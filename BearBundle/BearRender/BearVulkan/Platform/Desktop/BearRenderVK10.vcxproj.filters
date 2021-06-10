@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\VKContext.cpp" />
+    <ClCompile Include="..\..\VKDescriptorHeap.cpp" />
+    <ClCompile Include="..\..\VKFactory.cpp" />
+    <ClCompile Include="..\..\VKFrameBuffer.cpp" />
+    <ClCompile Include="..\..\VKIndexBuffer.cpp" />
+    <ClCompile Include="..\..\VKPCH.cpp" />
+    <ClCompile Include="..\..\VKPipelineGraphics.cpp" />
+    <ClCompile Include="..\..\VKPipelineMesh.cpp" />
+    <ClCompile Include="..\..\VKPipelineRayTracing.cpp" />
+    <ClCompile Include="..\..\VKRayTracingShaderTable.cpp" />
+    <ClCompile Include="..\..\VKRender.cpp" />
+    <ClCompile Include="..\..\VKRenderPass.cpp" />
+    <ClCompile Include="..\..\VKRootSignature.cpp" />
+    <ClCompile Include="..\..\VKSamplers.cpp" />
+    <ClCompile Include="..\..\VKShader.cpp" />
+    <ClCompile Include="..\..\VKStats.cpp" />
+    <ClCompile Include="..\..\VKStructuredBuffer.cpp" />
+    <ClCompile Include="..\..\VKTexture2D.cpp" />
+    <ClCompile Include="..\..\VKTextureCube.cpp" />
+    <ClCompile Include="..\..\VKUniformBuffer.cpp" />
+    <ClCompile Include="..\..\VKVertexBuffer.cpp" />
+    <ClCompile Include="..\..\VKViewport.cpp" />
+    <ClCompile Include="..\..\VKRayTracingBottomLevel.cpp" />
+    <ClCompile Include="..\..\VKRayTracingTopLevel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\VKBufferTools.h" />
+    <ClInclude Include="..\..\VKContext.h" />
+    <ClInclude Include="..\..\VKDescriptorHeap.h" />
+    <ClInclude Include="..\..\VKFactory.h" />
+    <ClInclude Include="..\..\VKFrameBuffer.h" />
+    <ClInclude Include="..\..\VKIndexBuffer.h" />
+    <ClInclude Include="..\..\VKPCH.h" />
+    <ClInclude Include="..\..\VKPipeline.h" />
+    <ClInclude Include="..\..\VKPipelineGraphics.h" />
+    <ClInclude Include="..\..\VKPipelineMesh.h" />
+    <ClInclude Include="..\..\VKPipelineRayTracing.h" />
+    <ClInclude Include="..\..\VKRayTracingShaderTable.h" />
+    <ClInclude Include="..\..\VKRenderPass.h" />
+    <ClInclude Include="..\..\VKRootSignature.h" />
+    <ClInclude Include="..\..\VKSamplers.h" />
+    <ClInclude Include="..\..\VKShader.h" />
+    <ClInclude Include="..\..\VKShaderResource.h" />
+    <ClInclude Include="..\..\VKStats.h" />
+    <ClInclude Include="..\..\VKStructuredBuffer.h" />
+    <ClInclude Include="..\..\VKTexture2D.h" />
+    <ClInclude Include="..\..\VKTextureCube.h" />
+    <ClInclude Include="..\..\VKUniformBuffer.h" />
+    <ClInclude Include="..\..\VKVertexBuffer.h" />
+    <ClInclude Include="..\..\VKViewport.h" />
+    <ClInclude Include="..\..\VKImports.h" />
+    <ClInclude Include="..\..\VKRayTracingTopLevel.h" />
+    <ClInclude Include="..\..\VKRayTracingBottomLevel.h" />
+  </ItemGroup>
+</Project>

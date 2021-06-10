@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="BearDebug">
+      <UniqueIdentifier>{8e0c5589-b86d-46f8-8271-21e009b1ccd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearTemplate">
+      <UniqueIdentifier>{6372daa1-4786-4cd7-83a8-1a4d03018c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearParser">
+      <UniqueIdentifier>{a525239e-c0d3-4a22-95a5-3500a1a47a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearMath">
+      <UniqueIdentifier>{24cde329-18ec-40d8-943d-5f748b7767e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearIO">
+      <UniqueIdentifier>{69461357-7365-4bf5-a82d-e3c83eadf3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearMemory">
+      <UniqueIdentifier>{8e417d70-5927-485e-97b2-06fabaae084c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearUtils">
+      <UniqueIdentifier>{23e52710-d7c1-4254-89ca-20890a54c01c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearNet">
+      <UniqueIdentifier>{a3ac54cd-5794-4512-800d-d6b03ee7c5f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\BearDebug\BearDebugDefines.h">
+      <Filter>BearDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDebug\BearLog.h">
+      <Filter>BearDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDebug\BearDebug.h">
+      <Filter>BearDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearAlgorithm.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearDefines.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearFastDelegate.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearFunction.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearFunctional.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearFunctionReflector.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearFunctionReflectorMaker.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearMap.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearMultiplicator.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearMultiplicatorDefine.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearMultiplicatorDefine_GCC.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearMultiplicatorDefine_MSVC.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearString.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearStringConteniar.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearString_inline.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearUtilsForClass.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTemplate\BearVector.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearParser\BearINI.h">
+      <Filter>BearParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearParser\BearXML.h">
+      <Filter>BearParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearTime.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearTime_inline.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearVector2.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearVector3.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearVector4.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearCamera.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearColor.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearFraction.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearMath.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMath\BearMatrix.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearFileManager.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearFilePackageStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearFileStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearFileSystem.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearInput.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearInputStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearKeys.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearMemoryStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearOutputStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearPackage.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearIO\BearBufferedReader.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMemory\BearMemoryTemplate.h">
+      <Filter>BearMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMemory\BearMemory.h">
+      <Filter>BearMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMemory\BearMemoryAllocator.h">
+      <Filter>BearMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMemory\BearMemoryMultiRef.h">
+      <Filter>BearMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearMemory\BearMemoryRef.h">
+      <Filter>BearMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearEncoding.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearFlags.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearGlobalTime.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearIncluder.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearMutex.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearSystem.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearThread.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearTimer.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearCheakSum.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearUtils\BearCompressor.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearTypes.h" />
+    <ClInclude Include="..\..\BearCore.hpp" />
+    <ClInclude Include="..\..\BearUtils\BearManagerDynamicLibraries.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearNet\BearNetTcpServer.h">
+      <Filter>BearNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearNet\BearIP.h">
+      <Filter>BearNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearNet\BearNetTcpClient.h">
+      <Filter>BearNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearConfig.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\BearDebug\BearDebug.cpp">
+      <Filter>BearDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearDebug\BearLog.cpp">
+      <Filter>BearDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearParser\BearINI.cpp">
+      <Filter>BearParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearParser\BearXML.cpp">
+      <Filter>BearParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearMath\BearCamera.cpp">
+      <Filter>BearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearMemoryStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearOutputStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearPackage.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearFileManager.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearFilePackageStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearFileStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearFileSystem.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearInput.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearInputStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearIO\BearBufferedReader.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearMemory\BearMemory.cpp">
+      <Filter>BearMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearFraction.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearGlobalTime.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearIncluder.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearMatrix.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearMutex.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearString.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearStringConteniar.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearSystem.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearThread.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearTimer.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearCheakSum.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearColor.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearCompressor.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearUtils\BearEncoding.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearCore.cpp" />
+    <ClCompile Include="..\..\BearCore.PCH.cpp" />
+    <ClCompile Include="..\..\BearUtils\BearManagerDynamicLibraries.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearNet\BearNetTcpServer.cpp">
+      <Filter>BearNet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearNet\BearIP.cpp">
+      <Filter>BearNet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearNet\BearNetTcpClient.cpp">
+      <Filter>BearNet</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE" />
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore" />
+  </ItemGroup>
+</Project>
