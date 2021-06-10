@@ -1,5 +1,5 @@
 ﻿#include "BearCore.hpp"
-#include "TinyXml/tinyxml.h"
+#include "..\External\tinyxml\tinyxml\tinyxml.h"
 BearXML::BearXML():m_Doc(NULL)
 {
 }

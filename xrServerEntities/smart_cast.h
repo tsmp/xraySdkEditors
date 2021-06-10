@@ -15,7 +15,7 @@
 
 #define  TL_FAST_COMPILATION
 #undef   STATIC_CHECK
-#include "loki/typelist.h"
+#include "..\External\loki\Typelist.h"
 
 #ifdef PURE_DYNAMIC_CAST
 #	define smart_cast dynamic_cast

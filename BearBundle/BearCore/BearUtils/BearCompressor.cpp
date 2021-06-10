@@ -1,7 +1,8 @@
 #include "BearCore.hpp"
-#include <lzo/lzoconf.h>
-#include <lzo/lzo1x.h>
-#include <zlib/zlib.h>
+#include "..\External\lzo\lzoconf.h"
+#include "..\External\lzo\lzo\lzo1x.h"
+#include "..\External\zlib\zlib.h"
+
 lzo_voidp GLZOWrkmem =0;
 lzo_voidp GLZOWrkmem999 = 0;
 

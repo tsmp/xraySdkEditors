@@ -8,8 +8,8 @@
 /* @(#) $Id$ */
 
 #include <stdio.h>
-#define ZLIB_INTERNAL
-#include "zlib/zutil.h"
+
+#include "zutil.h"
 
 #ifdef NO_DEFLATE       /* for compatibility with old definition */
 #  define NO_GZCOMPRESS

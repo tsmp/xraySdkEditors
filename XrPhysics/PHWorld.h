@@ -3,7 +3,7 @@
 #include "Physics.h"
 #include "phupdateobject.h"
 #include "IPHWorld.h"
-#include <boost/noncopyable.hpp>
+#include "..\External\boost\noncopyable.hpp"
 #include "physics_scripted.h"
 #include "../xrEngine/pure.h"
 // refs

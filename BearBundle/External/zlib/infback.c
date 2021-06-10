@@ -10,11 +10,10 @@
    inflate_fast() can be used with either inflate.c or infback.c.
  */
 
-#define ZLIB_INTERNAL
-#include "zlib/zutil.h"
-#include "zlib/inftrees.h"
-#include "zlib/inflate.h"
-#include "zlib/inffast.h"
+#include "zutil.h"
+#include "inftrees.h"
+#include "inflate.h"
+#include "inffast.h"
 
 /* function prototypes */
 local void fixedtables OF((struct inflate_state FAR *state));
@@ -106,7 +105,7 @@ struct inflate_state FAR *state;
         virgin = 0;
     }
 #else /* !BUILDFIXED */
-#   include "zlib/inffixed.h"
+#   include "inffixed.h"
 #endif /* BUILDFIXED */
     state->lencode = lenfix;
     state->lenbits = 9;

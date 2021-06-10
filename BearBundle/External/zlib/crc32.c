@@ -26,8 +26,7 @@
 #  endif /* !DYNAMIC_CRC_TABLE */
 #endif /* MAKECRCH */
 
-#define ZLIB_INTERNAL
-#include "zlib/zutil.h"      /* for STDC and FAR definitions */
+#include "zutil.h"      /* for STDC and FAR definitions */
 
 #define local static
 
@@ -197,7 +196,7 @@ local void write_table(out, table)
 /* ========================================================================
  * Tables of CRC-32s of all single-byte values, made by make_crc_table().
  */
-#include "zlib/crc32.h"
+#include "crc32.h"
 #endif /* DYNAMIC_CRC_TABLE */
 
 /* =========================================================================
@@ -265,8 +264,8 @@ local unsigned long crc32_little(crc, buf, len)
     const unsigned char FAR *buf;
     unsigned len;
 {
-    register u4 c;
-    register const u4 FAR *buf4;
+    u4 c;
+    const u4 FAR *buf4;
 
     c = (u4)crc;
     c = ~c;
@@ -305,8 +304,8 @@ local unsigned long crc32_big(crc, buf, len)
     const unsigned char FAR *buf;
     unsigned len;
 {
-    register u4 c;
-    register const u4 FAR *buf4;
+    u4 c;
+    const u4 FAR *buf4;
 
     c = REV((u4)crc);
     c = ~c;
