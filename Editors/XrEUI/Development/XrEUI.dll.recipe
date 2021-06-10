@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Projects\Bin\Win32\Release\BearCore.dll</FullPath>
+      <FullPath>D:\Projects\Bin\Win32\Debug\BearCore.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
       <FullPath>D:\Projects\Bin\Win32\Development\BugTrap.dll</FullPath>

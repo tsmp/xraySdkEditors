@@ -118,9 +118,6 @@
     <ProjectReference Include="..\..\..\BearCore\Platform\Desktop\BearCore.vcxproj">
       <Project>{86b65138-c85e-4c26-967b-9a21eb954216}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\External\IntelCompressor\IntelCompressor.vcxproj">
-      <Project>{4c532527-ab2e-4d93-8b18-f5eb3a0980d3}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\External\Nvtt\Nvtt.vcxproj">
       <Project>{32a26599-1a59-4866-8c03-1ea6e790405a}</Project>
     </ProjectReference>
@@ -194,12 +191,13 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-   <ImportGroup Label="PropertySheets">
+  <ImportGroup Label="PropertySheets">
     <Import Project="..\..\..\BearBundle.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -212,6 +210,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">
     <LinkIncremental>false</LinkIncremental>

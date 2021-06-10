@@ -20,8 +20,8 @@ extern "C"
 		return  bear_realloc<uint8>((uint8*)x, n);
 	}
 }
-#include "StbImage/stb_image.h"
-#include "StbImage/stb_image_write.h"
+#include "..\..\External\Public\StbImage\stb_image.h"
+#include "..\..\External\Public\StbImage\stb_image_write.h"
 bool BearImage::LoadFromFile(const bchar * str)
 {
 	BearFileStream stream;

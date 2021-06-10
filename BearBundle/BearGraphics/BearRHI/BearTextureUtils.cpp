@@ -1,14 +1,14 @@
 #include "BearGraphics.hpp"
 #include "BearRHI/BearTextureUtils.h"
 #ifdef DEVELOPER_VERSION
-#include "IntelCompressor/ispc_texcomp.h"
-#include "Nvtt/nvimage\ColorBlock.h"
-#include "Nvtt/nvimage\BlockDXT.h"
-#include "Nvtt/nvtt/CompressorDX9.h"
-#include "Nvtt/nvtt/QuickCompressDXT.h"
+//#include "IntelCompressor/ispc_texcomp.h"
+#include "nvimage\ColorBlock.h"
+#include "nvimage\BlockDXT.h"
+#include "nvtt/CompressorDX9.h"
+#include "nvtt/QuickCompressDXT.h"
 #endif
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
-#include "StbImage/stb_image_resize.h"
+#include "..\..\External\Public\StbImage\stb_image_resize.h"
 bsize BearTextureUtils::GetSizeWidth(bsize w, BearTexturePixelFormat format)
 {
 	if (isCompressor(format))
@@ -1267,26 +1267,28 @@ void BearTextureUtils::EndCompressor(BearTexturePixelFormat compressor, bsize w,
 	break;
 	case BearTexturePixelFormat::BC6:
 	{
-		rgba_surface Surface;
-		Surface.height = static_cast<uint32>(h);
-		Surface.width = static_cast<uint32>(w);
-		Surface.ptr = (uint8*)in;
-		Surface.stride = static_cast<uint32>(w * 2 * 4);
-		bc6h_enc_settings str;
-		GetProfile_bc6h_veryslow(&str);
-		CompressBlocksBC6H(&Surface, (uint8*)out, &str);
+		BEAR_ASSERT(FALSE);
+		//rgba_surface Surface;
+		//Surface.height = static_cast<uint32>(h);
+		//Surface.width = static_cast<uint32>(w);
+		//Surface.ptr = (uint8*)in;
+		//Surface.stride = static_cast<uint32>(w * 2 * 4);
+		//bc6h_enc_settings str;
+		//GetProfile_bc6h_veryslow(&str);
+		//CompressBlocksBC6H(&Surface, (uint8*)out, &str);
 	}
 	break;
 	case BearTexturePixelFormat::BC7:
 	{
-		rgba_surface Surface;
-		Surface.height = static_cast<uint32>(h);
-		Surface.width = static_cast<uint32>(w);
-		Surface.ptr = (uint8*)in;
-		Surface.stride = static_cast<uint32>(w * 4);
-		bc7_enc_settings str;
-		GetProfile_alpha_slow(&str);
-		CompressBlocksBC7(&Surface, (uint8*)out, &str);
+		BEAR_ASSERT(FALSE);
+		//rgba_surface Surface;
+		//Surface.height = static_cast<uint32>(h);
+		//Surface.width = static_cast<uint32>(w);
+		//Surface.ptr = (uint8*)in;
+		//Surface.stride = static_cast<uint32>(w * 4);
+		//bc7_enc_settings str;
+		//GetProfile_alpha_slow(&str);
+		//CompressBlocksBC7(&Surface, (uint8*)out, &str);
 		break;
 	}
 	default:
@@ -1781,17 +1783,17 @@ void BearTextureUtils::SetBlock(BearColor(&color)[16], uint8 * data, bsize w, bs
 
 		}
 		{
-
-			rgba_surface Surface;
-			Surface.height = static_cast<int32>(h);
-			Surface.width = static_cast<int32>(w);
-			Surface.ptr = (uint8*)ImagePixel16UInt16;
-			/*for (bsize i = 0; i < w*h; i++)
-			*(Image + i * 4) = 0;*/
-			Surface.stride = static_cast<int32>(w) * 2 * 4;
-			bc6h_enc_settings str;
-			GetProfile_bc6h_veryslow(&str);
-			CompressBlocksBC6H(&Surface, (uint8*)Block, &str);
+			BEAR_ASSERT(false);
+			//rgba_surface Surface;
+			//Surface.height = static_cast<int32>(h);
+			//Surface.width = static_cast<int32>(w);
+			//Surface.ptr = (uint8*)ImagePixel16UInt16;
+			///*for (bsize i = 0; i < w*h; i++)
+			//*(Image + i * 4) = 0;*/
+			//Surface.stride = static_cast<int32>(w) * 2 * 4;
+			//bc6h_enc_settings str;
+			//GetProfile_bc6h_veryslow(&str);
+			//CompressBlocksBC6H(&Surface, (uint8*)Block, &str);
 		}
 		break;
 	case BearTexturePixelFormat::BC7:
@@ -1804,17 +1806,18 @@ void BearTextureUtils::SetBlock(BearColor(&color)[16], uint8 * data, bsize w, bs
 
 		}
 		{
-			rgba_surface Surface;
-			Surface.height = static_cast<int32>(h);
-			Surface.width = static_cast<int32>(w);
-			Surface.ptr = ImagePixel16UInt8;
-			Surface.stride = static_cast<int32>(w) * 4;
-			bc7_enc_settings str;
-			if (GetCountComp(px) == 4)
-				GetProfile_alpha_slow(&str);
-			else
-				GetProfile_slow(&str);
-			CompressBlocksBC7(&Surface, (uint8*)Block, &str);
+			BEAR_ASSERT(false);
+			//rgba_surface Surface;
+			//Surface.height = static_cast<int32>(h);
+			//Surface.width = static_cast<int32>(w);
+			//Surface.ptr = ImagePixel16UInt8;
+			//Surface.stride = static_cast<int32>(w) * 4;
+			//bc7_enc_settings str;
+			//if (GetCountComp(px) == 4)
+			//	GetProfile_alpha_slow(&str);
+			//else
+			//	GetProfile_slow(&str);
+			//CompressBlocksBC7(&Surface, (uint8*)Block, &str);
 		}
 		break;
 	default:

@@ -3,7 +3,7 @@
 
 #pragma warning(push)
 #pragma warning(disable:4995)
-#include "directx\d3dx9.h"
+#include "..\BearBundle\BearRender\External\Public\directx\d3dx9.h"
 #pragma warning(pop)
 
 #include "../../xrCDB/frustum.h"

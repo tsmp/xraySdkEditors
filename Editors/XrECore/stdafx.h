@@ -55,7 +55,7 @@
 
 // DirectX headers
 #include <d3d9.h>
-#include "directx\d3dx9.h"
+#include "..\BearBundle\BearRender\External\Public\directx\d3dx9.h"
 #include "..\..\XrRender\Private\xrD3dDefs.h"
 
 #include <dinput.h>

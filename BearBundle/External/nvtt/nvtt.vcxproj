@@ -342,6 +342,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\Projects\tsmp_sdk\BearBundle\External\nvtt;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvcore;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvimage;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvmath;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvthread;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvtt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">
     <LinkIncremental>false</LinkIncremental>

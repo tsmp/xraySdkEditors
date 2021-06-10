@@ -9,7 +9,7 @@
 #include "ui_main.h"
 #include "EditObject.h"
 #include "ResourceManager.h"
-#include "StbImage\stb_image.h"
+#include "..\BearBundle\External\Public\StbImage\stb_image.h"
 #include "../XrETools/ETools.h"
 CImageManager ImageLib;
 //---------------------------------------------------------------------------
