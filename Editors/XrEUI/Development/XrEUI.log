@@ -1,0 +1,33 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
+  imgui.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+  imgui_demo.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+  imgui_draw.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+  imgui_impl_dx9.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+  imgui_impl_win32.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+  imgui_widgets.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+  spectrum.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+  XrUI.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+  XrUIManager.cpp
+D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
+D:\Projects\tsmp_sdk\XrCore\xrMemory_subst_msvc.h(148,3): warning C4984: "if constexpr" — расширение языка C++17
+D:\Projects\tsmp_sdk\Editors\XrEUI\XrUIManager.cpp(196): message : выполняется компиляция ссылки на экземпляр шаблон функции "void xr_delete<XrUI>(T *&)"
+          with
+          [
+              T=XrUI
+          ]
+  Создание кода...
+     Создается библиотека D:\Projects\tsmp_sdk\Development\XrEUI.lib и объект D:\Projects\tsmp_sdk\Development\XrEUI.exp
+  XrEUI.vcxproj -> D:\Projects\tsmp_sdk\Development\XrEUI.dll

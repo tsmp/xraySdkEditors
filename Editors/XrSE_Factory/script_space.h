@@ -17,10 +17,11 @@
 #pragma warning(disable:4530)
 #pragma warning(disable:4267)
 
-extern "C" {
-	#include <lua/lua.h>
-	#include <lua/lualib.h>
-	#include <lua/lauxlib.h>
+extern "C" 
+{
+	#include "..\External\LuaJIT\src\lua.h"
+	#include "..\External\LuaJIT\src\lualib.h"
+	#include "..\External\LuaJIT\src\lauxlib.h"
 };
 
 #include <luabind/luabind.hpp>

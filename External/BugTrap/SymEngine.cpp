@@ -2916,6 +2916,8 @@ BOOL CSymEngine::AddFileToArchive(zipFile hZipFile, PCTSTR pszFilePath, PCTSTR p
 		PBYTE pFileBuffer = new BYTE[dwBufferSize];
 		if (pFileBuffer)
 		{
+
+
 			if (zipOpenNewFileInZip(hZipFile, pszFileNameA, NULL, NULL, 0, NULL, 0, NULL, Z_DEFLATED, Z_BEST_COMPRESSION) == Z_OK)
 			{
 				bResult = TRUE;

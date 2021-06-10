@@ -7,8 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "pch_script.h"
-extern "C" {
-	#include "lua/lua.h"
+extern "C" 
+{
+	#include "..\External\LuaJIT\src\lua.h"
 };
 #include "script_engine.h"
 #include "script_thread.h"

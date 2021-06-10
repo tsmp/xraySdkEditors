@@ -329,6 +329,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvtt;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvthread;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvmath;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvimage;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt\nvcore;D:\Projects\tsmp_sdk\BearBundle\External\Public\Nvtt;D:\Projects\tsmp_sdk\BearBundle\External\nvtt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">
     <LinkIncremental>true</LinkIncremental>

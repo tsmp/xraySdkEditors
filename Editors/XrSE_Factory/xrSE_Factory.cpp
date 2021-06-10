@@ -22,8 +22,9 @@
 //#include "character_rank.h"
 //#include "character_reputation.h"
 
-#include <lua/library_linkage.h>
-#include <luabind/library_linkage.h>
+//#include "..\External\LuaJIT\src"
+//#include <lua/library_linkage.h>
+//#include <luabind/library_linkage.h>
 
 #pragma comment(lib,"xrCore.lib")
 

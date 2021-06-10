@@ -20,7 +20,7 @@
 
 
 // Platform definitions
-#include <pushlib/posh.h>
+#include <..\pushlib/posh.h>
 
 // OS:
 // NV_OS_WIN32

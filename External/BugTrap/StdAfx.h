@@ -47,7 +47,7 @@
 #include <process.h>
 #include <zmouse.h>
 #include <limits.h>
-#include "..\..\BearBundle\External\Public\Zlib\zip.h"
+#include "..\..\BearBundle\External\zlib\contrib\minizip\zip.h"
 #include <stdio.h>
 #include <new.h>
 #include <WinSock2.h>

@@ -13,8 +13,9 @@
 #include "script_space_forward.h"
 #include "associative_vector.h"
 
-extern "C" {
-	#include <lua/lua.h>
+extern "C" 
+{
+	#include "..\External\LuaJIT\src\lua.h"
 };
 
 //#define DBG_DISABLE_SCRIPTS

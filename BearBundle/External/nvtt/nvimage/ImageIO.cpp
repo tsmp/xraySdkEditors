@@ -54,7 +54,7 @@ extern "C" {
 
 #if defined(HAVE_STBIMAGE)
 #   define STBI_NO_STDIO
-#   include <StbImage/stb_image.h>
+#   include <..\StbImage/stb_image.h>
 #endif
 
 

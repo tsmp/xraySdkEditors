@@ -1,333 +1,275 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Development|Win32">
-      <Configuration>Development</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Development|x64">
-      <Configuration>Development</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Public\luabind\adopt_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\back_reference.hpp" />
-    <ClInclude Include="..\Public\luabind\back_reference_fwd.hpp" />
-    <ClInclude Include="..\Public\luabind\class.hpp" />
-    <ClInclude Include="..\Public\luabind\class_info.hpp" />
-    <ClInclude Include="..\Public\luabind\com_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\config.hpp" />
-    <ClInclude Include="..\Public\luabind\container_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\copy_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\dependency_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\calc_arity.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\call.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\call_function.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\call_member.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\call_operator_iterate.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\class_cache.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\class_registry.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\class_rep.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\class_rep_scope.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\constructor.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\construct_rep.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\convert_to_lua.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\debug.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\decorate_type.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\enum_maker.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\find_best_match.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\garbage_collector.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\get_overload_signature.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\get_signature.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\implicit_cast.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\is_indirect_const.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\link_compatibility.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\method_rep.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\object_funs.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\object_rep.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\open.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\operators.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\operator_id.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\other.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\overload_rep.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\overload_rep_base.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\overload_rep_impl.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\pcall.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\pointee_sizeof.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\pointee_typeid.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\policy.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\primitives.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\property.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\ref.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\signature_match.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\stack_utils.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\typetraits.hpp" />
-    <ClInclude Include="..\Public\luabind\detail\yes_no.hpp" />
-    <ClInclude Include="..\Public\luabind\discard_result_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\error.hpp" />
-    <ClInclude Include="..\Public\luabind\function.hpp" />
-    <ClInclude Include="..\Public\luabind\functor.hpp" />
-    <ClInclude Include="..\Public\luabind\iterator_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\library_linkage.h" />
-    <ClInclude Include="..\Public\luabind\luabind.hpp" />
-    <ClInclude Include="..\Public\luabind\luabind_auto_ptr.h" />
-    <ClInclude Include="..\Public\luabind\luabind_delete.h" />
-    <ClInclude Include="..\Public\luabind\luabind_memory.h" />
-    <ClInclude Include="..\Public\luabind\luabind_memory_allocator.h" />
-    <ClInclude Include="..\Public\luabind\luabind_memory_allocator_inline.h" />
-    <ClInclude Include="..\Public\luabind\luabind_memory_manager_generator.h" />
-    <ClInclude Include="..\Public\luabind\luabind_types.h" />
-    <ClInclude Include="..\Public\luabind\lua_include.hpp" />
-    <ClInclude Include="..\Public\luabind\object.hpp" />
-    <ClInclude Include="..\Public\luabind\open.hpp" />
-    <ClInclude Include="..\Public\luabind\operator.hpp" />
-    <ClInclude Include="..\Public\luabind\out_value_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\prefix.hpp" />
-    <ClInclude Include="..\Public\luabind\raw_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\return_reference_to_policy.hpp" />
-    <ClInclude Include="..\Public\luabind\scope.hpp" />
-    <ClInclude Include="..\Public\luabind\weak_ref.hpp" />
-    <ClInclude Include="..\Public\luabind\wrapper_base.hpp" />
-    <ClInclude Include="..\Public\luabind\yield_policy.hpp" />
-    <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="class.cpp" />
-    <ClCompile Include="class_info.cpp" />
-    <ClCompile Include="class_registry.cpp" />
-    <ClCompile Include="class_rep.cpp" />
-    <ClCompile Include="create_class.cpp" />
-    <ClCompile Include="error.cpp" />
-    <ClCompile Include="find_best_match.cpp" />
-    <ClCompile Include="function.cpp" />
-    <ClCompile Include="implicit_cast.cpp" />
-    <ClCompile Include="library_linkage.cpp" />
-    <ClCompile Include="link_compatibility.cpp" />
-    <ClCompile Include="luabind_memory.cpp" />
-    <ClCompile Include="object.cpp" />
-    <ClCompile Include="object_rep.cpp" />
-    <ClCompile Include="open.cpp" />
-    <ClCompile Include="pcall.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="ref.cpp" />
-    <ClCompile Include="scope.cpp" />
-    <ClCompile Include="stack_content_by_name.cpp" />
-    <ClCompile Include="weak_ref.cpp" />
-    <ClCompile Include="wrapper_base.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{18C37994-F2F2-46C0-BD55-BC738E8B9D89}</ProjectGuid>
+    <ProjectGuid>{6FDBCDB3-D190-486D-BDAC-3C4AC527DA3B}</ProjectGuid>
+    <RootNamespace>luabind</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Luabind</RootNamespace>
+    <ProjectName>Luabind</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='Debug'">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='Release'">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PlatformToolset>v142</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PlatformToolset>v142</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PlatformToolset>v142</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Default.props" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Default.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Default.props" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Default.props" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Default.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Default.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+  <PropertyGroup>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">
-    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Projects\Lib\Win32\Release;$(SolutionDir)\output\libraries_$(platform)_$(Configuration)\;$(SolutionDir)\output\libraries_$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\output\binaries_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\output\intermediate\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\output\binaries_x64_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\output\intermediate_x64\$(ProjectName)\$(Configuration)\</IntDir>
+    <LibraryPath>$(SolutionDir)\output\libraries_$(platform)_$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>DEBUG;_LIB;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_HAS_ITERATOR_DEBUGGING=0;LUABIND_BUILDING;NDEBUG;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\LuaJIT\src;..\xrCore;</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4251;4577;5037;</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</FunctionLevelLinking>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</FunctionLevelLinking>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>xrCore.lib;</AdditionalDependencies>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <LinkTimeCodeGeneration />
+    </Link>
+    <Link Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\output\libraries_$(Configuration)\$(ProjectName).lib</ImportLibrary>
+    </Link>
+    <Link Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Link Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      <TargetMachine>MachineX64</TargetMachine>
+      <ImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\output\libraries_$(platform)_$(Configuration)\$(ProjectName).lib</ImportLibrary>
+    </Link>
+    <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <OmitFramePointers>false</OmitFramePointers>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_HAS_ITERATOR_DEBUGGING=0;LUABIND_BUILDING;</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\LuaJIT\src;..\xrCore;</AdditionalIncludeDirectories>
+      <StringPooling>false</StringPooling>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4251;4577;5037;</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</FunctionLevelLinking>
+      <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</FunctionLevelLinking>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>
+      </OptimizeReferences>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>xrCore.lib;</AdditionalDependencies>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <LinkTimeCodeGeneration />
+    </Link>
+    <Link Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Link Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Link Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\class.cpp" />
+    <ClCompile Include="src\class_info.cpp" />
+    <ClCompile Include="src\class_registry.cpp" />
+    <ClCompile Include="src\class_rep.cpp" />
+    <ClCompile Include="src\create_class.cpp" />
+    <ClCompile Include="src\error.cpp" />
+    <ClCompile Include="src\find_best_match.cpp" />
+    <ClCompile Include="src\function.cpp" />
+    <ClCompile Include="src\implicit_cast.cpp" />
+    <ClCompile Include="src\link_compatibility.cpp" />
+    <ClCompile Include="src\object.cpp" />
+    <ClCompile Include="src\object_rep.cpp" />
+    <ClCompile Include="src\open.cpp" />
+    <ClCompile Include="src\pcall.cpp" />
+    <ClCompile Include="src\ref.cpp" />
+    <ClCompile Include="src\scope.cpp" />
+    <ClCompile Include="src\stack_content_by_name.cpp" />
+    <ClCompile Include="src\stdafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\weak_ref.cpp" />
+    <ClCompile Include="src\wrapper_base.cpp" />
+    <ClCompile Include="src\luabind_memory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="luabind\detail\calc_has_arg.hpp" />
+    <ClInclude Include="luabind\detail\policy_cons.hpp" />
+    <ClInclude Include="luabind\adopt_policy.hpp" />
+    <ClInclude Include="luabind\back_reference.hpp" />
+    <ClInclude Include="luabind\back_reference_fwd.hpp" />
+    <ClInclude Include="luabind\class.hpp" />
+    <ClInclude Include="luabind\class_info.hpp" />
+    <ClInclude Include="luabind\config.hpp" />
+    <ClInclude Include="luabind\copy_policy.hpp" />
+    <ClInclude Include="luabind\dependency_policy.hpp" />
+    <ClInclude Include="luabind\discard_result_policy.hpp" />
+    <ClInclude Include="luabind\error.hpp" />
+    <ClInclude Include="luabind\function.hpp" />
+    <ClInclude Include="luabind\functor.hpp" />
+    <ClInclude Include="luabind\iterator_pair_policy.hpp" />
+    <ClInclude Include="luabind\iterator_policy.hpp" />
+    <ClInclude Include="luabind\luabind.hpp" />
+    <ClInclude Include="luabind\luabind_delete.h" />
+    <ClInclude Include="luabind\luabind_memory.h" />
+    <ClInclude Include="luabind\luabind_memory_allocator.h" />
+    <ClInclude Include="luabind\luabind_memory_allocator_inline.h" />
+    <ClInclude Include="luabind\luabind_memory_manager_generator.h" />
+    <ClInclude Include="luabind\luabind_types.h" />
+    <ClInclude Include="luabind\object.hpp" />
+    <ClInclude Include="luabind\open.hpp" />
+    <ClInclude Include="luabind\operator.hpp" />
+    <ClInclude Include="luabind\out_value_policy.hpp" />
+    <ClInclude Include="luabind\raw_policy.hpp" />
+    <ClInclude Include="luabind\return_reference_to_policy.hpp" />
+    <ClInclude Include="luabind\scope.hpp" />
+    <ClInclude Include="luabind\weak_ref.hpp" />
+    <ClInclude Include="luabind\wrapper_base.hpp" />
+    <ClInclude Include="luabind\yield_policy.hpp" />
+    <ClInclude Include="luabind\detail\calc_arity.hpp" />
+    <ClInclude Include="luabind\detail\call.hpp" />
+    <ClInclude Include="luabind\detail\call_function.hpp" />
+    <ClInclude Include="luabind\detail\call_member.hpp" />
+    <ClInclude Include="luabind\detail\class_cache.hpp" />
+    <ClInclude Include="luabind\detail\class_registry.hpp" />
+    <ClInclude Include="luabind\detail\class_rep.hpp" />
+    <ClInclude Include="luabind\detail\construct_rep.hpp" />
+    <ClInclude Include="luabind\detail\constructor.hpp" />
+    <ClInclude Include="luabind\detail\convert_to_lua.hpp" />
+    <ClInclude Include="luabind\detail\debug.hpp" />
+    <ClInclude Include="luabind\detail\decorate_type.hpp" />
+    <ClInclude Include="luabind\detail\enum_maker.hpp" />
+    <ClInclude Include="luabind\detail\find_best_match.hpp" />
+    <ClInclude Include="luabind\detail\garbage_collector.hpp" />
+    <ClInclude Include="luabind\detail\get_overload_signature.hpp" />
+    <ClInclude Include="luabind\detail\get_signature.hpp" />
+    <ClInclude Include="luabind\detail\implicit_cast.hpp" />
+    <ClInclude Include="luabind\detail\is_indirect_const.hpp" />
+    <ClInclude Include="luabind\detail\link_compatibility.hpp" />
+    <ClInclude Include="luabind\detail\method_rep.hpp" />
+    <ClInclude Include="luabind\detail\object_funs.hpp" />
+    <ClInclude Include="luabind\detail\object_rep.hpp" />
+    <ClInclude Include="luabind\detail\operator_id.hpp" />
+    <ClInclude Include="luabind\detail\other.hpp" />
+    <ClInclude Include="luabind\detail\overload_rep.hpp" />
+    <ClInclude Include="luabind\detail\overload_rep_base.hpp" />
+    <ClInclude Include="luabind\detail\overload_rep_impl.hpp" />
+    <ClInclude Include="luabind\detail\pcall.hpp" />
+    <ClInclude Include="luabind\detail\pointee_sizeof.hpp" />
+    <ClInclude Include="luabind\detail\pointee_typeid.hpp" />
+    <ClInclude Include="luabind\detail\policy.hpp" />
+    <ClInclude Include="luabind\detail\primitives.hpp" />
+    <ClInclude Include="luabind\detail\property.hpp" />
+    <ClInclude Include="luabind\detail\ref.hpp" />
+    <ClInclude Include="luabind\detail\signature_match.hpp" />
+    <ClInclude Include="luabind\detail\stack_utils.hpp" />
+    <ClInclude Include="luabind\detail\typetraits.hpp" />
+    <ClInclude Include="src\stdafx.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

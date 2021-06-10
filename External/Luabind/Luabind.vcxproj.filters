@@ -1,327 +1,254 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Исходные файлы">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Файлы заголовков">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Файлы ресурсов">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="src\luabind_memory.cpp" />
+    <ClCompile Include="src\class.cpp" />
+    <ClCompile Include="src\class_info.cpp" />
+    <ClCompile Include="src\class_registry.cpp" />
+    <ClCompile Include="src\class_rep.cpp" />
+    <ClCompile Include="src\create_class.cpp" />
+    <ClCompile Include="src\error.cpp" />
+    <ClCompile Include="src\find_best_match.cpp" />
+    <ClCompile Include="src\function.cpp" />
+    <ClCompile Include="src\implicit_cast.cpp" />
+    <ClCompile Include="src\link_compatibility.cpp" />
+    <ClCompile Include="src\object.cpp" />
+    <ClCompile Include="src\object_rep.cpp" />
+    <ClCompile Include="src\open.cpp" />
+    <ClCompile Include="src\pcall.cpp" />
+    <ClCompile Include="src\ref.cpp" />
+    <ClCompile Include="src\scope.cpp" />
+    <ClCompile Include="src\stack_content_by_name.cpp" />
+    <ClCompile Include="src\weak_ref.cpp" />
+    <ClCompile Include="src\wrapper_base.cpp" />
+    <ClCompile Include="src\stdafx.cpp">
+      <Filter>pch</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="src\stdafx.h">
+      <Filter>pch</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\adopt_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\adopt_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\back_reference.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\back_reference.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\back_reference_fwd.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\back_reference_fwd.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\class.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\calc_arity.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\class_info.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\call.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\com_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\calc_has_arg.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\config.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\call_function.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\container_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\call_member.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\copy_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\class.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\dependency_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\class_cache.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\calc_arity.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\class_registry.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\call.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\class_rep.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\call_function.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\construct_rep.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\call_member.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\convert_to_lua.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\call_operator_iterate.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\constructor.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\class_cache.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\copy_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\class_registry.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\debug.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\class_rep.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\decorate_type.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\class_rep_scope.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\dependency_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\constructor.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\discard_result_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\construct_rep.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\enum_maker.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\convert_to_lua.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\class_info.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\debug.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\config.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\decorate_type.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\error.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\enum_maker.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\find_best_match.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\find_best_match.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\function.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\garbage_collector.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\functor.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\get_overload_signature.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\garbage_collector.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\get_signature.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\get_overload_signature.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\implicit_cast.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\get_signature.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\is_indirect_const.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\implicit_cast.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\link_compatibility.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\is_indirect_const.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\method_rep.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\iterator_pair_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\object_funs.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\iterator_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\object_rep.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\link_compatibility.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\open.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\luabind.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\operators.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\luabind_delete.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\operator_id.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\luabind_memory.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\other.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\luabind_memory_allocator.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\overload_rep.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\luabind_memory_allocator_inline.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\overload_rep_base.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\luabind_memory_manager_generator.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\overload_rep_impl.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\luabind_types.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\pcall.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\method_rep.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\pointee_sizeof.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\object.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\pointee_typeid.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\object_funs.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\object_rep.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\primitives.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\open.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\property.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\operator.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\ref.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\operator_id.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\signature_match.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\other.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\stack_utils.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\out_value_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\typetraits.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\overload_rep.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\detail\yes_no.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\overload_rep_base.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\discard_result_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\overload_rep_impl.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\error.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\pcall.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\function.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\pointee_sizeof.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\functor.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\pointee_typeid.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\iterator_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\library_linkage.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\policy_cons.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\luabind.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\primitives.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\luabind_auto_ptr.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\property.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\luabind_delete.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\raw_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\luabind_memory.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\return_reference_to_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\luabind_memory_allocator.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\ref.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\luabind_memory_allocator_inline.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\signature_match.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\luabind_memory_manager_generator.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\scope.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\luabind_types.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\stack_utils.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\lua_include.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\detail\typetraits.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\object.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\weak_ref.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\open.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\wrapper_base.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\luabind\operator.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\luabind\out_value_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\luabind\prefix.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\luabind\raw_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\luabind\return_reference_to_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\luabind\scope.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\luabind\weak_ref.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\luabind\wrapper_base.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\luabind\yield_policy.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="luabind\yield_policy.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="class.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="class_info.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="class_registry.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="class_rep.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="create_class.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="error.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="find_best_match.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="function.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="implicit_cast.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="library_linkage.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="link_compatibility.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="luabind_memory.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="object.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="object_rep.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="open.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="pcall.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ref.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="scope.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="stack_content_by_name.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="weak_ref.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="wrapper_base.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
+    <Filter Include="pch">
+      <UniqueIdentifier>{b82d35e0-b704-41a4-bbe5-58867032b8a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{a1f26dc1-f726-4332-a433-a87a27367cb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

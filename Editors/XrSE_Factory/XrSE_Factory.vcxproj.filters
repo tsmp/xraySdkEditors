@@ -677,9 +677,6 @@
     <ClCompile Include="script_file.cpp">
       <Filter>Scripts\ScriptDebugger</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\xrServerEntities\lua_studio.cpp">
-      <Filter>Scripts\lua_studio</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\xrServerEntities\alife_space.cpp">
       <Filter>ServerStuff\Common\ALifeStuff</Filter>
     </ClCompile>
