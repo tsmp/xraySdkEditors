@@ -125,7 +125,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">
-    <LibraryPath>D:\Projects\Lib\Win32\Release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\Projects\tsmp_sdk\Lib\Win32\Development;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

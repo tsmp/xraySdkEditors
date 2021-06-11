@@ -70,7 +70,7 @@
     <LibraryPath>$(SolutionDir)\output\libraries_$(platform)_$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>D:\Projects\Lib\Win32\Development;D:\Projects\Lib\Win32\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\Projects\tsmp_sdk\output\libraries_Win32_Debug;D:\Projects\tsmp_sdk\Lib\Win32\Development;D:\Projects\tsmp_sdk\Lib\Win32\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
