@@ -11,7 +11,7 @@ struct SAIParams
 	
 	SAIParams	()
     {
-		fPatchSize		= 0.7f;
+		fPatchSize		= 20.7f;
 		fTestHeight		= 1.0f;
 		fCanUP			= 1.5f;
 		fCanDOWN		= 4.0f;

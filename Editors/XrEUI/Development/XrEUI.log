@@ -1,10 +1,4 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(504,5): warning MSB8004: каталог Intermediate заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Intermediate.
-  imgui.cpp
+﻿  imgui.cpp
 D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
   imgui_demo.cpp
 D:\Projects\tsmp_sdk\XrCore\ELocatorAPI.h(49,10): warning C4141: virtual: используется несколько раз
@@ -29,5 +23,4 @@ D:\Projects\tsmp_sdk\Editors\XrEUI\XrUIManager.cpp(196): message : выполн�
               T=XrUI
           ]
   Создание кода...
-     Создается библиотека D:\Projects\tsmp_sdk\Development\XrEUI.lib и объект D:\Projects\tsmp_sdk\Development\XrEUI.exp
-  XrEUI.vcxproj -> D:\Projects\tsmp_sdk\Development\XrEUI.dll
+LINK : fatal error LNK1104: не удается открыть файл "D:\Projects\Lib\Win32\Development\XrCore.lib"

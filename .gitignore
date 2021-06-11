@@ -9,11 +9,14 @@ x64/
 obj/
 bin/
 
+Development/
+Debug/
+Release/
 output/
 *.aps
 
 *.ncb
-
+*.pdb
 *.opensdf
 
 *.sdf
