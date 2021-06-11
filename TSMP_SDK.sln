@@ -31,6 +31,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenAutomate", "External\OpenAutomate\OpenAutomate.vcxproj", "{200ACCB3-758B-4118-A10A-32EFF361AE64}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Luabind", "External\Luabind\Luabind.vcxproj", "{6FDBCDB3-D190-486D-BDAC-3C4AC527DA3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{632AEEB6-DC06-4E15-9551-B2B09A4B73C5} = {632AEEB6-DC06-4E15-9551-B2B09A4B73C5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrCPU_Pipe", "XrCPU_Pipe\XrCPU_Pipe.vcxproj", "{E671B0D4-52F0-471B-90B4-8317946C3C26}"
 EndProject
@@ -118,6 +121,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LevelEditor", "Editors\LevelEditor\LevelEditor.vcxproj", "{7E13BFCC-55B0-4715-8BBB-84A143CCE84B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrSE_Factory", "Editors\XrSE_Factory\XrSE_Factory.vcxproj", "{E5D980C8-02DF-45D1-9F15-4D87AE100661}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6FDBCDB3-D190-486D-BDAC-3C4AC527DA3B} = {6FDBCDB3-D190-486D-BDAC-3C4AC527DA3B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrDO_Light", "Editors\xrDO_Light\xrDO_Light.vcxproj", "{F973E86A-FE5E-432D-9107-898A5D62F1B5}"
 EndProject

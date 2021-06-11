@@ -4,7 +4,7 @@
 #include	"stdafx.h"
 #include	"D3DX_Wrapper.h"
 
-#include "..\..\BearBundle\BearRender\External\Public\directx\dxerr.h"
+#include "..\..\Components\DirectX\include\DxErr.h"
 // misc
 
 extern "C"{ 

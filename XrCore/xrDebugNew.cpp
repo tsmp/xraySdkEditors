@@ -6,7 +6,7 @@
 #include "os_clipboard.h"
 
 #include <sal.h>
-#include "..\BearBundle\BearRender\External\Public\directx\DxErr.h"
+#include "..\Components\DirectX\include\DxErr.h"
 
 #pragma warning(push)
 #pragma warning(disable:4995)

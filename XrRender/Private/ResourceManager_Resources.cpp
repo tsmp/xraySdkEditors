@@ -2,7 +2,7 @@
 #pragma hdrstop
 
 #pragma warning(disable:4995)
-#include "..\BearBundle\BearRender\External\Public\directx\d3dx9.h"
+#include "..\Components\DirectX\include\d3dx9.h"
 #ifndef _EDITOR
 #include "../../xrEngine/render.h"
 #endif
