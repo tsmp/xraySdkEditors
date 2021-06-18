@@ -23,11 +23,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrSound", "XrSound\XrSound.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrNetServer", "XrNetServer\XrNetServer.vcxproj", "{5A93A01A-05BD-4BF8-8D6E-2A5AE2E0BF14}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrEngine", "XrEngine\XrEngine.vcxproj", "{2820680F-79FE-4477-A14C-007F273A5FA8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E671B0D4-52F0-471B-90B4-8317946C3C26} = {E671B0D4-52F0-471B-90B4-8317946C3C26}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenAutomate", "External\OpenAutomate\OpenAutomate.vcxproj", "{200ACCB3-758B-4118-A10A-32EFF361AE64}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Luabind", "External\Luabind\Luabind.vcxproj", "{6FDBCDB3-D190-486D-BDAC-3C4AC527DA3B}"
@@ -115,8 +110,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BugTrap", "External\BugTrap
 	ProjectSection(ProjectDependencies) = postProject
 		{CA2604CA-A2AC-49A1-A468-8AB5A2E6CBC9} = {CA2604CA-A2AC-49A1-A468-8AB5A2E6CBC9}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestApp", "TestApp\TestApp.vcxproj", "{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrFontGenerate", "Editors\XrFontGenerate\XrFontGenerate.vcxproj", "{388DE51F-87F3-4956-8469-58865562577D}"
 EndProject
@@ -240,18 +233,6 @@ Global
 		{5A93A01A-05BD-4BF8-8D6E-2A5AE2E0BF14}.Release|x64.Build.0 = Release|x64
 		{5A93A01A-05BD-4BF8-8D6E-2A5AE2E0BF14}.Release|x86.ActiveCfg = Release|Win32
 		{5A93A01A-05BD-4BF8-8D6E-2A5AE2E0BF14}.Release|x86.Build.0 = Release|Win32
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Debug|x64.ActiveCfg = Debug|x64
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Debug|x64.Build.0 = Debug|x64
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Debug|x86.ActiveCfg = Debug|Win32
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Debug|x86.Build.0 = Debug|Win32
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Development|x64.ActiveCfg = Development|x64
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Development|x64.Build.0 = Development|x64
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Development|x86.ActiveCfg = Development|Win32
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Development|x86.Build.0 = Development|Win32
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Release|x64.ActiveCfg = Release|x64
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Release|x64.Build.0 = Release|x64
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Release|x86.ActiveCfg = Release|Win32
-		{2820680F-79FE-4477-A14C-007F273A5FA8}.Release|x86.Build.0 = Release|Win32
 		{200ACCB3-758B-4118-A10A-32EFF361AE64}.Debug|x64.ActiveCfg = Debug|x64
 		{200ACCB3-758B-4118-A10A-32EFF361AE64}.Debug|x64.Build.0 = Debug|x64
 		{200ACCB3-758B-4118-A10A-32EFF361AE64}.Debug|x86.ActiveCfg = Debug|Win32
@@ -635,16 +616,6 @@ Global
 		{E8CF1ADA-264A-4127-86C2-FD7057D3792C}.Release|x64.ActiveCfg = Release|Win32
 		{E8CF1ADA-264A-4127-86C2-FD7057D3792C}.Release|x86.ActiveCfg = Release|Win32
 		{E8CF1ADA-264A-4127-86C2-FD7057D3792C}.Release|x86.Build.0 = Release|Win32
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Debug|x64.ActiveCfg = Debug|x64
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Debug|x64.Build.0 = Debug|x64
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Debug|x86.ActiveCfg = Debug|Win32
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Debug|x86.Build.0 = Debug|Win32
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Development|x64.ActiveCfg = Development|x64
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Development|x64.Build.0 = Development|x64
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Development|x86.ActiveCfg = Development|Win32
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Development|x86.Build.0 = Development|Win32
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Release|x64.ActiveCfg = Release|x64
-		{FE8DE367-ED9E-4C95-ABFE-11393AE55DF2}.Release|x86.ActiveCfg = Release|Win32
 		{388DE51F-87F3-4956-8469-58865562577D}.Debug|x64.ActiveCfg = Debug|x64
 		{388DE51F-87F3-4956-8469-58865562577D}.Debug|x64.Build.0 = Debug|x64
 		{388DE51F-87F3-4956-8469-58865562577D}.Debug|x86.ActiveCfg = Debug|Win32
