@@ -17,7 +17,7 @@ class XRCORE_API ILocatorAPI
 public:
 	ILocatorAPI();
 	virtual ~ILocatorAPI();
-	virtual void						_initialize(u32 flags, LPCSTR target_folder = 0, LPCSTR fs_fname = 0) = 0;
+	virtual void						_initialize(u32 flags, LPCSTR fs_fname = 0) = 0;
 	virtual void						_destroy() = 0;
 
 	virtual IReader*					r_open(LPCSTR initial, LPCSTR N) = 0;

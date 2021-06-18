@@ -99,7 +99,7 @@ private:
 public:
 								CLocatorAPI			();
 	virtual							~CLocatorAPI		();
-	virtual void						_initialize			(u32 flags, LPCSTR target_folder=0, LPCSTR fs_name=0);
+	virtual void						_initialize			(u32 flags, LPCSTR fs_name=0);
 	virtual void						_destroy			();
 
 	IC IReader*							r_open(LPCSTR N) { return r_open(0, N); }

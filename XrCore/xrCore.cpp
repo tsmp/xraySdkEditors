@@ -117,7 +117,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		if (0!=strstr(Params,"-file_activity"))	 flags |= CLocatorAPI::flDumpFileActivity;
 	#endif
 #endif
-		FS._initialize		(flags,0,fs_fname);
+		FS._initialize		(flags,fs_fname);
 		Msg					("'%s' build %d, %s\n","xrCore",build_id, build_date);
 		EFS._initialize		();
 #ifdef DEBUG

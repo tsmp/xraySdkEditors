@@ -731,7 +731,7 @@ IReader* CLocatorAPI::setup_fs_ltx(LPCSTR fs_name)
 	return			(result);
 }
 
-void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_name)
+void CLocatorAPI::_initialize	(u32 flags, LPCSTR fs_name)
 {
 	char _delimiter = '|'; //','
 	if (m_Flags.is(flReady))return;
@@ -770,10 +770,7 @@ void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_name)
 	//-----------------------------------------------------------
 	// append application data path
 	// target folder 
-	if (m_Flags.is(flTargetFolderOnly))
-	{
-		append_path		("$target_folder$",target_folder,0,TRUE);
-	}else
+
 	{
 	IReader			*pFSltx = setup_fs_ltx(fs_name);
 /*

@@ -34,7 +34,7 @@ ELocatorAPI::~ELocatorAPI()
 {
 }
 
-void ELocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
+void ELocatorAPI::_initialize(u32 flags, LPCSTR fs_fname)
 {
 	char _delimiter = '|'; //','
 	if (m_Flags.is(flReady))return;
@@ -42,75 +42,79 @@ void ELocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
 	Log				("Initializing File System...");
 	m_Flags.set		(flags,TRUE);
 
+	if (m_Flags.is(flScanAppRoot))
+	{
+		string_path tmpAppPath;
+        string_path tmpFsPath;
 
-	// append application path
+		xr_strcpy(tmpAppPath, sizeof(tmpAppPath), Core.ApplicationPath);
+        xr_strcpy(tmpFsPath, sizeof(tmpAppPath), tmpAppPath);
+        xr_strcat(tmpFsPath, sizeof(tmpAppPath), FSLTX);
 
-	if (m_Flags.is(flScanAppRoot)){
-        string_path tmpAppPath;
-        xr_strcpy(tmpAppPath, sizeof(tmpAppPath), Core.ApplicationPath);
-        if (xr_strlen(tmpAppPath))
-        {
-            tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
-            if (strrchr(tmpAppPath, '\\'))
-                *(strrchr(tmpAppPath, '\\') + 1) = 0;
-            tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
-            if (strrchr(tmpAppPath, '\\'))
-                *(strrchr(tmpAppPath, '\\') + 1) = 0;
-            tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
-            if (strrchr(tmpAppPath, '\\'))
-                *(strrchr(tmpAppPath, '\\') + 1) = 0;
-        }
-		append_path		("$app_root$", tmpAppPath,0,FALSE);
-        append_path("$fs_root$", tmpAppPath, 0, FALSE);
-    }
-    else
-    {
+		while (xr_strlen(tmpAppPath) && !exist(tmpFsPath))
+		{
+			// remove last slash if exists
+			if (tmpAppPath[xr_strlen(tmpAppPath) - 1] == '\\')
+				tmpAppPath[xr_strlen(tmpAppPath) - 1] = '\0';
 
-        append_path("$fs_root$", "", 0, FALSE);
-    }
-	if (m_Flags.is(flTargetFolderOnly)){
-		append_path		("$target_folder$",target_folder,0,TRUE);
-	}else{
-		IReader* F		= r_open((fs_fname&&fs_fname[0])?fs_fname:FSLTX); 
-		if (!F&&m_Flags.is(flScanAppRoot))
-			F			= r_open("$app_root$",(fs_fname&&fs_fname[0])?fs_fname:FSLTX); 
-		R_ASSERT3		(F,"Can't open file:", (fs_fname&&fs_fname[0])?fs_fname:FSLTX);
-		// append all pathes    
-		string_path		buf;
-		string_path		id, temp, root, add, def, capt;
-		LPCSTR			lp_add, lp_def, lp_capt;
-		string16		b_v;
-		while(!F->eof()){
-			F->r_string	(buf,sizeof(buf));
-			_GetItem(buf,0,id,'=');
-			if (id[0]==';') continue;
-			_GetItem(buf,1,temp,'=');
-			int cnt		= _GetItemCount(temp,_delimiter);  R_ASSERT(cnt>=3);
-			u32 fl		= 0;
-			_GetItem	(temp,0,b_v,_delimiter);	if (CInifile::IsBOOL(b_v)) fl |= FS_Path::flRecurse;
-			_GetItem	(temp,1,b_v,_delimiter);	if (CInifile::IsBOOL(b_v)) fl |= FS_Path::flNotif;
-			_GetItem	(temp,2,root,_delimiter);
-			_GetItem	(temp,3,add,_delimiter);
-			_GetItem	(temp,4,def,_delimiter);
-			_GetItem	(temp,5,capt,_delimiter);
-			xr_strlwr	(id);			if (!m_Flags.is(flBuildCopy)&&(0==xr_strcmp(id,"$build_copy$"))) continue;
-			xr_strlwr	(root);
-			lp_add		=(cnt>=4)?xr_strlwr(add):0;
-			lp_def		=(cnt>=5)?def:0;
-			lp_capt		=(cnt>=6)?capt:0;
-			PathPairIt p_it = pathes.find(root);
-			std::pair<PathPairIt, bool> I;
-			FS_Path* P	= xr_new<FS_Path>((p_it!=pathes.end())?p_it->second->m_Path:root,lp_add,lp_def,lp_capt,fl);
-			I			= pathes.insert(mk_pair(xr_strdup(id),P));
-			
-			R_ASSERT	(I.second);
+			// go one folder up
+			if (strrchr(tmpAppPath, '\\'))
+				*(strrchr(tmpAppPath, '\\') + 1) = '\0';
+
+            // update path to FSLTX
+            xr_strcpy(tmpFsPath, sizeof(tmpAppPath), tmpAppPath);
+            xr_strcat(tmpFsPath, sizeof(tmpAppPath), FSLTX);
+
+			// remove last slash
+			tmpAppPath[xr_strlen(tmpAppPath) - 1] = '\0';
 		}
-		r_close			(F);
-	};
 
-	m_Flags.set		(flReady,TRUE);
+		append_path("$app_root$", tmpAppPath, 0, FALSE);
+		append_path("$fs_root$", tmpAppPath, 0, FALSE);
+	}
+	else
+		append_path("$fs_root$", "", 0, FALSE);
 
-	CreateLog		(0!=strstr(Core.Params,"-nolog"));
+	IReader* F = r_open((fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+	if (!F && m_Flags.is(flScanAppRoot))
+		F = r_open("$app_root$", (fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+	R_ASSERT3(F, "Can't open file:", (fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+	// append all pathes    
+	string_path		buf;
+	string_path		id, temp, root, add, def, capt;
+	LPCSTR			lp_add, lp_def, lp_capt;
+	string16		b_v;
+	while (!F->eof()) {
+		F->r_string(buf, sizeof(buf));
+		_GetItem(buf, 0, id, '=');
+		if (id[0] == ';') continue;
+		_GetItem(buf, 1, temp, '=');
+		int cnt = _GetItemCount(temp, _delimiter);  R_ASSERT(cnt >= 3);
+		u32 fl = 0;
+		_GetItem(temp, 0, b_v, _delimiter);	if (CInifile::IsBOOL(b_v)) fl |= FS_Path::flRecurse;
+		_GetItem(temp, 1, b_v, _delimiter);	if (CInifile::IsBOOL(b_v)) fl |= FS_Path::flNotif;
+		_GetItem(temp, 2, root, _delimiter);
+		_GetItem(temp, 3, add, _delimiter);
+		_GetItem(temp, 4, def, _delimiter);
+		_GetItem(temp, 5, capt, _delimiter);
+		xr_strlwr(id);			if (!m_Flags.is(flBuildCopy) && (0 == xr_strcmp(id, "$build_copy$"))) continue;
+		xr_strlwr(root);
+		lp_add = (cnt >= 4) ? xr_strlwr(add) : 0;
+		lp_def = (cnt >= 5) ? def : 0;
+		lp_capt = (cnt >= 6) ? capt : 0;
+		PathPairIt p_it = pathes.find(root);
+		std::pair<PathPairIt, bool> I;
+		FS_Path* P = xr_new<FS_Path>((p_it != pathes.end()) ? p_it->second->m_Path : root, lp_add, lp_def, lp_capt, fl);
+		I = pathes.insert(mk_pair(xr_strdup(id), P));
+
+		R_ASSERT(I.second);
+	}
+	r_close(F);
+
+
+	m_Flags.set(flReady, TRUE);
+
+	CreateLog(0 != strstr(Core.Params, "-nolog"));
 }
 
 void ELocatorAPI::_destroy		()

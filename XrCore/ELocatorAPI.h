@@ -19,7 +19,7 @@ private:
 public:
 	ELocatorAPI();
 	virtual							~ELocatorAPI();
-	virtual void						_initialize		(u32 flags, LPCSTR target_folder=0, LPCSTR fs_fname=0);
+	virtual void						_initialize		(u32 flags, LPCSTR fs_fname=0);
 	virtual void						_destroy		();
 
 	virtual IReader*					r_open			(LPCSTR initial, LPCSTR N);
