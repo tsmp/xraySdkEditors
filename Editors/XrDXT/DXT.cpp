@@ -5,7 +5,9 @@
 
 int DXTCompressImage	(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch, STextureParams* fmt, u32 depth)
 {
-	CTimer T; T.Start();
+	R_ASSERT(false);
+	return 0;
+	/*CTimer T; T.Start();
 
 	Msg("DXT: Compressing Image: %s %uX%u", out_name, w, h);
 
@@ -39,7 +41,7 @@ int DXTCompressImage	(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch, ST
 	Image.GenerateMipmap(ResizeFilter);
 	Image.Convert(Format);
 	Msg("DXT: Compressing Image: 2 [Closing File]. Time from start %f ms", T.GetElapsed_sec() * 1000.f);
-	return Image.SaveToDds(out_name);;
+	return Image.SaveToDds(out_name);;*/
 }
 
 extern int DXTCompressBump(LPCSTR out_name, u8* raw_data, u8* normal_map, u32 w, u32 h, u32 pitch, STextureParams* fmt, u32 depth);

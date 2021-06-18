@@ -354,9 +354,6 @@
     <ProjectReference Include="..\..\BearBundle\BearCore\Platform\Desktop\BearCore.vcxproj">
       <Project>{86b65138-c85e-4c26-967b-9a21eb954216}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\BearBundle\BearGraphics\Platform\Desktop\BearGraphics.vcxproj">
-      <Project>{3b75536d-008d-4495-9fe8-c7ae79ac6898}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\External\Ogg\Ogg.vcxproj">
       <Project>{490c4173-e321-4e03-8e09-0475d7b91307}</Project>
     </ProjectReference>

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "..\BearBundle\BearGraphics\BearGraphics.hpp"
+//#include "..\BearBundle\BearGraphics\BearGraphics.hpp"
 
 #include "ImageManager.h"
 #include "xrImage_Resampler.h"
@@ -30,60 +30,68 @@ bool IsValidSize(u32 w, u32 h){
 
 bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
 {
-    if (!FS.exist(full_name))
-    { 
-    	ELog.Msg(mtError,"Can't find file: '%s'",full_name);
-    	return false;
-    }
-	if (strstr(full_name,".tga")){
-    	CImage img;
-        if (!img.LoadTGA	(full_name)) return false;
-		w 					= img.dwWidth;
-        h 					= img.dwHeight;
-        a					= img.bAlpha;
-        data.resize			(w*h);
-		for(int y=0;y<h;y++) CopyMemory			(data.data()+y*w,img.pData+(y * w),sizeof(u32)*w);
-		if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
-        return true;
-    }else{
-        int wi, hi, c;
-        stbi_uc* raw_data = stbi_load((LPSTR)full_name, &wi, &hi, &c, 4);
-        if(raw_data)
-        {
-            w = wi;
-            h = hi;
-		    u32 w4			= w*4;
-            data.resize		(w*h);
-            CopyMemory(data.data(), raw_data,w4*h);
-            a = c == 4;
-            stbi_image_free(raw_data);
-			if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
-            return true;
-        }
-        else
-        {
-            BearImage img;
-            if (img.LoadFromFile(full_name))
-            {
-                img.ClearMipLevels();
-                img.Convert(BearTexturePixelFormat::R8G8B8A8);
-                img.SwapRB();
-                w = img.GetSize().x;
-                h = img.GetSize().y;
-                data.resize(w * h);
-                a = true;
-                CopyMemory(data.data(), *img, w * h*4);
-               /* for (bsize i = 0; i < h/2; i++)
-                {
-                    bear_swap(data.data()+(i*w), data.data() + ((h - (i+1)) * w), w);
-                }*/
-                return true;
-            }
-        }
-
-    }
-	return false;
+    bool ignore = false;
+    Debug.fail("not implemented", "1", 2, "Stbi_Load", ignore);
+    R_ASSERT(false);
+    return false;
 }
+//
+//bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
+//{
+//    if (!FS.exist(full_name))
+//    { 
+//    	ELog.Msg(mtError,"Can't find file: '%s'",full_name);
+//    	return false;
+//    }
+//	if (strstr(full_name,".tga")){
+//    	CImage img;
+//        if (!img.LoadTGA	(full_name)) return false;
+//		w 					= img.dwWidth;
+//        h 					= img.dwHeight;
+//        a					= img.bAlpha;
+//        data.resize			(w*h);
+//		for(int y=0;y<h;y++) CopyMemory			(data.data()+y*w,img.pData+(y * w),sizeof(u32)*w);
+//		if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
+//        return true;
+//    }else{
+//        int wi, hi, c;
+//        stbi_uc* raw_data = stbi_load((LPSTR)full_name, &wi, &hi, &c, 4);
+//        if(raw_data)
+//        {
+//            w = wi;
+//            h = hi;
+//		    u32 w4			= w*4;
+//            data.resize		(w*h);
+//            CopyMemory(data.data(), raw_data,w4*h);
+//            a = c == 4;
+//            stbi_image_free(raw_data);
+//			if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
+//            return true;
+//        }
+//        else
+//        {
+//            BearImage img;
+//            if (img.LoadFromFile(full_name))
+//            {
+//                img.ClearMipLevels();
+//                img.Convert(BearTexturePixelFormat::R8G8B8A8);
+//                img.SwapRB();
+//                w = img.GetSize().x;
+//                h = img.GetSize().y;
+//                data.resize(w * h);
+//                a = true;
+//                CopyMemory(data.data(), *img, w * h*4);
+//               /* for (bsize i = 0; i < h/2; i++)
+//                {
+//                    bear_swap(data.data()+(i*w), data.data() + ((h - (i+1)) * w), w);
+//                }*/
+//                return true;
+//            }
+//        }
+//
+//    }
+//	return false;
+//}
 //------------------------------------------------------------------------------
 
 u32* Stbi_Load(LPCSTR full_name,  u32& w, u32& h)
