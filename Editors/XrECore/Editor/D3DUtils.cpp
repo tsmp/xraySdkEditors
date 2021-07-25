@@ -1017,54 +1017,9 @@ void CDrawUtilities::DrawPivot(const Fvector& pos, float sz){
 
 void CDrawUtilities::DrawAxis(const Fmatrix& T)
 {
-/*
-	_VertexStream*	Stream	= &RCache.Vertex;
-    Fvector p[6];
-    u32 	c[6];
-
-    // colors
-    c[0]=c[2]=c[4]=0x00222222; c[1]=0x00FF0000; c[3]=0x0000FF00; c[5]=0x000000FF;
-
-    // position
-  	p[0].mad(T.c,T.k,0.25f);
-    p[1].set(p[0]); p[1].x+=.015f;
-    p[2].set(p[0]);
-    p[3].set(p[0]); p[3].y+=.015f;
-    p[4].set(p[0]);
-    p[5].set(p[0]); p[5].z+=.015f;
-
-    u32 vBase;
-	FVF::TL* pv	= (FVF::TL*)Stream->Lock(6,vs_TL->vb_stride,vBase);
-    // transform to screen
-    float dx=-float(EDevice.dwWidth)/2.2f;
-    float dy=float(EDevice.dwHeight)/2.25f;
-
-    for (int i=0; i<6; i++,pv++)
-    {
-	    pv->color 		= c[i]; 
-        pv->transform	(p[i],EDevice.mFullTransform);
-	    pv->p.set((float)iFloor(_x2real(pv->p.x)+dx),(float)iFloor(_y2real(pv->p.y)+dy),0,1);
-        p[i].set(pv->p.x,pv->p.y,0);
-    }
-
-	// unlock VB and Render it as triangle list
-	Stream->Unlock(6,vs_TL->vb_stride);
-	DU_DRAW_RS(D3DRS_SHADEMODE,D3DSHADE_GOURAUD);
-	DU_DRAW_SH(EDevice.m_WireShader);
-    DU_DRAW_DP(D3DPT_LINELIST,vs_TL,vBase,3);
-	DU_DRAW_RS(D3DRS_SHADEMODE,SHADE_MODE);
-
-    m_Font->SetColor(0xFF909090);
-    m_Font->Out(p[1].x,p[1].y,"x");
-    m_Font->Out(p[3].x,p[3].y,"y");
-    m_Font->Out(p[5].x,p[5].y,"z");
-    m_Font->SetColor(0xFF000000);
-    m_Font->Out(p[1].x-1,p[1].y-1,"x");
-    m_Font->Out(p[3].x-1,p[3].y-1,"y");
-    m_Font->Out(p[5].x-1,p[5].y-1,"z");
-*/
     if(!m_axis_object)
     	m_axis_object = Lib.CreateEditObject("editor\\axis");
+
     R_ASSERT(m_axis_object);
     
     Fmatrix	M 				= Fidentity;
@@ -1089,12 +1044,13 @@ void CDrawUtilities::DrawAxis(const Fmatrix& T)
 void CDrawUtilities::DrawObjectAxis(const Fmatrix& T, float sz, BOOL sel)
 {
 	VERIFY( EDevice.b_is_Ready );
-   // RCache.set_xform_world	(Fidentity);
+
 	_VertexStream*	Stream	= &RCache.Vertex;
     Fvector c,r,n,d;
 	float w	= T.c.x*EDevice.mFullTransform._14 + T.c.y*EDevice.mFullTransform._24 + T.c.z*EDevice.mFullTransform._34 + EDevice.mFullTransform._44;
-    if (w<0) 
-    return; // culling
+    
+    if (w < 0)
+        return; // culling
 
 	float s = w*sz;
 
@@ -1119,18 +1075,14 @@ void CDrawUtilities::DrawObjectAxis(const Fmatrix& T, float sz, BOOL sel)
 
     u32 vBase;
 	FVF::TL* pv	= (FVF::TL*)Stream->Lock(6,vs_TL->vb_stride,vBase);
-/*
-    c.set	(200,200,0);
-    d.set	(150,250,0);
-    r.set	(300,200,0);
-    n.set	(200,100,0);
-*/    
+  
 	pv->set	(c.x,	c.y,	0,	1, 0xFF222222, 					0,0); 	pv++;
 	pv->set	(d.x,	d.y,	0,	1, sel?0xFF0000FF:0xFF000080, 	0,0); 	pv++;
 	pv->set	(c.x,	c.y,	0,	1, 0xFF222222, 					0,0); 	pv++;
 	pv->set	(r.x,	r.y,	0,	1, sel?0xFFFF0000:0xFF800000, 	0,0); 	pv++;
 	pv->set	(c.x,	c.y,	0,	1, 0xFF222222, 					0,0); 	pv++;
 	pv->set	(n.x,	n.y,	0,	1, sel?0xFF00FF00:0xFF008000, 	0,0);
+
 	Stream->Unlock(6,vs_TL->vb_stride);
 
 	// Render it as line list

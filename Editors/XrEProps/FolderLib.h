@@ -81,11 +81,15 @@ public:
 		}
 		return nullptr;
 	}
+
 	inline Node* Find(Node* N, const char* path)
 	{
-		if (N == nullptr) return nullptr;
+		if (N == nullptr) 
+			return nullptr;
+
 		if (!N->IsFloder())
 			return nullptr;
+		
 		if (strchr(path, '\\'))
 		{
 			string_path name;
@@ -93,21 +97,28 @@ public:
 			strrchr(name, '\\')[0] = 0;
 			path = strrchr(path, '\\') + 1;
 			N = FindFloder(N, name);
-			if (N == nullptr) return nullptr;
+
+			if (!N)
+				return nullptr;
 		}
+
 		for (Node& node : N->Nodes)
 		{
 			if (node.Name == path)
 				return &node;
 		}
+
 		return nullptr;
 	}
+
 	inline Node* FindFloder(Node* N, const char* path)
 	{
-
-		if (N == nullptr) return nullptr;
+		if (!N) 
+			return nullptr;
+		
 		if (!N->IsFloder())
 			return nullptr;
+		
 		if (strchr(path, '\\'))
 		{
 			string_path name;
@@ -115,30 +126,32 @@ public:
 			strchr(name, '\\')[0] = 0;
 			return FindFloder(FindFloder(N, name), strchr(path, '\\') + 1);
 		}
+		
 		for (Node& node : N->Nodes)
 		{
 			if (node.Name == path && node.IsFloder())
 				return &node;
 		}
+
 		return nullptr;
 	}
+
 	inline Node* AppendFloder(Node* N, const char* path)
 	{
-		if (N == nullptr)return nullptr;
+		if (!N)
+			return nullptr;
+
 		if (strchr(path, '\\'))
 		{
 			string_path name;
 			xr_strcpy(name, path);
 			strchr(name, '\\')[0] = 0;
-			{
-				Node* NextNode = FindFloder(N, name);
-				if (NextNode)
-				{
-					return AppendFloder(NextNode, strchr(path, '\\') + 1);
-				}
-			}
-			return AppendFloder(AppendFloder(N, name), strchr(path, '\\') + 1);
 
+			Node* NextNode = FindFloder(N, name);
+			if (NextNode)
+				return AppendFloder(NextNode, strchr(path, '\\') + 1);
+
+			return AppendFloder(AppendFloder(N, name), strchr(path, '\\') + 1);
 		}
 
 		for (Node& node : N->Nodes)
@@ -154,7 +167,7 @@ public:
 				{
 					if (node.IsFloder())
 						return &node;
-					return nullptr;
+					//return nullptr;
 				}
 			}
 		}
@@ -163,42 +176,38 @@ public:
 		NewNode.Name = path;
 		if (N->Path.size() == 0)
 		{
-			if (N->Name.size())
-			{
-				NewNode.Path = N->Name;
-
-			}
-			else
-			{
-				NewNode.Path = "";
-			}
-
+			if (N->Name.size())			
+				NewNode.Path = N->Name;			
+			else			
+				NewNode.Path = "";			
 		}
-		else
-		{
+		else		
 			NewNode.Path.printf("%s\\%s", N->Path.c_str(), N->Name.c_str());
-		}
+		
 		N->Nodes.push_back(NewNode);
 		return &N->Nodes.back();
 	}
+
 	inline Node* AppendObject(Node* N, const char* path)
 	{
-		if (N == nullptr)return nullptr;
+		if (!N)
+			return nullptr;
+		
 		if (strchr(path, '\\'))
 		{
 			string_path name;
 			xr_strcpy(name, path);
-			strchr(name, '\\')[0] = 0;
-			{
-				Node* NextNode = FindFloder(N, name);
-				if (NextNode)
-				{
-					return AppendObject(NextNode, strchr(path, '\\') + 1);
-				}
-			}
-			return AppendObject(AppendFloder(N, name), strchr(path, '\\') + 1);
 
+			char* slash = strchr(name, '\\');
+			*slash = '\0';
+
+			Node* NextNode = FindFloder(N, name);
+			if (NextNode)
+				return AppendObject(NextNode, strchr(path, '\\') + 1);
+
+			return AppendObject(AppendFloder(N, name), strchr(path, '\\') + 1);
 		}
+
 		for (Node& node : N->Nodes)
 		{
 			if (node.Name == path)
@@ -209,38 +218,31 @@ public:
 						return &node;
 					return nullptr;
 				}
-				else
-				{
-					return &node;
-				}
+				else				
+					return &node;				
 			}
 		}
+
 		Node NewNode;
 		NewNode.Type = FNT_Object;
 		NewNode.Name = path;
+
 		if (N->Path.size() == 0)
 		{
-			if (N->Name.size())
-			{
-				NewNode.Path = N->Name;
-
-			}
-			else
-			{
-				NewNode.Path = "";
-			}
-
+			if (N->Name.size())			
+				NewNode.Path = N->Name;			
+			else			
+				NewNode.Path = "";			
 		}
-		else
-		{
+		else		
 			NewNode.Path.printf("%s\\%s", N->Path.c_str(), N->Name.c_str());
-		}
+		
 		N->Nodes.push_back(NewNode);
 		return &N->Nodes.back();
 	}
+
 	inline void Remove(Node* N, Node* Object, bool use_event = false)
 	{
-
 		Node* F = Object->Path.size() == 0 ? N : FindFloder(N, Object->Path.c_str());
 		R_ASSERT(F);
 		string_path path;
