@@ -39,8 +39,8 @@ void ELocatorAPI::_initialize(u32 flags, LPCSTR fs_fname)
 	char _delimiter = '|'; //','
 	if (m_Flags.is(flReady))return;
 
-	Log				("Initializing File System...");
-	m_Flags.set		(flags,TRUE);
+	Log("Initializing File System...");
+	m_Flags.set(flags,TRUE);
 
 	if (m_Flags.is(flScanAppRoot))
 	{
@@ -76,18 +76,29 @@ void ELocatorAPI::_initialize(u32 flags, LPCSTR fs_fname)
 		append_path("$fs_root$", "", 0, FALSE);
 
 	IReader* F = r_open((fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+
 	if (!F && m_Flags.is(flScanAppRoot))
 		F = r_open("$app_root$", (fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+
 	R_ASSERT3(F, "Can't open file:", (fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
 	// append all pathes    
-	string_path		buf;
-	string_path		id, temp, root, add, def, capt;
-	LPCSTR			lp_add, lp_def, lp_capt;
-	string16		b_v;
-	while (!F->eof()) {
+	string_path	buf;
+	string_path	id, temp, root, add, def, capt;
+	LPCSTR lp_add, lp_def, lp_capt;
+	string16 b_v;
+    Core.SocSdk = true;
+
+	while (!F->eof()) 
+    {
 		F->r_string(buf, sizeof(buf));
 		_GetItem(buf, 0, id, '=');
-		if (id[0] == ';') continue;
+
+		if (id[0] == ';') 
+            continue;
+
+        if (!strcmp(id, "$server_data_root$"))
+            Core.SocSdk = false;
+
 		_GetItem(buf, 1, temp, '=');
 		int cnt = _GetItemCount(temp, _delimiter);  R_ASSERT(cnt >= 3);
 		u32 fl = 0;
@@ -109,11 +120,10 @@ void ELocatorAPI::_initialize(u32 flags, LPCSTR fs_fname)
 
 		R_ASSERT(I.second);
 	}
+
 	r_close(F);
 
-
 	m_Flags.set(flReady, TRUE);
-
 	CreateLog(0 != strstr(Core.Params, "-nolog"));
 }
 

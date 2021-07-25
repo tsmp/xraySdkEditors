@@ -297,17 +297,18 @@ public:
 class XRCORE_API xrCore 
 {
 public:
-	string64	ApplicationName;
+	string64 ApplicationName;
 	string_path	ApplicationPath;
 	string_path	WorkingPath;
-	string64	UserName;
-	string64	CompName;
-	string512	Params;
-	bool		Editor;
+	string64 UserName;
+	string64 CompName;
+	string512 Params;
+	bool Editor;
+	bool SocSdk; // cop if false
 
 public:
-	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0,bool editor_fs=false);
-	void		_destroy	();
+	void _initialize(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0,bool editor_fs=false);
+	void _destroy();
 };
 
 //Borland class dll interface
@@ -320,4 +321,3 @@ public:
 extern XRCORE_API xrCore Core;
 #include "Bone.h"
 #endif
-
