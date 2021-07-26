@@ -192,7 +192,13 @@ bool ESoundSource::LoadStream(IReader& F)
 	inherited::LoadStream			(F);
 
     R_ASSERT(F.find_chunk(SOUND_CHUNK_TYPE));
-	m_Type					= ESoundType(F.r_u32());
+	m_Type = ESoundType(F.r_u32());
+
+    if (m_Type != stStaticSource)
+    {
+        Msg("! WARNING unknown type of sound: %u", (u32)m_Type);
+        m_Type = stStaticSource;
+    }
 
     R_ASSERT(F.find_chunk(SOUND_CHUNK_SOURCE_NAME));
     F.r_stringZ		(m_WAVName);
