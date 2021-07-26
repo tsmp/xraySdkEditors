@@ -136,14 +136,19 @@ void	SFillPropData::load			()
         for (k = 0; Ini->r_line(caSection,k,&N,&V); ++k)
             locations[i].push_back	(xr_rtoken(V,atoi(N)));
     }
-    for (k = 0; Ini->r_line("graph_points_draw_color_palette",k,&N,&V); ++k)
+
+	if (!Core.SocSdk)
 	{
-		u32 color;
-		if(1==sscanf(V,"%x", &color))
+		for (k = 0; Ini->r_line("graph_points_draw_color_palette", k, &N, &V); ++k)
 		{
-			location_colors[N]  = color;
-		}else
-			Msg("! invalid record format in [graph_points_draw_color_palette] %s=%s",N,V);
+			u32 color;
+			if (1 == sscanf(V, "%x", &color))
+			{
+				location_colors[N] = color;
+			}
+			else
+				Msg("! invalid record format in [graph_points_draw_color_palette] %s=%s", N, V);
+		}
 	}
     
 	// level names/ids
@@ -191,14 +196,18 @@ void	SFillPropData::load			()
 	xr_delete				(Ini);
 #endif // XRGAME_EXPORTS
 
-	luabind::object			table;
-	R_ASSERT				(ai().script_engine().function_object("smart_covers.descriptions", table, LUA_TTABLE));
-	luabind::object::iterator	I = table.begin();
-	luabind::object::iterator	E = table.end();
-	for ( ; I != E; ++I)
-		smart_covers.push_back	(luabind::object_cast<LPCSTR>(I.key()));
+	if (!Core.SocSdk)
+	{
+		luabind::object	table;
+		R_ASSERT(ai().script_engine().function_object("smart_covers.descriptions", table, LUA_TTABLE));
+		luabind::object::iterator I = table.begin();
+		luabind::object::iterator E = table.end();
 
-	std::sort				(smart_covers.begin(), smart_covers.end(), logical_string_predicate());
+		for (; I != E; ++I)
+			smart_covers.push_back(luabind::object_cast<LPCSTR>(I.key()));
+
+		std::sort(smart_covers.begin(), smart_covers.end(), logical_string_predicate());
+	}
 };
 
 void	SFillPropData::unload			()

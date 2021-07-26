@@ -261,8 +261,11 @@ BOOL EScene::LoadLevelPartLTX(ESceneToolBase* M, LPCSTR mn)
 
 BOOL EScene::LoadLevelPart(ESceneToolBase* M, LPCSTR map_name)
 {
-	if(M->can_use_inifile())
-	    return LoadLevelPartLTX(M, map_name);
+    if (!Core.SocSdk) 
+    {
+        if (M->can_use_inifile())
+            return LoadLevelPartLTX(M, map_name);
+    }
         
 	if (FS.exist(map_name))
     {
