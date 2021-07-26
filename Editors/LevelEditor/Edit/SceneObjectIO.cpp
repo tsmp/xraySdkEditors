@@ -265,24 +265,37 @@ bool CSceneObject::LoadStream(IReader& F)
 void CSceneObject::SaveStream(IWriter& F)
 {
 	CCustomObject::SaveStream(F);
+	F.open_chunk(SCENEOBJ_CHUNK_VERSION);
 
-	F.open_chunk	(SCENEOBJ_CHUNK_VERSION);
-	F.w_u16			(SCENEOBJ_CURRENT_VERSION);
-	F.close_chunk	();
+    if (Core.SocSdk)
+        F.w_u16(SCENEOBJ_CURRENT_VERSION - 1);
+    else
+        F.w_u16(SCENEOBJ_CURRENT_VERSION);
+
+	F.close_chunk();
 
     // reference object version
-    F.open_chunk	(SCENEOBJ_CHUNK_REFERENCE); R_ASSERT2(m_pReference,"Empty SceneObject REFS");
-    F.w_stringZ		(m_ReferenceName);
-    F.close_chunk	();
+    F.open_chunk(SCENEOBJ_CHUNK_REFERENCE); 
+    R_ASSERT2(m_pReference, "Empty SceneObject REFS");
 
-    F.open_chunk	(SCENEOBJ_CHUNK_FLAGS);
-	F.w_u32			(m_Flags.flags);
-    F.close_chunk	();
+    if (Core.SocSdk)
+    {
+        F.w_s32(m_pReference->Version());
+        F.w_s32(0); // reserved
+    }
+
+    F.w_stringZ(m_ReferenceName);
+    F.close_chunk();
+
+    F.open_chunk(SCENEOBJ_CHUNK_FLAGS);
+    F.w_u32(m_Flags.flags);
+    F.close_chunk();
     
-    if (m_Flags.test(flUseSurface))
+    if (m_Flags.test(flUseSurface) && !Core.SocSdk)
     {
         F.open_chunk(SCENEOBJ_CHUNK_FLAGS);
         F.w_u32(m_Surfaces.size());
+
         for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
         {
             F.w_stringZ((*sf_it)->_Name());
@@ -292,9 +305,7 @@ void CSceneObject::SaveStream(IWriter& F)
             F.w_stringZ((*sf_it)->_Texture());
             F.w_stringZ((*sf_it)->_VMap());
         }
+
         F.close_chunk();
     }
 }
-//----------------------------------------------------
-
-

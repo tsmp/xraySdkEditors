@@ -480,8 +480,10 @@ bool EScene::LoadToolLTX(ObjClassID clsid, LPCSTR fn)
 
 void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
 {
-	R_ASSERT		(bUndo);
-	VERIFY			(map_name);
+    if(!Core.SocSdk)
+        R_ASSERT(bUndo);
+	
+    VERIFY(map_name);
 
     CTimer 			T;
     T.Start			();

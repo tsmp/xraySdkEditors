@@ -253,48 +253,49 @@ CCommandVar CommandSaveBackup(CCommandVar p1, CCommandVar p2)
     FS.update_path	(fn,_maps_,fn);
     return 			ExecCommand(COMMAND_SAVE,xr_string(fn));
 }
+
 CCommandVar CommandSave(CCommandVar p1, CCommandVar p2)
 {
-    if( !Scene->locked() )
-    {
-        if (p2==1)
-        {
-            xr_string temp_fn	= LTools->m_LastFileName.c_str();
-            if (EFS.GetSaveName	( _maps_, temp_fn ))
-                return 			ExecCommand(COMMAND_SAVE,temp_fn, 66);
-            else
-                return          FALSE;
-        }else{
-            if (p1.IsInteger())
-            	return 			ExecCommand(COMMAND_SAVE,xr_string(LTools->m_LastFileName.c_str()),0);
-                
-            xr_string temp_fn	= xr_string(p1);
-            if (temp_fn.empty())
-            {
-                return 			ExecCommand(COMMAND_SAVE,temp_fn,1);
-            }else
-            {
-                xr_strlwr		(temp_fn);
+	if (Scene->locked())
+	{
+		ELog.DlgMsg(mtError, "Scene sharing violation");
+		return FALSE;
+	}
 
-                UI->SetStatus	("Level saving...");
+	if (p2 == 1)
+	{
+		xr_string temp_fn = LTools->m_LastFileName.c_str();
 
-                Scene->SaveLTX	(temp_fn.c_str(), false, (p2==66));
+		if (EFS.GetSaveName(_maps_, temp_fn))
+			return ExecCommand(COMMAND_SAVE, temp_fn, 66);
+		else
+			return FALSE;
+	}
 
-                UI->ResetStatus	();
-                // set new name
-                if (0!=xr_strcmp(Tools->m_LastFileName.c_str(),temp_fn.c_str()))
-                {
-    	            Tools->m_LastFileName 	= temp_fn.c_str();
-                }
-                ExecCommand		(COMMAND_UPDATE_CAPTION);
-                EPrefs->AppendRecentFile(temp_fn.c_str());
-                return 			TRUE;
-            }
-        }
-    } else {
-        ELog.DlgMsg			( mtError, "Scene sharing violation" );
-        return				FALSE;
-    }
+	if (p1.IsInteger())
+		return ExecCommand(COMMAND_SAVE, xr_string(LTools->m_LastFileName.c_str()), 0);
+
+	xr_string temp_fn = xr_string(p1);
+
+	if (temp_fn.empty())	
+		return ExecCommand(COMMAND_SAVE, temp_fn, 1);
+	
+	xr_strlwr(temp_fn);
+	UI->SetStatus("Level saving...");
+
+    if (Core.SocSdk)
+        Scene->Save(temp_fn.c_str(), false, true);
+	else
+		Scene->SaveLTX(temp_fn.c_str(), false, (p2 == 66));
+
+	UI->ResetStatus();
+	// set new name
+	if (xr_strcmp(Tools->m_LastFileName.c_str(), temp_fn.c_str()))	
+		Tools->m_LastFileName = temp_fn.c_str();
+	
+	ExecCommand(COMMAND_UPDATE_CAPTION);
+	EPrefs->AppendRecentFile(temp_fn.c_str());
+	return TRUE;
 }
 
 CCommandVar CommandClear(CCommandVar p1, CCommandVar p2)
