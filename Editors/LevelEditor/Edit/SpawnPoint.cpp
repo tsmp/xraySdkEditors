@@ -340,73 +340,81 @@ void CSpawnPoint::SSpawnData::SaveLTX	(CInifile& ini, LPCSTR sect_name)
 
 void CSpawnPoint::SSpawnData::SaveStream(IWriter& F)
 {
-    F.open_chunk		(SPAWNPOINT_CHUNK_ENTITYREF);
-    F.w_stringZ			(m_Data->name());
-    F.close_chunk		();
+	F.open_chunk(SPAWNPOINT_CHUNK_ENTITYREF);
+	F.w_stringZ(m_Data->name());
+	F.close_chunk();
 
-    F.open_chunk		(SPAWNPOINT_CHUNK_FLAGS);
-    F.w_u8				(m_flags.get());
-    F.close_chunk		();
+    if (!Core.SocSdk)
+    {
+        F.open_chunk(SPAWNPOINT_CHUNK_FLAGS);
+        F.w_u8(m_flags.get());
+        F.close_chunk();
+    }
 
-    F.open_chunk		(SPAWNPOINT_CHUNK_SPAWNDATA);
-    NET_Packet 			Packet;
-    m_Data->Spawn_Write	(Packet,TRUE);
-    F.w_u32				(Packet.B.count);
-    F.w					(Packet.B.data,Packet.B.count);
-    F.close_chunk		();
+	F.open_chunk(SPAWNPOINT_CHUNK_SPAWNDATA);
+	NET_Packet Packet;
+	m_Data->Spawn_Write(Packet, TRUE);
+	F.w_u32(Packet.B.count);
+	F.w(Packet.B.data, Packet.B.count);
+	F.close_chunk();
 }
 
 bool CSpawnPoint::SSpawnData::LoadStream(IReader& F)
 {
-    string64 			temp;
-    R_ASSERT			(F.find_chunk(SPAWNPOINT_CHUNK_ENTITYREF));
-    F.r_stringZ			(temp,sizeof(temp));
+	string64 temp;
+	R_ASSERT(F.find_chunk(SPAWNPOINT_CHUNK_ENTITYREF));
+	F.r_stringZ(temp, sizeof(temp));
 
-    if(F.find_chunk(SPAWNPOINT_CHUNK_FLAGS))
-		m_flags.assign	(F.r_u8());
+	if (F.find_chunk(SPAWNPOINT_CHUNK_FLAGS))
+		m_flags.assign(F.r_u8());
 
-    NET_Packet 			Packet;
-    R_ASSERT(F.find_chunk(SPAWNPOINT_CHUNK_SPAWNDATA));
-    Packet.B.count 		= F.r_u32();
-    F.r					(Packet.B.data,Packet.B.count);
-    Create				(temp);
-    if (Valid())
-    	if (!m_Data->Spawn_Read(Packet))
-        	Destroy		();
+	NET_Packet Packet;
+	R_ASSERT(F.find_chunk(SPAWNPOINT_CHUNK_SPAWNDATA));
+	Packet.B.count = F.r_u32();
+	F.r(Packet.B.data, Packet.B.count);
+	Create(temp);
 
-    return Valid();
+	if (Valid() && !m_Data->Spawn_Read(Packet))
+        Destroy();
+
+	return Valid();
 }
+
 bool CSpawnPoint::SSpawnData::ExportGame(SExportStreams* F, CSpawnPoint* owner)
 {
 	// set params
-    m_Data->set_name_replace	(owner->GetName());
-    m_Data->position().set		(owner->GetPosition());
-    m_Data->angle().set			(owner->GetRotation());
+	m_Data->set_name_replace(owner->GetName());
+	m_Data->position().set(owner->GetPosition());
+	m_Data->angle().set(owner->GetRotation());
 
-    // export cform (if needed)
-    ISE_Shape* cform 			= m_Data->shape();
-// SHAPE
-    if (cform&&!(owner->m_AttachedObject&&(owner->m_AttachedObject->FClassID==OBJCLASS_SHAPE))){
-		ELog.DlgMsg				(mtError,"Spawn Point: '%s' must contain attached shape.",owner->GetName());
-    	return false;
-    }
-    if (cform){
-	    CEditShape* shape		= dynamic_cast<CEditShape*>(owner->m_AttachedObject); R_ASSERT(shape);
-		shape->ApplyScale		();
-        owner->SetScale( 			 shape->GetScale());
-    	cform->assign_shapes	(&*shape->GetShapes().begin(),shape->GetShapes().size());
-    }
-    // end
+	// export cform (if needed)
+	ISE_Shape* cform = m_Data->shape();
 
-    NET_Packet					Packet;
-    m_Data->Spawn_Write			(Packet,TRUE);
+	// SHAPE
+	if (cform && !(owner->m_AttachedObject && (owner->m_AttachedObject->FClassID == OBJCLASS_SHAPE)))
+	{
+		ELog.DlgMsg(mtError, "Spawn Point: '%s' must contain attached shape.", owner->GetName());
+		return false;
+	}
 
-    SExportStreamItem& tgt 		= (m_flags.test(eSDTypeRespawn))? F->spawn_rs : F->spawn;
-    tgt.stream.open_chunk		(tgt.chunk++);
-    tgt.stream.w				(Packet.B.data,Packet.B.count);
-    tgt.stream.close_chunk		();
+	if (cform)
+	{
+		CEditShape* shape = dynamic_cast<CEditShape*>(owner->m_AttachedObject); R_ASSERT(shape);
+		shape->ApplyScale();
+		owner->SetScale(shape->GetScale());
+		cform->assign_shapes(&*shape->GetShapes().begin(), shape->GetShapes().size());
+	}
+	// end
 
-    return true;
+	NET_Packet Packet;
+	m_Data->Spawn_Write(Packet, TRUE);
+
+	SExportStreamItem& tgt = (m_flags.test(eSDTypeRespawn)) ? F->spawn_rs : F->spawn;
+	tgt.stream.open_chunk(tgt.chunk++);
+	tgt.stream.w(Packet.B.data, Packet.B.count);
+	tgt.stream.close_chunk();
+
+	return true;
 }
 
 void CSpawnPoint::SSpawnData::OnAnimControlClick(ButtonValue* value, bool& bModif, bool& bSafe)
@@ -972,7 +980,7 @@ bool CSpawnPoint::RayPick(float& distance, const Fvector& start, const Fvector& 
 
 	return bPick;
 }
-//----------------------------------------------------
+
 bool CSpawnPoint::OnAppendObject(CCustomObject* object)
 {
 	R_ASSERT(!m_AttachedObject);
@@ -997,7 +1005,6 @@ bool CSpawnPoint::OnAppendObject(CCustomObject* object)
 
 bool CSpawnPoint::LoadLTX(CInifile& ini, LPCSTR sect_name)
 {
-
 	u32 version = ini.r_u32(sect_name, "version");
 
     if(version<0x0014)
@@ -1007,13 +1014,14 @@ bool CSpawnPoint::LoadLTX(CInifile& ini, LPCSTR sect_name)
     }
 
 	CCustomObject::LoadLTX(ini, sect_name);
-    m_Type 			= (EPointType)ini.r_u32(sect_name, "type");
+	m_Type = (EPointType)ini.r_u32(sect_name, "type");
 
-    if (m_Type>=ptMaxType)
+    if (m_Type >= ptMaxType)
     {
         ELog.Msg( mtError, "SPAWNPOINT: Unsupported spawn version.");
         return false;
     }
+
     switch (m_Type)
     {
     case ptSpawnPoint:
@@ -1026,7 +1034,9 @@ bool CSpawnPoint::LoadLTX(CInifile& ini, LPCSTR sect_name)
             return false;
         }
         SetValid		(true);
-    }break;
+    }
+    break;
+
     case ptRPoint:
         {
             if(version>=0x0017)
@@ -1037,6 +1047,7 @@ bool CSpawnPoint::LoadLTX(CInifile& ini, LPCSTR sect_name)
             m_GameType.LoadLTX			(ini, sect_name, (version==0x0014) );
         }
     break;
+
     case ptEnvMod:
         {
             m_EM_Radius			= ini.r_float(sect_name, "em_radius");
@@ -1061,55 +1072,59 @@ bool CSpawnPoint::LoadLTX(CInifile& ini, LPCSTR sect_name)
 	UpdateTransform	();
 
 	// BUG fix
-    CEditShape* shape	= dynamic_cast<CEditShape*>(m_AttachedObject);
-    if (shape)
-    	SetScale 	( shape->GetScale());
-    
-    return true;
+	CEditShape* shape = dynamic_cast<CEditShape*>(m_AttachedObject);
+	if (shape)
+		SetScale(shape->GetScale());
+
+	return true;
 }
 
 void CSpawnPoint::SaveLTX(CInifile& ini, LPCSTR sect_name)
 {
 	CCustomObject::SaveLTX(ini, sect_name);
-
-	ini.w_u32			(sect_name, "version", SPAWNPOINT_VERSION);
+	ini.w_u32(sect_name, "version", SPAWNPOINT_VERSION);
 
     // save attachment
-    if (m_AttachedObject)
-    {
-	    ObjectList 					lst;
-        lst.push_back				(m_AttachedObject);
-		Scene->SaveObjectsLTX		(lst, sect_name, "attached", ini);
-    }
+	if (m_AttachedObject)
+	{
+		ObjectList lst;
+		lst.push_back(m_AttachedObject);
+		Scene->SaveObjectsLTX(lst, sect_name, "attached", ini);
+	}
 
-	ini.w_u32						(sect_name, "type", m_Type);
+	ini.w_u32(sect_name, "type", m_Type);
     
     switch (m_Type)
     {
     case ptSpawnPoint:
     {
-        string128	buff;
-        m_SpawnData.SaveLTX(ini, strconcat(sizeof(buff), buff, sect_name, "_spawndata"));
-    }break;
-    case ptRPoint:
-    {
-        ini.w_u8		(sect_name, "team_id", m_RP_TeamID);
-        ini.w_string	(sect_name, "rp_profile", m_rpProfile.c_str());
-        ini.w_u8		(sect_name, "rp_type", m_RP_Type);
-        m_GameType.SaveLTX(ini, sect_name);
-    }break;
-    case ptEnvMod:
-    {
-        ini.w_float		(sect_name, "em_radius", m_EM_Radius);
-        ini.w_float		(sect_name, "em_power", m_EM_Power);
-        ini.w_float		(sect_name, "view_dist", m_EM_ViewDist);
-        ini.w_u32		(sect_name, "fog_color", m_EM_FogColor);
-        ini.w_float		(sect_name, "fog_density", m_EM_FogDensity);
-        ini.w_u32		(sect_name, "ambient_color", m_EM_AmbientColor);
-        ini.w_u32		(sect_name, "sky_color", m_EM_SkyColor);
-        ini.w_u32		(sect_name, "hemi_color", m_EM_HemiColor);
-        ini.w_u16		(sect_name, "em_flags", m_EM_Flags.get());
-    }break;
+		string128 buff;
+		m_SpawnData.SaveLTX(ini, strconcat(sizeof(buff), buff, sect_name, "_spawndata"));
+    }
+    break;
+
+	case ptRPoint:
+	{
+		ini.w_u8(sect_name, "team_id", m_RP_TeamID);
+		ini.w_string(sect_name, "rp_profile", m_rpProfile.c_str());
+		ini.w_u8(sect_name, "rp_type", m_RP_Type);
+		m_GameType.SaveLTX(ini, sect_name);
+	}
+	break;
+
+	case ptEnvMod:
+	{
+		ini.w_float(sect_name, "em_radius", m_EM_Radius);
+		ini.w_float(sect_name, "em_power", m_EM_Power);
+		ini.w_float(sect_name, "view_dist", m_EM_ViewDist);
+		ini.w_u32(sect_name, "fog_color", m_EM_FogColor);
+		ini.w_float(sect_name, "fog_density", m_EM_FogDensity);
+		ini.w_u32(sect_name, "ambient_color", m_EM_AmbientColor);
+		ini.w_u32(sect_name, "sky_color", m_EM_SkyColor);
+		ini.w_u32(sect_name, "hemi_color", m_EM_HemiColor);
+		ini.w_u16(sect_name, "em_flags", m_EM_Flags.get());
+	}
+    break;
 
     default: THROW;
     }
@@ -1118,13 +1133,13 @@ void CSpawnPoint::SaveLTX(CInifile& ini, LPCSTR sect_name)
 bool CSpawnPoint::LoadStream(IReader& F)
 {
 	u16 version = 0;
-
-    R_ASSERT(F.r_chunk(SPAWNPOINT_CHUNK_VERSION,&version));
-    if(version<0x0014)
-    {
-        ELog.Msg( mtError, "SPAWNPOINT: Unsupported version.");
-        return false;
-    }
+	R_ASSERT(F.r_chunk(SPAWNPOINT_CHUNK_VERSION, &version));
+	
+    if (version < 0x0014)
+	{
+		ELog.Msg(mtError, "SPAWNPOINT: Unsupported version.");
+		return false;
+	}
 
 	CCustomObject::LoadStream(F);
 
@@ -1190,55 +1205,76 @@ bool CSpawnPoint::LoadStream(IReader& F)
 void CSpawnPoint::SaveStream(IWriter& F)
 {
 	CCustomObject::SaveStream(F);
+	F.open_chunk(SPAWNPOINT_CHUNK_VERSION);
 
-	F.open_chunk		(SPAWNPOINT_CHUNK_VERSION);
-	F.w_u16				(SPAWNPOINT_VERSION);
-	F.close_chunk		();
+    if (!Core.SocSdk)
+        F.w_u16(SPAWNPOINT_VERSION);
+    else
+        F.w_u16(SPAWNPOINT_VERSION - 3);
 
-    // save attachment
-    if (m_AttachedObject)
-    {
-	    ObjectList lst; lst.push_back(m_AttachedObject);
-		Scene->SaveObjectsStream(lst,SPAWNPOINT_CHUNK_ATTACHED_OBJ,F);
-    }
+	F.close_chunk();
+
+	// save attachment
+	if (m_AttachedObject)
+	{
+		ObjectList lst; lst.push_back(m_AttachedObject);
+		Scene->SaveObjectsStream(lst, SPAWNPOINT_CHUNK_ATTACHED_OBJ, F);
+	}
 
 	if (m_SpawnData.Valid())
-    {
-    	m_SpawnData.SaveStream(F);
-    }else{
-		F.w_chunk	(SPAWNPOINT_CHUNK_TYPE,		&m_Type,	sizeof(u32));
-    	switch (m_Type){
-        case ptRPoint:
-        	F.open_chunk			(SPAWNPOINT_CHUNK_RPOINT);
-           	F.w_u8					(m_RP_TeamID);
-            F.w_u8					(m_RP_Type);
-            m_GameType.SaveStream	(F);
-       		F.w_stringZ				(m_rpProfile);            
-            F.close_chunk			();
-        break;
-        case ptEnvMod:
-        	F.open_chunk(SPAWNPOINT_CHUNK_ENVMOD);
-            F.w_float	(m_EM_Radius);
-            F.w_float	(m_EM_Power);
-            F.w_float	(m_EM_ViewDist);
-            F.w_u32		(m_EM_FogColor);
-            F.w_float	(m_EM_FogDensity);
-        	F.w_u32		(m_EM_AmbientColor);
-            F.w_u32		(m_EM_SkyColor);
-            F.close_chunk();
-        	F.open_chunk(SPAWNPOINT_CHUNK_ENVMOD2);
-            F.w_u32		(m_EM_HemiColor);
-            F.close_chunk();
+	{
+		m_SpawnData.SaveStream(F);
+        return;
+	}
+    	
+	F.w_chunk(SPAWNPOINT_CHUNK_TYPE, &m_Type, sizeof(u32));
 
-        	F.open_chunk(SPAWNPOINT_CHUNK_ENVMOD3);
-            F.w_u16		(m_EM_Flags.get());
-            F.close_chunk();
-        break;
-        default: THROW;
+    switch (m_Type)
+    {
+    case ptRPoint:
+        F.open_chunk(SPAWNPOINT_CHUNK_RPOINT);
+        F.w_u8(m_RP_TeamID);
+        F.w_u8(m_RP_Type);
+
+        if (Core.SocSdk)
+        {
+            F.w_u8(m_GameType.m_GameType.get());
+            F.w_u8(0);
         }
+        else
+        {
+            m_GameType.SaveStream(F);
+            F.w_stringZ(m_rpProfile);
+        }
+
+        F.close_chunk();
+        break;
+
+    case ptEnvMod:
+        F.open_chunk(SPAWNPOINT_CHUNK_ENVMOD);
+        F.w_float(m_EM_Radius);
+        F.w_float(m_EM_Power);
+        F.w_float(m_EM_ViewDist);
+        F.w_u32(m_EM_FogColor);
+        F.w_float(m_EM_FogDensity);
+        F.w_u32(m_EM_AmbientColor);
+        F.w_u32(m_EM_SkyColor);
+        F.close_chunk();
+
+        F.open_chunk(SPAWNPOINT_CHUNK_ENVMOD2);
+        F.w_u32(m_EM_HemiColor);
+        F.close_chunk();
+
+        if (!Core.SocSdk)
+        {
+            F.open_chunk(SPAWNPOINT_CHUNK_ENVMOD3);
+            F.w_u16(m_EM_Flags.get());
+            F.close_chunk();
+        }
+        break;
+    default: THROW;
     }
 }
-//----------------------------------------------------
 
 Fvector3 u32_3f(u32 clr)
 {

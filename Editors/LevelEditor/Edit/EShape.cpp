@@ -393,21 +393,27 @@ bool CEditShape::LoadStream(IReader& F)
 
 void CEditShape::SaveStream(IWriter& F)
 {
-	inherited::SaveStream	(F);
+	inherited::SaveStream(F);
+	F.open_chunk(SHAPE_CHUNK_VERSION);
 
-	F.open_chunk	(SHAPE_CHUNK_VERSION);
-	F.w_u16			(SHAPE_CURRENT_VERSION);
-	F.close_chunk	();
+	if (Core.SocSdk)
+		F.w_u16(SHAPE_CURRENT_VERSION - 1);
+	else
+		F.w_u16(SHAPE_CURRENT_VERSION);
+
+	F.close_chunk();
 
 	F.open_chunk	(SHAPE_CHUNK_SHAPES);
     F.w_u32			(shapes.size());
     F.w				(shapes.data(),shapes.size()*sizeof(shape_def));
 	F.close_chunk	();
 
-    F.open_chunk	(SHAPE_CHUNK_DATA);
-    F.w_u8			(m_shape_type);
-	F.close_chunk	();
-    
+    if (!Core.SocSdk)
+    {
+        F.open_chunk(SHAPE_CHUNK_DATA);
+        F.w_u8(m_shape_type);
+        F.close_chunk();
+    }    
 }
 
 void CEditShape::FillProp(LPCSTR pref, PropItemVec& values)

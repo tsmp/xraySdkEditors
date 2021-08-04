@@ -192,33 +192,36 @@ CInifile &CSE_Abstract::spawn_ini			()
 	return						(*m_ini_file);
 }
 	
-void CSE_Abstract::Spawn_Write				(NET_Packet	&tNetPacket, BOOL bLocal)
+void CSE_Abstract::Spawn_Write(NET_Packet& tNetPacket, BOOL bLocal)
 {
 	// generic
-	tNetPacket.w_begin			(M_SPAWN);
-	tNetPacket.w_stringZ		(s_name			);
-	tNetPacket.w_stringZ		(s_name_replace ?	s_name_replace : "");
-	tNetPacket.w_u8				(0);
-	tNetPacket.w_u8				(s_RP			);
-	tNetPacket.w_vec3			(o_Position		);
-	tNetPacket.w_vec3			(o_Angle		);
-	tNetPacket.w_u16			(RespawnTime	);
-	tNetPacket.w_u16			(ID				);
-	tNetPacket.w_u16			(ID_Parent		);
-	tNetPacket.w_u16			(ID_Phantom		);
+	tNetPacket.w_begin(M_SPAWN);
+	tNetPacket.w_stringZ(s_name);
+	tNetPacket.w_stringZ(s_name_replace ? s_name_replace : "");
+	tNetPacket.w_u8(0); // в тч тут режим был, s_gameid!
+	tNetPacket.w_u8(s_RP);
+	tNetPacket.w_vec3(o_Position);
+	tNetPacket.w_vec3(o_Angle);
+	tNetPacket.w_u16(RespawnTime);
+	tNetPacket.w_u16(ID);
+	tNetPacket.w_u16(ID_Parent);
+	tNetPacket.w_u16(ID_Phantom);
 
-	s_flags.set					(M_SPAWN_VERSION,TRUE);
+	s_flags.set(M_SPAWN_VERSION, TRUE);
 	if (bLocal)
 		tNetPacket.w_u16		(u16(s_flags.flags|M_SPAWN_OBJECT_LOCAL) );
 	else
 		tNetPacket.w_u16		(u16(s_flags.flags&~(M_SPAWN_OBJECT_LOCAL|M_SPAWN_OBJECT_ASPLAYER)));
 	
-	tNetPacket.w_u16			(SPAWN_VERSION);
-
-	tNetPacket.w_u16			(m_gameType.m_GameType.get());
+	if (!Core.SocSdk)
+	{
+		tNetPacket.w_u16(128);
+		tNetPacket.w_u16(m_gameType.m_GameType.get());
+	}
+	else
+		tNetPacket.w_u16(118);
 	
-	tNetPacket.w_u16			(script_server_object_version());
-
+	tNetPacket.w_u16(script_server_object_version());
 
 	//client object custom data serialization SAVE
 	u16 client_data_size		= (u16)client_data.size(); //не может быть больше 256 байт
