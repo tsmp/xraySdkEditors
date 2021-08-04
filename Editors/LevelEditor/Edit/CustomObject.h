@@ -26,16 +26,17 @@ struct SExportStreamItem{
     SExportStreamItem	():chunk(0){;}
 };
 
-struct SExportStreams{
-	SExportStreamItem	spawn;
-	SExportStreamItem	spawn_rs;
-	SExportStreamItem	patrolpath;
-	SExportStreamItem	rpoint;
-	SExportStreamItem	sound_static;
-	SExportStreamItem	sound_env_geom;
-	SExportStreamItem	pe_static;
-	SExportStreamItem	envmodif;
-	SExportStreamItem	fog_vol;
+struct SExportStreams
+{
+	SExportStreamItem spawn;
+	SExportStreamItem spawn_rs;
+	SExportStreamItem patrolpath;
+	SExportStreamItem rpoint;
+	SExportStreamItem sound_static;
+	SExportStreamItem sound_env_geom;
+	SExportStreamItem pe_static;
+	SExportStreamItem envmodif;
+	SExportStreamItem fog_vol;
 };
 
 class  CCustomObject:private pureDrawUI
@@ -56,7 +57,9 @@ class  CCustomObject:private pureDrawUI
     void			AnimationDeleteKey	(float t);
     void			AnimationUpdate		(float t);
 public:
-	enum{
+	
+    enum
+    {
     	flSelected_notused			= (1<<0),
     	flVisible_notused			= (1<<1),
     	flLocked_notused			= (1<<2),
@@ -68,18 +71,20 @@ public:
     	flAutoKey					= (1<<30),
     	flCameraView				= (1<<31),
     };
-    Flags32			m_CO_Flags;
 
-	enum{
-        flRT_Valid			= (1<<0),
-        flRT_UpdateTransform= (1<<1),
-        flRT_NeedSelfDelete	= (1<<2),
-    	flRT_Selected		= (1<<3),
-    	flRT_Visible		= (1<<4),
-    	flRT_SelectedLast	= (1<<5),
-        
-    };
-    Flags32			m_RT_Flags;
+    Flags32	m_CO_Flags;
+
+	enum
+	{
+		flRT_Valid = (1 << 0),
+		flRT_UpdateTransform = (1 << 1),
+		flRT_NeedSelfDelete = (1 << 2),
+		flRT_Selected = (1 << 3),
+		flRT_Visible = (1 << 4),
+		flRT_SelectedLast = (1 << 5)
+	};
+
+    Flags32	m_RT_Flags;
 public:
 	shared_str		FName;
 	int 			save_id;

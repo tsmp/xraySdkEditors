@@ -149,11 +149,12 @@ void CSceneObject::SaveLTX(CInifile& ini, LPCSTR sect_name)
 
 }
 
-
 bool CSceneObject::LoadStream(IReader& F)
 {
     bool bRes = true;
-	do{
+
+	do
+    {
         u16 version = 0;
         string1024 buf;
         R_ASSERT(F.r_chunk(SCENEOBJ_CHUNK_VERSION,&version));
@@ -193,28 +194,10 @@ bool CSceneObject::LoadStream(IReader& F)
                 {
                     bRes = SetReference(_new_name.c_str());
                 }
-            }
-            if(!bRes)
-            {
-     
-
-                /*if ( (mr==mrNone||mr==mrYes) && TfrmChoseItem::SelectItem(smObject,new_val,1))
-                {
-                    bRes = SetReference(new_val);
-                    if(bRes)
-                        Scene->RegisterSubstObjectName(buf, new_val);
-                }*/
-            }
+            }            
 
             Scene->Modified();
         }
-       
-        
-
-
-//        if(!CheckVersion()){
-//            ELog.Msg( mtError, "CSceneObject: '%s' different file version!", buf );
-//            }
 
         // flags
         if (F.find_chunk(SCENEOBJ_CHUNK_FLAGS)){
