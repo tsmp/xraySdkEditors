@@ -328,13 +328,10 @@ void ESceneWallmarkTool::SaveLTX(CInifile& ini, int id)
 bool ESceneWallmarkTool::LoadStream(IReader& F)
 {
 	inherited::LoadStream	(F);
-
 	u16 version = 0;
-
     R_ASSERT(F.r_chunk(WM_CHUNK_VERSION,&version));
 
-
-    if(version!=0x0003 && version!=WM_VERSION)
+    if (version != 0x0003 && version != WM_VERSION)
     {
         ELog.Msg( mtError, "Static Wallmark: Unsupported version.");
         return false;
@@ -355,7 +352,8 @@ bool ESceneWallmarkTool::LoadStream(IReader& F)
     F.r_stringZ		(m_TxName);
 
     IReader* OBJ 	= F.open_chunk(WM_CHUNK_ITEMS);
-    if (OBJ){
+    if (OBJ)
+    {
         IReader* O  = OBJ->open_chunk(0);
         for (int count=1; O; count++) {
             u32 item_count	= O->r_u32();	
@@ -385,7 +383,9 @@ bool ESceneWallmarkTool::LoadStream(IReader& F)
             O = OBJ->open_chunk(count);
         }
         OBJ->close();
-    }else{
+    }
+    else
+    {
         IReader* OBJ 	= F.open_chunk(WM_CHUNK_ITEMS2);
         if (OBJ){
             IReader* O  = OBJ->open_chunk(0);
@@ -421,16 +421,21 @@ bool ESceneWallmarkTool::LoadStream(IReader& F)
     }
 
     // validate wallmarks
-    for (WMSVecIt slot_it=marks.begin(); slot_it!=marks.end(); slot_it++){
+    for (WMSVecIt slot_it=marks.begin(); slot_it!=marks.end(); slot_it++)
+    {
         wm_slot* slot		= *slot_it;	
-        for (WMVecIt w_it=slot->items.begin(); w_it!=slot->items.end(); w_it++){
+
+        for (WMVecIt w_it=slot->items.begin(); w_it!=slot->items.end(); w_it++)
+        {
             wallmark*& W	= *w_it;
-            if (W->verts.size()>MAX_WALLMARK_VERTEX_COUNT){
+            if (W->verts.size()>MAX_WALLMARK_VERTEX_COUNT)
+            {
                 ELog.Msg	(mtError,"ERROR: Invalid wallmark (Contain more than %d vertices). Removed.", MAX_WALLMARK_VERTEX_COUNT);
                 wm_destroy	(W);
                 W			= 0;
             }
         }
+
         WMVecIt new_end		= std::remove_if(slot->items.begin(),slot->items.end(),zero_item_pred());
 	    slot->items.erase	(new_end,slot->items.end());
     }
@@ -443,7 +448,12 @@ void ESceneWallmarkTool::SaveStream(IWriter& F)
 	inherited::SaveStream	(F);
 
 	F.open_chunk	(WM_CHUNK_VERSION);
-    F.w_u16			(WM_VERSION);
+
+    if (Core.SocSdk)
+        F.w_u16(WM_VERSION - 1);
+	else
+		F.w_u16(WM_VERSION);
+
 	F.close_chunk	();
 
 	F.open_chunk	(WM_CHUNK_FLAGS);
@@ -459,7 +469,8 @@ void ESceneWallmarkTool::SaveStream(IWriter& F)
 	F.close_chunk	();
 
 	F.open_chunk	(WM_CHUNK_ITEMS2);
-    for (WMSVecIt slot_it=marks.begin(); slot_it!=marks.end(); slot_it++){
+    for (WMSVecIt slot_it=marks.begin(); slot_it!=marks.end(); slot_it++)
+    {
 		F.open_chunk(slot_it-marks.begin());
         wm_slot* slot= *slot_it;	
         F.w_u32		(slot->items.size());

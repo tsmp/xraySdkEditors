@@ -214,18 +214,25 @@ void EParticlesObject::SaveStream(IWriter& F)
 	inherited::SaveStream(F);
 
 	F.open_chunk	(CPSOBJECT_CHUNK_VERSION);
-	F.w_u16			(CPSOBJECT_VERSION);
+
+    if (Core.SocSdk)
+        F.w_u16(CPSOBJECT_VERSION - 2);
+	else
+		F.w_u16(CPSOBJECT_VERSION);
+
 	F.close_chunk	();
 
 	F.open_chunk	(CPSOBJECT_CHUNK_REFERENCE);
     F.w_stringZ		(m_RefName);
 	F.close_chunk	();
 
-	F.open_chunk	(CPSOBJECT_CHUNK_GAMETYPE);
-	m_GameType.SaveStream(F);
-	F.close_chunk	();
+    if (!Core.SocSdk)
+    {
+        F.open_chunk(CPSOBJECT_CHUNK_GAMETYPE);
+        m_GameType.SaveStream(F);
+        F.close_chunk();
+    }
 }
-//----------------------------------------------------
 
 void EParticlesObject::OnDeviceCreate()
 {
