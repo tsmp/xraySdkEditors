@@ -1404,7 +1404,7 @@ void CSE_ALifeObjectHangingLamp::STATE_Read	(NET_Packet	&tNetPacket, u16 size)
 		light_ambient_bone			= light_main_bone;
 	}
 
-	if (m_wVersion>118)
+	if (m_wVersion > 118)
 	{
 		tNetPacket.r_float			(m_volumetric_quality);
 		tNetPacket.r_float			(m_volumetric_intensity);
@@ -1439,11 +1439,13 @@ void CSE_ALifeObjectHangingLamp::STATE_Write(NET_Packet	&tNetPacket)
     
 	tNetPacket.w_stringZ		(light_ambient_bone);
 
-	tNetPacket.w_float			(m_volumetric_quality);
-	tNetPacket.w_float			(m_volumetric_intensity);
-	tNetPacket.w_float			(m_volumetric_distance);
+	if (!Core.SocSdk)
+	{
+		tNetPacket.w_float(m_volumetric_quality);
+		tNetPacket.w_float(m_volumetric_intensity);
+		tNetPacket.w_float(m_volumetric_distance);
+	}
 }
-
 
 void CSE_ALifeObjectHangingLamp::UPDATE_Read(NET_Packet	&tNetPacket)
 {
@@ -1992,7 +1994,9 @@ void CSE_ALifeObjectClimable::STATE_Write	(NET_Packet	&tNetPacket)
 	//inherited1::STATE_Write		(tNetPacket);
 	inherited2::STATE_Write		(tNetPacket);
 	cform_write(tNetPacket);
-	tNetPacket.w_stringZ( material );
+
+	if(!Core.SocSdk)
+		tNetPacket.w_stringZ( material );
 }
 
 void CSE_ALifeObjectClimable::UPDATE_Read	(NET_Packet	&tNetPacket)

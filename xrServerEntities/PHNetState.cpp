@@ -215,6 +215,7 @@ VERIFY( !(fsimilar(min.x,max.x)&&fsimilar(min.y,max.y)&&fsimilar(min.z,max.z)) )
 SPHBonesData::SPHBonesData()
 {
 	bones_mask					=u64(-1);
+	bones_mask_soc = u64(-1);
 	root_bone					=0;
 
 	Fvector						_mn, _mx;
@@ -223,10 +224,17 @@ SPHBonesData::SPHBonesData()
 	_mx.set						(100.f,100.f,100.f);
 	set_min_max					(_mn, _mx);
 }
+
 void SPHBonesData::net_Save(NET_Packet &P)
 {
-	for(int i=0;i<BONE_COUNT_VISMASK;i++)
-	P.w_u64			(bones_mask.visimask[i].flags);
+	if(Core.SocSdk)
+		P.w_u64(bones_mask_soc);
+	else
+	{
+		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
+			P.w_u64(bones_mask.visimask[i].flags);
+	}
+
 	P.w_u16			(root_bone);
 	
 	P.w_vec3		(get_min());
@@ -246,8 +254,15 @@ void SPHBonesData::net_Save(NET_Packet &P)
 void SPHBonesData::net_Load(NET_Packet &P)
 {
 	bones.clear					();
-	for (int i = 0; i < BONE_COUNT_VISMASK; i++)
-		bones_mask.visimask[i].flags = P.r_u64();
+
+	if (Core.SocSdk)
+		bones_mask_soc = P.r_u64();
+	else
+	{
+		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
+			bones_mask.visimask[i].flags = P.r_u64();
+	}
+
 	root_bone					=P.r_u16();
 	Fvector						_mn, _mx;
 	P.r_vec3					(_mn);

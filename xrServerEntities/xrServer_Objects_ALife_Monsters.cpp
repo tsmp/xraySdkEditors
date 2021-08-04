@@ -182,8 +182,11 @@ void CSE_ALifeTraderAbstract::STATE_Write	(NET_Packet &tNetPacket)
 #endif
 	save_data					(m_character_name, tNetPacket);
 	
-	tNetPacket.w_u8				( (m_deadbody_can_take)? 1 : 0 );
-	tNetPacket.w_u8				( (m_deadbody_closed)? 1 : 0 );
+	if (!Core.SocSdk)
+	{
+		tNetPacket.w_u8((m_deadbody_can_take) ? 1 : 0);
+		tNetPacket.w_u8((m_deadbody_closed) ? 1 : 0);
+	}
 }
 
 void CSE_ALifeTraderAbstract::STATE_Read	(NET_Packet &tNetPacket, u16 size)
@@ -1241,7 +1244,7 @@ void CSE_ALifeMonsterAbstract::STATE_Write	(NET_Packet &tNetPacket)
 	tNetPacket.w_stringZ		(m_in_space_restrictors);
 	tNetPacket.w_u16			(m_smart_terrain_id);
 
-	if(tNetPacket.inistream)
+	if(tNetPacket.inistream && !Core.SocSdk)
 		tNetPacket.w_u16			((m_task_reached)?1:0);
 	else
 		tNetPacket.w				(&m_task_reached, sizeof(m_task_reached));
@@ -2171,12 +2174,15 @@ void CSE_ALifeOnlineOfflineGroup::STATE_Write				(NET_Packet &tNetPacket)
 	inherited1::STATE_Write		(tNetPacket);
 
 #if 1
-	tNetPacket.w_u32			(m_members.size());
+	if (!Core.SocSdk)
+	{
+		tNetPacket.w_u32(m_members.size());
 
-	MEMBERS::iterator			I = m_members.begin();
-	MEMBERS::iterator			E = m_members.end();
-	for ( ; I != E; ++I)
-		save_data				((*I).first,tNetPacket);
+		MEMBERS::iterator			I = m_members.begin();
+		MEMBERS::iterator			E = m_members.end();
+		for (; I != E; ++I)
+			save_data((*I).first, tNetPacket);
+	}
 #endif
 }
 
@@ -2185,12 +2191,17 @@ void CSE_ALifeOnlineOfflineGroup::STATE_Read				(NET_Packet &tNetPacket, u16 siz
 	inherited1::STATE_Read		(tNetPacket, size);
 
 #if 1
-	u32							container_size = tNetPacket.r_u32();
-	for (u32 i=0; i<container_size; ++i) {
-		MEMBERS::value_type		pair;
-		load_data				(pair.first,tNetPacket);
-		pair.second				= 0;
-		m_members.insert		(pair);
+	if (!Core.SocSdk)
+	{
+		u32							container_size = tNetPacket.r_u32();
+		
+		for (u32 i = 0; i < container_size; ++i) 
+		{
+			MEMBERS::value_type		pair;
+			load_data(pair.first, tNetPacket);
+			pair.second = 0;
+			m_members.insert(pair);
+		}
 	}
 #endif
 }

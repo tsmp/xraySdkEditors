@@ -84,7 +84,10 @@ CSE_ALifeInventoryItem::~CSE_ALifeInventoryItem	()
 void CSE_ALifeInventoryItem::STATE_Write	(NET_Packet &tNetPacket)
 {
 	tNetPacket.w_float			(m_fCondition);
-	save_data					(m_upgrades, tNetPacket);
+
+	if(!Core.SocSdk)
+		save_data					(m_upgrades, tNetPacket);
+	
 	State.position				= base()->o_Position;
 }
 
@@ -578,7 +581,9 @@ void CSE_ALifeItemWeapon::STATE_Write		(NET_Packet	&tNetPacket)
 	tNetPacket.w_u8				(wpn_state);
 	tNetPacket.w_u8				(m_addon_flags.get());
 	tNetPacket.w_u8				(ammo_type);
-	tNetPacket.w_u8				(a_elapsed_grenades.pack_to_byte());
+
+	if(!Core.SocSdk)
+		tNetPacket.w_u8				(a_elapsed_grenades.pack_to_byte());
 }
 
 void CSE_ALifeItemWeapon::OnEvent			(NET_Packet	&tNetPacket, u16 type, u32 time, ClientID sender )
