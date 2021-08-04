@@ -71,92 +71,107 @@ void st_LevelOptions::SaveLTX( CInifile& ini )
     m_mapUsage.SaveLTX(ini,section);
 }
 
-void st_LevelOptions::Save( IWriter& F )
+void st_LevelOptions::Save(IWriter& F)
 {
-    F.open_chunk( CHUNK_LO_VERSION );
-	F.w_u32		( CURRENT_LEVELOP_VERSION );
+    F.open_chunk(CHUNK_LO_VERSION);
+
+    if(!Core.SocSdk)
+        F.w_u32(CURRENT_LEVELOP_VERSION);
+    else
+        F.w_u32(0x00000008);
+
     F.close_chunk();
 
-    F.open_chunk( CHUNK_LO_NAMES );
-	F.w_stringZ	( m_FNLevelPath.size()?m_FNLevelPath.c_str():"" );
+    F.open_chunk(CHUNK_LO_NAMES);
+    F.w_stringZ(m_FNLevelPath.size() ? m_FNLevelPath.c_str() : "");
     F.close_chunk();
 
-    F.open_chunk( CHUNK_LO_PREFIX );
-	F.w_stringZ	( m_LevelPrefix.size()?m_LevelPrefix.c_str():"");
-    F.close_chunk();
+	F.open_chunk(CHUNK_LO_PREFIX);
+	F.w_stringZ(m_LevelPrefix.size() ? m_LevelPrefix.c_str() : "");
+	F.close_chunk();
 
-    F.open_chunk( CHUNK_LO_BOP );
-	F.w_stringZ	( m_BOPText.size()?m_BOPText.c_str():"" );
-    F.close_chunk();
+	F.open_chunk(CHUNK_LO_BOP);
+	F.w_stringZ(m_BOPText.size() ? m_BOPText.c_str() : "");
+	F.close_chunk();
 
-    F.open_chunk( CHUNK_LO_MAP_VER );
-	F.w_stringZ	( m_map_version.size()?m_map_version.c_str():"1.0" );
-    F.close_chunk();
+	if (!Core.SocSdk)
+	{
+		F.open_chunk(CHUNK_LO_MAP_VER);
+		F.w_stringZ(m_map_version.size() ? m_map_version.c_str() : "1.0");
+		F.close_chunk();
+	}
 
-    F.open_chunk( CHUNK_LO_BP_VERSION );
-	F.w_u32		( CURRENT_LEVELOP_BP_VERSION );
-    F.close_chunk();
+	F.open_chunk(CHUNK_LO_BP_VERSION);
+	F.w_u32(CURRENT_LEVELOP_BP_VERSION);
+	F.close_chunk();
 
-    F.open_chunk( CHUNK_BUILD_PARAMS );
-	F.w			( &m_BuildParams, sizeof(m_BuildParams) );
-    F.close_chunk();
+	F.open_chunk(CHUNK_BUILD_PARAMS);
+	F.w(&m_BuildParams, sizeof(m_BuildParams));
+	F.close_chunk();
 
-    F.open_chunk( CHUNK_LIGHT_QUALITY );
-	F.w_u8		( m_LightHemiQuality );
-	F.w_u8		( m_LightSunQuality );
-    F.close_chunk();
+	F.open_chunk(CHUNK_LIGHT_QUALITY);
+	F.w_u8(m_LightHemiQuality);
+	F.w_u8(m_LightSunQuality);
+	F.close_chunk();
 
-    F.open_chunk( CHUNK_MAP_USAGE );
-	F.w_u16		( m_mapUsage.m_GameType.get() );
-    F.close_chunk();
+	F.open_chunk(CHUNK_MAP_USAGE);
+
+    if (Core.SocSdk)
+    {
+        F.w_s32(m_mapUsage.m_GameType.is(eGameIDDeathmatch));
+        F.w_s32(m_mapUsage.m_GameType.is(eGameIDTeamDeathmatch));
+        F.w_s32(m_mapUsage.m_GameType.is(eGameIDArtefactHunt));
+    }
+    else    
+        F.w_u16(m_mapUsage.m_GameType.get());
+    
+	F.close_chunk();
 }
 
 void st_LevelOptions::ReadLTX(CInifile& ini)
 {
-	LPCSTR section 	= "level_options";
+	LPCSTR section = "level_options";
 
-    u32 vers_op 		= ini.r_u32(section, "version");
-    if( vers_op < 0x00000008 )
-    {
-        ELog.DlgMsg( mtError, "Skipping bad version of level options." );
-        return;
-    }
-
-    m_FNLevelPath		= ini.r_string 		(section, "level_path");
-    m_LevelPrefix		= ini.r_string 		(section, "level_prefix");
-    m_BOPText			= ini.r_string_wb	(section, "bop");
-
-    if(vers_op > 0x0000000B)
-    	m_map_version		= ini.r_string		(section, "map_version");
-
-    m_BuildParams.LoadLTX(ini);
-
-    m_LightHemiQuality 				= ini.r_u8(section, "light_hemi_quality" );
-    m_LightSunQuality 				= ini.r_u8(section, "light_sun_quality" );
-
-    m_mapUsage.SetDefaults			();
-    if(vers_op > 0x0000000A)
+	u32 vers_op = ini.r_u32(section, "version");
+	if (vers_op < 0x00000008)
 	{
-     m_mapUsage.LoadLTX				(ini,section,false);
-    }else
-    {
+		ELog.DlgMsg(mtError, "Skipping bad version of level options.");
+		return;
+	}
 
-    m_mapUsage.m_GameType.set		(eGameIDDeathmatch ,	ini.r_s32(section, "usage_deathmatch"));
-    m_mapUsage.m_GameType.set		(eGameIDTeamDeathmatch, ini.r_s32(section, "usage_teamdeathmatch"));
-    m_mapUsage.m_GameType.set		(eGameIDArtefactHunt,	ini.r_s32(section, "usage_artefacthunt"));
+	m_FNLevelPath = ini.r_string(section, "level_path");
+	m_LevelPrefix = ini.r_string(section, "level_prefix");
+	m_BOPText = ini.r_string_wb(section, "bop");
 
+	if (vers_op > 0x0000000B)
+		m_map_version = ini.r_string(section, "map_version");
 
-	if(vers_op > 0x00000008)
-    {
-        m_mapUsage.m_GameType.set	(eGameIDCaptureTheArtefact,	ini.r_s32(section, "usage_captretheartefact"));
+	m_BuildParams.LoadLTX(ini);
 
-        m_mapUsage.m_GameType.set	(eGameIDTeamDominationZone,	ini.r_s32(section, "usage_team_domination_zone"));
-        if(vers_op==0x00000009)
-        	m_mapUsage.m_GameType.set(eGameIDDominationZone,		ini.r_s32(section, "domination_zone"));
-        else
-        	m_mapUsage.m_GameType.set(eGameIDDominationZone,		ini.r_s32(section, "usage_domination_zone"));
-     }
-    }
+	m_LightHemiQuality = ini.r_u8(section, "light_hemi_quality");
+	m_LightSunQuality = ini.r_u8(section, "light_sun_quality");
+
+	m_mapUsage.SetDefaults();
+
+	if (vers_op > 0x0000000A)	
+		m_mapUsage.LoadLTX(ini, section, false);	
+	else
+	{
+		m_mapUsage.m_GameType.set(eGameIDDeathmatch, ini.r_s32(section, "usage_deathmatch"));
+		m_mapUsage.m_GameType.set(eGameIDTeamDeathmatch, ini.r_s32(section, "usage_teamdeathmatch"));
+		m_mapUsage.m_GameType.set(eGameIDArtefactHunt, ini.r_s32(section, "usage_artefacthunt"));
+
+		if (vers_op > 0x00000008)
+		{
+			m_mapUsage.m_GameType.set(eGameIDCaptureTheArtefact, ini.r_s32(section, "usage_captretheartefact"));
+			m_mapUsage.m_GameType.set(eGameIDTeamDominationZone, ini.r_s32(section, "usage_team_domination_zone"));
+
+			if (vers_op == 0x00000009)
+				m_mapUsage.m_GameType.set(eGameIDDominationZone, ini.r_s32(section, "domination_zone"));
+			else
+				m_mapUsage.m_GameType.set(eGameIDDominationZone, ini.r_s32(section, "usage_domination_zone"));
+		}
+	}
 }
 
 void st_LevelOptions::Read(IReader& F)
@@ -197,19 +212,19 @@ void st_LevelOptions::Read(IReader& F)
 	    m_LightHemiQuality 	= F.r_u8();
 	    m_LightSunQuality 	= F.r_u8();
     }
-    if (F.find_chunk(CHUNK_MAP_USAGE))
-    {
-    	if(vers > 0x00000008)
-        {
-          m_mapUsage.m_GameType.assign	(F.r_u16());
-        }else
-        {
-            m_mapUsage.m_GameType.zero					();
-            m_mapUsage.m_GameType.set					(eGameIDDeathmatch ,	F.r_s32());
-            m_mapUsage.m_GameType.set					(eGameIDTeamDeathmatch, F.r_s32());
-            m_mapUsage.m_GameType.set					(eGameIDArtefactHunt,	F.r_s32());
-        }
-    }
+
+	if (F.find_chunk(CHUNK_MAP_USAGE))
+	{
+		if (vers > 0x00000008)
+			m_mapUsage.m_GameType.assign(F.r_u16());
+		else
+		{
+			m_mapUsage.m_GameType.zero();
+			m_mapUsage.m_GameType.set(eGameIDDeathmatch, F.r_s32());
+			m_mapUsage.m_GameType.set(eGameIDTeamDeathmatch, F.r_s32());
+			m_mapUsage.m_GameType.set(eGameIDArtefactHunt, F.r_s32());
+		}
+	}
 }
 
 //------------------------------------------------------------------------------------------------
