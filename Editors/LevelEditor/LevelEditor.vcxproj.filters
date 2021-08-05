@@ -679,5 +679,12 @@
     <ClInclude Include="UI\UIObjectList.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LevelEditor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="IconLE.ico" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,12 @@
 ﻿// LevelEditor.cpp : Определяет точку входа для приложения.
 //
 #include "stdafx.h"
+
 class ISE_Abstract;
+
 #include "..\XrSE_Factory\xrSE_Factory_import_export.h"
+#include "resource.h"
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
     if(!IsDebuggerPresent()) Debug._initialize(false);
@@ -18,6 +22,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     Scene = xr_new<EScene>();
 
     UIMainForm* MainForm = xr_new< UIMainForm>();
+    HICON icon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_LE));
+
+    if (icon)
+    {        
+        SendMessage(EDevice.m_hWnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(icon));
+        SendMessage(EDevice.m_hWnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(icon));
+    }
+
     ::MainForm = MainForm;
     UI->Push(MainForm, false);
     while (MainForm->Frame())

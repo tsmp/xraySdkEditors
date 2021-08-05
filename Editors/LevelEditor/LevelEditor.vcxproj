@@ -236,6 +236,7 @@
     <ClInclude Include="iniStreamImpl.h" />
     <ClInclude Include="LEPhysics.h" />
     <ClInclude Include="mesh_data.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UI\Tools\UIAIMapTool.h" />
     <ClInclude Include="UI\Tools\UIDOTool.h" />
@@ -292,6 +293,12 @@
     <ProjectReference Include="..\XrSE_Factory\XrSE_Factory.vcxproj">
       <Project>{e5d980c8-02df-45d1-9f15-4d87ae100661}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LevelEditor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="IconLE.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
