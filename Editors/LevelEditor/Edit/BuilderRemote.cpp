@@ -341,98 +341,112 @@ void SceneBuilder::SaveBuildAsObject()
 
 void SceneBuilder::SaveBuild()
 {
-    xr_string fn	= MakeLevelPath("build.prj");
-	IWriter* F		= FS.w_open(fn.c_str());
-    if (F){
-        F->open_chunk	(EB_Version);
-        F->w_u32   		(XRCL_CURRENT_VERSION);
-        F->close_chunk	();
+	xr_string fn = MakeLevelPath("build.prj");
+	IWriter* F = FS.w_open(fn.c_str());
 
-        F->open_chunk	(EB_Parameters);
-        F->w	  		(&Scene->m_LevelOp.m_BuildParams,sizeof(b_params));
-        F->close_chunk	();
+	if (!F)
+		return;
 
-        F->open_chunk	(EB_Vertices);
-        F->w		  	(l_verts,sizeof(b_vertex)*l_vert_it); 	//. l_vert_cnt
-        F->close_chunk	();
+	F->open_chunk(EB_Version);
 
-        F->open_chunk	(EB_Faces);
-        F->w		  	(l_faces,sizeof(b_face)*l_face_it); 	//. l_face_cnt
-        F->close_chunk	();
+    if (Core.SocSdk)
+        F->w_u32(XRCL_CURRENT_VERSION - 1);
+    else
+        F->w_u32(XRCL_CURRENT_VERSION);
 
-        F->open_chunk	(EB_SmoothGroups);
-        F->w		  	(l_smgroups, sizeof(u32)*l_face_it); 	//. l_face_cnt
-        F->close_chunk	();
+	F->close_chunk();
 
-        F->open_chunk	(EB_Materials);
-        F->w	   		(l_materials.data(),sizeof(b_material)*l_materials.size());
-        F->close_chunk	();
+	F->open_chunk(EB_Parameters);
+	F->w(&Scene->m_LevelOp.m_BuildParams, sizeof(b_params));
+	F->close_chunk();
 
-        F->open_chunk	(EB_Shaders_Render);
-        F->w			(l_shaders.data(),sizeof(b_shader)*l_shaders.size());
-        F->close_chunk	();
+	F->open_chunk(EB_Vertices);
+	F->w(l_verts, sizeof(b_vertex) * l_vert_it); 	//. l_vert_cnt
+	F->close_chunk();
 
-        F->open_chunk	(EB_Shaders_Compile);
-        F->w			(l_shaders_xrlc.data(),sizeof(b_shader)*l_shaders_xrlc.size());
-        F->close_chunk	();
+	F->open_chunk(EB_Faces);
+	F->w(l_faces, sizeof(b_face) * l_face_it); 	//. l_face_cnt
+	F->close_chunk();
 
-        F->open_chunk	(EB_Textures);
-        F->w			(l_textures.data(),sizeof(b_texture_real)*l_textures.size());
-        F->close_chunk	();
-
-        F->open_chunk 	(EB_Glows);
-        F->w			(l_glows.data(),sizeof(b_glow)*l_glows.size());
-        F->close_chunk	();
-
-        F->open_chunk	(EB_Portals);
-        F->w			(l_portals.data(),sizeof(b_portal)*l_portals.size());
-        F->close_chunk	();
-
-        F->open_chunk	(EB_Light_control);
-        for (xr_vector<sb_light_control>::iterator lc_it=l_light_control.begin(); lc_it!=l_light_control.end(); lc_it++){
-            F->w		(lc_it->name,sizeof(lc_it->name));
-            F->w_u32 	(lc_it->data.size());
-            F->w	 	(lc_it->data.data(),sizeof(u32)*lc_it->data.size());
-        }
-        F->close_chunk	();
-
-        F->open_chunk	(EB_Light_static);
-        F->w		 	(l_light_static.data(),sizeof(b_light_static)*l_light_static.size());
-        F->close_chunk	();
-
-        F->open_chunk	(EB_Light_dynamic);
-        F->w		  	(l_light_dynamic.data(),sizeof(b_light_dynamic)*l_light_dynamic.size());
-        F->close_chunk	();
-
-        F->open_chunk	(EB_LOD_models);
-        for (int k=0; k<(int)l_lods.size(); ++k)
-            F->w	  	(&l_lods[k].lod,sizeof(b_lod));
-        F->close_chunk	();
-
-        F->open_chunk	(EB_MU_models);
-        for (int k=0; k<(int)l_mu_models.size(); ++k)
-        {
-            b_mu_model&	m= l_mu_models[k];
-            // name
-            F->w_stringZ(m.name);
-            // vertices
-            F->w_u32	(m.m_iVertexCount);
-            F->w		(m.m_pVertices,sizeof(b_vertex)*m.m_iVertexCount);
-            // faces
-            F->w_u32	(m.m_iFaceCount);
-            F->w		(m.m_pFaces,sizeof(b_face)*m.m_iFaceCount);
-            // lod_id
-            F->w_u16	(m.lod_id);
-            F->w		(m.m_smgroups,sizeof(int)*m.m_iFaceCount);
-        }
-        F->close_chunk	();
-
-        F->open_chunk	(EB_MU_refs);
-        F->w			(l_mu_refs.data(),sizeof(b_mu_reference)*l_mu_refs.size());
-        F->close_chunk	();
-
-        FS.w_close		(F);
+    if (!Core.SocSdk)
+    {
+        F->open_chunk(EB_SmoothGroups);
+        F->w(l_smgroups, sizeof(u32) * l_face_it); 	//. l_face_cnt
+        F->close_chunk();
     }
+
+	F->open_chunk(EB_Materials);
+	F->w(l_materials.data(), sizeof(b_material) * l_materials.size());
+	F->close_chunk();
+
+	F->open_chunk(EB_Shaders_Render);
+	F->w(l_shaders.data(), sizeof(b_shader) * l_shaders.size());
+	F->close_chunk();
+
+	F->open_chunk(EB_Shaders_Compile);
+	F->w(l_shaders_xrlc.data(), sizeof(b_shader) * l_shaders_xrlc.size());
+	F->close_chunk();
+
+	F->open_chunk(EB_Textures);
+	F->w(l_textures.data(), sizeof(b_texture_real) * l_textures.size());
+	F->close_chunk();
+
+	F->open_chunk(EB_Glows);
+	F->w(l_glows.data(), sizeof(b_glow) * l_glows.size());
+	F->close_chunk();
+
+	F->open_chunk(EB_Portals);
+	F->w(l_portals.data(), sizeof(b_portal) * l_portals.size());
+	F->close_chunk();
+
+	F->open_chunk(EB_Light_control);
+	for (xr_vector<sb_light_control>::iterator lc_it = l_light_control.begin(); lc_it != l_light_control.end(); lc_it++) {
+		F->w(lc_it->name, sizeof(lc_it->name));
+		F->w_u32(lc_it->data.size());
+		F->w(lc_it->data.data(), sizeof(u32) * lc_it->data.size());
+	}
+	F->close_chunk();
+
+	F->open_chunk(EB_Light_static);
+	F->w(l_light_static.data(), sizeof(b_light_static) * l_light_static.size());
+	F->close_chunk();
+
+	F->open_chunk(EB_Light_dynamic);
+	F->w(l_light_dynamic.data(), sizeof(b_light_dynamic) * l_light_dynamic.size());
+	F->close_chunk();
+
+	F->open_chunk(EB_LOD_models);
+	for (int k = 0; k < (int)l_lods.size(); ++k)
+		F->w(&l_lods[k].lod, sizeof(b_lod));
+	F->close_chunk();
+
+	F->open_chunk(EB_MU_models);
+
+	for (int k = 0; k < (int)l_mu_models.size(); ++k)
+	{
+		b_mu_model& m = l_mu_models[k];
+		// name
+		F->w_stringZ(m.name);
+		// vertices
+		F->w_u32(m.m_iVertexCount);
+		F->w(m.m_pVertices, sizeof(b_vertex) * m.m_iVertexCount);
+		// faces
+		F->w_u32(m.m_iFaceCount);
+		F->w(m.m_pFaces, sizeof(b_face) * m.m_iFaceCount);
+		// lod_id
+		F->w_u16(m.lod_id);
+
+        if(!Core.SocSdk)
+            F->w(m.m_smgroups, sizeof(int) * m.m_iFaceCount);
+	}
+
+	F->close_chunk();
+
+	F->open_chunk(EB_MU_refs);
+	F->w(l_mu_refs.data(), sizeof(b_mu_reference) * l_mu_refs.size());
+	F->close_chunk();
+
+	FS.w_close(F);
 }
 
 int SceneBuilder::CalculateSector(const Fvector& P, float R)
