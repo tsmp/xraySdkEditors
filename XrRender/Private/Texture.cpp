@@ -530,7 +530,8 @@ IC u32 it_height_rev_base(u32 d, u32 s)	{	return	color_rgba	(
 
 ID3DBaseTexture* CRender::texture_load_software(LPCSTR fRName, u32& ret_msize)
 {
-	R_ASSERT(false);
+	// TSMP: todo
+	MessageBoxA(0, "TSMP: texture_load_software not implemented!", "Error", 0);
 	return nullptr;
 }
 

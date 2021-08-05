@@ -5,8 +5,9 @@
 
 int DXTCompressImage	(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch, STextureParams* fmt, u32 depth)
 {
-	R_ASSERT(false);
-	return 0;
+	// TSMP: todo
+	MessageBoxA(0, "TSMP: DXTCompressImage not implemented!", "Error", 0);
+	return false;
 	/*CTimer T; T.Start();
 
 	Msg("DXT: Compressing Image: %s %uX%u", out_name, w, h);

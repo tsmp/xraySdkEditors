@@ -30,9 +30,8 @@ bool IsValidSize(u32 w, u32 h){
 
 bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
 {
-    bool ignore = false;
-    Debug.fail("not implemented", "1", 2, "Stbi_Load", ignore);
-    R_ASSERT(false);
+    // TSMP: todo
+    MessageBoxA(0, "TSMP: Stbi_Load not implemented!", "Error", 0);
     return false;
 }
 //
