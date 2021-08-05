@@ -575,9 +575,15 @@ void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
     }
         
     // save data
-    if (bSaveMain)		FS.w_close(F);
+    if (bSaveMain)		
+        FS.w_close(F);
+
+    if (!bUndo)
+    {
+        m_RTFlags.set(flRT_Unsaved, FALSE);
+        Msg("Saving time: %3.2f sec", T.GetElapsed_sec());
+    }
 }
-//--------------------------------------------------------------------------------------------------
 
 void EScene::SaveObjectLTX(CCustomObject* O, LPCSTR sect_name, CInifile& ini)
 {
