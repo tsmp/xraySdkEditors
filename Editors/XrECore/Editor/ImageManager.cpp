@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-//#include "..\BearBundle\BearGraphics\BearGraphics.hpp"
-
 #include "ImageManager.h"
 #include "xrImage_Resampler.h"
 #include "..\Engine\Image.h"
@@ -11,104 +9,119 @@
 #include "ResourceManager.h"
 #include "..\BearBundle\External\Public\StbImage\stb_image.h"
 #include "../XrETools/ETools.h"
+
+#include "..\Components\FreeImage\FreeImage.h"
+#pragma comment(lib,"FreeImage.lib")
+
 CImageManager ImageLib;
-//---------------------------------------------------------------------------
-/*
-extern bool IsFormatRegister(LPCSTR ext);
-extern FIBITMAP* Stbi_Load(char* full_name);*/
 
 extern "C" __declspec(dllimport)
-int DXTCompress	(LPCSTR out_name, u8* raw_data, u8* ext_data, u32 w, u32 h, u32 pitch,
-					STextureParams* options, u32 depth);
+int DXTCompress	(LPCSTR out_name, u8* raw_data, u8* ext_data, u32 w, u32 h, u32 pitch, STextureParams* options, u32 depth);
 
-bool IsValidSize(u32 w, u32 h){
-	if (!btwIsPow2(h)) return false;
-    if (h*6==w) return true;
-	if (!btwIsPow2(w)) return false;
-    return true;
+bool IsValidSize(u32 w, u32 h)
+{
+	if (!btwIsPow2(h))
+		return false;
+
+	if (h * 6 == w)
+		return true;
+
+	if (!btwIsPow2(w))
+		return false;
+
+	return true;
 }
 
-bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
+FIBITMAP* Surface_Load(char* full_name)
 {
-    // TSMP: todo
-    MessageBoxA(0, "TSMP: Stbi_Load not implemented!", "Error", 0);
-    return false;
-}
-//
-//bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
-//{
-//    if (!FS.exist(full_name))
-//    { 
-//    	ELog.Msg(mtError,"Can't find file: '%s'",full_name);
-//    	return false;
-//    }
-//	if (strstr(full_name,".tga")){
-//    	CImage img;
-//        if (!img.LoadTGA	(full_name)) return false;
-//		w 					= img.dwWidth;
-//        h 					= img.dwHeight;
-//        a					= img.bAlpha;
-//        data.resize			(w*h);
-//		for(int y=0;y<h;y++) CopyMemory			(data.data()+y*w,img.pData+(y * w),sizeof(u32)*w);
-//		if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
-//        return true;
-//    }else{
-//        int wi, hi, c;
-//        stbi_uc* raw_data = stbi_load((LPSTR)full_name, &wi, &hi, &c, 4);
-//        if(raw_data)
-//        {
-//            w = wi;
-//            h = hi;
-//		    u32 w4			= w*4;
-//            data.resize		(w*h);
-//            CopyMemory(data.data(), raw_data,w4*h);
-//            a = c == 4;
-//            stbi_image_free(raw_data);
-//			if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
-//            return true;
-//        }
-//        else
-//        {
-//            BearImage img;
-//            if (img.LoadFromFile(full_name))
-//            {
-//                img.ClearMipLevels();
-//                img.Convert(BearTexturePixelFormat::R8G8B8A8);
-//                img.SwapRB();
-//                w = img.GetSize().x;
-//                h = img.GetSize().y;
-//                data.resize(w * h);
-//                a = true;
-//                CopyMemory(data.data(), *img, w * h*4);
-//               /* for (bsize i = 0; i < h/2; i++)
-//                {
-//                    bear_swap(data.data()+(i*w), data.data() + ((h - (i+1)) * w), w);
-//                }*/
-//                return true;
-//            }
-//        }
-//
-//    }
-//	return false;
-//}
-//------------------------------------------------------------------------------
+    // load
+	FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(full_name);
+    FIBITMAP* map = FreeImage_Load(fif, full_name);
 
-u32* Stbi_Load(LPCSTR full_name,  u32& w, u32& h)
-{
-    u32 a;
-    xr_vector<u32> data;
-    if (Stbi_Load(full_name, data, w, h, a))
-    {
-        u32* raw_data = xr_alloc<u32>(w * h );
-        memcpy(raw_data, data.data(), w * h * 4);
-        return raw_data;
-   }
-    else
-    {
+    if (!map)
         return nullptr;
-    }
+
+    // check if already 32bpp
+    if (32 == FreeImage_GetBPP(map))	
+        return map;
+
+    // convert
+    FIBITMAP* map32 = FreeImage_ConvertTo32Bits(map);
+
+    if (!map32)
+        map32 = map;
+    else
+        FreeImage_Unload(map);
+
+	return map32;
 }
-//------------------------------------------------------------------------------
+
+bool Stbi_Load(LPCSTR full_name, U32Vec &data, u32 &w, u32 &h, u32 &a)
+{
+    if (!FS.exist(full_name))
+    { 
+    	ELog.Msg(mtError,"Can't find file: '%s'",full_name);
+    	return false;
+    }
+
+    if (strstr(full_name, ".tga"))
+    {
+        CImage img;
+
+        if (!img.LoadTGA(full_name))
+            return false;
+
+        w = img.dwWidth;
+        h = img.dwHeight;
+        a = img.bAlpha;
+        data.resize(w * h);
+
+        for (int y = 0; y < h; y++)
+            CopyMemory(data.data() + y * w, img.pData + (y * w), sizeof(u32) * w);
+
+        if (!IsValidSize(w, h))
+            ELog.Msg(mtError, "Texture (%s) - invalid size: [%d, %d]", full_name, w, h);
+
+        return true;
+    }
+    
+	if (FIBITMAP* bm = Surface_Load((LPSTR)full_name))
+	{
+		w = FreeImage_GetWidth(bm);
+		h = FreeImage_GetHeight(bm);
+		u32 w4 = w * 4;
+		data.resize(w * h);
+
+		for (int y = h - 1; y >= 0; y--) 
+            CopyMemory(&data[0] + (h - y - 1) * w, FreeImage_GetScanLine(bm, y), w4);
+
+		a = FIC_RGBALPHA == FreeImage_GetColorType(bm);
+		FreeImage_Unload(bm);
+
+		if (!IsValidSize(w, h))	
+            ELog.Msg(mtError, "Texture (%s) - invalid size: [%d, %d]", full_name, w, h);
+
+		return true;
+	}
+
+	return false;
+}
+
+u32* Stbi_Load(LPCSTR full_name, u32& w, u32& h)
+{
+	u32 a;
+	xr_vector<u32> data;
+
+	if (Stbi_Load(full_name, data, w, h, a))
+	{
+		u32* raw_data = xr_alloc<u32>(w * h);
+		memcpy(raw_data, data.data(), w * h * 4);
+		return raw_data;
+	}
+	
+    return nullptr;	
+}
+
 xr_string CImageManager::UpdateFileName(xr_string& fn)
 {
 	return EFS.AppendFolderToName(fn,1,TRUE);
@@ -121,10 +134,14 @@ void CImageManager::MakeThumbnailImage(ETextureThumbnail* THM, u32* data, u32 w,
 {
 	R_ASSERT(THM);
 	// create thumbnail
-    if (THM->m_Pixels.empty()) THM->m_Pixels.resize(THUMB_SIZE);
+
+    if (THM->m_Pixels.empty()) 
+        THM->m_Pixels.resize(THUMB_SIZE);
+
 	THM->m_TexParams.width = w;
 	THM->m_TexParams.height= h;
     THM->m_TexParams.flags.set(STextureParams::flHasAlpha,a);
+
 	imf_Process(THM->m_Pixels.data(),THUMB_WIDTH,THUMB_HEIGHT,data,THM->_Width(),THM->_Height(),imf_box);
     THM->VFlip();
 }
@@ -135,7 +152,8 @@ void CImageManager::MakeThumbnailImage(ETextureThumbnail* THM, u32* data, u32 w,
 void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const xr_string& src_name, LPCSTR initial, bool bSetDefParam)
 {
 	R_ASSERT(src_name.size());
-	string_path 	base_name;
+	string_path base_name;
+
     if (initial)
     	FS.update_path(base_name,initial,src_name.c_str());
     else
@@ -143,7 +161,8 @@ void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const xr_stri
 
     U32Vec data;
     u32 w, h, a;
-    xr_string fn 	= EFS.ChangeFileExt(base_name,".tga");
+    xr_string fn = EFS.ChangeFileExt(base_name,".tga");
+
     if (!Stbi_Load(fn.c_str(),data,w,h,a))
     {
         if (!Stbi_Load(base_name, data, w, h, a))
@@ -152,43 +171,48 @@ void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const xr_stri
             return;
         }
     }
+
     MakeThumbnailImage(THM,data.data(),w,h,a);
 
+	// выставить начальные параметры
+	if (bSetDefParam)
+	{
+		THM->m_Age = FS.get_file_age(fn.c_str());
+		THM->m_TexParams.fmt = (a) ? STextureParams::tfDXT3 : STextureParams::tfDXT1;
 
-    // выставить начальные параметры
-	if (bSetDefParam){
-		THM->m_Age 			= FS.get_file_age(fn.c_str());
-		THM->m_TexParams.fmt            = (a)?STextureParams::tfDXT3:STextureParams::tfDXT1;
-	    if ((h*6)==w){
-        	THM->m_TexParams.type	        = STextureParams::ttCubeMap;
-        	THM->m_TexParams.flags.set      (STextureParams::flGenerateMipMaps,FALSE);
-        }
-    }
-    THM->SetValid();
+		if ((h * 6) == w)
+		{
+			THM->m_TexParams.type = STextureParams::ttCubeMap;
+			THM->m_TexParams.flags.set(STextureParams::flGenerateMipMaps, FALSE);
+		}
+	}
+
+	THM->SetValid();
 }
+
 //------------------------------------------------------------------------------
 // создает новую текстуру
 //------------------------------------------------------------------------------
 void CImageManager::CreateGameTexture(LPCSTR src_name, ETextureThumbnail* thumb)
 {
-	R_ASSERT(src_name&&src_name[0]);
-    ETextureThumbnail* THM 	= thumb?thumb:xr_new<ETextureThumbnail>(src_name);
+	R_ASSERT(src_name && src_name[0]);
+	ETextureThumbnail* THM = thumb ? thumb : xr_new<ETextureThumbnail>(src_name);
 	string_path base_name;
-    strcpy					(base_name,src_name);
+	strcpy(base_name, src_name);
 
 	string_path 			game_name;
-    strcpy					(game_name,EFS.ChangeFileExt(src_name,".dds").c_str());
-	FS.update_path			(base_name,_textures_,base_name);
-	FS.update_path			(game_name,_game_textures_,game_name);
-    int base_age 			= FS.get_file_age(base_name);
+	strcpy(game_name, EFS.ChangeFileExt(src_name, ".dds").c_str());
+	FS.update_path(base_name, _textures_, base_name);
+	FS.update_path(game_name, _game_textures_, game_name);
+	int base_age = FS.get_file_age(base_name);
 
-    U32Vec data;
-    u32 w, h, a;
-    if (!Stbi_Load(base_name,data,w,h,a)) return;
-    MakeGameTexture(THM,game_name,data.data());
+	U32Vec data;
+	u32 w, h, a;
+	if (!Stbi_Load(base_name, data, w, h, a)) return;
+	MakeGameTexture(THM, game_name, data.data());
 
-    FS.set_file_age(game_name, base_age);
-    if (!thumb) xr_delete(THM);
+	FS.set_file_age(game_name, base_age);
+	if (!thumb) xr_delete(THM);
 }
 
 //------------------------------------------------------------------------------
@@ -197,79 +221,105 @@ void CImageManager::CreateGameTexture(LPCSTR src_name, ETextureThumbnail* thumb)
 bool CImageManager::MakeGameTexture(LPCSTR game_name, u32* data, const STextureParams& tp)
 {
 	VerifyPath(game_name);
-    // fill texture params
+	// fill texture params
 	// compress
-    u32 w4= tp.width*4;
-    int res			= DXTCompress(game_name, (u8*)data, 0, tp.width, tp.height, w4, (STextureParams*)&tp, 4);
-    if (1!=res){
-    	FS.file_delete(game_name);
-        switch(res){
-        case 0:		ELog.DlgMsg	(mtError,"Can't make game texture '%s'.",game_name);	break;
-        case -1000:	ELog.Msg	(mtError,"Invalid gloss mask '%s'.",game_name);			return true;
-        }
+	u32 w4 = tp.width * 4;
+	int res = DXTCompress(game_name, (u8*)data, 0, tp.width, tp.height, w4, (STextureParams*)&tp, 4);
+	if (1 != res) 
+    {
+		FS.file_delete(game_name);
+
+		switch (res) 
+        {
+		case 0:		
+            ELog.DlgMsg(mtError, "Can't make game texture '%s'.", game_name);	
+            break;
+
+		case -1000:	
+            ELog.Msg(mtError, "Invalid gloss mask '%s'.", game_name);			
+            return true;
+		}
+
 		return false;
-    }
-    R_ASSERT((res==1)&&FS.file_length(game_name));
-    return res==1;
+	}
+
+	R_ASSERT((res == 1) && FS.file_length(game_name));
+	return res == 1;
 }
+
 bool CImageManager::MakeGameTexture(ETextureThumbnail* THM, LPCSTR game_name, u32* load_data)
 {
 	VerifyPath(game_name);
-    // flip
-    u32 w = THM->_Width();
-    u32 h = THM->_Height();
-    u32 w4= w*4;
+	// flip
+	u32 w = THM->_Width();
+	u32 h = THM->_Height();
+	u32 w4 = w * 4;
 	// remove old
-    FS.file_delete			(game_name);
-    xr_string game_name2 	= ChangeFileExt(game_name,"#.dds");
-    FS.file_delete			(game_name2.c_str());
+	FS.file_delete(game_name);
+	xr_string game_name2 = ChangeFileExt(game_name, "#.dds");
+	FS.file_delete(game_name2.c_str());
 
-    U32Vec 	ext_data;
-    if ((THM->m_TexParams.type==STextureParams::ttBumpMap)&&(THM->m_TexParams.ext_normal_map_name.size()))
-    {
-    	bool e_res			= true;
-        LPCSTR e_name		= THM->m_TexParams.ext_normal_map_name.c_str();
-        ETextureThumbnail* 	NM_THM = xr_new<ETextureThumbnail>(e_name);
-        if (NM_THM->_Format().type==STextureParams::ttNormalMap)
-        {
-	        if (NM_THM->_Format().fmt==STextureParams::tfRGBA)
+	U32Vec 	ext_data;
+	if ((THM->m_TexParams.type == STextureParams::ttBumpMap) && (THM->m_TexParams.ext_normal_map_name.size()))
+	{
+		bool e_res = true;
+		LPCSTR e_name = THM->m_TexParams.ext_normal_map_name.c_str();
+		ETextureThumbnail* NM_THM = xr_new<ETextureThumbnail>(e_name);
+
+		if (NM_THM->_Format().type == STextureParams::ttNormalMap)
+		{
+			if (NM_THM->_Format().fmt == STextureParams::tfRGBA)
+			{
+				u32 _w, _h;
+
+				if (!LoadTextureData(e_name, ext_data, _w, _h))
+				{
+					ELog.DlgMsg(mtError, "Can't load special normal map texture '%s'.", e_name);
+					e_res = false;
+				}
+				else if ((_w != w) || (_h != h))
+				{
+					ELog.DlgMsg(mtError, "Invalid load special normal map size '%s'. It should be [%dx%d]", e_name, w, h);
+					e_res = false;
+				}
+			}
+			else 
             {
-            	u32 _w,_h;
-                if (!LoadTextureData(e_name,ext_data,_w,_h))
-                {
-                    ELog.DlgMsg	(mtError,"Can't load special normal map texture '%s'.",e_name);
-                    e_res		= false;
-                }else if ((_w!=w)||(_h!=h))
-                {
-                    ELog.DlgMsg	(mtError,"Invalid load special normal map size '%s'. It should be [%dx%d]",e_name,w,h);
-                    e_res		= false;
-                }
-        	}else{
-                ELog.DlgMsg		(mtError,"Invalid special normal map format '%s'. It should be '32 bit (8:8:8:8)'",e_name);
-                e_res			= false;
-            }
-        }else{
-            ELog.DlgMsg		(mtError,"Invalid special normal map type '%s'. It should be 'NormalMap'",e_name);
-            e_res			= false;
-        }
-        xr_delete			(NM_THM);
-        if (false==e_res)	return false;
-    }
-    // compress
-    int res 	= DXTCompress(game_name, (u8*)load_data, (u8*)(ext_data.empty()?0:ext_data.data()), w, h, w4, &THM->m_TexParams, 4);
-   if (1!=res){
-    	if (-1000!=res){ //. Special for Oles (glos<10%) 
-            FS.file_delete	(game_name);
-            FS.file_delete	(game_name2.c_str());
-        }
-        switch(res){
-        case 0:		ELog.DlgMsg	(mtError,"Can't make game texture '%s'.",THM->m_SrcName.c_str());	break;
-        case -1000:	ELog.Msg	(mtError,"Invalid gloss mask '%s'.",THM->m_SrcName.c_str());		return true;
-        }
+				ELog.DlgMsg(mtError, "Invalid special normal map format '%s'. It should be '32 bit (8:8:8:8)'", e_name);
+				e_res = false;
+			}
+		}
+		else 
+        {
+			ELog.DlgMsg(mtError, "Invalid special normal map type '%s'. It should be 'NormalMap'", e_name);
+			e_res = false;
+		}
+
+		xr_delete(NM_THM);
+		if (false == e_res)	return false;
+	}
+	// compress
+	int res = DXTCompress(game_name, (u8*)load_data, (u8*)(ext_data.empty() ? 0 : ext_data.data()), w, h, w4, &THM->m_TexParams, 4);
+	if (1 != res) 
+    {
+		if (-1000 != res) { //. Special for Oles (glos<10%) 
+			FS.file_delete(game_name);
+			FS.file_delete(game_name2.c_str());
+		}
+		switch (res) 
+        {
+		case 0:		
+            ELog.DlgMsg(mtError, "Can't make game texture '%s'.", THM->m_SrcName.c_str());	
+            break;
+
+		case -1000:	
+            ELog.Msg(mtError, "Invalid gloss mask '%s'.", THM->m_SrcName.c_str());		
+            return true;
+		}
 		return false;
-    }
-    R_ASSERT((res==1)&&FS.file_length(game_name));
-    return res==1;
+	}
+	R_ASSERT((res == 1) && FS.file_length(game_name));
+	return res == 1;
 }
 
 //------------------------------------------------------------------------------
@@ -277,13 +327,17 @@ bool CImageManager::MakeGameTexture(ETextureThumbnail* THM, LPCSTR game_name, u3
 //------------------------------------------------------------------------------
 bool CImageManager::LoadTextureData(LPCSTR src_name, U32Vec& data, u32& w, u32& h, int* age)
 {
-	string_path 			fn;
-//.	FS.update_path			(fn,_textures_,ChangeFileExt(src_name,".tga").c_str());
-	FS.update_path			(fn,_game_textures_,ChangeFileExt(src_name,".dds").c_str());
-    u32 a;
-    if (!Stbi_Load(fn,data,w,h,a)) return false;
-    if (age) *age			= FS.get_file_age(fn);
-    return true;
+	string_path fn;
+	FS.update_path(fn, _game_textures_, ChangeFileExt(src_name, ".dds").c_str());
+	u32 a;
+
+	if (!Stbi_Load(fn, data, w, h, a)) 
+        return false;
+
+	if (age) 
+        *age = FS.get_file_age(fn);
+
+	return true;
 }
 
 //------------------------------------------------------------------------------
@@ -292,40 +346,47 @@ bool CImageManager::LoadTextureData(LPCSTR src_name, U32Vec& data, u32& w, u32& 
 //------------------------------------------------------------------------------
 void CImageManager::SafeCopyLocalToServer(FS_FileSet& files)
 {
-    string_path 		p_import, p_textures;
-    string_path 		src_name, dest_name;
-    FS.update_path	   	(p_import,_import_,"");
-    FS.update_path	   	(p_textures,_textures_,"");
+	string_path p_import, p_textures;
+	string_path src_name, dest_name;
+	FS.update_path(p_import, _import_, "");
+	FS.update_path(p_textures, _textures_, "");
 
-    FS_FileSetIt it	= files.begin();
-	FS_FileSetIt _E 	= files.end();
-	for (; it!=_E; it++){
-                xr_string fn;
+	FS_FileSetIt it = files.begin();
+	FS_FileSetIt _E = files.end();
 
-    	// copy sources
-		fn 				 = it->name;
-		strconcat		(sizeof(src_name),src_name, p_import, fn.c_str());
-		UpdateFileName	 (fn);
+	for (; it != _E; it++) 
+    {
+		xr_string fn;
 
-		strconcat(sizeof(dest_name),dest_name, p_textures, EFS.ChangeFileExt(fn,".tga").c_str() );
+		// copy sources
+		fn = it->name;
+		strconcat(sizeof(src_name), src_name, p_import, fn.c_str());
+		UpdateFileName(fn);
 
-        if (0==strcmp(strext(src_name),".tga")){
-			FS.file_copy(src_name,dest_name);
-        }else{
-        	// convert to TGA
-            U32Vec data;
-            u32 w,h,a;
-		    R_ASSERT	(Stbi_Load(src_name,data,w,h,a));
-            CImage* I 	= xr_new<CImage>();
-            I->Create	(w,h,data.data());
-            I->Vflip	();
-            I->SaveTGA	(dest_name);
-            xr_delete	(I);
-        }
-        FS.set_file_age		(dest_name, FS.get_file_age(src_name));
-        EFS.MarkFile		(src_name,true);
-    }
-}    
+		strconcat(sizeof(dest_name), dest_name, p_textures, EFS.ChangeFileExt(fn, ".tga").c_str());
+
+		if (0 == strcmp(strext(src_name), ".tga")) 
+        {
+			FS.file_copy(src_name, dest_name);
+		}
+		else 
+        {
+			// convert to TGA
+			U32Vec data;
+			u32 w, h, a;
+			R_ASSERT(Stbi_Load(src_name, data, w, h, a));
+			CImage* I = xr_new<CImage>();
+			I->Create(w, h, data.data());
+			I->Vflip();
+			I->SaveTGA(dest_name);
+			xr_delete(I);
+		}
+
+		FS.set_file_age(dest_name, FS.get_file_age(src_name));
+		EFS.MarkFile(src_name, true);
+	}
+}
+
 //------------------------------------------------------------------------------
 // возвращает список не синхронизированных (модифицированных) текстур
 // source_list - содержит список текстур с расширениями
