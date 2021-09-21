@@ -245,7 +245,7 @@ int CImageManager::CreateMergedTexture(const RStringVec& _names, LPCSTR dest_nam
     tp.fmt				= fmt;
     tp.type				= STextureParams::ttImage;
     tp.mip_filter		= STextureParams::kMIPFilterAdvanced;
-    tp.flags.assign		(STextureParams::flDitherColor|STextureParams::flGenerateMipMaps);
+    tp.flags.assign		(STextureParams::flDitherColor);
     MakeGameTexture		(fn.c_str(),dest_pixels.data(),tp);
     return 1;
 }
