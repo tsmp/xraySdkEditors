@@ -133,26 +133,23 @@ void ESceneCustomOTool::SaveLTX(CInifile& ini, int id)
 
 void ESceneCustomOTool::SaveStream(IWriter& F)
 {
-	inherited::SaveStream	(F);
+	inherited::SaveStream(F);
+	F.open_chunk(CHUNK_OBJECTS);
+    int objectsCount = 0;
 
-    int Objcount		= 0;
-
-	F.open_chunk		(CHUNK_OBJECTS);
-    int count			= 0;
-    for(ObjectIt it = m_Objects.begin();it!=m_Objects.end();++it)
+	for (ObjectIt it = m_Objects.begin(); it != m_Objects.end(); ++it)
 	{
-    	if ( (*it)->IsDeleted() || (*it)->m_CO_Flags.test(CCustomObject::flObjectInGroup) )
-        continue;
+		if ((*it)->IsDeleted() || (*it)->m_CO_Flags.test(CCustomObject::flObjectInGroup))
+			continue;
 
-        F.open_chunk			(count++);
+        F.open_chunk(objectsCount++);
         Scene->SaveObjectStream	(*it,F);
-        F.close_chunk			();
+        F.close_chunk();
     }
-	F.close_chunk	();
 
-	F.w_chunk		(CHUNK_OBJECT_COUNT,&Objcount,sizeof(Objcount));
+	F.close_chunk();
+    F.w_chunk(CHUNK_OBJECT_COUNT, &objectsCount, sizeof(objectsCount));
 }
-//----------------------------------------------------
 
 bool ESceneCustomOTool::Export(LPCSTR path)
 {
