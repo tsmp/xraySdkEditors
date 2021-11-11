@@ -252,8 +252,30 @@ void CExportSkeleton::SSplit::Save(IWriter& F)
 
     // Vertices
     F.open_chunk		(OGF_VERTICES);
-	F.w_u32				(m_SkeletonLinkType);
-    F.w_u32				(m_Verts.size());
+
+    if (Core.SocSdk)
+    {
+        switch (m_SkeletonLinkType)
+        {
+        case 1:
+            F.w_u32(OGF_VERTEXFORMAT_FVF_1L);
+            break;
+
+        case 2:
+            F.w_u32(OGF_VERTEXFORMAT_FVF_2L);
+            break;
+
+        default:
+            std::string message = "Тип связи скелета: " + std::to_string(m_SkeletonLinkType) + ", оригинальная тч не сможет правильно открыть эту ogf.";
+            MessageBoxA(0, message.c_str(), "Внимание!", 0);
+            F.w_u32(m_SkeletonLinkType);
+            break;
+        }
+    }
+    else
+        F.w_u32(m_SkeletonLinkType);
+	
+    F.w_u32(m_Verts.size());
 
     if(m_SkeletonLinkType==1)
     {
