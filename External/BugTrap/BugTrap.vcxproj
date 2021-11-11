@@ -501,8 +501,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BearBundle\External\zlib\zlib.vcxproj">
-      <Project>{86d28925-9f85-43ec-980e-e99d7ff2501c}</Project>
+    <ProjectReference Include="..\zlib\zlib.vcxproj">
+      <Project>{ca2604ca-a2ac-49a1-a468-8ab5a2e6cbc9}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
