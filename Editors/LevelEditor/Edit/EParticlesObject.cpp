@@ -244,20 +244,31 @@ void EParticlesObject::OnDeviceDestroy()
 
 bool EParticlesObject::ExportGame(SExportStreams* F)
 {
-	SExportStreamItem& I	= F->pe_static;
+	SExportStreamItem &I= F->pe_static;
 
-    if(I.chunk==0)
+    if (!Core.SocSdk)
     {
-        I.stream.open_chunk		(I.chunk++);
-        I.stream.w_u32			(1); //version
-        I.stream.close_chunk	();
+        if (I.chunk == 0)
+        {
+            I.stream.open_chunk(I.chunk++);
+            I.stream.w_u32(1); //version
+            I.stream.close_chunk();
+        }
+
+        I.stream.open_chunk(I.chunk++);
+        I.stream.w_u16(m_GameType.m_GameType.get());
+        I.stream.w_stringZ(m_RefName);
+        I.stream.w(&_Transform(), sizeof(Fmatrix));
+        I.stream.close_chunk();
     }
-    
-	I.stream.open_chunk		(I.chunk++);
-    I.stream.w_u16			(m_GameType.m_GameType.get());
-    I.stream.w_stringZ		(m_RefName);
-    I.stream.w				(&_Transform(),sizeof(Fmatrix));
-    I.stream.close_chunk	();
+    else
+    {
+        I.stream.open_chunk(I.chunk++);
+        I.stream.w_stringZ(m_RefName);
+        I.stream.w(&_Transform(), sizeof(Fmatrix));
+        I.stream.close_chunk();
+    }
+
     return true;
 }
 //----------------------------------------------------
