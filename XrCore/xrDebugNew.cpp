@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\BearBundle\BearCore\BearCore.hpp"
+//#include "..\BearBundle\BearCore\BearCore.hpp"
 #pragma hdrstop
 
 #include "xrdebug.h"
@@ -25,7 +25,7 @@ extern bool shared_str_initialized;
         static BOOL			bException	= TRUE;
     #   define USE_BUG_TRAP
 #else
-    #	define DEBUG_INVOKE	BearCore::GetDebug()->Break();
+    #	define DEBUG_INVOKE	__debugbreak();
         static BOOL			bException	= FALSE;
 #endif
 #ifndef _DEBUG
