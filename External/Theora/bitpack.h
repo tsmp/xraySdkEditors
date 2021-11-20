@@ -50,7 +50,7 @@ int oc_pack_read1(oc_pack_buf *_b);
 /* returns -1 for read beyond EOF, or the number of whole bytes available */
 #if X32
 long oc_pack_bytes_left(oc_pack_buf *_b);
-#elif X64
+#elif _WIN64
 long long oc_pack_bytes_left(oc_pack_buf *_b);
 #endif
 /*These two functions are implemented locally in huffdec.c*/
