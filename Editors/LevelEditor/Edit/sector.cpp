@@ -631,28 +631,49 @@ bool CSector::GetSummaryInfo(SSceneSummary* inf)
 	return true;
 }
 
+const int SectorMinFaceCount = 4;
+
 bool CSector::Validate(bool bMsg)
 {
-	bool bRes		= true;
-    // verify face count
-    int f_cnt;
-    GetCounts		(0,0,&f_cnt);
-    if (f_cnt<=4){
-        if (bMsg) 	ELog.Msg(mtError,"*ERROR: Sector: '%s' - face count < 4!",GetName());
-        bRes		= false;
-    }
+	bool bRes = true;
+
+	// verify face count
+    int faceCount = 0;
+	GetCounts(0, 0, &faceCount);
+
+	if (faceCount <= SectorMinFaceCount)
+    {
+        if (bMsg)
+            ELog.Msg(mtError, "*ERROR: Sector: '%s' - face count < %u!", GetName(), SectorMinFaceCount);
+
+		bRes = false;
+	}
+
     // verify shader compatibility
-	bool bRenderableFound	= false;    
-    for (SItemIt it=sector_items.begin();it!=sector_items.end();it++){
-        for (SurfFacesPairIt sf_it=it->mesh->m_SurfFaces.begin(); sf_it!=it->mesh->m_SurfFaces.end(); sf_it++){
-            CSurface* surf 		= sf_it->first;
-            Shader_xrLC* c_sh	= EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
-            if (c_sh->flags.bRendering)	bRenderableFound = true;
+	bool bRenderableFound = false;
+
+    for (SItemIt it=sector_items.begin();it!=sector_items.end();it++)
+    {
+        for (SurfFacesPairIt sf_it=it->mesh->m_SurfFaces.begin(); sf_it!=it->mesh->m_SurfFaces.end(); sf_it++)
+        {
+			CSurface* surf = sf_it->first;
+            LPCSTR compileShaderName = surf->_ShaderXRLCName();
+
+            if (Shader_xrLC* c_sh = EDevice.ShaderXRLC.Get(compileShaderName))
+            {
+                if (c_sh->flags.bRendering)
+                    bRenderableFound = true;
+            }
         }
 	}
-    if (!bRenderableFound){
-        if (bMsg) 	ELog.Msg(mtError,"*ERROR: Sector: '%s' - can't find any renderable face!", GetName());
-    	bRes 		= false;
-	}        
+
+    if (!bRenderableFound)
+    {
+        if (bMsg)
+            ELog.Msg(mtError,"*ERROR: Sector: '%s' - can't find any renderable face!", GetName());
+
+    	bRes = false;
+	}
+
    	return bRes;
 }
