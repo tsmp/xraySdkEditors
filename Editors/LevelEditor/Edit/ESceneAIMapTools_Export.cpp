@@ -57,11 +57,25 @@ bool ESceneAIMapTool::Export(LPCSTR path)
 
         EnumerateNodes	();
         F->open_chunk	(E_AIMAP_CHUNK_NODES);
-        F->w_u32		(m_Nodes.size());
-        for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++){
-            u32 			id;
-            u16 			pl;
-            NodePosition 	np;
+
+        u32 nodesCount = m_Nodes.size();
+        u32 defaultMaxNodesCount = (u32(1) << u32(MAX_NODE_BIT_COUNT)) - 2;
+        
+        if (nodesCount > defaultMaxNodesCount)
+        {
+            ELog.DlgMsg(mtInformation, "Warning. AI-Map contains %u nodes. Original compiler/game can handle only %u nodes. Extra: %u nodes",
+                nodesCount,
+                defaultMaxNodesCount,
+                nodesCount - defaultMaxNodesCount);
+        }
+
+        F->w_u32(nodesCount);
+
+        for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++)
+        {
+			u32 id;
+			u16 pl;
+			NodePosition np;
 
             id = (*it)->n1?(u32)(*it)->n1->idx:InvalidNode;  	F->w(&id,3);
             id = (*it)->n2?(u32)(*it)->n2->idx:InvalidNode;  	F->w(&id,3);
