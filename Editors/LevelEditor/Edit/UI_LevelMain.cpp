@@ -16,6 +16,7 @@
 #include "SoundManager_LE.h"
 #include "LevelPreferences.h"
 #include "UI\UIObjectList.h"
+#include "UI\UIEditLibrary.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -63,14 +64,19 @@ CCommandVar CLevelTool::CommandShowObjectList(CCommandVar p1, CCommandVar p2)
 //------------------------------------------------------------------------------
 CCommandVar CommandLibraryEditor(CCommandVar p1, CCommandVar p2)
 {
-   /* if (Scene->ObjCount()||(LUI->GetEState()!=esEditScene)){
-        if (LUI->GetEState()==esEditLibrary)	TfrmEditLibrary::ShowEditor();
-        else									ELog.DlgMsg(mtError, "Scene must be empty before editing library!");
-    }else{
-        TfrmEditLibrary::ShowEditor();
-    }*/
-    return TRUE;
+    if (Scene->ObjCount() || (LUI->GetEState() != esEditScene))
+    {
+        if (LUI->GetEState() == esEditLibrary)
+            UIEditLibrary::Show();
+        else
+            ELog.DlgMsg(mtError, "Scene must be empty before editing library!");
+    }
+    else
+        UIEditLibrary::Show();
+	
+	return TRUE;
 }
+
 CCommandVar CommandLAnimEditor(CCommandVar p1, CCommandVar p2)
 {
     //TfrmEditLightAnim::ShowEditor();
@@ -1291,6 +1297,8 @@ void CLevelMain::OnDrawUI()
 {
     inherited::OnDrawUI();
     UIObjectList::Update();
+    UIEditLibrary::Update();
+    
     if (LTools->GetToolForm())
     {
         LTools->GetToolForm()->OnDrawUI();

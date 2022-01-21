@@ -421,6 +421,9 @@
     <ClCompile Include="UI\UIObjectList.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\UIEditLibrary.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -680,6 +683,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="UI\UIEditLibrary.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="LevelEditor.rc" />

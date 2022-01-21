@@ -163,6 +163,7 @@
     <ClCompile Include="UI\Tools\UIWayTool.cpp" />
     <ClCompile Include="UI\UIDOOneColor.cpp" />
     <ClCompile Include="UI\UIDOShuffle.cpp" />
+    <ClCompile Include="UI\UIEditLibrary.cpp" />
     <ClCompile Include="UI\UILeftBarForm.cpp" />
     <ClCompile Include="UI\UIMainForm.cpp" />
     <ClCompile Include="UI\UIMainMenuForm.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="UI\Tools\UIWayTool.h" />
     <ClInclude Include="UI\UIDOOneColor.h" />
     <ClInclude Include="UI\UIDOShuffle.h" />
+    <ClInclude Include="UI\UIEditLibrary.h" />
     <ClInclude Include="UI\UILeftBarForm.h" />
     <ClInclude Include="UI\UIMainForm.h" />
     <ClInclude Include="UI\UIMainMenuForm.h" />
@@ -482,6 +484,12 @@
       <PreprocessorDefinitions>_EDITOR;_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <Optimization>MaxSpeed</Optimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
