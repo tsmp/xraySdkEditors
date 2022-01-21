@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "ui_levelmain.h"
 
+#include "UI/UIEditLibrary.h"
 
 #include "igame_persistent.h"
 #include "Builder.h"
@@ -418,8 +419,11 @@ void  CLevelTool::Render()
 
     EEditorState est 		= UI->GetEState();
     // draw scene
-    switch(est){
-    case esEditLibrary: 	/*TfrmEditLibrary::OnRender();*/ 	break;
+    switch(est)
+    {
+    case esEditLibrary: 
+        UIEditLibrary::OnRender(); 
+        break;
     case esEditLightAnim:
     case esEditScene:
     	Scene->Render(EDevice.m_Camera.GetTransform()); 

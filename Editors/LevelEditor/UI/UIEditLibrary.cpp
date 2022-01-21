@@ -2,6 +2,7 @@
 #include "UIEditLibrary.h"
 #include "..\..\XrECore\Editor\Library.h"
 #include "../../XrEUI/imgui_internal.h"
+#include "SceneObject.h"
 
 UIEditLibrary* UIEditLibrary::Form = nullptr;
 
@@ -29,10 +30,10 @@ void UIEditLibrary::OnItemFocused(ListItem* item)
 	//if (m_RealTexture)m_RemoveTexture = m_RealTexture;
 	m_RealTexture = nullptr;
 	m_Props->ClearProperties();
-	//m_Current = nullptr;
+	m_Current = nullptr;
 	if (item)
 	{
-		auto m_Current = item->Key();
+		m_Current = item->Key();
 		auto* m_Thm = ImageLib.CreateThumbnail(m_Current, EImageThumbnail::ETObject);
 		if (m_Thm)
 		{
@@ -41,7 +42,17 @@ void UIEditLibrary::OnItemFocused(ListItem* item)
 			m_Thm->FillInfo(Info);
 			m_Props->AssignItems(Info);
 		}
+
+		if (m_Preview)
+		{
+			ListItemsVec vec;
+			vec.push_back(item);
+			SelectionToReference(&vec);
+		}
 	}
+
+    //UpdateObjectProperties();
+    UI->RedrawScene();
 }
 
 UIEditLibrary::~UIEditLibrary()
@@ -93,12 +104,15 @@ void UIEditLibrary::Update()
 
 void UIEditLibrary::Show()
 {
+	UI->BeginEState(esEditLibrary);
+
 	if (!Form)
 		Form = xr_new<UIEditLibrary>();
 }
 
 void UIEditLibrary::Close()
 {
+	UI->EndEState(esEditLibrary);
 	// TODO: возможно еще кого то надо грохнуть
 	xr_delete(Form);
 }
@@ -320,8 +334,6 @@ void UIEditLibrary::OnPropertiesClick()
 
 void UIEditLibrary::DrawRightBar()
 {
-	static bool disabled = false;
-
 	if (ImGui::BeginChild("Right", ImVec2(192, 0)))
 	{
 		if (m_NullTexture || m_RealTexture)
@@ -349,7 +361,22 @@ void UIEditLibrary::DrawRightBar()
 		if (ImGui::Button("Make LOD (High Quality)", ImVec2(-1, 0))) {}
 		if (ImGui::Button("Make LOD (Low Quality)", ImVec2(-1, 0))) {}
 
-		ImGui::Checkbox("Preview", &disabled);
+		//if (disabled)
+		{
+			ImGui::PopItemFlag();
+			ImGui::PopStyleVar();
+		}
+
+		ImGui::Checkbox("Preview", &m_Preview);
+
+		//if (m_Preview)
+		//	DrawSceneObjects();
+
+		//if (disabled)
+		{
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+		}
 
 		if (ImGui::Button("Rename Object", ImVec2(-1, 0))) {}
 		if (ImGui::Button("Remove Object", ImVec2(-1, 0))) {}
@@ -369,6 +396,125 @@ void UIEditLibrary::DrawRightBar()
 
 		ImGui::EndChild();
 	}
+}
+
+////---------------------------------------------------------------------------
+bool UIEditLibrary::SelectionToReference(ListItemsVec* props)
+{
+    RStringVec					sel_strings;
+    ListItemsVec 				sel_items;
+
+    //if (props == NULL)
+    //    m_Items->GetSelected(NULL, sel_items, false /*true*/);
+    //else
+        sel_items = *props;
+
+    ListItemsIt it = sel_items.begin();
+    ListItemsIt it_e = sel_items.end();
+
+    for (; it != it_e; ++it)
+    {
+        ListItem* item = *it;
+        sel_strings.push_back(item->Key());
+    }
+    ChangeReference(sel_strings);
+    return                       sel_strings.size() > 0;
+}
+
+void UIEditLibrary::ChangeReference(const RStringVec& items)
+{
+    xr_vector<CSceneObject*>::iterator it = m_pEditObjects.begin();
+    xr_vector<CSceneObject*>::iterator it_e = m_pEditObjects.end();
+    for (; it != it_e; ++it)
+    {
+        CSceneObject* SO = *it;
+        xr_delete(SO);
+    }
+
+    m_pEditObjects.clear();
+
+    RStringVec::const_iterator sit = items.begin();
+    RStringVec::const_iterator sit_e = items.end();
+
+    for (; sit != sit_e; ++sit)
+    {
+        CSceneObject* SO = xr_new<CSceneObject>((LPVOID)0, (LPSTR)0);
+        m_pEditObjects.push_back(SO);
+        SO->SetReference((*sit).c_str());
+
+        CEditableObject* NE = SO->GetReference();
+        if (NE)
+        {
+            SO->FPosition = NE->t_vPosition;
+            SO->FScale = NE->t_vScale;
+            SO->FRotation = NE->t_vRotate;
+        }
+        // update transformation
+        SO->UpdateTransform();
+
+        /*
+            // save new position
+            CEditableObject* E				= m_pEditObject->GetReference();
+
+            if (E && new_name && (stricmp(E->GetName(),new_name))==0 ) return;
+
+            if (E)
+            {
+                E->t_vPosition.set			(m_pEditObject->PPosition);
+                E->t_vScale.set				(m_pEditObject->PScale);
+                E->t_vRotate.set			(m_pEditObject->PRotation);
+            }
+            m_pEditObject->SetReference		(new_name);
+            // get old position
+            E								= m_pEditObject->GetReference();
+            if (E)
+            {
+                m_pEditObject->PPosition 	= E->t_vPosition;
+                m_pEditObject->PScale 		= E->t_vScale;
+                m_pEditObject->PRotation	= E->t_vRotate;
+            }
+            // update transformation
+            m_pEditObject->UpdateTransform	();
+        */
+    }
+
+    ExecCommand(COMMAND_EVICT_OBJECTS);
+    ExecCommand(COMMAND_EVICT_TEXTURES);
+}
+
+void UIEditLibrary::OnRender()
+{
+	if (!Form)
+		return;
+
+    if (!Form->m_Preview) 
+		return;
+
+	for (auto &it : Form->m_pEditObjects)
+    {
+        CSceneObject* SO = it;
+        CSceneObject* S = SO;
+
+        CEditableObject* O = SO->GetReference();		
+        if (O)
+        {
+			S->m_RT_Flags.set(S->flRT_Visible,true);
+
+            if (!S->FPosition.similar(O->t_vPosition))
+                S->FPosition = O->t_vPosition;
+
+            if (!S->FRotation.similar(O->t_vRotate))
+                S->FRotation = O->t_vRotate;
+
+            if (!S->FScale.similar(O->t_vScale))
+                S->FScale = O->t_vScale;
+
+            SO->OnFrame();
+            SO->RenderSingle();
+			//static bool strict = true;
+			//SO->Render(0, strict);
+        }
+    }
 }
 
 void UIEditLibrary::Draw()

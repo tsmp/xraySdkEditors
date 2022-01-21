@@ -11,6 +11,7 @@ public:
 	static void Update();
 	static void Show();
 	static void Close();
+	static void OnRender();
 	
 	ImTextureID m_NullTexture;
 	ImTextureID m_RealTexture;
@@ -22,13 +23,21 @@ private:
 	
 	virtual void Draw();
 	void DrawObjects();
+	
 	void DrawRightBar();
 	void DrawObject(CCustomObject* obj, const char* name);
 	void InitObjects();
 	void OnPropertiesClick();
 
+	void ChangeReference(const RStringVec& items);
+	bool SelectionToReference(ListItemsVec* props);
+
 	UIItemListForm* m_ObjectList;
 	UIPropertiesForm* m_Props;
+	LPCSTR m_Current;
+	bool m_Preview;
+
+	xr_vector<CSceneObject*> m_pEditObjects;
 
 	/*
 
