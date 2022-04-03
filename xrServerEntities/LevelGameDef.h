@@ -19,10 +19,12 @@ enum EWayType{
     wt_force_dword=u32(-1)
 };
 
-enum ERPpointType{		// [0..255]
+enum ERPpointType
+{
 	rptActorSpawn		= 0,
 	rptArtefactSpawn	,
     rptItemSpawn		,
+    rptTeamBaseParticle = rptItemSpawn
 };
 
 enum EEnvModUsedParams{	eViewDist 		=(1<<0),
@@ -34,6 +36,7 @@ enum EEnvModUsedParams{	eViewDist 		=(1<<0),
 };
 
 extern ECORE_API xr_token rpoint_type[];
+extern ECORE_API xr_token rpoint_type_soc[];
 extern ECORE_API xr_token rpoint_game_type[];
 
 // BASE offset

@@ -1450,19 +1450,26 @@ void CSpawnPoint::FillProp(LPCSTR pref, PropItemVec& items)
         case ptRPoint:
         {
 
-            if(m_RP_Type==rptItemSpawn)
-            {                                                            
-                ChooseValue* C				= PHelper().CreateChoose(items,PrepareKey(pref,"Respawn Point\\Profile"),&m_rpProfile,smCustom,0,0,10,cfMultiSelect);
-                C->OnChooseFillEvent.bind	(this,&CSpawnPoint::OnFillRespawnItemProfile);
-             }else
+            if (m_RP_Type == rptItemSpawn && !Core.SocSdk)
             {
-				PHelper().CreateU8		(items, PrepareKey(pref,"Respawn Point\\Team"), 		&m_RP_TeamID, 	0,7);
+                ChooseValue* C = PHelper().CreateChoose(items, PrepareKey(pref, "Respawn Point\\Profile"), &m_rpProfile, smCustom, 0, 0, 10, cfMultiSelect);
+                C->OnChooseFillEvent.bind(this, &CSpawnPoint::OnFillRespawnItemProfile);
             }
-			Token8Value* TV = PHelper().CreateToken8	(items, PrepareKey(pref,"Respawn Point\\Spawn Type"),	&m_RP_Type, 	rpoint_type);
-            TV->OnChangeEvent.bind		(this,&CSpawnPoint::OnRPointTypeChange);
+            else
+                PHelper().CreateU8(items, PrepareKey(pref, "Respawn Point\\Team"), &m_RP_TeamID, 0, 7);
 
-		m_GameType.FillProp			(pref, items);
-        }break;
+            Token8Value* TV;
+
+            if (Core.SocSdk)
+                TV = PHelper().CreateToken8(items, PrepareKey(pref, "Respawn Point\\Spawn Type"), &m_RP_Type, rpoint_type_soc);
+            else
+                TV = PHelper().CreateToken8(items, PrepareKey(pref, "Respawn Point\\Spawn Type"), &m_RP_Type, rpoint_type);
+
+            TV->OnChangeEvent.bind(this, &CSpawnPoint::OnRPointTypeChange);
+
+            m_GameType.FillProp(pref, items);
+        }
+        break;
         case ptEnvMod:{
         	PHelper().CreateFloat	(items, PrepareKey(pref,"Environment Modificator\\Radius"),			&m_EM_Radius, 	EPS_L,10000.f);
         	PHelper().CreateFloat	(items, PrepareKey(pref,"Environment Modificator\\Power"), 			&m_EM_Power, 	EPS,1000.f);
