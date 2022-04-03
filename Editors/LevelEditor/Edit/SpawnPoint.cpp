@@ -567,39 +567,54 @@ CSpawnPoint::CSpawnPoint(LPVOID data, LPCSTR name):CCustomObject(data,name),m_Sp
 
 void CSpawnPoint::Construct(LPVOID data)
 {
-	FClassID			= OBJCLASS_SPAWNPOINT;
-    m_AttachedObject= 0;
-    if (data){
-        if (strcmp(LPSTR(data),RPOINT_CHOOSE_NAME)==0)
-        {
-            m_Type 				= ptRPoint;
-            m_RP_Type			= rptActorSpawn;
-            m_GameType.SetDefaults();
-            m_RP_TeamID			= 1;
-        }else if (strcmp(LPSTR(data),ENVMOD_CHOOSE_NAME)==0)
-        {
-            m_Type 				= ptEnvMod;
-            m_EM_Radius			= 10.f;
-            m_EM_Power			= 1.f;
-            m_EM_ViewDist		= 300.f;
-            m_EM_FogColor		= 0x00808080;
-            m_EM_FogDensity		= 1.f;
-            m_EM_AmbientColor	= 0x00000000;
-            m_EM_SkyColor		= 0x00FFFFFF;
-            m_EM_HemiColor		= 0x00FFFFFF;
-        }else{
-            CreateSpawnData(LPCSTR(data));
-            if (!m_SpawnData.Valid())
-            {
-            	SetValid(false);
-            }else{
-	        	m_Type			= ptSpawnPoint;
-            }
-        }
-    }else{
-		SetValid(false);
+    FClassID = OBJCLASS_SPAWNPOINT;
+    m_AttachedObject = nullptr;
+
+    if (!data)
+    {
+        SetValid(false);
+        return;
     }
+
+	if (!strcmp(LPSTR(data), RPOINT_CHOOSE_NAME))
+	{
+		m_Type = ptRPoint;
+		m_RP_Type = rptActorSpawn;
+
+        if (Core.SocSdk)
+        {
+            m_GameType.m_GameType.assign(static_cast<u16>(rpgtGameAny));
+            m_RP_TeamID = 0;
+        }
+        else
+        {
+            m_GameType.SetDefaults();
+            m_RP_TeamID = 1;
+        }
+	}
+	else if (!strcmp(LPSTR(data), ENVMOD_CHOOSE_NAME))
+	{
+		m_Type = ptEnvMod;
+		m_EM_Radius = 10.f;
+		m_EM_Power = 1.f;
+		m_EM_ViewDist = 300.f;
+		m_EM_FogColor = 0x00808080;
+		m_EM_FogDensity = 1.f;
+		m_EM_AmbientColor = 0x00000000;
+		m_EM_SkyColor = 0x00FFFFFF;
+		m_EM_HemiColor = 0x00FFFFFF;
+	}
+	else 
+    {
+		CreateSpawnData(LPCSTR(data));
+
+		if (!m_SpawnData.Valid())		
+			SetValid(false);		
+		else 
+            m_Type = ptSpawnPoint;		
+	}
 }
+
 void  CSpawnPoint::	OnSceneRemove	()
 {
 	DeletePhysicsShell();
@@ -1289,26 +1304,40 @@ Fvector3 u32_3f(u32 clr)
 bool CSpawnPoint::ExportGame(SExportStreams* F)
 {
 	// spawn
-	if (m_SpawnData.Valid()){
-    	if (m_SpawnData.m_Data->validate()){
-	    	m_SpawnData.ExportGame		(F,this);
-        }else{
+	if (m_SpawnData.Valid())
+    {
+    	if (m_SpawnData.m_Data->validate())        
+	    	m_SpawnData.ExportGame(F,this);
+        else
+        {
         	Log	("!Invalid spawn data:",GetName());
             return false;
         }
-    }else{
+    }
+    else
+    {
         // game
-        switch (m_Type){
+        switch (m_Type)
+        {
         case ptRPoint:
-	        F->rpoint.stream.open_chunk	(F->rpoint.chunk++);
-            F->rpoint.stream.w_fvector3	(GetPosition());
-            F->rpoint.stream.w_fvector3	(GetRotation());
-            F->rpoint.stream.w_u8		(m_RP_TeamID);
-            F->rpoint.stream.w_u8		(m_RP_Type);
-            F->rpoint.stream.w_u16		(m_GameType.m_GameType.get());
+	        F->rpoint.stream.open_chunk(F->rpoint.chunk++);
+            F->rpoint.stream.w_fvector3(GetPosition());
+            F->rpoint.stream.w_fvector3(GetRotation());
+            F->rpoint.stream.w_u8(m_RP_TeamID);
+            F->rpoint.stream.w_u8(m_RP_Type);
+
+            if (Core.SocSdk)
+            {
+                F->rpoint.stream.w_u8(static_cast<u8>(m_GameType.m_GameType.get()));
+                F->rpoint.stream.w_u8(0);
+            }
+            else
+                F->rpoint.stream.w_u16(m_GameType.m_GameType.get());
+            
             F->rpoint.stream.w_stringZ	(m_rpProfile);
 			F->rpoint.stream.close_chunk	();
         break;
+
         case ptEnvMod:
         	Fcolor tmp;
 	        F->envmodif.stream.open_chunk(F->envmodif.chunk++);
@@ -1329,7 +1358,7 @@ bool CSpawnPoint::ExportGame(SExportStreams* F)
     }
     return true;
 }
-//----------------------------------------------------
+
 void CSpawnPoint::OnFillRespawnItemProfile(ChooseValue* val)
 {
 	val->m_Items->clear		();

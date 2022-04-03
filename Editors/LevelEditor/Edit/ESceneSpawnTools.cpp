@@ -10,11 +10,16 @@
 #include "builder.h"
 #include "..\..\XrECore\Editor\Library.h"
 #include "UI\Tools\UISpawnTool.h"
+
 static HMODULE hXRSE_FACTORY = 0;
 
 CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, const GameTypeChooser& _GameType)
 {
-	CEditableObject* ret = NULL;
+    if (Core.SocSdk)
+        return nullptr;
+
+	CEditableObject* ret = nullptr;
+
 	if(m_draw_RP_visuals.empty())
     {
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_ah"));     		//0
@@ -28,6 +33,7 @@ CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, co
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\spectator"));        		//8
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\item_spawn"));       		//9
     }
+
     switch (_RP_Type)
     {
     	case rptActorSpawn: //actor spawn
@@ -36,66 +42,65 @@ CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, co
             {
             	if(_RP_TeamID==0)
             		ret = m_draw_RP_visuals[5];
-            };
+            }
+
 			if(_GameType.MatchType(eGameIDTeamDeathmatch))
             {
-            	if(_RP_TeamID==2)
-            		ret = m_draw_RP_visuals[7];
-                else
-            	if(_RP_TeamID==1)
-            		ret = m_draw_RP_visuals[6];
-            };
+                if (_RP_TeamID == 2)
+                    ret = m_draw_RP_visuals[7];
+                else if (_RP_TeamID == 1)
+                    ret = m_draw_RP_visuals[6];
+            }
             
 			if(_GameType.MatchType(eGameIDCaptureTheArtefact))
             {
-            	if(_RP_TeamID==0)
-                	Msg("! incorrect ActorRP teamID [%d] for CTA",_RP_TeamID);
-                else
-            	if(_RP_TeamID==1)
+                if (!_RP_TeamID)
+                    Msg("! incorrect ActorRP teamID [%d] for CTA", _RP_TeamID);
+                else if(_RP_TeamID==1)
             		ret = m_draw_RP_visuals[4];
-                else
-            	if(_RP_TeamID==2)
+                else if(_RP_TeamID==2)
             		ret = m_draw_RP_visuals[3];
-            };
+            }
+
 			if(_GameType.MatchType(eGameIDArtefactHunt))
             {
-            	if(_RP_TeamID==0)
-            		ret = m_draw_RP_visuals[8]; //spactator
-                else
-            	if(_RP_TeamID==1)
+                if (!_RP_TeamID)
+                    ret = m_draw_RP_visuals[8]; //spactator
+                else if(_RP_TeamID==1)
             		ret = m_draw_RP_visuals[4];
-                else
-            	if(_RP_TeamID==2)
+                else if(_RP_TeamID==2)
             		ret = m_draw_RP_visuals[3];
-            };
-        
-        }break;
+            }        
+        }
+        break;
+
     	case rptArtefactSpawn: //AF spawn
         {
 			if(_GameType.MatchType(eGameIDCaptureTheArtefact))
             {
             	if(_RP_TeamID==1)
             		ret = m_draw_RP_visuals[2];
-                else
-            	if(_RP_TeamID==2)
+                else if(_RP_TeamID==2)
             		ret = m_draw_RP_visuals[1];
                 else
                 	Msg("! incorrect AF teamID [%d] for CTA",_RP_TeamID);
-            }else
-			if(_GameType.MatchType(eGameIDArtefactHunt))
-            {
-          		ret = m_draw_RP_visuals[0];
             }
-        }break;
+            else if(_GameType.MatchType(eGameIDArtefactHunt))            
+          		ret = m_draw_RP_visuals[0];            
+        }
+        break;
+
     	case rptItemSpawn:
         {
         	ret = m_draw_RP_visuals[9];
-        }break;
+        }
+        break;
     }
+
     return ret;
 }
 
-void   FillSpawnItems	(ChooseItemVec& lst, void* param)
+void FillSpawnItems(ChooseItemVec &lst, void *param)
 {
 	LPCSTR gcs					= (LPCSTR)param;
     ObjectList objects;
