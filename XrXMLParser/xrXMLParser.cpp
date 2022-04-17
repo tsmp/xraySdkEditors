@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #pragma hdrstop
-#include "..\XrAPI\xrGameManager.h"
 #include "xrXMLParser.h"
 
 #pragma optimize("s", off)
@@ -85,18 +84,12 @@ void CXml::Load(LPCSTR path, LPCSTR xml_filename)
 	FS.r_close(F);
 
 	m_Doc.Parse(&m_Doc, (LPCSTR)W.pointer());
+
 	if (m_Doc.Error())
 	{
 		string1024 str;
 		xr_sprintf(str, "XML file:%s value:%s errDescr:%s", m_xml_file_name, m_Doc.Value(), m_Doc.ErrorDesc());
-		if (xrGameManager::GetGame() == EGame::COP)
-		{
-			R_ASSERT2(false, str);
-		}
-		else
-		{
-			Msg(str);
-		}
+		Msg(str);		
 	}
 
 	m_root = m_Doc.FirstChildElement();

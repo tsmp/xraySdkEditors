@@ -13,11 +13,8 @@
 #include "FS_internal.h"
 #include "stream_reader.h"
 #include "file_stream_reader.h"
-#include "..\XrAPI\xrGameManager.h"
-const u32 BIG_FILE_READER_WINDOW_SIZE = 1024 * 1024;
 
-// typedef void DUMMY_STUFF (const void*,const u32&,void*);
-// XRCORE_API DUMMY_STUFF	*g_temporary_stuff = 0;
+const u32 BIG_FILE_READER_WINDOW_SIZE = 1024 * 1024;
 
 #pragma warning(push)
 #pragma warning(disable : 4995)
@@ -693,22 +690,17 @@ void CLocatorAPI::setup_fs_path(LPCSTR fs_name)
 IReader *CLocatorAPI::setup_fs_ltx(LPCSTR fs_name)
 {
 	setup_fs_path(fs_name);
-
-	//	if (m_Flags.is(flTargetFolderOnly)) {
-	//		append_path	("$fs_root$", "", 0, FALSE);
-	//		return		(0);
-	//	}
 	string_path fs_file_name;
-	if (fs_name && *fs_name)
-	{
-		xr_strcpy(fs_file_name, fs_name);
-	}
+
+	if (fs_name && *fs_name)	
+		xr_strcpy(fs_file_name, fs_name);	
 	else
 	{
 		xr_strcpy(fs_file_name, Core.ApplicationPath);
 		if (xr_strlen(fs_file_name))
 		{
 			fs_file_name[xr_strlen(fs_file_name) - 1] = 0;
+
 			if (strrchr(fs_file_name, '\\'))
 				*(strrchr(fs_file_name, '\\') + 1) = 0;
 			fs_file_name[xr_strlen(fs_file_name) - 1] = 0;
@@ -718,15 +710,8 @@ IReader *CLocatorAPI::setup_fs_ltx(LPCSTR fs_name)
 			if (strrchr(fs_file_name, '\\'))
 				*(strrchr(fs_file_name, '\\') + 1) = 0;
 		}
-		switch (xrGameManager::GetGame())
-		{
-		case EGame::CS:
-			xr_strcat(fs_file_name, FSLTX_CS);
-			break;
-		default:
-			xr_strcat(fs_file_name, FSLTX);
-			break;
-		}
+
+		xr_strcat(fs_file_name, FSLTX);		
 	}
 
 	Log("using fs-ltx:", fs_file_name);
