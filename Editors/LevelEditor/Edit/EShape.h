@@ -6,67 +6,81 @@
 #include "ShapeData.h"
 #include "CustomObject.h"
 //---------------------------------------------------------------------------
-enum eShapeUsage{eShapeCommon=0, eShapeLevelBound};
+enum eShapeUsage
+{
+	eShapeCommon = 0,
+	eShapeLevelBound
+};
 
-class CEditShape: public CCustomObject,protected CShapeData
+class CEditShape : public CCustomObject, protected CShapeData
 {
 	typedef CCustomObject inherited;
+
 private:
-// bounds
-	Fbox			m_Box;
-	Fsphere			m_Sphere;
-	void			ComputeBounds	( );
-public:
-	u8				m_shape_type;
-	u32				m_DrawTranspColor;
-	u32				m_DrawEdgeColor;
+	// bounds
+	Fbox m_Box;
+	Fsphere m_Sphere;
+	void ComputeBounds();
 
-	void			SetDrawColor	(u32 transp, u32 edge){m_DrawTranspColor=transp;m_DrawEdgeColor=edge;}
-	void			ApplyScale		();
-	void			add_sphere		(const Fsphere& S);
-	void			add_box			(const Fmatrix& B);
-    const shape_def&get_shape		(int idx){R_ASSERT(idx<(int)shapes.size());return shapes[idx];}
-	virtual void	FillProp		(LPCSTR pref, PropItemVec& values);
-    
+public:
+	u8 m_shape_type;
+	u32 m_DrawTranspColor;
+	u32 m_DrawEdgeColor;
+
+	void SetDrawColor(u32 transp, u32 edge)
+	{
+		m_DrawTranspColor = transp;
+		m_DrawEdgeColor = edge;
+	}
+	void ApplyScale();
+	void add_sphere(const Fsphere &S);
+	void add_box(const Fmatrix &B);
+	const shape_def &get_shape(int idx)
+	{
+		R_ASSERT(idx < (int)shapes.size());
+		return shapes[idx];
+	}
+	virtual void FillProp(LPCSTR pref, PropItemVec &values);
+
 protected:
-	virtual void 	SetScale		(const Fvector& val);
-    virtual void	OnUpdateTransform();
+	virtual void SetScale(const Fvector &val);
+	virtual void OnUpdateTransform();
+
 public:
-					CEditShape 		(LPVOID data, LPCSTR name);
-	void 			Construct		(LPVOID data);
-	virtual 		~CEditShape		();
-    virtual bool	CanAttach		() {return true;}
-    
-    // pick functions
-	virtual bool 	RayPick		(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf = NULL);
-    virtual bool 	FrustumPick	(const CFrustum& frustum);
+	CEditShape(LPVOID data, LPCSTR name);
+	void Construct(LPVOID data);
+	virtual ~CEditShape();
+	virtual bool CanAttach() { return true; }
 
-    // placement functions
-	virtual bool 	GetBox		(Fbox& box) ;
+	// pick functions
+	virtual bool RayPick(float &distance, const Fvector &start, const Fvector &direction, SRayPickInfo *pinf = NULL);
+	virtual bool FrustumPick(const CFrustum &frustum);
 
-    // change position/orientation methods
-//	virtual void 	Scale		(Fvector& amount){;}
+	// placement functions
+	virtual bool GetBox(Fbox &box);
 
-    // file system function
-  	virtual bool 		LoadStream			(IReader&);
-  	virtual bool 		LoadLTX				(CInifile& ini, LPCSTR sect_name);
-	virtual void 		SaveStream			(IWriter&);
-  	virtual void 		SaveLTX				(CInifile& ini, LPCSTR sect_name);
+	// change position/orientation methods
+	//	virtual void 	Scale		(Fvector& amount){;}
 
-    // render utility function
-	virtual void 	Render		(int priority, bool strictB2F);
-	virtual void 	OnFrame		();
+	// file system function
+	virtual bool LoadStream(IReader &);
+	virtual bool LoadLTX(CInifile &ini, LPCSTR sect_name);
+	virtual void SaveStream(IWriter &);
+	virtual void SaveLTX(CInifile &ini, LPCSTR sect_name);
 
-    // tools
-    void			Attach		(CEditShape* from);
-    void			Detach		();
+	// render utility function
+	virtual void Render(int priority, bool strictB2F);
+	virtual void OnFrame();
 
-    ShapeVec&		GetShapes	(){return shapes;}
+	// tools
+	void Attach(CEditShape *from);
+	void Detach();
 
+	ShapeVec &GetShapes() { return shapes; }
 
-    virtual void	OnDetach	();
-    // events
-    virtual void    OnShowHint  (AStringVec& dest);
+	virtual void OnDetach();
+	// events
+	virtual void OnShowHint(AStringVec &dest);
 };
 
 #endif

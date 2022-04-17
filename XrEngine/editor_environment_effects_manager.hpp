@@ -14,55 +14,59 @@
 #include <boost/noncopyable.hpp>
 #include "property_collection_forward.hpp"
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
-class property_holder;
+	class property_holder;
 
-namespace environment {
+	namespace environment
+	{
 
-class manager;
+		class manager;
 
-namespace effects {
+		namespace effects
+		{
 
-class effect;
+			class effect;
 
-class manager : private boost::noncopyable {
-public:
-							manager			(::XrWeatherEditor::environment::manager* environment);
-							~manager		();
-			void			load			();
-			void			save			();
-			void			fill			(XrWeatherEditor::property_holder* holder);
-			shared_str		unique_id		(shared_str const& id) const;
+			class manager : private boost::noncopyable
+			{
+			public:
+				manager(::XrWeatherEditor::environment::manager *environment);
+				~manager();
+				void load();
+				void save();
+				void fill(XrWeatherEditor::property_holder *holder);
+				shared_str unique_id(shared_str const &id) const;
 
-public:
-	inline	::XrWeatherEditor::environment::manager&	environment	() const {return m_environment;}
+			public:
+				inline ::XrWeatherEditor::environment::manager &environment() const { return m_environment; }
 
-public:
-	typedef xr_vector<effect*>				effect_container_type;
-	typedef xr_vector<LPSTR>				effects_ids_type;
+			public:
+				typedef xr_vector<effect *> effect_container_type;
+				typedef xr_vector<LPSTR> effects_ids_type;
 
-public:
-	effects_ids_type const&	effects_ids		() const;
+			public:
+				effects_ids_type const &effects_ids() const;
 
-private:
-	typedef XrWeatherEditor::property_holder			property_holder_type;
-	typedef property_collection<
-				effect_container_type,
-				manager
-			>								collection_type;
+			private:
+				typedef XrWeatherEditor::property_holder property_holder_type;
+				typedef property_collection<
+					effect_container_type,
+					manager>
+					collection_type;
 
-private:
-	effect_container_type					m_effects;
-	mutable effects_ids_type				m_effects_ids;
-	::XrWeatherEditor::environment::manager&			m_environment;
-	property_holder_type*					m_property_holder;
-	collection_type*						m_collection;
-	mutable bool							m_changed;
-}; // class effects_manager
+			private:
+				effect_container_type m_effects;
+				mutable effects_ids_type m_effects_ids;
+				::XrWeatherEditor::environment::manager &m_environment;
+				property_holder_type *m_property_holder;
+				collection_type *m_collection;
+				mutable bool m_changed;
+			}; // class effects_manager
 
-} // namespace effects
-} // namespace environment
+		} // namespace effects
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

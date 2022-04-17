@@ -11,64 +11,62 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline Box3::Box3 ()
+inline Box3::Box3()
 {
     // no initialization for efficiency
 }
 //----------------------------------------------------------------------------
-inline Vector3& Box3::Center ()
+inline Vector3 &Box3::Center()
 {
     return m_kCenter;
 }
 //----------------------------------------------------------------------------
-inline const Vector3& Box3::Center () const
+inline const Vector3 &Box3::Center() const
 {
     return m_kCenter;
 }
 //----------------------------------------------------------------------------
-inline Vector3& Box3::Axis (int i)
+inline Vector3 &Box3::Axis(int i)
 {
-    assert( 0 <= i && i < 3 );
+    assert(0 <= i && i < 3);
     return m_akAxis[i];
 }
 //----------------------------------------------------------------------------
-inline const Vector3& Box3::Axis (int i) const
+inline const Vector3 &Box3::Axis(int i) const
 {
-    assert( 0 <= i && i < 3 );
+    assert(0 <= i && i < 3);
     return m_akAxis[i];
 }
 //----------------------------------------------------------------------------
-inline Vector3* Box3::Axes ()
+inline Vector3 *Box3::Axes()
 {
     return m_akAxis;
 }
 //----------------------------------------------------------------------------
-inline const Vector3* Box3::Axes () const
+inline const Vector3 *Box3::Axes() const
 {
     return m_akAxis;
 }
 //----------------------------------------------------------------------------
-inline Real& Box3::Extent (int i)
+inline Real &Box3::Extent(int i)
 {
-    assert( 0 <= i && i < 3 );
+    assert(0 <= i && i < 3);
     return m_afExtent[i];
 }
 //----------------------------------------------------------------------------
-inline const Real& Box3::Extent (int i) const
+inline const Real &Box3::Extent(int i) const
 {
-    assert( 0 <= i && i < 3 );
+    assert(0 <= i && i < 3);
     return m_afExtent[i];
 }
 //----------------------------------------------------------------------------
-inline Real* Box3::Extents ()
+inline Real *Box3::Extents()
 {
     return m_afExtent;
 }
 //----------------------------------------------------------------------------
-inline const Real* Box3::Extents () const
+inline const Real *Box3::Extents() const
 {
     return m_afExtent;
 }
 //----------------------------------------------------------------------------
-
-

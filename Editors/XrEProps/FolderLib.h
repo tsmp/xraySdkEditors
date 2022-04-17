@@ -1,5 +1,5 @@
 #pragma once
-template<class C,bool FloderAsItem=false>
+template <class C, bool FloderAsItem = false>
 class FolderHelper
 {
 public:
@@ -11,20 +11,20 @@ public:
 	};
 	struct Node
 	{
-		Node() :Object(nullptr), Type(FNT_Root), Selected(false) {}
-		~Node() {  }
+		Node() : Object(nullptr), Type(FNT_Root), Selected(false) {}
+		~Node() {}
 		bool Selected;
 		EFloderNodeType Type;
 		shared_str Name;
 		shared_str Path;
 		xr_vector<Node> Nodes;
-		mutable C* Object;
+		mutable C *Object;
 		IC bool IsObject() { return Type == FNT_Object; }
 		IC bool IsFloder() { return Type == FNT_Floder || Type == FNT_Root; }
 	};
 	FolderHelper() {}
 	inline ~FolderHelper() {}
-	inline Node* SelectObject(Node* N, const char* path)
+	inline Node *SelectObject(Node *N, const char *path)
 	{
 		VERIFY(N);
 		VERIFY(N->IsFloder());
@@ -38,7 +38,7 @@ public:
 			N->Selected = true;
 			return SelectObject(N, strchr(path, '\\') + 1);
 		}
-		for (Node& node : N->Nodes)
+		for (Node &node : N->Nodes)
 		{
 			if (FloderAsItem)
 			{
@@ -60,9 +60,10 @@ public:
 		VERIFY(false);
 		return nullptr;
 	}
-	inline Node* FindObject(Node* N, const char* path)
+	inline Node *FindObject(Node *N, const char *path)
 	{
-		if (N == nullptr) return nullptr;
+		if (N == nullptr)
+			return nullptr;
 		if (!N->IsFloder())
 			return nullptr;
 		if (strchr(path, '\\'))
@@ -72,9 +73,10 @@ public:
 			strrchr(name, '\\')[0] = 0;
 			path = strrchr(path, '\\') + 1;
 			N = FindFloder(N, name);
-			if (N == nullptr) return nullptr;
+			if (N == nullptr)
+				return nullptr;
 		}
-		for (Node& node : N->Nodes)
+		for (Node &node : N->Nodes)
 		{
 			if (node.Name == path && node.IsObject())
 				return &node;
@@ -82,14 +84,14 @@ public:
 		return nullptr;
 	}
 
-	inline Node* Find(Node* N, const char* path)
+	inline Node *Find(Node *N, const char *path)
 	{
-		if (N == nullptr) 
+		if (N == nullptr)
 			return nullptr;
 
 		if (!N->IsFloder())
 			return nullptr;
-		
+
 		if (strchr(path, '\\'))
 		{
 			string_path name;
@@ -102,7 +104,7 @@ public:
 				return nullptr;
 		}
 
-		for (Node& node : N->Nodes)
+		for (Node &node : N->Nodes)
 		{
 			if (node.Name == path)
 				return &node;
@@ -111,14 +113,14 @@ public:
 		return nullptr;
 	}
 
-	inline Node* FindFloder(Node* N, const char* path)
+	inline Node *FindFloder(Node *N, const char *path)
 	{
-		if (!N) 
+		if (!N)
 			return nullptr;
-		
+
 		if (!N->IsFloder())
 			return nullptr;
-		
+
 		if (strchr(path, '\\'))
 		{
 			string_path name;
@@ -126,8 +128,8 @@ public:
 			strchr(name, '\\')[0] = 0;
 			return FindFloder(FindFloder(N, name), strchr(path, '\\') + 1);
 		}
-		
-		for (Node& node : N->Nodes)
+
+		for (Node &node : N->Nodes)
 		{
 			if (node.Name == path && node.IsFloder())
 				return &node;
@@ -136,7 +138,7 @@ public:
 		return nullptr;
 	}
 
-	inline Node* AppendFloder(Node* N, const char* path)
+	inline Node *AppendFloder(Node *N, const char *path)
 	{
 		if (!N)
 			return nullptr;
@@ -147,14 +149,14 @@ public:
 			xr_strcpy(name, path);
 			strchr(name, '\\')[0] = 0;
 
-			Node* NextNode = FindFloder(N, name);
+			Node *NextNode = FindFloder(N, name);
 			if (NextNode)
 				return AppendFloder(NextNode, strchr(path, '\\') + 1);
 
 			return AppendFloder(AppendFloder(N, name), strchr(path, '\\') + 1);
 		}
 
-		for (Node& node : N->Nodes)
+		for (Node &node : N->Nodes)
 		{
 			if (node.Name == path)
 			{
@@ -167,7 +169,7 @@ public:
 				{
 					if (node.IsFloder())
 						return &node;
-					//return nullptr;
+					// return nullptr;
 				}
 			}
 		}
@@ -176,39 +178,39 @@ public:
 		NewNode.Name = path;
 		if (N->Path.size() == 0)
 		{
-			if (N->Name.size())			
-				NewNode.Path = N->Name;			
-			else			
-				NewNode.Path = "";			
+			if (N->Name.size())
+				NewNode.Path = N->Name;
+			else
+				NewNode.Path = "";
 		}
-		else		
+		else
 			NewNode.Path.printf("%s\\%s", N->Path.c_str(), N->Name.c_str());
-		
+
 		N->Nodes.push_back(NewNode);
 		return &N->Nodes.back();
 	}
 
-	inline Node* AppendObject(Node* N, const char* path)
+	inline Node *AppendObject(Node *N, const char *path)
 	{
 		if (!N)
 			return nullptr;
-		
+
 		if (strchr(path, '\\'))
 		{
 			string_path name;
 			xr_strcpy(name, path);
 
-			char* slash = strchr(name, '\\');
+			char *slash = strchr(name, '\\');
 			*slash = '\0';
 
-			Node* NextNode = FindFloder(N, name);
+			Node *NextNode = FindFloder(N, name);
 			if (NextNode)
 				return AppendObject(NextNode, strchr(path, '\\') + 1);
 
 			return AppendObject(AppendFloder(N, name), strchr(path, '\\') + 1);
 		}
 
-		for (Node& node : N->Nodes)
+		for (Node &node : N->Nodes)
 		{
 			if (node.Name == path)
 			{
@@ -218,8 +220,8 @@ public:
 						return &node;
 					return nullptr;
 				}
-				else				
-					return &node;				
+				else
+					return &node;
 			}
 		}
 
@@ -229,21 +231,21 @@ public:
 
 		if (N->Path.size() == 0)
 		{
-			if (N->Name.size())			
-				NewNode.Path = N->Name;			
-			else			
-				NewNode.Path = "";			
+			if (N->Name.size())
+				NewNode.Path = N->Name;
+			else
+				NewNode.Path = "";
 		}
-		else		
+		else
 			NewNode.Path.printf("%s\\%s", N->Path.c_str(), N->Name.c_str());
-		
+
 		N->Nodes.push_back(NewNode);
 		return &N->Nodes.back();
 	}
 
-	inline void Remove(Node* N, Node* Object, bool use_event = false)
+	inline void Remove(Node *N, Node *Object, bool use_event = false)
 	{
-		Node* F = Object->Path.size() == 0 ? N : FindFloder(N, Object->Path.c_str());
+		Node *F = Object->Path.size() == 0 ? N : FindFloder(N, Object->Path.c_str());
 		R_ASSERT(F);
 		string_path path;
 		if (use_event)
@@ -254,12 +256,12 @@ public:
 		}
 		R_ASSERT(RemoveNodeFromN(F, Object));
 	}
-	inline bool Move(Node* N, Node* Object, const char* new_path)
+	inline bool Move(Node *N, Node *Object, const char *new_path)
 	{
 		{
-			Node* ObjectNew = nullptr;
+			Node *ObjectNew = nullptr;
 			bool IsFloder = false;
-			
+
 			string_path old_path;
 			GetFullPath(Object, old_path);
 
@@ -282,16 +284,16 @@ public:
 			{
 				Object = FindObject(N, old_path);
 			}
-			if (ObjectNew == Object)return false;
-			if (!ObjectNew)return false;
+			if (ObjectNew == Object)
+				return false;
+			if (!ObjectNew)
+				return false;
 
-		
 			SwapData(ObjectNew, Object);
 			Remove(N, Object);
 			if (IsFloder)
 			{
 				ObjectNew = FindFloder(N, new_path);
-
 			}
 			else
 			{
@@ -304,18 +306,18 @@ public:
 		}
 		return true;
 	}
-	inline void DrawNode(Node* N)
+	inline void DrawNode(Node *N)
 	{
 		if (N->Type == FNT_Root)
 		{
-			for (Node& node : N->Nodes)
+			for (Node &node : N->Nodes)
 			{
 				if (node.IsFloder() && IsDrawFloder(&node))
 				{
 					DrawNode(&node);
 				}
 			}
-			for (Node& node : N->Nodes)
+			for (Node &node : N->Nodes)
 			{
 				if (!node.IsFloder())
 				{
@@ -325,24 +327,27 @@ public:
 		}
 		else if (N->IsFloder())
 		{
-			if (N->Selected)ImGui::SetNextTreeNodeOpen(true);
+			if (N->Selected)
+				ImGui::SetNextTreeNodeOpen(true);
 			ImGui::AlignTextToFramePadding();
 			ImGuiTreeNodeFlags FloderFlags = ImGuiTreeNodeFlags_OpenOnArrow;
-			if (IsFloderBullet(N))FloderFlags |= ImGuiTreeNodeFlags_Bullet;
-			if (IsFloderSelected(N))FloderFlags |= ImGuiTreeNodeFlags_Selected;
+			if (IsFloderBullet(N))
+				FloderFlags |= ImGuiTreeNodeFlags_Bullet;
+			if (IsFloderSelected(N))
+				FloderFlags |= ImGuiTreeNodeFlags_Selected;
 			if (ImGui::TreeNodeEx(N->Name.c_str(), FloderFlags))
 			{
 				DrawAfterFloderNode(true, N);
 				if (ImGui::IsItemClicked() && N->Object)
 					IsItemClicked(N);
-				for (Node& node : N->Nodes)
+				for (Node &node : N->Nodes)
 				{
 					if (node.IsFloder() && IsDrawFloder(&node))
 					{
 						DrawNode(&node);
 					}
 				}
-				for (Node& node : N->Nodes)
+				for (Node &node : N->Nodes)
 				{
 					if (!node.IsFloder())
 					{
@@ -357,20 +362,22 @@ public:
 				if (ImGui::IsItemClicked() && N->Object)
 					IsItemClicked(N);
 			}
-			if (N->Selected)N->Selected = false;
+			if (N->Selected)
+				N->Selected = false;
 		}
 		else if (N->IsObject())
 		{
 			DrawItem(N);
-			if (N->Selected)N->Selected = false;
+			if (N->Selected)
+				N->Selected = false;
 		}
 	}
-	virtual void DrawAfterFloderNode(bool is_open = false, Node* Node = 0) {}
-	virtual bool IsFloderBullet(Node* Node) { return false; }
-	virtual bool IsFloderSelected(Node* Node) { return false; }
-	virtual void EventRenameNode(Node* Node, const char* old_path, const char* new_path) {}
-	virtual void EventRemoveNode(Node* Node, const char* path) {}
-	inline void GetFullPath(Node* Object, string_path& full_path)
+	virtual void DrawAfterFloderNode(bool is_open = false, Node *Node = 0) {}
+	virtual bool IsFloderBullet(Node *Node) { return false; }
+	virtual bool IsFloderSelected(Node *Node) { return false; }
+	virtual void EventRenameNode(Node *Node, const char *old_path, const char *new_path) {}
+	virtual void EventRemoveNode(Node *Node, const char *path) {}
+	inline void GetFullPath(Node *Object, string_path &full_path)
 	{
 		if (Object->Path.c_str() && Object->Path.c_str()[0])
 			xr_strcpy(full_path, Object->Path.c_str());
@@ -381,19 +388,20 @@ public:
 			xr_strcat(full_path, "\\");
 		xr_strcat(full_path, Object->Name.c_str());
 	}
-	virtual void IsItemClicked(Node* Node) {}
-	virtual bool IsDrawFloder(Node* Node) = 0;
-	virtual void DrawItem(Node* Node) = 0;
+	virtual void IsItemClicked(Node *Node) {}
+	virtual bool IsDrawFloder(Node *Node) = 0;
+	virtual void DrawItem(Node *Node) = 0;
+
 private:
-	inline void SwapData(Node* Dst, Node* Src)
+	inline void SwapData(Node *Dst, Node *Src)
 	{
 		std::swap(Dst->Type, Src->Type);
 		std::swap(Dst->Object, Src->Object);
 		Dst->Nodes.swap(Src->Nodes);
 	}
-	inline void RebuildPath(Node* N)
+	inline void RebuildPath(Node *N)
 	{
-		for (Node& n : N->Nodes)
+		for (Node &n : N->Nodes)
 		{
 
 			string_path old_path, new_path;
@@ -401,7 +409,7 @@ private:
 
 			if (N->Path.size() == 0)
 			{
-				if (N->Name.size() )
+				if (N->Name.size())
 				{
 					n.Path = N->Name;
 				}
@@ -423,9 +431,9 @@ private:
 		}
 	}
 
-	inline void RemoveNode(Node* Object)
+	inline void RemoveNode(Node *Object)
 	{
-		for (Node& n : Object->Nodes)
+		for (Node &n : Object->Nodes)
 		{
 			string_path path;
 			RemoveNode(&n);
@@ -435,7 +443,7 @@ private:
 		Object->Nodes.clear();
 	}
 
-	inline bool RemoveNodeFromN(Node* N, Node* Object)
+	inline bool RemoveNodeFromN(Node *N, Node *Object)
 	{
 		for (auto b = N->Nodes.begin(), e = N->Nodes.end(); b != e; b++)
 		{
@@ -447,8 +455,4 @@ private:
 		}
 		return false;
 	}
-
-	
-	
-	
 };

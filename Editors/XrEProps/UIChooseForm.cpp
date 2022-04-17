@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "UIChooseForm.h"
-UIChooseForm::EventsMap	UIChooseForm::m_Events;
-UIChooseForm* UIChooseForm::Form = 0;
+UIChooseForm::EventsMap UIChooseForm::m_Events;
+UIChooseForm *UIChooseForm::Form = 0;
 xr_string UIChooseForm::m_LastSelection;
-ImTextureID   UIChooseForm::NullTexture = nullptr;
-void UIChooseForm::DrawItem(Node* Node)
+ImTextureID UIChooseForm::NullTexture = nullptr;
+void UIChooseForm::DrawItem(Node *Node)
 {
     if (m_Filter.PassFilter(Node->Name.c_str()))
     {
@@ -23,7 +23,7 @@ void UIChooseForm::DrawItem(Node* Node)
         }
         ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 
-        for (auto& item : m_SelectedItems)
+        for (auto &item : m_SelectedItems)
         {
             if (item == Node->Object)
             {
@@ -31,15 +31,15 @@ void UIChooseForm::DrawItem(Node* Node)
                 break;
             }
         }
-        if (m_SelectedItem ==  Node->Object)
+        if (m_SelectedItem == Node->Object)
         {
             Flags |= ImGuiTreeNodeFlags_Selected;
         }
-           
+
         ImGui::TreeNodeEx(Node->Name.c_str(), Flags);
         if (ImGui::IsItemClicked())
         {
-            if ( E.flags.test(SChooseEvents::flClearTexture))
+            if (E.flags.test(SChooseEvents::flClearTexture))
             {
                 if (m_Texture)
                     m_Texture->Release();
@@ -53,43 +53,43 @@ void UIChooseForm::DrawItem(Node* Node)
                 E.on_sel(m_SelectedItem, Vec);
                 m_Props->AssignItems(Vec);
             }
-            if (ImGui::GetIO().KeyCtrl||!m_Flags.is(cfMultiSelect))
+            if (ImGui::GetIO().KeyCtrl || !m_Flags.is(cfMultiSelect))
                 m_ClickItem = Node->Object;
         }
     }
-
 }
-bool UIChooseForm::IsDrawFloder(Node*node)
+bool UIChooseForm::IsDrawFloder(Node *node)
 {
     bool result = false;
-    for (Node& N : node->Nodes)
+    for (Node &N : node->Nodes)
     {
         if (N.IsFloder())
         {
             result = result | IsDrawFloder(&N);
         }
-        else  if (N.IsObject())
+        else if (N.IsObject())
         {
             result = result | m_Filter.PassFilter(N.Name.c_str());
         }
     }
     return result;
 }
-void UIChooseForm::AppendItem(SChooseItem& item)
+void UIChooseForm::AppendItem(SChooseItem &item)
 {
-   Node*node =  AppendObject(&m_GeneralNode, item.name.c_str());
-   VERIFY(node);
-   node->Object = &item;
+    Node *node = AppendObject(&m_GeneralNode, item.name.c_str());
+    VERIFY(node);
+    node->Object = &item;
 }
 void UIChooseForm::UpdateTexture()
 {
     if (m_SelectedItem == &m_ItemNone)
     {
-        if (m_Texture)m_Texture->Release();
+        if (m_Texture)
+            m_Texture->Release();
         m_Texture = nullptr;
         m_SelectedItems.clear();
     }
-    else  if (m_SelectedItem)
+    else if (m_SelectedItem)
     {
 
         if (m_SelectedItem && E.flags.test(SChooseEvents::flClearTexture))
@@ -101,41 +101,40 @@ void UIChooseForm::UpdateTexture()
         if (!E.on_get_texture.empty())
             E.on_get_texture(m_SelectedItem->name.c_str(), m_Texture);
     }
-
 }
 void UIChooseForm::FillItems(u32 choose_id)
 {
     m_ChooseID = choose_id;
     m_GeneralNode = Node();
     u32 ss = m_Items.size();
-    ChooseItemVecIt  it = m_Items.begin();
-    ChooseItemVecIt  _E = m_Items.end();
+    ChooseItemVecIt it = m_Items.begin();
+    ChooseItemVecIt _E = m_Items.end();
 
-    //SPBItem* pb	= UI->ProgressStart(ss,"Fill items..."); //sky to all: no idea how to do it
+    // SPBItem* pb	= UI->ProgressStart(ss,"Fill items..."); //sky to all: no idea how to do it
 
- //   bool b_check_duplicate = (choose_id != 15);// smSkeletonAnimations is already unique set !!!
+    //   bool b_check_duplicate = (choose_id != 15);// smSkeletonAnimations is already unique set !!!
     for (; it != _E; it++)
     {
         AppendItem(*it);
     }
 
-    //UI->ProgressEnd(pb);
+    // UI->ProgressEnd(pb);
 
     if (m_Flags.is(cfAllowNone) && !m_Flags.is(cfMultiSelect))
     {
         m_ItemNone.name = NONE_CAPTION;
         AppendItem(m_ItemNone);
     }
-   /* form->tvItems->Sort(true);
-    form->tvItems->IsUpdating = false;
-    if (m_Flags.is(cfFullExpand))*
-        form->tvItems->FullExpand();*/
+    /* form->tvItems->Sort(true);
+     form->tvItems->IsUpdating = false;
+     if (m_Flags.is(cfFullExpand))*
+         form->tvItems->FullExpand();*/
 }
 
-UIChooseForm::UIChooseForm():m_Texture(nullptr),m_ClickItem(nullptr), iSelectedInList(-1), m_SelectedItem(nullptr)
+UIChooseForm::UIChooseForm() : m_Texture(nullptr), m_ClickItem(nullptr), iSelectedInList(-1), m_SelectedItem(nullptr)
 {
     m_Props = xr_new<UIPropertiesForm>();
-   // m_Props->AsGroup();
+    // m_Props->AsGroup();
 }
 UIChooseForm::~UIChooseForm()
 {
@@ -149,28 +148,30 @@ UIChooseForm::~UIChooseForm()
 }
 void UIChooseForm::Draw()
 {
- 
+
     if (!m_LastSelection.empty())
     {
-        Node* N = FindObject(&m_GeneralNode, m_LastSelection.c_str());
-        if (N)SelectObject(&m_GeneralNode, m_LastSelection.c_str());
+        Node *N = FindObject(&m_GeneralNode, m_LastSelection.c_str());
+        if (N)
+            SelectObject(&m_GeneralNode, m_LastSelection.c_str());
         m_LastSelection.clear();
     }
-    if (m_SelectedItem&& E.flags.test(SChooseEvents::flAnimated))
+    if (m_SelectedItem && E.flags.test(SChooseEvents::flAnimated))
     {
-        if (!E.on_get_texture.empty())E.on_get_texture(m_SelectedItem->name.c_str(), m_Texture);
+        if (!E.on_get_texture.empty())
+            E.on_get_texture(m_SelectedItem->name.c_str(), m_Texture);
     }
     ImGui::Columns(2);
     {
         {
             ImGui::Text("Find:");
             ImGui::SameLine();
-            m_Filter.Draw("",-1);
-            if (ImGui::BeginChild("Left", ImVec2(0, 0),false,ImGuiWindowFlags_HorizontalScrollbar))
+            m_Filter.Draw("", -1);
+            if (ImGui::BeginChild("Left", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar))
             {
                 DrawNode(&m_GeneralNode);
             }
-            
+
             ImGui::EndChild();
         }
         ImGui::NextColumn();
@@ -210,7 +211,7 @@ void UIChooseForm::Draw()
             {
                 if (m_SelectedItem)
                 {
-                    if (ImGui::BeginChild("Props", ImVec2(0,0)))
+                    if (ImGui::BeginChild("Props", ImVec2(0, 0)))
                     {
                         m_Props->Draw();
                     }
@@ -219,13 +220,14 @@ void UIChooseForm::Draw()
             }
             else if (m_Flags.is(cfMultiSelect))
             {
-                if (ImGui::BeginChild("List", ImVec2(0,0), true, ImGuiWindowFlags_AlwaysHorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar))
+                if (ImGui::BeginChild("List", ImVec2(0, 0), true, ImGuiWindowFlags_AlwaysHorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar))
                 {
                     int i = 0;
 
                     int HereY = -iSelectedInList - 2;
-                    if (HereY >= 0)iSelectedInList = HereY;
-                    for (auto& item : m_SelectedItems)
+                    if (HereY >= 0)
+                        iSelectedInList = HereY;
+                    for (auto &item : m_SelectedItems)
                     {
                         if (HereY == i)
                             ImGui::SetScrollHereY();
@@ -237,12 +239,41 @@ void UIChooseForm::Draw()
                     }
                 }
                 ImGui::EndChild();
-                if (ImGui::Button("Up")) { if (iSelectedInList > 0) { std::swap(m_SelectedItems[iSelectedInList - 1], m_SelectedItems[iSelectedInList]); iSelectedInList = -(iSelectedInList - 1) - 2; } } ImGui::SameLine();
-                if (ImGui::Button("Down")) { if (m_SelectedItems.size() > 1 && iSelectedInList < m_SelectedItems.size() - 1) { std::swap(m_SelectedItems[iSelectedInList], m_SelectedItems[iSelectedInList + 1]); iSelectedInList = -(iSelectedInList + 1) - 2; } }  ImGui::SameLine();
-                if (ImGui::Button("Del")) { if (m_SelectedItems.size() && iSelectedInList >= 0) { m_SelectedItems.erase(m_SelectedItems.begin() + iSelectedInList); iSelectedInList = -1; } } ImGui::SameLine();
-                if (ImGui::Button("Clear List")) { m_SelectedItems.clear(); iSelectedInList = -1;/*  if (E.flags.test(SChooseEvents::flClearTexture) ){ if (m_Texture)m_Texture->Release(); m_Texture = 0; } */ImGui::SameLine(); }
+                if (ImGui::Button("Up"))
+                {
+                    if (iSelectedInList > 0)
+                    {
+                        std::swap(m_SelectedItems[iSelectedInList - 1], m_SelectedItems[iSelectedInList]);
+                        iSelectedInList = -(iSelectedInList - 1) - 2;
+                    }
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Down"))
+                {
+                    if (m_SelectedItems.size() > 1 && iSelectedInList < m_SelectedItems.size() - 1)
+                    {
+                        std::swap(m_SelectedItems[iSelectedInList], m_SelectedItems[iSelectedInList + 1]);
+                        iSelectedInList = -(iSelectedInList + 1) - 2;
+                    }
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Del"))
+                {
+                    if (m_SelectedItems.size() && iSelectedInList >= 0)
+                    {
+                        m_SelectedItems.erase(m_SelectedItems.begin() + iSelectedInList);
+                        iSelectedInList = -1;
+                    }
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Clear List"))
+                {
+                    m_SelectedItems.clear();
+                    iSelectedInList = -1; /*  if (E.flags.test(SChooseEvents::flClearTexture) ){ if (m_Texture)m_Texture->Release(); m_Texture = 0; } */
+                    ImGui::SameLine();
+                }
             }
-           
+
             ImGui::EndChild();
             if (ImGui::Button("Ok", ImVec2(100, 0)))
             {
@@ -258,14 +289,11 @@ void UIChooseForm::Draw()
             }
         }
     }
-  
-      
-    
+
     if (m_ClickItem)
     {
-       
+
         {
-           
 
             if (!m_Flags.is(cfMultiSelect))
             {
@@ -292,7 +320,6 @@ void UIChooseForm::Draw()
 
             m_ClickItem = nullptr;
         }
-
     }
 }
 
@@ -303,25 +330,25 @@ void UIChooseForm::SetNullTexture(ImTextureID Texture)
 void UIChooseForm::Update()
 {
     // ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings
-    if (Form&& !Form->IsClosed())
+    if (Form && !Form->IsClosed())
     {
         ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_::ImGuiCond_FirstUseEver);
-        if (ImGui::BeginPopupModal("ChooseForm", nullptr,0,true))
+        if (ImGui::BeginPopupModal("ChooseForm", nullptr, 0, true))
         {
             Form->Draw();
             ImGui::EndPopup();
         }
     }
-
 }
 bool UIChooseForm::IsActive()
 {
     return Form;
 }
 
-bool UIChooseForm::GetResult(bool& change, shared_str& result)
+bool UIChooseForm::GetResult(bool &change, shared_str &result)
 {
-    if (!Form)return false;
+    if (!Form)
+        return false;
     if (!Form->bOpen)
     {
         if (Form->m_Result == R_Ok)
@@ -332,7 +359,7 @@ bool UIChooseForm::GetResult(bool& change, shared_str& result)
             }
             xr_string reuslt_temp;
             int i = 0;
-            for (auto& item : Form->m_SelectedItems)
+            for (auto &item : Form->m_SelectedItems)
             {
                 if (i != 0)
                 {
@@ -349,11 +376,11 @@ bool UIChooseForm::GetResult(bool& change, shared_str& result)
         change = false;
         xr_delete(Form);
         return true;
-   }
-      
-	return false;
+    }
+
+    return false;
 }
-bool UIChooseForm::GetResult(bool& change, xr_string& result)
+bool UIChooseForm::GetResult(bool &change, xr_string &result)
 {
     if (!Form->bOpen)
     {
@@ -364,7 +391,7 @@ bool UIChooseForm::GetResult(bool& change, xr_string& result)
                 VERIFY(Form->GetSelectedItem());
             }
             int i = 0;
-            for (auto& item : Form->m_SelectedItems)
+            for (auto &item : Form->m_SelectedItems)
             {
                 if (i != 0)
                 {
@@ -384,7 +411,7 @@ bool UIChooseForm::GetResult(bool& change, xr_string& result)
 
     return false;
 }
-bool UIChooseForm::GetResult(bool& change, xr_vector<xr_string>& result)
+bool UIChooseForm::GetResult(bool &change, xr_vector<xr_string> &result)
 {
     if (!Form->bOpen)
     {
@@ -395,9 +422,9 @@ bool UIChooseForm::GetResult(bool& change, xr_vector<xr_string>& result)
                 VERIFY(Form->GetSelectedItem());
             }
             int i = 0;
-            for (auto& item : Form->m_SelectedItems)
+            for (auto &item : Form->m_SelectedItems)
             {
-               
+
                 result.push_back(item->name.c_str());
                 i++;
             }
@@ -412,7 +439,7 @@ bool UIChooseForm::GetResult(bool& change, xr_vector<xr_string>& result)
 
     return false;
 }
-void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnChooseFillItems item_fill, void* fill_param, TOnChooseSelectItem item_select, ChooseItemVec* items, u32 mask)
+void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnChooseFillItems item_fill, void *fill_param, TOnChooseSelectItem item_select, ChooseItemVec *items, u32 mask)
 {
     VERIFY(!Form);
 
@@ -422,33 +449,33 @@ void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnC
     Form->iMultiSelLimit = sel_cnt;
 
     // init
-   
-    if(sel_cnt <= 1)
+
+    if (sel_cnt <= 1)
     {
         if (init_name && init_name[0])
             m_LastSelection = init_name;
     }
-    //Form->tvItems->Selected = 0;
+    // Form->tvItems->Selected = 0;
 
     // fill items
-    if (items) 
+    if (items)
     {
         VERIFY2(item_fill.empty(), "ChooseForm: Duplicate source.");
         Form->m_Items = *items;
         Form->E.Set("Select Item", 0, item_select, 0, 0, 0);
     }
-    else if (!item_fill.empty()) 
+    else if (!item_fill.empty())
     {
         // custom
         Form->E.Set("Select Item", item_fill, item_select, 0, 0, 0);
     }
     else
     {
-        SChooseEvents* e = GetEvents(choose_ID); VERIFY2(e, "Can't find choose event.");
+        SChooseEvents *e = GetEvents(choose_ID);
+        VERIFY2(e, "Can't find choose event.");
         Form->E = *e;
     }
     // set & fill
-
 
     Form->m_Title = Form->E.caption.c_str();
     if (!Form->E.on_fill.empty())
@@ -463,7 +490,7 @@ void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnC
         for (int i = 0; i < cnt; i++)
         {
             _GetItem(init_name, i, result);
-            for (auto& item : Form->m_Items)
+            for (auto &item : Form->m_Items)
             {
                 if (item.name.c_str() == result)
                 {
@@ -475,22 +502,22 @@ void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnC
     /*ImGui::GetBack*/
     //.	Form->paItemsCount->Caption		= AnsiString(" Items in list: ")+AnsiString(Form->tvItems->Items->Count);
 
-        // show
-   /* bool bRes = (Form->ShowModal() == mrOk);
-    dest = 0;
-    if (bRes) {
-        int item_cnt = _GetItemCount(select_item.c_str(), ',');
-        dest = (select_item == NONE_CAPTION) ? 0 : select_item.c_str();
-        m_LastSelection = select_item;
-        return 						item_cnt ? item_cnt : 1;
-    }*/
+    // show
+    /* bool bRes = (Form->ShowModal() == mrOk);
+     dest = 0;
+     if (bRes) {
+         int item_cnt = _GetItemCount(select_item.c_str(), ',');
+         dest = (select_item == NONE_CAPTION) ? 0 : select_item.c_str();
+         m_LastSelection = select_item;
+         return 						item_cnt ? item_cnt : 1;
+     }*/
 }
 
 void UIChooseForm::AppendEvents(u32 choose_ID, LPCSTR caption, TOnChooseFillItems on_fill, TOnChooseSelectItem on_sel, TGetTexture on_thm, TOnChooseClose on_close, u32 flags)
 {
-	EventsMapIt it = m_Events.find(choose_ID); VERIFY(it == m_Events.end());
-	m_Events.insert(std::make_pair(choose_ID, SChooseEvents(caption, on_fill, on_sel, on_thm, on_close, flags)));
-
+    EventsMapIt it = m_Events.find(choose_ID);
+    VERIFY(it == m_Events.end());
+    m_Events.insert(std::make_pair(choose_ID, SChooseEvents(caption, on_fill, on_sel, on_thm, on_close, flags)));
 }
 
 void UIChooseForm::ClearEvents()
@@ -499,11 +526,13 @@ void UIChooseForm::ClearEvents()
     m_Events.clear();
 }
 
-SChooseEvents* UIChooseForm::GetEvents(u32 choose_ID)
+SChooseEvents *UIChooseForm::GetEvents(u32 choose_ID)
 {
-	EventsMapIt it = m_Events.find(choose_ID);
-	if (it != m_Events.end()) {
-		return &it->second;
-	}
-	else return 0;
+    EventsMapIt it = m_Events.find(choose_ID);
+    if (it != m_Events.end())
+    {
+        return &it->second;
+    }
+    else
+        return 0;
 }

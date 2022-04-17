@@ -12,7 +12,8 @@ UIPropertiesForm::UIPropertiesForm()
 
 UIPropertiesForm::~UIPropertiesForm()
 {
-	if (m_EditTextValueData)xr_delete(m_EditTextValueData);
+	if (m_EditTextValueData)
+		xr_delete(m_EditTextValueData);
 	ClearProperties();
 }
 
@@ -23,7 +24,7 @@ void UIPropertiesForm::Draw()
 		{
 			shared_str result;
 			bool is_result;
-			if (UIChooseForm::GetResult(is_result,result))
+			if (UIChooseForm::GetResult(is_result, result))
 			{
 				if (is_result)
 				{
@@ -64,7 +65,6 @@ void UIPropertiesForm::Draw()
 								Modified();
 							}
 					}
-					
 				}
 				m_EditTextureValue = nullptr;
 			}
@@ -74,7 +74,7 @@ void UIPropertiesForm::Draw()
 		{
 			xr_shortcut result;
 			bool ok;
-			if (UIKeyPressForm::GetResult(ok,result))
+			if (UIKeyPressForm::GetResult(ok, result))
 			{
 				if (ok)
 				{
@@ -102,25 +102,24 @@ void UIPropertiesForm::Draw()
 	}
 }
 
-
-void UIPropertiesForm::AssignItems(PropItemVec& items)
+void UIPropertiesForm::AssignItems(PropItemVec &items)
 {
 	m_GeneralNode = Node();
 	m_Items = items;
-	for (PropItem* item : items)
+	for (PropItem *item : items)
 	{
 		item->m_Owner = this;
-		Node*N = AppendObject(&m_GeneralNode,item->Key());
+		Node *N = AppendObject(&m_GeneralNode, item->Key());
 		VERIFY(N);
 		N->Object = item;
 	}
 }
 
-PropItem* UIPropertiesForm::FindItemOfName(shared_str name)
+PropItem *UIPropertiesForm::FindItemOfName(shared_str name)
 {
-	for (PropItem* I : m_Items)
+	for (PropItem *I : m_Items)
 	{
-		const char* key = I->Key();
+		const char *key = I->Key();
 		if (strrchr(key, '\\'))
 		{
 			key = strrchr(key, '\\') + 1;
@@ -136,7 +135,7 @@ PropItem* UIPropertiesForm::FindItemOfName(shared_str name)
 void UIPropertiesForm::ClearProperties()
 {
 	VERIFY(!m_EditChooseValue);
-	for (PropItem* I : m_Items)
+	for (PropItem *I : m_Items)
 	{
 		xr_delete(I);
 	}
@@ -144,14 +143,15 @@ void UIPropertiesForm::ClearProperties()
 	m_Items.clear();
 }
 
-PropItem* UIPropertiesForm::FindItem(const char* name)
+PropItem *UIPropertiesForm::FindItem(const char *name)
 {
-	Node* N = FindObject(&m_GeneralNode, name);
-	if (N)return N->Object;
+	Node *N = FindObject(&m_GeneralNode, name);
+	if (N)
+		return N->Object;
 	return nullptr;
 }
 
-void UIPropertiesForm::DrawItem(Node* node)
+void UIPropertiesForm::DrawItem(Node *node)
 {
 
 	EPropType type = node->Object->Type();
@@ -165,12 +165,12 @@ void UIPropertiesForm::DrawItem(Node* node)
 		if (node->Object->m_Flags.test(PropItem::flMixed))
 		{
 			ImGui::TextDisabled(node->Object->GetDrawText().c_str());
-
 		}
 		else
 		{
 			ImGui::PushItemWidth(-1);
-			CanvasValue* val = dynamic_cast<CanvasValue*>(node->Object->GetFrontValue()); R_ASSERT(val);
+			CanvasValue *val = dynamic_cast<CanvasValue *>(node->Object->GetFrontValue());
+			R_ASSERT(val);
 			if (!val->OnDrawCanvasEvent.empty())
 				val->OnDrawCanvasEvent(val);
 		}
@@ -178,20 +178,20 @@ void UIPropertiesForm::DrawItem(Node* node)
 	}
 	break;
 	case PROP_BUTTON:
-	
+
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
 		if (node->Object->m_Flags.test(PropItem::flMixed))
 		{
 			ImGui::TextDisabled(node->Object->GetDrawText().c_str());
-
 		}
 		else
 		{
 			ImGui::PushID(node->Name.c_str());
 			bool bRes = false;
 			bool bSafe = false;
-			ButtonValue* V = dynamic_cast<ButtonValue*>(node->Object->GetFrontValue()); R_ASSERT(V);
+			ButtonValue *V = dynamic_cast<ButtonValue *>(node->Object->GetFrontValue());
+			R_ASSERT(V);
 			if (!V->value.empty())
 			{
 				ImGui::PushItemWidth(-1);
@@ -241,7 +241,8 @@ void UIPropertiesForm::DrawItem(Node* node)
 			ImGui::NextColumn();
 			if (type == PROP_BOOLEAN)
 			{
-				FlagValueCustom* V = dynamic_cast<FlagValueCustom*>(node->Object->GetFrontValue()); VERIFY(V);
+				FlagValueCustom *V = dynamic_cast<FlagValueCustom *>(node->Object->GetFrontValue());
+				VERIFY(V);
 				ImGui::TextDisabled(V->GetValueEx() ? "true" : "false");
 			}
 			else
@@ -268,7 +269,8 @@ void UIPropertiesForm::DrawItem(Node* node)
 				{
 					node->Object->OnChange();
 					Modified();
-				} ImGui::SameLine(0, 2);
+				}
+				ImGui::SameLine(0, 2);
 			}
 			ImGui::Text(node->Name.c_str());
 			ImGui::NextColumn();
@@ -276,8 +278,9 @@ void UIPropertiesForm::DrawItem(Node* node)
 			{
 				if (type == PROP_FLAG)
 				{
-					FlagValueCustom* V = dynamic_cast<FlagValueCustom*>(node->Object->GetFrontValue()); VERIFY(V);
-					ImGui::TextDisabled(V->GetValueEx()?"true":"false");
+					FlagValueCustom *V = dynamic_cast<FlagValueCustom *>(node->Object->GetFrontValue());
+					VERIFY(V);
+					ImGui::TextDisabled(V->GetValueEx() ? "true" : "false");
 				}
 				else
 				{
@@ -296,12 +299,12 @@ void UIPropertiesForm::DrawItem(Node* node)
 	}
 }
 
-bool UIPropertiesForm::IsDrawFloder(Node* Node)
+bool UIPropertiesForm::IsDrawFloder(Node *Node)
 {
 	return true;
 }
 
-void UIPropertiesForm::DrawAfterFloderNode(bool is_open, Node* node )
+void UIPropertiesForm::DrawAfterFloderNode(bool is_open, Node *node)
 {
 	if (!node->Object)
 	{
@@ -327,13 +330,13 @@ void UIPropertiesForm::DrawAfterFloderNode(bool is_open, Node* node )
 		if (node->Object->m_Flags.test(PropItem::flMixed))
 		{
 			ImGui::TextDisabled(node->Object->GetDrawText().c_str());
-
 		}
 		else
 		{
 			bool bRes = false;
 			bool bSafe = false;
-			ButtonValue* V = dynamic_cast<ButtonValue*>(node->Object->GetFrontValue()); R_ASSERT(V);
+			ButtonValue *V = dynamic_cast<ButtonValue *>(node->Object->GetFrontValue());
+			R_ASSERT(V);
 			if (!V->value.empty())
 			{
 				ImGui::PushItemWidth(-1);
@@ -393,13 +396,14 @@ void UIPropertiesForm::DrawAfterFloderNode(bool is_open, Node* node )
 		}
 		else
 		{
-			
+
 			ImGui::NextColumn();
 			if (node->Object->m_Flags.test(PropItem::flDisabled))
 			{
 				if (type == PROP_FLAG)
 				{
-					FlagValueCustom* V = dynamic_cast<FlagValueCustom*>(node->Object->GetFrontValue()); VERIFY(V);
+					FlagValueCustom *V = dynamic_cast<FlagValueCustom *>(node->Object->GetFrontValue());
+					VERIFY(V);
 					ImGui::TextDisabled(V->GetValueEx() ? "true" : "false");
 				}
 				else
@@ -430,7 +434,7 @@ void UIPropertiesForm::DrawEditText()
 		ImGui::BeginGroup();
 		if (ImGui::Button("Ok"))
 		{
-			CTextValue* V1 = dynamic_cast<CTextValue*>(m_EditTextValue->GetFrontValue());
+			CTextValue *V1 = dynamic_cast<CTextValue *>(m_EditTextValue->GetFrontValue());
 			if (V1)
 			{
 				xr_string out = m_EditTextValueData;
@@ -446,7 +450,7 @@ void UIPropertiesForm::DrawEditText()
 			}
 			else
 			{
-				RTextValue* V2 = dynamic_cast<RTextValue*>(m_EditTextValue->GetFrontValue());
+				RTextValue *V2 = dynamic_cast<RTextValue *>(m_EditTextValue->GetFrontValue());
 				if (V2)
 				{
 					shared_str out = m_EditTextValueData;
@@ -462,7 +466,7 @@ void UIPropertiesForm::DrawEditText()
 				}
 				else
 				{
-					STextValue* V3 = dynamic_cast<STextValue*>(m_EditTextValue->GetFrontValue());
+					STextValue *V3 = dynamic_cast<STextValue *>(m_EditTextValue->GetFrontValue());
 					if (V3)
 					{
 						xr_string out = m_EditTextValueData;
@@ -482,15 +486,17 @@ void UIPropertiesForm::DrawEditText()
 					}
 				}
 			}
-		}ImGui::SameLine(0);
+		}
+		ImGui::SameLine(0);
 		if (ImGui::Button("Cancel"))
 		{
 			xr_delete(m_EditTextValueData);
 			ImGui::CloseCurrentPopup();
-		} ImGui::SameLine(0);
+		}
+		ImGui::SameLine(0);
 		if (ImGui::Button("Apply"))
 		{
-			CTextValue* V1 = dynamic_cast<CTextValue*>(m_EditTextValue->GetFrontValue());
+			CTextValue *V1 = dynamic_cast<CTextValue *>(m_EditTextValue->GetFrontValue());
 			if (V1)
 			{
 				xr_string out = m_EditTextValueData;
@@ -504,7 +510,7 @@ void UIPropertiesForm::DrawEditText()
 			}
 			else
 			{
-				RTextValue* V2 = dynamic_cast<RTextValue*>(m_EditTextValue->GetFrontValue());
+				RTextValue *V2 = dynamic_cast<RTextValue *>(m_EditTextValue->GetFrontValue());
 				if (V2)
 				{
 					shared_str out = m_EditTextValueData;
@@ -518,7 +524,7 @@ void UIPropertiesForm::DrawEditText()
 				}
 				else
 				{
-					STextValue* V3 = dynamic_cast<STextValue*>(m_EditTextValue->GetFrontValue());
+					STextValue *V3 = dynamic_cast<STextValue *>(m_EditTextValue->GetFrontValue());
 					if (V3)
 					{
 						xr_string out = m_EditTextValueData;
@@ -536,41 +542,49 @@ void UIPropertiesForm::DrawEditText()
 					}
 				}
 			}
-		}ImGui::SameLine(150);
+		}
+		ImGui::SameLine(150);
 
 		if (ImGui::Button("Load"))
 		{
 			xr_string fn;
-			if (EFS.GetOpenName(0, "$import$", fn, false, NULL, 2)) {
-				xr_string		buf;
-				IReader* F = FS.r_open(fn.c_str());
+			if (EFS.GetOpenName(0, "$import$", fn, false, NULL, 2))
+			{
+				xr_string buf;
+				IReader *F = FS.r_open(fn.c_str());
 				F->r_stringZ(buf);
 				xr_delete(m_EditTextValueData);
 				m_EditTextValueData = xr_strdup(buf.c_str());
-				m_EditTextValueDataSize = xr_strlen(m_EditTextValueData)+1;
+				m_EditTextValueDataSize = xr_strlen(m_EditTextValueData) + 1;
 				FS.r_close(F);
 			}
 		}
-		
+
 		ImGui::SameLine(0);
 		if (ImGui::Button("Save"))
 		{
 			xr_string fn;
-			if (EFS.GetSaveName("$import$", fn, NULL, 2)) {
+			if (EFS.GetSaveName("$import$", fn, NULL, 2))
+			{
 				CMemoryWriter F;
 				F.w_stringZ(m_EditTextValueData);
 				if (!F.save_to(fn.c_str()))
 					Log("!Can't save text file:", fn.c_str());
 			}
 		}
-		
-		ImGui::SameLine(0);
-		if (ImGui::Button("Clear")) { m_EditTextValueData[0] = 0; }
-		ImGui::EndGroup();
-		if(m_EditTextValueData)
-		ImGui::InputTextMultiline("", m_EditTextValueData, m_EditTextValueDataSize, ImVec2(500, 200) ,ImGuiInputTextFlags_CallbackResize, [](ImGuiInputTextCallbackData* data)->int {return reinterpret_cast<UIPropertiesForm*>(data->UserData)->DrawEditText_Callback(data); }, reinterpret_cast<void*>(this));
 
-		
+		ImGui::SameLine(0);
+		if (ImGui::Button("Clear"))
+		{
+			m_EditTextValueData[0] = 0;
+		}
+		ImGui::EndGroup();
+		if (m_EditTextValueData)
+			ImGui::InputTextMultiline(
+				"", m_EditTextValueData, m_EditTextValueDataSize, ImVec2(500, 200), ImGuiInputTextFlags_CallbackResize, [](ImGuiInputTextCallbackData *data) -> int
+				{ return reinterpret_cast<UIPropertiesForm *>(data->UserData)->DrawEditText_Callback(data); },
+				reinterpret_cast<void *>(this));
+
 		ImGui::EndPopup();
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
@@ -578,9 +592,9 @@ void UIPropertiesForm::DrawEditText()
 	}
 }
 
-int UIPropertiesForm::DrawEditText_Callback(ImGuiInputTextCallbackData* data)
+int UIPropertiesForm::DrawEditText_Callback(ImGuiInputTextCallbackData *data)
 {
-	m_EditTextValueData =(char*) xr_realloc(m_EditTextValueData, data->BufSize);
+	m_EditTextValueData = (char *)xr_realloc(m_EditTextValueData, data->BufSize);
 	m_EditTextValueDataSize = data->BufSize;
 	data->Buf = m_EditTextValueData;
 	return 0;
@@ -631,7 +645,8 @@ void UIPropertiesForm::DrawEditGameType()
 					m_EditGameTypeChooser.m_GameType.set(eGameIDCaptureTheArtefact, cheked);
 				}
 			}
-			ImGui::EndGroup(); ImGui::SameLine();
+			ImGui::EndGroup();
+			ImGui::SameLine();
 		}
 		{
 			ImGui::BeginGroup();
@@ -657,4 +672,3 @@ void UIPropertiesForm::DrawEditGameType()
 		ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 5);
 	}
 }
-

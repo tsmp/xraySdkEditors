@@ -28,21 +28,42 @@ void UIMainMenuForm::Draw()
         {
             if (ImGui::BeginMenu("Image"))
             {
-                if (ImGui::MenuItem("Image Editor", "")) { ExecCommand(COMMAND_IMAGE_EDITOR); }
+                if (ImGui::MenuItem("Image Editor", ""))
+                {
+                    ExecCommand(COMMAND_IMAGE_EDITOR);
+                }
                 ImGui::Separator();
-                if (ImGui::MenuItem("Synchronize Textures", "")) { ExecCommand(COMMAND_REFRESH_TEXTURES); }
-                if (ImGui::MenuItem("Cheack New Textures", "")) { ExecCommand(COMMAND_CHECK_TEXTURES); }
+                if (ImGui::MenuItem("Synchronize Textures", ""))
+                {
+                    ExecCommand(COMMAND_REFRESH_TEXTURES);
+                }
+                if (ImGui::MenuItem("Cheack New Textures", ""))
+                {
+                    ExecCommand(COMMAND_CHECK_TEXTURES);
+                }
                 ImGui::EndMenu();
             }
             if (ImGui::BeginMenu("Sounds"))
             {
-                if (ImGui::MenuItem("Sound Editor", "")) { ExecCommand(COMMAND_SOUND_EDITOR); }
+                if (ImGui::MenuItem("Sound Editor", ""))
+                {
+                    ExecCommand(COMMAND_SOUND_EDITOR);
+                }
                 ImGui::Separator();
-                if (ImGui::MenuItem("Synchronize Sounds", "")) { ExecCommand(COMMAND_SYNC_SOUNDS); }
+                if (ImGui::MenuItem("Synchronize Sounds", ""))
+                {
+                    ExecCommand(COMMAND_SYNC_SOUNDS);
+                }
                 ImGui::EndMenu();
             }
-            if (ImGui::MenuItem("Light Anim Editor", "")) { ExecCommand(COMMAND_LIGHTANIM_EDITOR); }
-            if (ImGui::MenuItem("Minimap Editor", "")) { ExecCommand(COMMAND_MINIMAP_EDITOR); }
+            if (ImGui::MenuItem("Light Anim Editor", ""))
+            {
+                ExecCommand(COMMAND_LIGHTANIM_EDITOR);
+            }
+            if (ImGui::MenuItem("Minimap Editor", ""))
+            {
+                ExecCommand(COMMAND_MINIMAP_EDITOR);
+            }
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Options"))
@@ -51,7 +72,7 @@ void UIMainMenuForm::Draw()
             {
                 if (ImGui::BeginMenu("Quality"))
                 {
-                    static bool selected[4] = { false,false,true,false };
+                    static bool selected[4] = {false, false, true, false};
                     if (ImGui::MenuItem("25%", "", &selected[0]))
                     {
                         selected[1] = selected[2] = selected[3] = false;
@@ -80,7 +101,7 @@ void UIMainMenuForm::Draw()
                 }
                 if (ImGui::BeginMenu("Fill Mode"))
                 {
-                    bool selected[3] = { EDevice.dwFillMode == D3DFILL_POINT,EDevice.dwFillMode == D3DFILL_WIREFRAME,EDevice.dwFillMode == D3DFILL_SOLID };
+                    bool selected[3] = {EDevice.dwFillMode == D3DFILL_POINT, EDevice.dwFillMode == D3DFILL_WIREFRAME, EDevice.dwFillMode == D3DFILL_SOLID};
                     if (ImGui::MenuItem("Point", "", &selected[0]))
                     {
                         EDevice.dwFillMode = D3DFILL_POINT;
@@ -100,7 +121,7 @@ void UIMainMenuForm::Draw()
                 }
                 if (ImGui::BeginMenu("Shader Mode"))
                 {
-                    bool selected[2] = { EDevice.dwShadeMode == D3DSHADE_FLAT,EDevice.dwShadeMode == D3DSHADE_GOURAUD };
+                    bool selected[2] = {EDevice.dwShadeMode == D3DSHADE_FLAT, EDevice.dwShadeMode == D3DSHADE_GOURAUD};
                     if (ImGui::MenuItem("Flat", "", &selected[0]))
                     {
                         EDevice.dwShadeMode = D3DSHADE_FLAT;
@@ -177,7 +198,8 @@ void UIMainMenuForm::Draw()
             }
             ImGui::Separator();
             {
-                bool selected = psDeviceFlags.test(rsLighting);;
+                bool selected = psDeviceFlags.test(rsLighting);
+                ;
                 if (ImGui::MenuItem("Lighting", "", &selected))
                 {
                     psDeviceFlags.set(rsLighting, selected);
@@ -201,11 +223,17 @@ void UIMainMenuForm::Draw()
             ImGui::Separator();
             {
                 bool selected = psDeviceFlags.test(rsStatistic);
-                if (ImGui::MenuItem("Stats", "", &selected)) { psDeviceFlags.set(rsStatistic, selected);  UI->RedrawScene(); }
-
+                if (ImGui::MenuItem("Stats", "", &selected))
+                {
+                    psDeviceFlags.set(rsStatistic, selected);
+                    UI->RedrawScene();
+                }
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Preferences", "")) { ExecCommand(COMMAND_EDITOR_PREF); }
+            if (ImGui::MenuItem("Preferences", ""))
+            {
+                ExecCommand(COMMAND_EDITOR_PREF);
+            }
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Windows"))
@@ -213,7 +241,10 @@ void UIMainMenuForm::Draw()
             {
                 bool selected = AllowLogCommands();
 
-                if (ImGui::MenuItem("Log", "", &selected)) { ExecCommand(COMMAND_LOG_COMMANDS); }
+                if (ImGui::MenuItem("Log", "", &selected))
+                {
+                    ExecCommand(COMMAND_LOG_COMMANDS);
+                }
             }
             ImGui::EndMenu();
         }

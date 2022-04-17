@@ -11,30 +11,28 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline Sphere::Sphere ()
+inline Sphere::Sphere()
 {
     // no initialization for efficiency
 }
 //----------------------------------------------------------------------------
-inline Vector3& Sphere::Center ()
+inline Vector3 &Sphere::Center()
 {
     return m_kCenter;
 }
 //----------------------------------------------------------------------------
-inline const Vector3& Sphere::Center () const
+inline const Vector3 &Sphere::Center() const
 {
     return m_kCenter;
 }
 //----------------------------------------------------------------------------
-inline Real& Sphere::Radius ()
+inline Real &Sphere::Radius()
 {
     return m_fRadius;
 }
 //----------------------------------------------------------------------------
-inline const Real& Sphere::Radius () const
+inline const Real &Sphere::Radius() const
 {
     return m_fRadius;
 }
 //----------------------------------------------------------------------------
-
-

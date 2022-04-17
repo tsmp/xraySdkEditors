@@ -1,4 +1,4 @@
-#ifndef	xrApi_included
+#ifndef xrApi_included
 #define xrApi_included
 #pragma once
 
@@ -8,41 +8,38 @@
 #define XRAPI_API __declspec(dllimport)
 #endif
 
-
-
 #ifndef _EDITOR
 class IRender_interface;
-extern XRAPI_API IRender_interface*	Render;
+extern XRAPI_API IRender_interface *Render;
 
 class IRenderFactory;
-extern XRAPI_API IRenderFactory*	RenderFactory;
+extern XRAPI_API IRenderFactory *RenderFactory;
 
 class CDUInterface;
-extern XRAPI_API CDUInterface*	DU;
+extern XRAPI_API CDUInterface *DU;
 
 struct xr_token;
-extern XRAPI_API xr_token*	vid_mode_token;
+extern XRAPI_API xr_token *vid_mode_token;
 
 class IUIRender;
-extern XRAPI_API IUIRender*	UIRender;
+extern XRAPI_API IUIRender *UIRender;
 
-
-#ifndef	_EDITOR
+#ifndef _EDITOR
 class CGameMtlLibrary;
-extern XRAPI_API CGameMtlLibrary *			PGMLib;
+extern XRAPI_API CGameMtlLibrary *PGMLib;
 #endif
 
 #ifdef DEBUG
-	class IDebugRender;
-	extern XRAPI_API IDebugRender*	DRender;
+class IDebugRender;
+extern XRAPI_API IDebugRender *DRender;
 #endif // DEBUG
 
 #else
-	class	CRender;
-    extern ENGINE_API CRender*	Render;
+class CRender;
+extern ENGINE_API CRender *Render;
 
-   class IRenderFactory;
-    extern ENGINE_API IRenderFactory*	RenderFactory;
+class IRenderFactory;
+extern ENGINE_API IRenderFactory *RenderFactory;
 #endif
 /*
 // This class is exported from the xrAPI.dll
@@ -57,4 +54,4 @@ extern XRAPI_API int nxrAPI;
 XRAPI_API int fnxrAPI(void);
 */
 
-#endif	//	xrApi_included
+#endif //	xrApi_included

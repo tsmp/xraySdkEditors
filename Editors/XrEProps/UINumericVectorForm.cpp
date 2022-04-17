@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-UINumericVectorForm::UINumericVectorForm(const char* title, Fvector* data , Fvector* Reset, int decimal, Fvector* Min, Fvector* Max)
+UINumericVectorForm::UINumericVectorForm(const char *title, Fvector *data, Fvector *Reset, int decimal, Fvector *Min, Fvector *Max)
 {
 	m_Title = title;
 	m_Out = data;
@@ -17,19 +17,26 @@ UINumericVectorForm::~UINumericVectorForm()
 
 void UINumericVectorForm::Draw()
 {
-	ImGui::Begin(m_Title.c_str() , 0, ImGuiWindowFlags_::ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings);
-		ImGui::BeginGroup();
-			ImGui::InputFloat("X",&m_Edit.x,0.01,0.1, m_Decimal); ImGui::SameLine(0);
-			if (ImGui::Button("Ok"))CLBOk(); 
-		ImGui::EndGroup();
-		ImGui::BeginGroup();
-			ImGui::InputFloat("Y", &m_Edit.y, 0.01, 0.1, m_Decimal); ImGui::SameLine(0);
-			if (ImGui::Button("Cancek"))CLBCancel();
-		ImGui::EndGroup();
-		ImGui::BeginGroup();
-			ImGui::InputFloat("Z", &m_Edit.z, 0.01, 0.1, m_Decimal); ImGui::SameLine(0);
-			if(m_Reset) if (ImGui::Button("Reset"))CLBReset();
-		ImGui::EndGroup();
+	ImGui::Begin(m_Title.c_str(), 0, ImGuiWindowFlags_::ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings);
+	ImGui::BeginGroup();
+	ImGui::InputFloat("X", &m_Edit.x, 0.01, 0.1, m_Decimal);
+	ImGui::SameLine(0);
+	if (ImGui::Button("Ok"))
+		CLBOk();
+	ImGui::EndGroup();
+	ImGui::BeginGroup();
+	ImGui::InputFloat("Y", &m_Edit.y, 0.01, 0.1, m_Decimal);
+	ImGui::SameLine(0);
+	if (ImGui::Button("Cancek"))
+		CLBCancel();
+	ImGui::EndGroup();
+	ImGui::BeginGroup();
+	ImGui::InputFloat("Z", &m_Edit.z, 0.01, 0.1, m_Decimal);
+	ImGui::SameLine(0);
+	if (m_Reset)
+		if (ImGui::Button("Reset"))
+			CLBReset();
+	ImGui::EndGroup();
 	ImGui::End();
 	if (m_Max)
 	{

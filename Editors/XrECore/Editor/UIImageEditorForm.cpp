@@ -2,12 +2,12 @@
 #include "stdafx.h"
 #include "UIImageEditorForm.h"
 #include "EThumbnail.h"
-UIImageEditorForm* UIImageEditorForm::Form = nullptr;
+UIImageEditorForm *UIImageEditorForm::Form = nullptr;
 UIImageEditorForm::UIImageEditorForm()
 {
     m_ItemProps = xr_new<UIPropertiesForm>();
     m_ItemList = xr_new<UIItemListForm>();
-    m_ItemList->SetOnItemFocusedEvent(TOnILItemFocused(this,&UIImageEditorForm::OnItemsFocused));
+    m_ItemList->SetOnItemFocusedEvent(TOnILItemFocused(this, &UIImageEditorForm::OnItemsFocused));
     m_ItemList->SetOnItemRemoveEvent(TOnItemRemove(&ImageLib, &CImageManager::RemoveTexture));
     m_Texture = nullptr;
     m_bFilterImage = true;
@@ -20,7 +20,8 @@ UIImageEditorForm::UIImageEditorForm()
 
 UIImageEditorForm::~UIImageEditorForm()
 {
-    if (m_Texture)m_Texture->Release();
+    if (m_Texture)
+        m_Texture->Release();
     xr_delete(m_ItemList);
     xr_delete(m_ItemProps);
 }
@@ -52,11 +53,20 @@ void UIImageEditorForm::Draw()
     ImGui::Separator();
     if (!bImportMode)
     {
-        if (ImGui::Checkbox("Image", &m_bFilterImage))FilterUpdate(); ImGui::SameLine();
-        if (ImGui::Checkbox("Cube", &m_bFilterCube))FilterUpdate(); ImGui::SameLine();
-        if (ImGui::Checkbox("Bump", &m_bFilterBump))FilterUpdate(); ImGui::SameLine();
-        if (ImGui::Checkbox("Normal", &m_bFilterNormal))FilterUpdate(); ImGui::SameLine();
-        if (ImGui::Checkbox("Terrain", &m_bFilterTerrain))FilterUpdate();
+        if (ImGui::Checkbox("Image", &m_bFilterImage))
+            FilterUpdate();
+        ImGui::SameLine();
+        if (ImGui::Checkbox("Cube", &m_bFilterCube))
+            FilterUpdate();
+        ImGui::SameLine();
+        if (ImGui::Checkbox("Bump", &m_bFilterBump))
+            FilterUpdate();
+        ImGui::SameLine();
+        if (ImGui::Checkbox("Normal", &m_bFilterNormal))
+            FilterUpdate();
+        ImGui::SameLine();
+        if (ImGui::Checkbox("Terrain", &m_bFilterTerrain))
+            FilterUpdate();
         ImGui::Separator();
     }
     if (ImGui::Button("Close"))
@@ -77,7 +87,6 @@ void UIImageEditorForm::Draw()
             m_ItemList->RemoveSelectItem();
         }
     }
-
 }
 
 void UIImageEditorForm::Update()
@@ -96,13 +105,13 @@ void UIImageEditorForm::Update()
         {
             xr_delete(Form);
         }
-
     }
 }
 
 void UIImageEditorForm::Show(bool bImport)
 {
-    if(Form==nullptr)Form = xr_new< UIImageEditorForm>();
+    if (Form == nullptr)
+        Form = xr_new<UIImageEditorForm>();
     Form->bImportMode = bImport;
     //.        form->ebRebuildAssociation->Enabled = !bImport;
     Form->bReadonlyMode = !FS.can_write_to_alias(_textures_);
@@ -124,7 +133,7 @@ void UIImageEditorForm::ImportTextures()
     {
         if (ELog.DlgMsg(mtInformation, "Found %d new texture(s)", new_cnt))
         {
-            Form = xr_new< UIImageEditorForm>();
+            Form = xr_new<UIImageEditorForm>();
             Form->texture_map.swap(TextureMap);
             Show(true);
         }
@@ -135,13 +144,13 @@ void UIImageEditorForm::ImportTextures()
     }
 }
 
-ETextureThumbnail* UIImageEditorForm::FindUsedTHM(const shared_str& name)
+ETextureThumbnail *UIImageEditorForm::FindUsedTHM(const shared_str &name)
 {
     THMMapIt it = m_THM_Used.find(name);
     if (it != m_THM_Used.end())
         return it->second;
 
-    ETextureThumbnail* thm = xr_new<ETextureThumbnail>(name.c_str(), false);
+    ETextureThumbnail *thm = xr_new<ETextureThumbnail>(name.c_str(), false);
     m_THM_Used[name] = thm;
 
     if (bImportMode)
@@ -175,12 +184,14 @@ void UIImageEditorForm::RegisterModifiedTHM()
     }
 }
 
-void UIImageEditorForm::OnCubeMapBtnClick(ButtonValue* value, bool& bModif, bool& bSafe)
+void UIImageEditorForm::OnCubeMapBtnClick(ButtonValue *value, bool &bModif, bool &bSafe)
 {
-    ButtonValue* B = dynamic_cast<ButtonValue*>(value); R_ASSERT(B);
+    ButtonValue *B = dynamic_cast<ButtonValue *>(value);
+    R_ASSERT(B);
     bModif = false;
-    switch (B->btn_num) {
-    case 0: 
+    switch (B->btn_num)
+    {
+    case 0:
     {
         RStringVec items;
         if (0 != m_ItemList->GetSelected(items))
@@ -196,7 +207,7 @@ void UIImageEditorForm::OnCubeMapBtnClick(ButtonValue* value, bool& bModif, bool
     }
 }
 
-void UIImageEditorForm::OnTypeChange(PropValue* prop)
+void UIImageEditorForm::OnTypeChange(PropValue *prop)
 {
 }
 
@@ -219,14 +230,14 @@ void UIImageEditorForm::InitItemList()
         }
     */
 
-    ListItemsVec 			items;
+    ListItemsVec items;
     // fill
     FS_FileSetIt it = texture_map.begin();
     FS_FileSetIt _E = texture_map.end();
     for (; it != _E; it++)
     {
-        ListItem* I = LHelper().CreateItem(items, it->name.c_str(), 0);
-        I->m_Object = (void*)(FindUsedTHM(it->name.c_str()));
+        ListItem *I = LHelper().CreateItem(items, it->name.c_str(), 0);
+        I->m_Object = (void *)(FindUsedTHM(it->name.c_str()));
         R_ASSERT2(I->m_Object, it->name.c_str());
     }
     m_ItemList->AssignItems(items);
@@ -250,7 +261,7 @@ void UIImageEditorForm::UpdateLib()
         // rename with folder
         FS_FileSet files = texture_map;
         texture_map.clear();
-        xr_string               fn;
+        xr_string fn;
         FS_FileSetIt it = files.begin();
         FS_FileSetIt _E = files.end();
 
@@ -258,7 +269,7 @@ void UIImageEditorForm::UpdateLib()
         {
             fn = EFS.ChangeFileExt(it->name.c_str(), "");
             ImageLib.UpdateFileName(fn);
-            FS_File				F(*it);
+            FS_File F(*it);
             F.name = fn;
             texture_map.insert(F);
         }
@@ -278,7 +289,7 @@ void UIImageEditorForm::UpdateLib()
     }
 }
 
-void UIImageEditorForm::OnItemsFocused(ListItem* item)
+void UIImageEditorForm::OnItemsFocused(ListItem *item)
 {
     PropItemVec props;
 
@@ -289,10 +300,10 @@ void UIImageEditorForm::OnItemsFocused(ListItem* item)
     if (item)
     {
 
-        ListItem* prop = item;
-        if (prop) 
+        ListItem *prop = item;
+        if (prop)
         {
-            ETextureThumbnail* thm = 0;
+            ETextureThumbnail *thm = 0;
 
             thm = FindUsedTHM(prop->Key());
             /*
@@ -319,20 +330,19 @@ void UIImageEditorForm::OnItemsFocused(ListItem* item)
             }
             */
             m_THM_Current.push_back(thm);
-            //prop->tag								= thm->_Format().type;
+            // prop->tag								= thm->_Format().type;
 
             // fill prop
             thm->FillProp(props, PropValue::TOnChange(this, &UIImageEditorForm::OnTypeChange));
 
             if (thm->_Format().type == STextureParams::ttCubeMap)
             {
-                ButtonValue* B = PHelper().CreateButton(props, "CubeMap\\Edit", "Make Small", 0);
+                ButtonValue *B = PHelper().CreateButton(props, "CubeMap\\Edit", "Make Small", 0);
                 B->OnBtnClickEvent.bind(this, &UIImageEditorForm::OnCubeMapBtnClick);
             }
-           
+
             thm->Update(m_Texture);
         }
-
     }
     m_ItemProps->AssignItems(props);
 }
@@ -348,22 +358,22 @@ void UIImageEditorForm::SaveUsedTHM()
 
 void UIImageEditorForm::FilterUpdate()
 {
-    const ListItemsVec& items = m_ItemList->GetItems();
+    const ListItemsVec &items = m_ItemList->GetItems();
 
     u32 cnt = items.size();
     for (u32 k = 0; k < cnt; ++k)
     {
-        ListItem* I = items[k];
+        ListItem *I = items[k];
 
-        ETextureThumbnail* thm = (ETextureThumbnail*)I->m_Object;
+        ETextureThumbnail *thm = (ETextureThumbnail *)I->m_Object;
 
         BOOL bVis = FALSE;
         int type = thm->_Format().type;
-        if (STextureParams::ttImage == type&&m_bFilterImage)
+        if (STextureParams::ttImage == type && m_bFilterImage)
             bVis = TRUE;
         else if (STextureParams::ttCubeMap == type && m_bFilterCube)
             bVis = TRUE;
-        else if (STextureParams::ttBumpMap== type && m_bFilterBump)
+        else if (STextureParams::ttBumpMap == type && m_bFilterBump)
             bVis = TRUE;
         else if (STextureParams::ttNormalMap == type && m_bFilterNormal)
             bVis = TRUE;
@@ -371,7 +381,6 @@ void UIImageEditorForm::FilterUpdate()
             bVis = TRUE;
 
         I->Visible(bVis);
-        
     }
     m_ItemList->ClearSelected();
 }

@@ -9,12 +9,14 @@ UIParticlesTool::UIParticlesTool()
     m_ParticlesList = xr_new<UIItemListForm>();
     m_ParticlesList->SetOnItemFocusedEvent(TOnILItemFocused(this, &UIParticlesTool::OnItemFocused));
     ListItemsVec items;
-    for (PS::PEDIt E = ::Render->PSLibrary.FirstPED(); E != ::Render->PSLibrary.LastPED(); E++) {
-        ListItem* I = LHelper().CreateItem(items, *(*E)->m_Name, 0, 0, *E);
+    for (PS::PEDIt E = ::Render->PSLibrary.FirstPED(); E != ::Render->PSLibrary.LastPED(); E++)
+    {
+        ListItem *I = LHelper().CreateItem(items, *(*E)->m_Name, 0, 0, *E);
         I->SetIcon(1);
     }
-    for (PS::PGDIt G = ::Render->PSLibrary.FirstPGD(); G != ::Render->PSLibrary.LastPGD(); G++) {
-        ListItem* I = LHelper().CreateItem(items, *(*G)->m_Name, 0, 0, *G);
+    for (PS::PGDIt G = ::Render->PSLibrary.FirstPGD(); G != ::Render->PSLibrary.LastPGD(); G++)
+    {
+        ListItem *I = LHelper().CreateItem(items, *(*G)->m_Name, 0, 0, *G);
         I->SetIcon(2);
     }
 
@@ -33,24 +35,38 @@ void UIParticlesTool::Draw()
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         {
-            ImGui::Text("Ref's Select:   "); ImGui::SameLine(); if (ImGui::Button("+", ImVec2(ImGui::GetFrameHeight(), ImGui::GetFrameHeight()))) { SelByRef(true); }; ImGui::SameLine(); if (ImGui::Button("-", ImVec2(ImGui::GetFrameHeight(), ImGui::GetFrameHeight()))) { SelByRef(false); };
-            ImGui::Text("Selected:       "); ImGui::SameLine();
+            ImGui::Text("Ref's Select:   ");
+            ImGui::SameLine();
+            if (ImGui::Button("+", ImVec2(ImGui::GetFrameHeight(), ImGui::GetFrameHeight())))
+            {
+                SelByRef(true);
+            };
+            ImGui::SameLine();
+            if (ImGui::Button("-", ImVec2(ImGui::GetFrameHeight(), ImGui::GetFrameHeight())))
+            {
+                SelByRef(false);
+            };
+            ImGui::Text("Selected:       ");
+            ImGui::SameLine();
             if (ImGui::ArrowButton("play", ImGuiDir_Right))
             {
                 ObjectIt _F = Scene->FirstObj(OBJCLASS_PS);
                 ObjectIt _E = Scene->LastObj(OBJCLASS_PS);
-                for (; _F != _E; _F++) {
+                for (; _F != _E; _F++)
+                {
                     if ((*_F)->Visible() && (*_F)->Selected())
-                        ((EParticlesObject*)(*_F))->Play();
+                        ((EParticlesObject *)(*_F))->Play();
                 }
-            }ImGui::SameLine(); 
+            }
+            ImGui::SameLine();
             if (ImGui::Button("stop", ImVec2(0, ImGui::GetFrameHeight())))
             {
                 ObjectIt _F = Scene->FirstObj(OBJCLASS_PS);
                 ObjectIt _E = Scene->LastObj(OBJCLASS_PS);
-                for (; _F != _E; _F++) {
+                for (; _F != _E; _F++)
+                {
                     if ((*_F)->Visible() && (*_F)->Selected())
-                        ((EParticlesObject*)(*_F))->Stop();
+                        ((EParticlesObject *)(*_F))->Stop();
                 }
             }
         }
@@ -72,20 +88,23 @@ void UIParticlesTool::Draw()
 
 void UIParticlesTool::SelByRef(bool flag)
 {
-    if (m_Current) 
+    if (m_Current)
     {
         ObjectIt _F = Scene->FirstObj(OBJCLASS_PS);
         ObjectIt _E = Scene->LastObj(OBJCLASS_PS);
-        for (; _F != _E; _F++) {
-            if ((*_F)->Visible()) {
-                EParticlesObject* _O = (EParticlesObject*)(*_F);
-                if (_O->RefCompare(m_Current)) _O->Select(flag);
+        for (; _F != _E; _F++)
+        {
+            if ((*_F)->Visible())
+            {
+                EParticlesObject *_O = (EParticlesObject *)(*_F);
+                if (_O->RefCompare(m_Current))
+                    _O->Select(flag);
             }
         }
     }
 }
 
-void UIParticlesTool::OnItemFocused(ListItem* item)
+void UIParticlesTool::OnItemFocused(ListItem *item)
 {
     m_Current = nullptr;
     if (item)

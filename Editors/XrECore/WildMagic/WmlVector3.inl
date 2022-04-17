@@ -10,13 +10,13 @@
 
 //----------------------------------------------------------------------------
 template <class Real>
-Vector3<Real>::Vector3 ()
+Vector3<Real>::Vector3()
 {
     // the vector is uninitialized
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector3<Real>::Vector3 (Real fX, Real fY, Real fZ)
+Vector3<Real>::Vector3(Real fX, Real fY, Real fZ)
 {
     Vector3<Real>::m_afTuple[0] = fX;
     Vector3<Real>::m_afTuple[1] = fY;
@@ -24,89 +24,89 @@ Vector3<Real>::Vector3 (Real fX, Real fY, Real fZ)
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector3<Real>::Vector3 (const Vector3& rkV)
+Vector3<Real>::Vector3(const Vector3 &rkV)
 {
-    memcpy(Vector3<Real>::m_afTuple,rkV.Vector3<Real>::m_afTuple,3*sizeof(Real));
+    memcpy(Vector3<Real>::m_afTuple, rkV.Vector3<Real>::m_afTuple, 3 * sizeof(Real));
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector3<Real>::Vector3 (const Vector<3,Real>& rkV)
+Vector3<Real>::Vector3(const Vector<3, Real> &rkV)
 {
-    memcpy(Vector3<Real>::m_afTuple,(const Real*)rkV,3*sizeof(Real));
+    memcpy(Vector3<Real>::m_afTuple, (const Real *)rkV, 3 * sizeof(Real));
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector3<Real>& Vector3<Real>::operator= (const Vector3& rkV)
+Vector3<Real> &Vector3<Real>::operator=(const Vector3 &rkV)
 {
-    memcpy(Vector3<Real>::m_afTuple,rkV.Vector3<Real>::m_afTuple,3*sizeof(Real));
+    memcpy(Vector3<Real>::m_afTuple, rkV.Vector3<Real>::m_afTuple, 3 * sizeof(Real));
     return *this;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector3<Real>& Vector3<Real>::operator= (const Vector<3,Real>& rkV)
+Vector3<Real> &Vector3<Real>::operator=(const Vector<3, Real> &rkV)
 {
-    memcpy(Vector3<Real>::m_afTuple,(const Real*)rkV,3*sizeof(Real));
+    memcpy(Vector3<Real>::m_afTuple, (const Real *)rkV, 3 * sizeof(Real));
     return *this;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector3<Real>::X () const
+Real Vector3<Real>::X() const
 {
     return Vector3<Real>::m_afTuple[0];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector3<Real>::X ()
+Real &Vector3<Real>::X()
 {
     return Vector3<Real>::m_afTuple[0];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector3<Real>::Y () const
+Real Vector3<Real>::Y() const
 {
     return Vector3<Real>::m_afTuple[1];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector3<Real>::Y ()
+Real &Vector3<Real>::Y()
 {
     return Vector3<Real>::m_afTuple[1];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector3<Real>::Z () const
+Real Vector3<Real>::Z() const
 {
     return Vector3<Real>::m_afTuple[2];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector3<Real>::Z ()
+Real &Vector3<Real>::Z()
 {
     return Vector3<Real>::m_afTuple[2];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector3<Real> Vector3<Real>::Cross (const Vector3& rkV) const
+Vector3<Real> Vector3<Real>::Cross(const Vector3 &rkV) const
 {
     return Vector3(
-        Vector3<Real>::m_afTuple[1]*rkV.Vector3<Real>::m_afTuple[2] - Vector3<Real>::m_afTuple[2]*rkV.Vector3<Real>::m_afTuple[1],
-        Vector3<Real>::m_afTuple[2]*rkV.Vector3<Real>::m_afTuple[0] - Vector3<Real>::m_afTuple[0]*rkV.Vector3<Real>::m_afTuple[2],
-        Vector3<Real>::m_afTuple[0]*rkV.Vector3<Real>::m_afTuple[1] - Vector3<Real>::m_afTuple[1]*rkV.Vector3<Real>::m_afTuple[0]);
+        Vector3<Real>::m_afTuple[1] * rkV.Vector3<Real>::m_afTuple[2] - Vector3<Real>::m_afTuple[2] * rkV.Vector3<Real>::m_afTuple[1],
+        Vector3<Real>::m_afTuple[2] * rkV.Vector3<Real>::m_afTuple[0] - Vector3<Real>::m_afTuple[0] * rkV.Vector3<Real>::m_afTuple[2],
+        Vector3<Real>::m_afTuple[0] * rkV.Vector3<Real>::m_afTuple[1] - Vector3<Real>::m_afTuple[1] * rkV.Vector3<Real>::m_afTuple[0]);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector3<Real> Vector3<Real>::UnitCross (const Vector3& rkV) const
+Vector3<Real> Vector3<Real>::UnitCross(const Vector3 &rkV) const
 {
     Vector3 kCross(
-        Vector3<Real>::m_afTuple[1]*rkV.Vector3<Real>::m_afTuple[2] - Vector3<Real>::m_afTuple[2]*rkV.Vector3<Real>::m_afTuple[1],
-        Vector3<Real>::m_afTuple[2]*rkV.Vector3<Real>::m_afTuple[0] - Vector3<Real>::m_afTuple[0]*rkV.Vector3<Real>::m_afTuple[2],
-        Vector3<Real>::m_afTuple[0]*rkV.Vector3<Real>::m_afTuple[1] - Vector3<Real>::m_afTuple[1]*rkV.Vector3<Real>::m_afTuple[0]);
+        Vector3<Real>::m_afTuple[1] * rkV.Vector3<Real>::m_afTuple[2] - Vector3<Real>::m_afTuple[2] * rkV.Vector3<Real>::m_afTuple[1],
+        Vector3<Real>::m_afTuple[2] * rkV.Vector3<Real>::m_afTuple[0] - Vector3<Real>::m_afTuple[0] * rkV.Vector3<Real>::m_afTuple[2],
+        Vector3<Real>::m_afTuple[0] * rkV.Vector3<Real>::m_afTuple[1] - Vector3<Real>::m_afTuple[1] * rkV.Vector3<Real>::m_afTuple[0]);
     kCross.Normalize();
     return kCross;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Vector3<Real>::Orthonormalize (Vector3& rkU, Vector3& rkV, Vector3& rkW)
+void Vector3<Real>::Orthonormalize(Vector3 &rkU, Vector3 &rkV, Vector3 &rkW)
 {
     // If the input vectors are v0, v1, and v2, then the Gram-Schmidt
     // orthonormalization produces vectors u0, u1, and u2 as follows,
@@ -122,50 +122,50 @@ void Vector3<Real>::Orthonormalize (Vector3& rkU, Vector3& rkV, Vector3& rkW)
     rkU.Normalize();
 
     // compute u1
-    Real fDot0 = rkU.Dot(rkV); 
-    rkV -= fDot0*rkU;
+    Real fDot0 = rkU.Dot(rkV);
+    rkV -= fDot0 * rkU;
     rkV.Normalize();
 
     // compute u2
     Real fDot1 = rkV.Dot(rkW);
     fDot0 = rkU.Dot(rkW);
-    rkW -= fDot0*rkU + fDot1*rkV;
+    rkW -= fDot0 * rkU + fDot1 * rkV;
     rkW.Normalize();
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Vector3<Real>::Orthonormalize (Vector3 akV[/*3*/])
+void Vector3<Real>::Orthonormalize(Vector3 akV[/*3*/])
 {
-    Orthonormalize(akV[0],akV[1],akV[2]);
+    Orthonormalize(akV[0], akV[1], akV[2]);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Vector3<Real>::GenerateOrthonormalBasis (Vector3& rkU, Vector3& rkV,
-    Vector3& rkW, bool bUnitLengthW)
+void Vector3<Real>::GenerateOrthonormalBasis(Vector3 &rkU, Vector3 &rkV,
+                                             Vector3 &rkW, bool bUnitLengthW)
 {
-    if ( !bUnitLengthW )
+    if (!bUnitLengthW)
         rkW.Normalize();
 
     Real fInvLength;
 
-    if ( Math<Real>::FAbs(rkW.Vector3<Real>::m_afTuple[0]) >=
-         Math<Real>::FAbs(rkW.Vector3<Real>::m_afTuple[1]) )
+    if (Math<Real>::FAbs(rkW.Vector3<Real>::m_afTuple[0]) >=
+        Math<Real>::FAbs(rkW.Vector3<Real>::m_afTuple[1]))
     {
         // W.x or W.z is the largest magnitude component, swap them
-        fInvLength = Math<Real>::InvSqrt(rkW.Vector3<Real>::m_afTuple[0]*rkW.Vector3<Real>::m_afTuple[0] +
-            rkW.Vector3<Real>::m_afTuple[2]*rkW.Vector3<Real>::m_afTuple[2]);
-        rkU.Vector3<Real>::m_afTuple[0] = -rkW.Vector3<Real>::m_afTuple[2]*fInvLength;
+        fInvLength = Math<Real>::InvSqrt(rkW.Vector3<Real>::m_afTuple[0] * rkW.Vector3<Real>::m_afTuple[0] +
+                                         rkW.Vector3<Real>::m_afTuple[2] * rkW.Vector3<Real>::m_afTuple[2]);
+        rkU.Vector3<Real>::m_afTuple[0] = -rkW.Vector3<Real>::m_afTuple[2] * fInvLength;
         rkU.Vector3<Real>::m_afTuple[1] = (Real)0.0;
-        rkU.Vector3<Real>::m_afTuple[2] = +rkW.Vector3<Real>::m_afTuple[0]*fInvLength;
+        rkU.Vector3<Real>::m_afTuple[2] = +rkW.Vector3<Real>::m_afTuple[0] * fInvLength;
     }
     else
     {
         // W.y or W.z is the largest magnitude component, swap them
-        fInvLength = Math<Real>::InvSqrt(rkW.Vector3<Real>::m_afTuple[1]*rkW.Vector3<Real>::m_afTuple[1] +
-            rkW.Vector3<Real>::m_afTuple[2]*rkW.Vector3<Real>::m_afTuple[2]);
+        fInvLength = Math<Real>::InvSqrt(rkW.Vector3<Real>::m_afTuple[1] * rkW.Vector3<Real>::m_afTuple[1] +
+                                         rkW.Vector3<Real>::m_afTuple[2] * rkW.Vector3<Real>::m_afTuple[2]);
         rkU.Vector3<Real>::m_afTuple[0] = (Real)0.0;
-        rkU.Vector3<Real>::m_afTuple[1] = +rkW.Vector3<Real>::m_afTuple[2]*fInvLength;
-        rkU.Vector3<Real>::m_afTuple[2] = -rkW.Vector3<Real>::m_afTuple[1]*fInvLength;
+        rkU.Vector3<Real>::m_afTuple[1] = +rkW.Vector3<Real>::m_afTuple[2] * fInvLength;
+        rkU.Vector3<Real>::m_afTuple[2] = -rkW.Vector3<Real>::m_afTuple[1] * fInvLength;
     }
 
     rkV = rkW.Cross(rkU);

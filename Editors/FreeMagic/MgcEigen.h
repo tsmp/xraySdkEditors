@@ -15,75 +15,74 @@
 
 #include "MgcMath.h"
 
-namespace Mgc {
-
-
-class MAGICFM Eigen
+namespace Mgc
 {
-public:
-    Eigen (int iSize);
-    ~Eigen ();
 
-    // set the matrix for eigensolving
-    Real& Matrix (int iRow, int iCol);
-    void SetMatrix (Real** aafMat);
+    class MAGICFM Eigen
+    {
+    public:
+        Eigen(int iSize);
+        ~Eigen();
 
-    // get the results of eigensolving (eigenvectors are columns of matrix)
-    Real GetEigenvalue (int i) const;
-    Real GetEigenvector (int iRow, int iCol) const;
-    Real* GetEigenvalue ();
-    Real** GetEigenvector ();
+        // set the matrix for eigensolving
+        Real &Matrix(int iRow, int iCol);
+        void SetMatrix(Real **aafMat);
 
-    // solve eigensystem
-    void EigenStuff2 ();
-    void EigenStuff3 ();
-    void EigenStuff4 ();
-    void EigenStuffN ();
-    void EigenStuff  ();
+        // get the results of eigensolving (eigenvectors are columns of matrix)
+        Real GetEigenvalue(int i) const;
+        Real GetEigenvector(int iRow, int iCol) const;
+        Real *GetEigenvalue();
+        Real **GetEigenvector();
 
-    // solve eigensystem, use decreasing sort on eigenvalues
-    void DecrSortEigenStuff2 ();
-    void DecrSortEigenStuff3 ();
-    void DecrSortEigenStuff4 ();
-    void DecrSortEigenStuffN ();
-    void DecrSortEigenStuff  ();
+        // solve eigensystem
+        void EigenStuff2();
+        void EigenStuff3();
+        void EigenStuff4();
+        void EigenStuffN();
+        void EigenStuff();
 
-    // solve eigensystem, use increasing sort on eigenvalues
-    void IncrSortEigenStuff2 ();
-    void IncrSortEigenStuff3 ();
-    void IncrSortEigenStuff4 ();
-    void IncrSortEigenStuffN ();
-    void IncrSortEigenStuff  ();
+        // solve eigensystem, use decreasing sort on eigenvalues
+        void DecrSortEigenStuff2();
+        void DecrSortEigenStuff3();
+        void DecrSortEigenStuff4();
+        void DecrSortEigenStuffN();
+        void DecrSortEigenStuff();
 
-protected:
-    int m_iSize;
-    Real** m_aafMat;
-    Real* m_afDiag;
-    Real* m_afSubd;
+        // solve eigensystem, use increasing sort on eigenvalues
+        void IncrSortEigenStuff2();
+        void IncrSortEigenStuff3();
+        void IncrSortEigenStuff4();
+        void IncrSortEigenStuffN();
+        void IncrSortEigenStuff();
 
-    // Householder reduction to tridiagonal form
-    static void Tridiagonal2 (Real** aafMat, Real* afDiag, Real* afSubd);
-    static void Tridiagonal3 (Real** aafMat, Real* afDiag, Real* afSubd);
-    static void Tridiagonal4 (Real** aafMat, Real* afDiag, Real* afSubd);
-    static void TridiagonalN (int iSize, Real** aafMat, Real* afDiag,
-        Real* afSubd);
+    protected:
+        int m_iSize;
+        Real **m_aafMat;
+        Real *m_afDiag;
+        Real *m_afSubd;
 
-    // QL algorithm with implicit shifting, applies to tridiagonal matrices
-    static bool QLAlgorithm (int iSize, Real* afDiag, Real* afSubd,
-        Real** aafMat);
+        // Householder reduction to tridiagonal form
+        static void Tridiagonal2(Real **aafMat, Real *afDiag, Real *afSubd);
+        static void Tridiagonal3(Real **aafMat, Real *afDiag, Real *afSubd);
+        static void Tridiagonal4(Real **aafMat, Real *afDiag, Real *afSubd);
+        static void TridiagonalN(int iSize, Real **aafMat, Real *afDiag,
+                                 Real *afSubd);
 
-    // sort eigenvalues from largest to smallest
-    static void DecreasingSort (int iSize, Real* afEigval,
-        Real** aafEigvec);
+        // QL algorithm with implicit shifting, applies to tridiagonal matrices
+        static bool QLAlgorithm(int iSize, Real *afDiag, Real *afSubd,
+                                Real **aafMat);
 
-    // sort eigenvalues from smallest to largest
-    static void IncreasingSort (int iSize, Real* afEigval,
-        Real** aafEigvec);
-};
+        // sort eigenvalues from largest to smallest
+        static void DecreasingSort(int iSize, Real *afEigval,
+                                   Real **aafEigvec);
+
+        // sort eigenvalues from smallest to largest
+        static void IncreasingSort(int iSize, Real *afEigval,
+                                   Real **aafEigvec);
+    };
 
 #include "MgcEigen.inl"
 
 } // namespace Mgc
 
 #endif
-

@@ -3,12 +3,12 @@
 
 #include "pure.h"
 
-//ENGINE_API int	__cdecl	_REG_Compare(const void *e1, const void *e2)
+// ENGINE_API int	__cdecl	_REG_Compare(const void *e1, const void *e2)
 //{
 //	_REG_INFO *p1 = (_REG_INFO *)e1;
 //	_REG_INFO *p2 = (_REG_INFO *)e2;
 //	return (p2->Prio - p1->Prio);
-//}
+// }
 
 DECLARE_RP(Frame);
 DECLARE_RP(Render);
@@ -21,4 +21,3 @@ DECLARE_RP(ScreenResolutionChanged);
 #ifdef _EDITOR
 DECLARE_RP(DrawUI);
 #endif
-

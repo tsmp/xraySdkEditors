@@ -13,31 +13,35 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
-class property_holder;
-class property_holder_collection;
+	class property_holder;
+	class property_holder_collection;
 
-namespace environment {
-namespace suns {
+	namespace environment
+	{
+		namespace suns
+		{
 
-class manager;
+			class manager;
 
-class blend : private boost::noncopyable {
-public:
-					blend		();
-			void	load		(CInifile& config, shared_str const& section);
-			void	save		(CInifile& config, shared_str const& section);
-			void	fill		(manager const& manager, XrWeatherEditor::property_holder* holder, XrWeatherEditor::property_holder_collection* collection);
+			class blend : private boost::noncopyable
+			{
+			public:
+				blend();
+				void load(CInifile &config, shared_str const &section);
+				void save(CInifile &config, shared_str const &section);
+				void fill(manager const &manager, XrWeatherEditor::property_holder *holder, XrWeatherEditor::property_holder_collection *collection);
 
-private:
-    float			m_down_time;
-    float			m_rise_time;
-    float			m_time;
-}; // class blend
+			private:
+				float m_down_time;
+				float m_rise_time;
+				float m_time;
+			}; // class blend
 
-} // namespace suns
-} // namespace environment
+		} // namespace suns
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

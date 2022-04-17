@@ -3,15 +3,16 @@
 #include "stdafx.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-    if (!IsDebuggerPresent()) Debug._initialize(false);
-    Core._initialize("Actor", ELogCallback,1,"fs.ltx",true);
+    if (!IsDebuggerPresent())
+        Debug._initialize(false);
+    Core._initialize("Actor", ELogCallback, 1, "fs.ltx", true);
 
     Tools = xr_new<CActorTools>();
-    ATools = (CActorTools*)Tools;
+    ATools = (CActorTools *)Tools;
     UI = xr_new<CActorMain>();
     UI->RegisterCommands();
 
-    UIMainForm* MainForm = xr_new< UIMainForm>();
+    UIMainForm *MainForm = xr_new<UIMainForm>();
     ::MainForm = MainForm;
     UI->Push(MainForm, false);
     while (MainForm->Frame())

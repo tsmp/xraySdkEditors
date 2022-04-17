@@ -80,9 +80,9 @@
 //#define ImDrawIdx unsigned int
 
 //---- Override ImDrawCallback signature (will need to modify renderer back-ends accordingly)
-//struct ImDrawList;
-//struct ImDrawCmd;
-//typedef void (*MyImDrawCallback)(const ImDrawList* draw_list, const ImDrawCmd* cmd, void* my_renderer_user_data);
+// struct ImDrawList;
+// struct ImDrawCmd;
+// typedef void (*MyImDrawCallback)(const ImDrawList* draw_list, const ImDrawCmd* cmd, void* my_renderer_user_data);
 //#define ImDrawCallback MyImDrawCallback
 
 //---- Debug Tools: Macro to break in Debugger
@@ -107,5 +107,5 @@ namespace ImGui
 */
 #define IMGUI_API XREUI_API
 #define IMGUI_IMPL_API
-using ImTextureID = IDirect3DBaseTexture9*;
-#define ImTextureID ImTextureID 
+using ImTextureID = IDirect3DBaseTexture9 *;
+#define ImTextureID ImTextureID

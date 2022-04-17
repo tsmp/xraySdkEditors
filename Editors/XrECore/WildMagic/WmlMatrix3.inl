@@ -10,40 +10,40 @@
 
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 ()
+Matrix3<Real>::Matrix3()
 {
     // the matrix is uninitialized
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (const Matrix3& rkM)
+Matrix3<Real>::Matrix3(const Matrix3 &rkM)
 {
-    memcpy(Matrix3<Real>::m_afEntry,rkM.Matrix3<Real>::m_afEntry,9*sizeof(Real));
+    memcpy(Matrix3<Real>::m_afEntry, rkM.Matrix3<Real>::m_afEntry, 9 * sizeof(Real));
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (const Matrix<3,Real>& rkM)
+Matrix3<Real>::Matrix3(const Matrix<3, Real> &rkM)
 {
-    memcpy(Matrix3<Real>::m_afEntry,(const Real*)rkM,9*sizeof(Real));
+    memcpy(Matrix3<Real>::m_afEntry, (const Real *)rkM, 9 * sizeof(Real));
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>& Matrix3<Real>::operator= (const Matrix3& rkM)
+Matrix3<Real> &Matrix3<Real>::operator=(const Matrix3 &rkM)
 {
-    memcpy(Matrix3<Real>::m_afEntry,rkM.Matrix3<Real>::m_afEntry,9*sizeof(Real));
+    memcpy(Matrix3<Real>::m_afEntry, rkM.Matrix3<Real>::m_afEntry, 9 * sizeof(Real));
     return *this;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>& Matrix3<Real>::operator= (const Matrix<3,Real>& rkM)
+Matrix3<Real> &Matrix3<Real>::operator=(const Matrix<3, Real> &rkM)
 {
-    memcpy(Matrix3<Real>::m_afEntry,(const Real*)rkM,9*sizeof(Real));
+    memcpy(Matrix3<Real>::m_afEntry, (const Real *)rkM, 9 * sizeof(Real));
     return *this;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (Real fM00, Real fM01, Real fM02, Real fM10,
-    Real fM11, Real fM12, Real fM20, Real fM21, Real fM22)
+Matrix3<Real>::Matrix3(Real fM00, Real fM01, Real fM02, Real fM10,
+                       Real fM11, Real fM12, Real fM20, Real fM21, Real fM22)
 {
     Matrix3<Real>::m_afEntry[0] = fM00;
     Matrix3<Real>::m_afEntry[1] = fM01;
@@ -57,11 +57,11 @@ Matrix3<Real>::Matrix3 (Real fM00, Real fM01, Real fM02, Real fM10,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (const Real afEntry[9], bool bRowMajor)
+Matrix3<Real>::Matrix3(const Real afEntry[9], bool bRowMajor)
 {
-    if ( bRowMajor )
+    if (bRowMajor)
     {
-        memcpy(Matrix3<Real>::m_afEntry,afEntry,9*sizeof(Real));
+        memcpy(Matrix3<Real>::m_afEntry, afEntry, 9 * sizeof(Real));
     }
     else
     {
@@ -78,10 +78,10 @@ Matrix3<Real>::Matrix3 (const Real afEntry[9], bool bRowMajor)
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (const Vector3<Real>& rkU,
-    const Vector3<Real>& rkV, const Vector3<Real>& rkW, bool bColumns)
+Matrix3<Real>::Matrix3(const Vector3<Real> &rkU,
+                       const Vector3<Real> &rkV, const Vector3<Real> &rkW, bool bColumns)
 {
-    if ( bColumns )
+    if (bColumns)
     {
         Matrix3<Real>::m_afEntry[0] = rkU[0];
         Matrix3<Real>::m_afEntry[1] = rkV[0];
@@ -108,9 +108,9 @@ Matrix3<Real>::Matrix3 (const Vector3<Real>& rkU,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (const Vector3<Real>* akV, bool bColumns)
+Matrix3<Real>::Matrix3(const Vector3<Real> *akV, bool bColumns)
 {
-    if ( bColumns )
+    if (bColumns)
     {
         Matrix3<Real>::m_afEntry[0] = akV[0][0];
         Matrix3<Real>::m_afEntry[1] = akV[1][0];
@@ -137,35 +137,35 @@ Matrix3<Real>::Matrix3 (const Vector3<Real>* akV, bool bColumns)
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (const Vector3<Real>& rkU,
-    const Vector3<Real>& rkV)
+Matrix3<Real>::Matrix3(const Vector3<Real> &rkU,
+                       const Vector3<Real> &rkV)
 {
-    MakeTensorProduct(rkU,rkV);
+    MakeTensorProduct(rkU, rkV);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::MakeTensorProduct (const Vector3<Real>& rkU,
-    const Vector3<Real>& rkV)
+void Matrix3<Real>::MakeTensorProduct(const Vector3<Real> &rkU,
+                                      const Vector3<Real> &rkV)
 {
-    Matrix3<Real>::m_afEntry[0] = rkU[0]*rkV[0];
-    Matrix3<Real>::m_afEntry[1] = rkU[0]*rkV[1];
-    Matrix3<Real>::m_afEntry[2] = rkU[0]*rkV[2];
-    Matrix3<Real>::m_afEntry[3] = rkU[1]*rkV[0];
-    Matrix3<Real>::m_afEntry[4] = rkU[1]*rkV[1];
-    Matrix3<Real>::m_afEntry[5] = rkU[1]*rkV[2];
-    Matrix3<Real>::m_afEntry[6] = rkU[2]*rkV[0];
-    Matrix3<Real>::m_afEntry[7] = rkU[2]*rkV[1];
-    Matrix3<Real>::m_afEntry[8] = rkU[2]*rkV[2];
+    Matrix3<Real>::m_afEntry[0] = rkU[0] * rkV[0];
+    Matrix3<Real>::m_afEntry[1] = rkU[0] * rkV[1];
+    Matrix3<Real>::m_afEntry[2] = rkU[0] * rkV[2];
+    Matrix3<Real>::m_afEntry[3] = rkU[1] * rkV[0];
+    Matrix3<Real>::m_afEntry[4] = rkU[1] * rkV[1];
+    Matrix3<Real>::m_afEntry[5] = rkU[1] * rkV[2];
+    Matrix3<Real>::m_afEntry[6] = rkU[2] * rkV[0];
+    Matrix3<Real>::m_afEntry[7] = rkU[2] * rkV[1];
+    Matrix3<Real>::m_afEntry[8] = rkU[2] * rkV[2];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (Real fM00, Real fM11, Real fM22)
+Matrix3<Real>::Matrix3(Real fM00, Real fM11, Real fM22)
 {
-    MakeDiagonal(fM00,fM11,fM22);
+    MakeDiagonal(fM00, fM11, fM22);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::MakeDiagonal (Real fM00, Real fM11, Real fM22)
+void Matrix3<Real>::MakeDiagonal(Real fM00, Real fM11, Real fM22)
 {
     Matrix3<Real>::m_afEntry[0] = fM00;
     Matrix3<Real>::m_afEntry[1] = (Real)0.0;
@@ -179,60 +179,60 @@ void Matrix3<Real>::MakeDiagonal (Real fM00, Real fM11, Real fM22)
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real>::Matrix3 (const Vector3<Real>& rkAxis, Real fAngle)
+Matrix3<Real>::Matrix3(const Vector3<Real> &rkAxis, Real fAngle)
 {
-    FromAxisAngle(rkAxis,fAngle);
+    FromAxisAngle(rkAxis, fAngle);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::FromAxisAngle (const Vector3<Real>& rkAxis, Real fAngle)
+void Matrix3<Real>::FromAxisAngle(const Vector3<Real> &rkAxis, Real fAngle)
 {
     Real fCos = Math<Real>::Cos(fAngle);
     Real fSin = Math<Real>::Sin(fAngle);
-    Real fOneMinusCos = ((Real)1.0)-fCos;
-    Real fX2 = rkAxis[0]*rkAxis[0];
-    Real fY2 = rkAxis[1]*rkAxis[1];
-    Real fZ2 = rkAxis[2]*rkAxis[2];
-    Real fXYM = rkAxis[0]*rkAxis[1]*fOneMinusCos;
-    Real fXZM = rkAxis[0]*rkAxis[2]*fOneMinusCos;
-    Real fYZM = rkAxis[1]*rkAxis[2]*fOneMinusCos;
-    Real fXSin = rkAxis[0]*fSin;
-    Real fYSin = rkAxis[1]*fSin;
-    Real fZSin = rkAxis[2]*fSin;
-    
-    Matrix3<Real>::m_afEntry[0] = fX2*fOneMinusCos+fCos;
-    Matrix3<Real>::m_afEntry[1] = fXYM-fZSin;
-    Matrix3<Real>::m_afEntry[2] = fXZM+fYSin;
-    Matrix3<Real>::m_afEntry[3] = fXYM+fZSin;
-    Matrix3<Real>::m_afEntry[4] = fY2*fOneMinusCos+fCos;
-    Matrix3<Real>::m_afEntry[5] = fYZM-fXSin;
-    Matrix3<Real>::m_afEntry[6] = fXZM-fYSin;
-    Matrix3<Real>::m_afEntry[7] = fYZM+fXSin;
-    Matrix3<Real>::m_afEntry[8] = fZ2*fOneMinusCos+fCos;
+    Real fOneMinusCos = ((Real)1.0) - fCos;
+    Real fX2 = rkAxis[0] * rkAxis[0];
+    Real fY2 = rkAxis[1] * rkAxis[1];
+    Real fZ2 = rkAxis[2] * rkAxis[2];
+    Real fXYM = rkAxis[0] * rkAxis[1] * fOneMinusCos;
+    Real fXZM = rkAxis[0] * rkAxis[2] * fOneMinusCos;
+    Real fYZM = rkAxis[1] * rkAxis[2] * fOneMinusCos;
+    Real fXSin = rkAxis[0] * fSin;
+    Real fYSin = rkAxis[1] * fSin;
+    Real fZSin = rkAxis[2] * fSin;
+
+    Matrix3<Real>::m_afEntry[0] = fX2 * fOneMinusCos + fCos;
+    Matrix3<Real>::m_afEntry[1] = fXYM - fZSin;
+    Matrix3<Real>::m_afEntry[2] = fXZM + fYSin;
+    Matrix3<Real>::m_afEntry[3] = fXYM + fZSin;
+    Matrix3<Real>::m_afEntry[4] = fY2 * fOneMinusCos + fCos;
+    Matrix3<Real>::m_afEntry[5] = fYZM - fXSin;
+    Matrix3<Real>::m_afEntry[6] = fXZM - fYSin;
+    Matrix3<Real>::m_afEntry[7] = fYZM + fXSin;
+    Matrix3<Real>::m_afEntry[8] = fZ2 * fOneMinusCos + fCos;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real> Matrix3<Real>::Inverse () const
+Matrix3<Real> Matrix3<Real>::Inverse() const
 {
     // Invert a 3x3 using cofactors.  This is faster than using a generic
     // Gaussian elimination because of the loop overhead of such a method.
 
     Matrix3<Real> kInverse;
 
-    kInverse[0][0] = Matrix3<Real>::m_afEntry[4]*Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[5]*Matrix3<Real>::m_afEntry[7];
-    kInverse[0][1] = Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[8];
-    kInverse[0][2] = Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[5] - Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[4];
-    kInverse[1][0] = Matrix3<Real>::m_afEntry[5]*Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[8];
-    kInverse[1][1] = Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[6];
-    kInverse[1][2] = Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[3] - Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[5];
-    kInverse[2][0] = Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[4]*Matrix3<Real>::m_afEntry[6];
-    kInverse[2][1] = Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[7];
-    kInverse[2][2] = Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[4] - Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[3];
+    kInverse[0][0] = Matrix3<Real>::m_afEntry[4] * Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[5] * Matrix3<Real>::m_afEntry[7];
+    kInverse[0][1] = Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[8];
+    kInverse[0][2] = Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[5] - Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[4];
+    kInverse[1][0] = Matrix3<Real>::m_afEntry[5] * Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[8];
+    kInverse[1][1] = Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[6];
+    kInverse[1][2] = Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[3] - Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[5];
+    kInverse[2][0] = Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[4] * Matrix3<Real>::m_afEntry[6];
+    kInverse[2][1] = Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[7];
+    kInverse[2][2] = Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[4] - Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[3];
 
-    Real fDet = Matrix3<Real>::m_afEntry[0]*kInverse[0][0] + Matrix3<Real>::m_afEntry[1]*kInverse[1][0]+
-        Matrix3<Real>::m_afEntry[2]*kInverse[2][0];
+    Real fDet = Matrix3<Real>::m_afEntry[0] * kInverse[0][0] + Matrix3<Real>::m_afEntry[1] * kInverse[1][0] +
+                Matrix3<Real>::m_afEntry[2] * kInverse[2][0];
 
-    if ( Math<Real>::FAbs(fDet) <= Math<Real>::EPSILON )
+    if (Math<Real>::FAbs(fDet) <= Math<Real>::EPSILON)
         return Matrix3::ZERO;
 
     kInverse /= fDet;
@@ -240,35 +240,35 @@ Matrix3<Real> Matrix3<Real>::Inverse () const
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real> Matrix3<Real>::Adjoint () const
+Matrix3<Real> Matrix3<Real>::Adjoint() const
 {
     Matrix3<Real> kAdjoint;
 
-    kAdjoint[0][0] = Matrix3<Real>::m_afEntry[4]*Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[5]*Matrix3<Real>::m_afEntry[7];
-    kAdjoint[0][1] = Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[8];
-    kAdjoint[0][2] = Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[5] - Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[4];
-    kAdjoint[1][0] = Matrix3<Real>::m_afEntry[5]*Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[8];
-    kAdjoint[1][1] = Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[6];
-    kAdjoint[1][2] = Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[3] - Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[5];
-    kAdjoint[2][0] = Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[4]*Matrix3<Real>::m_afEntry[6];
-    kAdjoint[2][1] = Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[7];
-    kAdjoint[2][2] = Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[4] - Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[3];
+    kAdjoint[0][0] = Matrix3<Real>::m_afEntry[4] * Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[5] * Matrix3<Real>::m_afEntry[7];
+    kAdjoint[0][1] = Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[8];
+    kAdjoint[0][2] = Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[5] - Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[4];
+    kAdjoint[1][0] = Matrix3<Real>::m_afEntry[5] * Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[8];
+    kAdjoint[1][1] = Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[6];
+    kAdjoint[1][2] = Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[3] - Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[5];
+    kAdjoint[2][0] = Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[4] * Matrix3<Real>::m_afEntry[6];
+    kAdjoint[2][1] = Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[7];
+    kAdjoint[2][2] = Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[4] - Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[3];
 
     return kAdjoint;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Matrix3<Real>::Determinant () const
+Real Matrix3<Real>::Determinant() const
 {
-    Real fCo00 = Matrix3<Real>::m_afEntry[4]*Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[5]*Matrix3<Real>::m_afEntry[7];
-    Real fCo10 = Matrix3<Real>::m_afEntry[5]*Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[8];
-    Real fCo20 = Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[4]*Matrix3<Real>::m_afEntry[6];
-    Real fDet = Matrix3<Real>::m_afEntry[0]*fCo00 + Matrix3<Real>::m_afEntry[1]*fCo10 + Matrix3<Real>::m_afEntry[2]*fCo20;
+    Real fCo00 = Matrix3<Real>::m_afEntry[4] * Matrix3<Real>::m_afEntry[8] - Matrix3<Real>::m_afEntry[5] * Matrix3<Real>::m_afEntry[7];
+    Real fCo10 = Matrix3<Real>::m_afEntry[5] * Matrix3<Real>::m_afEntry[6] - Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[8];
+    Real fCo20 = Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[4] * Matrix3<Real>::m_afEntry[6];
+    Real fDet = Matrix3<Real>::m_afEntry[0] * fCo00 + Matrix3<Real>::m_afEntry[1] * fCo10 + Matrix3<Real>::m_afEntry[2] * fCo20;
     return fDet;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::ToAxisAngle (Vector3<Real>& rkAxis, Real& rfAngle) const
+void Matrix3<Real>::ToAxisAngle(Vector3<Real> &rkAxis, Real &rfAngle) const
 {
     // Let (x,y,z) be the unit-length axis and let A be an angle of rotation.
     // The rotation matrix is R = I + sin(A)*P + (1-cos(A))*P^2 where
@@ -293,64 +293,64 @@ void Matrix3<Real>::ToAxisAngle (Vector3<Real>& rkAxis, Real& rfAngle) const
     // it does not matter which sign you choose on the square roots.
 
     Real fTrace = Matrix3<Real>::m_afEntry[0] + Matrix3<Real>::m_afEntry[4] + Matrix3<Real>::m_afEntry[8];
-    Real fCos = ((Real)0.5)*(fTrace-((Real)1.0));
-    rfAngle = Math<Real>::ACos(fCos);  // in [0,PI]
+    Real fCos = ((Real)0.5) * (fTrace - ((Real)1.0));
+    rfAngle = Math<Real>::ACos(fCos); // in [0,PI]
 
-    if ( rfAngle > (Real)0.0 )
+    if (rfAngle > (Real)0.0)
     {
-        if ( rfAngle < Math<Real>::_PI )
+        if (rfAngle < Math<Real>::_PI)
         {
-            rkAxis[0] = Matrix3<Real>::m_afEntry[7]-Matrix3<Real>::m_afEntry[5];
-            rkAxis[1] = Matrix3<Real>::m_afEntry[2]-Matrix3<Real>::m_afEntry[6];
-            rkAxis[2] = Matrix3<Real>::m_afEntry[3]-Matrix3<Real>::m_afEntry[1];
+            rkAxis[0] = Matrix3<Real>::m_afEntry[7] - Matrix3<Real>::m_afEntry[5];
+            rkAxis[1] = Matrix3<Real>::m_afEntry[2] - Matrix3<Real>::m_afEntry[6];
+            rkAxis[2] = Matrix3<Real>::m_afEntry[3] - Matrix3<Real>::m_afEntry[1];
             rkAxis.Normalize();
         }
         else
         {
             // angle is PI
             Real fHalfInverse;
-            if ( Matrix3<Real>::m_afEntry[0] >= Matrix3<Real>::m_afEntry[4] )
+            if (Matrix3<Real>::m_afEntry[0] >= Matrix3<Real>::m_afEntry[4])
             {
                 // r00 >= r11
-                if ( Matrix3<Real>::m_afEntry[0] >= Matrix3<Real>::m_afEntry[8] )
+                if (Matrix3<Real>::m_afEntry[0] >= Matrix3<Real>::m_afEntry[8])
                 {
                     // r00 is maximum diagonal term
-                    rkAxis[0] = ((Real)0.5)*Math<Real>::Sqrt(Matrix3<Real>::m_afEntry[0] -
-                        Matrix3<Real>::m_afEntry[4] - Matrix3<Real>::m_afEntry[8] + (Real)1.0);
-                    fHalfInverse = ((Real)0.5)/rkAxis[0];
-                    rkAxis[1] = fHalfInverse*Matrix3<Real>::m_afEntry[1];
-                    rkAxis[2] = fHalfInverse*Matrix3<Real>::m_afEntry[2];
+                    rkAxis[0] = ((Real)0.5) * Math<Real>::Sqrt(Matrix3<Real>::m_afEntry[0] -
+                                                               Matrix3<Real>::m_afEntry[4] - Matrix3<Real>::m_afEntry[8] + (Real)1.0);
+                    fHalfInverse = ((Real)0.5) / rkAxis[0];
+                    rkAxis[1] = fHalfInverse * Matrix3<Real>::m_afEntry[1];
+                    rkAxis[2] = fHalfInverse * Matrix3<Real>::m_afEntry[2];
                 }
                 else
                 {
                     // r22 is maximum diagonal term
-                    rkAxis[2] = ((Real)0.5)*Math<Real>::Sqrt(Matrix3<Real>::m_afEntry[8] -
-                        Matrix3<Real>::m_afEntry[0] - Matrix3<Real>::m_afEntry[4] + (Real)1.0);
-                    fHalfInverse = ((Real)0.5)/rkAxis[2];
-                    rkAxis[0] = fHalfInverse*Matrix3<Real>::m_afEntry[2];
-                    rkAxis[1] = fHalfInverse*Matrix3<Real>::m_afEntry[5];
+                    rkAxis[2] = ((Real)0.5) * Math<Real>::Sqrt(Matrix3<Real>::m_afEntry[8] -
+                                                               Matrix3<Real>::m_afEntry[0] - Matrix3<Real>::m_afEntry[4] + (Real)1.0);
+                    fHalfInverse = ((Real)0.5) / rkAxis[2];
+                    rkAxis[0] = fHalfInverse * Matrix3<Real>::m_afEntry[2];
+                    rkAxis[1] = fHalfInverse * Matrix3<Real>::m_afEntry[5];
                 }
             }
             else
             {
                 // r11 > r00
-                if ( Matrix3<Real>::m_afEntry[4] >= Matrix3<Real>::m_afEntry[8] )
+                if (Matrix3<Real>::m_afEntry[4] >= Matrix3<Real>::m_afEntry[8])
                 {
                     // r11 is maximum diagonal term
-                    rkAxis[1] = ((Real)0.5)*Math<Real>::Sqrt(Matrix3<Real>::m_afEntry[4] -
-                        Matrix3<Real>::m_afEntry[0] - Matrix3<Real>::m_afEntry[8] + (Real)1.0);
-                    fHalfInverse  = ((Real)0.5)/rkAxis[1];
-                    rkAxis[0] = fHalfInverse*Matrix3<Real>::m_afEntry[1];
-                    rkAxis[2] = fHalfInverse*Matrix3<Real>::m_afEntry[5];
+                    rkAxis[1] = ((Real)0.5) * Math<Real>::Sqrt(Matrix3<Real>::m_afEntry[4] -
+                                                               Matrix3<Real>::m_afEntry[0] - Matrix3<Real>::m_afEntry[8] + (Real)1.0);
+                    fHalfInverse = ((Real)0.5) / rkAxis[1];
+                    rkAxis[0] = fHalfInverse * Matrix3<Real>::m_afEntry[1];
+                    rkAxis[2] = fHalfInverse * Matrix3<Real>::m_afEntry[5];
                 }
                 else
                 {
                     // r22 is maximum diagonal term
-                    rkAxis[2] = ((Real)0.5)*Math<Real>::Sqrt(Matrix3<Real>::m_afEntry[8] -
-                        Matrix3<Real>::m_afEntry[0] - Matrix3<Real>::m_afEntry[4] + (Real)1.0);
-                    fHalfInverse = ((Real)0.5)/rkAxis[2];
-                    rkAxis[0] = fHalfInverse*Matrix3<Real>::m_afEntry[2];
-                    rkAxis[1] = fHalfInverse*Matrix3<Real>::m_afEntry[5];
+                    rkAxis[2] = ((Real)0.5) * Math<Real>::Sqrt(Matrix3<Real>::m_afEntry[8] -
+                                                               Matrix3<Real>::m_afEntry[0] - Matrix3<Real>::m_afEntry[4] + (Real)1.0);
+                    fHalfInverse = ((Real)0.5) / rkAxis[2];
+                    rkAxis[0] = fHalfInverse * Matrix3<Real>::m_afEntry[2];
+                    rkAxis[1] = fHalfInverse * Matrix3<Real>::m_afEntry[5];
                 }
             }
         }
@@ -366,7 +366,7 @@ void Matrix3<Real>::ToAxisAngle (Vector3<Real>& rkAxis, Real& rfAngle) const
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::Orthonormalize ()
+void Matrix3<Real>::Orthonormalize()
 {
     // Algorithm uses Gram-Schmidt orthogonalization.  If 'this' matrix is
     // M = [m0|m1|m2], then orthonormal output matrix is Q = [q0|q1|q2],
@@ -379,41 +379,41 @@ void Matrix3<Real>::Orthonormalize ()
     // product of vectors A and B.
 
     // compute q0
-    Real fInvLength = Math<Real>::InvSqrt(Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[0] +
-        Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[3] + Matrix3<Real>::m_afEntry[6]*Matrix3<Real>::m_afEntry[6]);
+    Real fInvLength = Math<Real>::InvSqrt(Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[0] +
+                                          Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[3] + Matrix3<Real>::m_afEntry[6] * Matrix3<Real>::m_afEntry[6]);
 
     Matrix3<Real>::m_afEntry[0] *= fInvLength;
     Matrix3<Real>::m_afEntry[3] *= fInvLength;
     Matrix3<Real>::m_afEntry[6] *= fInvLength;
 
     // compute q1
-    Real fDot0 = Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[1] + Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[4] +
-        Matrix3<Real>::m_afEntry[6]*Matrix3<Real>::m_afEntry[7];
+    Real fDot0 = Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[1] + Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[4] +
+                 Matrix3<Real>::m_afEntry[6] * Matrix3<Real>::m_afEntry[7];
 
-    Matrix3<Real>::m_afEntry[1] -= fDot0*Matrix3<Real>::m_afEntry[0];
-    Matrix3<Real>::m_afEntry[4] -= fDot0*Matrix3<Real>::m_afEntry[3];
-    Matrix3<Real>::m_afEntry[7] -= fDot0*Matrix3<Real>::m_afEntry[6];
+    Matrix3<Real>::m_afEntry[1] -= fDot0 * Matrix3<Real>::m_afEntry[0];
+    Matrix3<Real>::m_afEntry[4] -= fDot0 * Matrix3<Real>::m_afEntry[3];
+    Matrix3<Real>::m_afEntry[7] -= fDot0 * Matrix3<Real>::m_afEntry[6];
 
-    fInvLength = Math<Real>::InvSqrt(Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[1] +
-        Matrix3<Real>::m_afEntry[4]*Matrix3<Real>::m_afEntry[4] + Matrix3<Real>::m_afEntry[7]*Matrix3<Real>::m_afEntry[7]);
+    fInvLength = Math<Real>::InvSqrt(Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[1] +
+                                     Matrix3<Real>::m_afEntry[4] * Matrix3<Real>::m_afEntry[4] + Matrix3<Real>::m_afEntry[7] * Matrix3<Real>::m_afEntry[7]);
 
     Matrix3<Real>::m_afEntry[1] *= fInvLength;
     Matrix3<Real>::m_afEntry[4] *= fInvLength;
     Matrix3<Real>::m_afEntry[7] *= fInvLength;
 
     // compute q2
-    Real fDot1 = Matrix3<Real>::m_afEntry[1]*Matrix3<Real>::m_afEntry[2] + Matrix3<Real>::m_afEntry[4]*Matrix3<Real>::m_afEntry[5] +
-        Matrix3<Real>::m_afEntry[7]*Matrix3<Real>::m_afEntry[8];
+    Real fDot1 = Matrix3<Real>::m_afEntry[1] * Matrix3<Real>::m_afEntry[2] + Matrix3<Real>::m_afEntry[4] * Matrix3<Real>::m_afEntry[5] +
+                 Matrix3<Real>::m_afEntry[7] * Matrix3<Real>::m_afEntry[8];
 
-    fDot0 = Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[2] + Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[5] +
-        Matrix3<Real>::m_afEntry[6]*Matrix3<Real>::m_afEntry[8];
+    fDot0 = Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[2] + Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[5] +
+            Matrix3<Real>::m_afEntry[6] * Matrix3<Real>::m_afEntry[8];
 
-    Matrix3<Real>::m_afEntry[2] -= fDot0*Matrix3<Real>::m_afEntry[0] + fDot1*Matrix3<Real>::m_afEntry[1];
-    Matrix3<Real>::m_afEntry[5] -= fDot0*Matrix3<Real>::m_afEntry[3] + fDot1*Matrix3<Real>::m_afEntry[4];
-    Matrix3<Real>::m_afEntry[8] -= fDot0*Matrix3<Real>::m_afEntry[6] + fDot1*Matrix3<Real>::m_afEntry[7];
+    Matrix3<Real>::m_afEntry[2] -= fDot0 * Matrix3<Real>::m_afEntry[0] + fDot1 * Matrix3<Real>::m_afEntry[1];
+    Matrix3<Real>::m_afEntry[5] -= fDot0 * Matrix3<Real>::m_afEntry[3] + fDot1 * Matrix3<Real>::m_afEntry[4];
+    Matrix3<Real>::m_afEntry[8] -= fDot0 * Matrix3<Real>::m_afEntry[6] + fDot1 * Matrix3<Real>::m_afEntry[7];
 
-    fInvLength = Math<Real>::InvSqrt(Matrix3<Real>::m_afEntry[2]*Matrix3<Real>::m_afEntry[2] +
-        Matrix3<Real>::m_afEntry[5]*Matrix3<Real>::m_afEntry[5] + Matrix3<Real>::m_afEntry[8]*Matrix3<Real>::m_afEntry[8]);
+    fInvLength = Math<Real>::InvSqrt(Matrix3<Real>::m_afEntry[2] * Matrix3<Real>::m_afEntry[2] +
+                                     Matrix3<Real>::m_afEntry[5] * Matrix3<Real>::m_afEntry[5] + Matrix3<Real>::m_afEntry[8] * Matrix3<Real>::m_afEntry[8]);
 
     Matrix3<Real>::m_afEntry[2] *= fInvLength;
     Matrix3<Real>::m_afEntry[5] *= fInvLength;
@@ -421,26 +421,26 @@ void Matrix3<Real>::Orthonormalize ()
 }
 //----------------------------------------------------------------------------
 template <class Real>
-bool Matrix3<Real>::ToEulerAnglesXYZ (Real& rfXAngle, Real& rfYAngle,
-    Real& rfZAngle) const
+bool Matrix3<Real>::ToEulerAnglesXYZ(Real &rfXAngle, Real &rfYAngle,
+                                     Real &rfZAngle) const
 {
     // rot =  cy*cz          -cy*sz           sy
     //        cz*sx*sy+cx*sz  cx*cz-sx*sy*sz -cy*sx
     //       -cx*cz*sy+sx*sz  cz*sx+cx*sy*sz  cx*cy
 
-    if ( Matrix3<Real>::m_afEntry[2] < (Real)1.0 )
+    if (Matrix3<Real>::m_afEntry[2] < (Real)1.0)
     {
-        if ( Matrix3<Real>::m_afEntry[2] > -(Real)1.0 )
+        if (Matrix3<Real>::m_afEntry[2] > -(Real)1.0)
         {
-            rfXAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[5],Matrix3<Real>::m_afEntry[8]);
+            rfXAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[5], Matrix3<Real>::m_afEntry[8]);
             rfYAngle = (Real)asin((double)Matrix3<Real>::m_afEntry[2]);
-            rfZAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[1],Matrix3<Real>::m_afEntry[0]);
+            rfZAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[1], Matrix3<Real>::m_afEntry[0]);
             return true;
         }
         else
         {
             // WARNING.  Not unique.  XA - ZA = -atan2(r10,r11)
-            rfXAngle = -Math<Real>::ATan2(Matrix3<Real>::m_afEntry[3],Matrix3<Real>::m_afEntry[4]);
+            rfXAngle = -Math<Real>::ATan2(Matrix3<Real>::m_afEntry[3], Matrix3<Real>::m_afEntry[4]);
             rfYAngle = -Math<Real>::HALF_PI;
             rfZAngle = (Real)0.0;
             return false;
@@ -449,7 +449,7 @@ bool Matrix3<Real>::ToEulerAnglesXYZ (Real& rfXAngle, Real& rfYAngle,
     else
     {
         // WARNING.  Not unique.  XAngle + ZAngle = atan2(r10,r11)
-        rfXAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[3],Matrix3<Real>::m_afEntry[4]);
+        rfXAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[3], Matrix3<Real>::m_afEntry[4]);
         rfYAngle = Math<Real>::HALF_PI;
         rfZAngle = (Real)0.0;
         return false;
@@ -457,26 +457,26 @@ bool Matrix3<Real>::ToEulerAnglesXYZ (Real& rfXAngle, Real& rfYAngle,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-bool Matrix3<Real>::ToEulerAnglesXZY (Real& rfXAngle, Real& rfZAngle,
-    Real& rfYAngle) const
+bool Matrix3<Real>::ToEulerAnglesXZY(Real &rfXAngle, Real &rfZAngle,
+                                     Real &rfYAngle) const
 {
     // rot =  cy*cz          -sz              cz*sy
     //        sx*sy+cx*cy*sz  cx*cz          -cy*sx+cx*sy*sz
     //       -cx*sy+cy*sx*sz  cz*sx           cx*cy+sx*sy*sz
 
-    if ( Matrix3<Real>::m_afEntry[1] < (Real)1.0 )
+    if (Matrix3<Real>::m_afEntry[1] < (Real)1.0)
     {
-        if ( Matrix3<Real>::m_afEntry[1] > -(Real)1.0 )
+        if (Matrix3<Real>::m_afEntry[1] > -(Real)1.0)
         {
-            rfXAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[7],Matrix3<Real>::m_afEntry[4]);
+            rfXAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[7], Matrix3<Real>::m_afEntry[4]);
             rfZAngle = (Real)asin(-(double)Matrix3<Real>::m_afEntry[1]);
-            rfYAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[2],Matrix3<Real>::m_afEntry[0]);
+            rfYAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[2], Matrix3<Real>::m_afEntry[0]);
             return true;
         }
         else
         {
             // WARNING.  Not unique.  XA - YA = atan2(r20,r22)
-            rfXAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[6],Matrix3<Real>::m_afEntry[8]);
+            rfXAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[6], Matrix3<Real>::m_afEntry[8]);
             rfZAngle = Math<Real>::HALF_PI;
             rfYAngle = (Real)0.0;
             return false;
@@ -485,7 +485,7 @@ bool Matrix3<Real>::ToEulerAnglesXZY (Real& rfXAngle, Real& rfZAngle,
     else
     {
         // WARNING.  Not unique.  XA + YA = atan2(-r20,r22)
-        rfXAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[6],Matrix3<Real>::m_afEntry[8]);
+        rfXAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[6], Matrix3<Real>::m_afEntry[8]);
         rfZAngle = -Math<Real>::HALF_PI;
         rfYAngle = (Real)0.0;
         return false;
@@ -493,26 +493,26 @@ bool Matrix3<Real>::ToEulerAnglesXZY (Real& rfXAngle, Real& rfZAngle,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-bool Matrix3<Real>::ToEulerAnglesYXZ (Real& rfYAngle, Real& rfXAngle,
-    Real& rfZAngle) const
+bool Matrix3<Real>::ToEulerAnglesYXZ(Real &rfYAngle, Real &rfXAngle,
+                                     Real &rfZAngle) const
 {
     // rot =  cy*cz+sx*sy*sz  cz*sx*sy-cy*sz  cx*sy
     //        cx*sz           cx*cz          -sx
     //       -cz*sy+cy*sx*sz  cy*cz*sx+sy*sz  cx*cy
 
-    if ( Matrix3<Real>::m_afEntry[5] < (Real)1.0 )
+    if (Matrix3<Real>::m_afEntry[5] < (Real)1.0)
     {
-        if ( Matrix3<Real>::m_afEntry[5] > -(Real)1.0 )
+        if (Matrix3<Real>::m_afEntry[5] > -(Real)1.0)
         {
-            rfYAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[2],Matrix3<Real>::m_afEntry[8]);
+            rfYAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[2], Matrix3<Real>::m_afEntry[8]);
             rfXAngle = (Real)asin(-(double)Matrix3<Real>::m_afEntry[5]);
-            rfZAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[3],Matrix3<Real>::m_afEntry[4]);
+            rfZAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[3], Matrix3<Real>::m_afEntry[4]);
             return true;
         }
         else
         {
             // WARNING.  Not unique.  YA - ZA = atan2(r01,r00)
-            rfYAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[1],Matrix3<Real>::m_afEntry[0]);
+            rfYAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[1], Matrix3<Real>::m_afEntry[0]);
             rfXAngle = Math<Real>::HALF_PI;
             rfZAngle = (Real)0.0;
             return false;
@@ -521,7 +521,7 @@ bool Matrix3<Real>::ToEulerAnglesYXZ (Real& rfYAngle, Real& rfXAngle,
     else
     {
         // WARNING.  Not unique.  YA + ZA = atan2(-r01,r00)
-        rfYAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[1],Matrix3<Real>::m_afEntry[0]);
+        rfYAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[1], Matrix3<Real>::m_afEntry[0]);
         rfXAngle = -Math<Real>::HALF_PI;
         rfZAngle = (Real)0.0;
         return false;
@@ -529,26 +529,26 @@ bool Matrix3<Real>::ToEulerAnglesYXZ (Real& rfYAngle, Real& rfXAngle,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-bool Matrix3<Real>::ToEulerAnglesYZX (Real& rfYAngle, Real& rfZAngle,
-    Real& rfXAngle) const
+bool Matrix3<Real>::ToEulerAnglesYZX(Real &rfYAngle, Real &rfZAngle,
+                                     Real &rfXAngle) const
 {
     // rot =  cy*cz           sx*sy-cx*cy*sz  cx*sy+cy*sx*sz
     //        sz              cx*cz          -cz*sx
     //       -cz*sy           cy*sx+cx*sy*sz  cx*cy-sx*sy*sz
 
-    if ( Matrix3<Real>::m_afEntry[3] < (Real)1.0 )
+    if (Matrix3<Real>::m_afEntry[3] < (Real)1.0)
     {
-        if ( Matrix3<Real>::m_afEntry[3] > -(Real)1.0 )
+        if (Matrix3<Real>::m_afEntry[3] > -(Real)1.0)
         {
-            rfYAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[6],Matrix3<Real>::m_afEntry[0]);
+            rfYAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[6], Matrix3<Real>::m_afEntry[0]);
             rfZAngle = (Real)asin((double)Matrix3<Real>::m_afEntry[3]);
-            rfXAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[5],Matrix3<Real>::m_afEntry[4]);
+            rfXAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[5], Matrix3<Real>::m_afEntry[4]);
             return true;
         }
         else
         {
             // WARNING.  Not unique.  YA - XA = -atan2(r21,r22);
-            rfYAngle = -Math<Real>::ATan2(Matrix3<Real>::m_afEntry[7],Matrix3<Real>::m_afEntry[8]);
+            rfYAngle = -Math<Real>::ATan2(Matrix3<Real>::m_afEntry[7], Matrix3<Real>::m_afEntry[8]);
             rfZAngle = -Math<Real>::HALF_PI;
             rfXAngle = (Real)0.0;
             return false;
@@ -557,7 +557,7 @@ bool Matrix3<Real>::ToEulerAnglesYZX (Real& rfYAngle, Real& rfZAngle,
     else
     {
         // WARNING.  Not unique.  YA + XA = atan2(r21,r22)
-        rfYAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[7],Matrix3<Real>::m_afEntry[8]);
+        rfYAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[7], Matrix3<Real>::m_afEntry[8]);
         rfZAngle = Math<Real>::HALF_PI;
         rfXAngle = (Real)0.0;
         return false;
@@ -565,26 +565,26 @@ bool Matrix3<Real>::ToEulerAnglesYZX (Real& rfYAngle, Real& rfZAngle,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-bool Matrix3<Real>::ToEulerAnglesZXY (Real& rfZAngle, Real& rfXAngle,
-    Real& rfYAngle) const
+bool Matrix3<Real>::ToEulerAnglesZXY(Real &rfZAngle, Real &rfXAngle,
+                                     Real &rfYAngle) const
 {
     // rot =  cy*cz-sx*sy*sz -cx*sz           cz*sy+cy*sx*sz
     //        cz*sx*sy+cy*sz  cx*cz          -cy*cz*sx+sy*sz
     //       -cx*sy           sx              cx*cy
 
-    if ( Matrix3<Real>::m_afEntry[7] < (Real)1.0 )
+    if (Matrix3<Real>::m_afEntry[7] < (Real)1.0)
     {
-        if ( Matrix3<Real>::m_afEntry[7] > -(Real)1.0 )
+        if (Matrix3<Real>::m_afEntry[7] > -(Real)1.0)
         {
-            rfZAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[1],Matrix3<Real>::m_afEntry[4]);
+            rfZAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[1], Matrix3<Real>::m_afEntry[4]);
             rfXAngle = (Real)asin((double)Matrix3<Real>::m_afEntry[7]);
-            rfYAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[6],Matrix3<Real>::m_afEntry[8]);
+            rfYAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[6], Matrix3<Real>::m_afEntry[8]);
             return true;
         }
         else
         {
             // WARNING.  Not unique.  ZA - YA = -atan(r02,r00)
-            rfZAngle = -Math<Real>::ATan2(Matrix3<Real>::m_afEntry[2],Matrix3<Real>::m_afEntry[0]);
+            rfZAngle = -Math<Real>::ATan2(Matrix3<Real>::m_afEntry[2], Matrix3<Real>::m_afEntry[0]);
             rfXAngle = -Math<Real>::HALF_PI;
             rfYAngle = (Real)0.0;
             return false;
@@ -593,7 +593,7 @@ bool Matrix3<Real>::ToEulerAnglesZXY (Real& rfZAngle, Real& rfXAngle,
     else
     {
         // WARNING.  Not unique.  ZA + YA = atan2(r02,r00)
-        rfZAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[2],Matrix3<Real>::m_afEntry[0]);
+        rfZAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[2], Matrix3<Real>::m_afEntry[0]);
         rfXAngle = Math<Real>::HALF_PI;
         rfYAngle = (Real)0.0;
         return false;
@@ -601,26 +601,26 @@ bool Matrix3<Real>::ToEulerAnglesZXY (Real& rfZAngle, Real& rfXAngle,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-bool Matrix3<Real>::ToEulerAnglesZYX (Real& rfZAngle, Real& rfYAngle,
-    Real& rfXAngle) const
+bool Matrix3<Real>::ToEulerAnglesZYX(Real &rfZAngle, Real &rfYAngle,
+                                     Real &rfXAngle) const
 {
     // rot =  cy*cz           cz*sx*sy-cx*sz  cx*cz*sy+sx*sz
     //        cy*sz           cx*cz+sx*sy*sz -cz*sx+cx*sy*sz
     //       -sy              cy*sx           cx*cy
 
-    if ( Matrix3<Real>::m_afEntry[6] < (Real)1.0 )
+    if (Matrix3<Real>::m_afEntry[6] < (Real)1.0)
     {
-        if ( Matrix3<Real>::m_afEntry[6] > -(Real)1.0 )
+        if (Matrix3<Real>::m_afEntry[6] > -(Real)1.0)
         {
-            rfZAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[3],Matrix3<Real>::m_afEntry[0]);
+            rfZAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[3], Matrix3<Real>::m_afEntry[0]);
             rfYAngle = (Real)asin(-(double)Matrix3<Real>::m_afEntry[6]);
-            rfXAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[7],Matrix3<Real>::m_afEntry[8]);
+            rfXAngle = Math<Real>::ATan2(Matrix3<Real>::m_afEntry[7], Matrix3<Real>::m_afEntry[8]);
             return true;
         }
         else
         {
             // WARNING.  Not unique.  ZA - XA = -atan2(r01,r02)
-            rfZAngle = -Math<Real>::ATan2(Matrix3<Real>::m_afEntry[1],Matrix3<Real>::m_afEntry[2]);
+            rfZAngle = -Math<Real>::ATan2(Matrix3<Real>::m_afEntry[1], Matrix3<Real>::m_afEntry[2]);
             rfYAngle = Math<Real>::HALF_PI;
             rfXAngle = (Real)0.0;
             return false;
@@ -629,7 +629,7 @@ bool Matrix3<Real>::ToEulerAnglesZYX (Real& rfZAngle, Real& rfYAngle,
     else
     {
         // WARNING.  Not unique.  ZA + XA = atan2(-r01,-r02)
-        rfZAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[1],-Matrix3<Real>::m_afEntry[2]);
+        rfZAngle = Math<Real>::ATan2(-Matrix3<Real>::m_afEntry[1], -Matrix3<Real>::m_afEntry[2]);
         rfYAngle = -Math<Real>::HALF_PI;
         rfXAngle = (Real)0.0;
         return false;
@@ -637,203 +637,203 @@ bool Matrix3<Real>::ToEulerAnglesZYX (Real& rfZAngle, Real& rfYAngle,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::FromEulerAnglesXYZ (Real fYAngle, Real fPAngle,
-    Real fRAngle)
+void Matrix3<Real>::FromEulerAnglesXYZ(Real fYAngle, Real fPAngle,
+                                       Real fRAngle)
 {
     Real fCos, fSin;
 
     fCos = Math<Real>::Cos(fYAngle);
     fSin = Math<Real>::Sin(fYAngle);
     Matrix3 kXMat(
-        (Real)1.0,(Real)0.0,(Real)0.0,
-        (Real)0.0,fCos,-fSin,
-        (Real)0.0,fSin,fCos);
+        (Real)1.0, (Real)0.0, (Real)0.0,
+        (Real)0.0, fCos, -fSin,
+        (Real)0.0, fSin, fCos);
 
     fCos = Math<Real>::Cos(fPAngle);
     fSin = Math<Real>::Sin(fPAngle);
     Matrix3 kYMat(
-        fCos,(Real)0.0,fSin,
-        (Real)0.0,(Real)1.0,(Real)0.0,
-        -fSin,(Real)0.0,fCos);
+        fCos, (Real)0.0, fSin,
+        (Real)0.0, (Real)1.0, (Real)0.0,
+        -fSin, (Real)0.0, fCos);
 
     fCos = Math<Real>::Cos(fRAngle);
     fSin = Math<Real>::Sin(fRAngle);
     Matrix3 kZMat(
-        fCos,-fSin,(Real)0.0,
-        fSin,fCos,(Real)0.0,
-        (Real)0.0,(Real)0.0,(Real)1.0);
+        fCos, -fSin, (Real)0.0,
+        fSin, fCos, (Real)0.0,
+        (Real)0.0, (Real)0.0, (Real)1.0);
 
-    *this = kXMat*(kYMat*kZMat);
+    *this = kXMat * (kYMat * kZMat);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::FromEulerAnglesXZY (Real fYAngle, Real fPAngle,
-    Real fRAngle)
+void Matrix3<Real>::FromEulerAnglesXZY(Real fYAngle, Real fPAngle,
+                                       Real fRAngle)
 {
     Real fCos, fSin;
 
     fCos = Math<Real>::Cos(fYAngle);
     fSin = Math<Real>::Sin(fYAngle);
     Matrix3 kXMat(
-        (Real)1.0,(Real)0.0,(Real)0.0,
-        (Real)0.0,fCos,-fSin,
-        (Real)0.0,fSin,fCos);
+        (Real)1.0, (Real)0.0, (Real)0.0,
+        (Real)0.0, fCos, -fSin,
+        (Real)0.0, fSin, fCos);
 
     fCos = Math<Real>::Cos(fPAngle);
     fSin = Math<Real>::Sin(fPAngle);
     Matrix3 kZMat(
-        fCos,-fSin,(Real)0.0,
-        fSin,fCos,(Real)0.0,
-        (Real)0.0,(Real)0.0,(Real)1.0);
+        fCos, -fSin, (Real)0.0,
+        fSin, fCos, (Real)0.0,
+        (Real)0.0, (Real)0.0, (Real)1.0);
 
     fCos = Math<Real>::Cos(fRAngle);
     fSin = Math<Real>::Sin(fRAngle);
     Matrix3 kYMat(
-        fCos,(Real)0.0,fSin,
-        (Real)0.0,(Real)1.0,(Real)0.0,
-        -fSin,(Real)0.0,fCos);
+        fCos, (Real)0.0, fSin,
+        (Real)0.0, (Real)1.0, (Real)0.0,
+        -fSin, (Real)0.0, fCos);
 
-    *this = kXMat*(kZMat*kYMat);
+    *this = kXMat * (kZMat * kYMat);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::FromEulerAnglesYXZ (Real fYAngle, Real fPAngle,
-    Real fRAngle)
+void Matrix3<Real>::FromEulerAnglesYXZ(Real fYAngle, Real fPAngle,
+                                       Real fRAngle)
 {
     Real fCos, fSin;
 
     fCos = Math<Real>::Cos(fYAngle);
     fSin = Math<Real>::Sin(fYAngle);
     Matrix3 kYMat(
-        fCos,(Real)0.0,fSin,
-        (Real)0.0,(Real)1.0,(Real)0.0,
-        -fSin,(Real)0.0,fCos);
+        fCos, (Real)0.0, fSin,
+        (Real)0.0, (Real)1.0, (Real)0.0,
+        -fSin, (Real)0.0, fCos);
 
     fCos = Math<Real>::Cos(fPAngle);
     fSin = Math<Real>::Sin(fPAngle);
     Matrix3 kXMat(
-        (Real)1.0,(Real)0.0,(Real)0.0,
-        (Real)0.0,fCos,-fSin,
-        (Real)0.0,fSin,fCos);
+        (Real)1.0, (Real)0.0, (Real)0.0,
+        (Real)0.0, fCos, -fSin,
+        (Real)0.0, fSin, fCos);
 
     fCos = Math<Real>::Cos(fRAngle);
     fSin = Math<Real>::Sin(fRAngle);
     Matrix3 kZMat(
-        fCos,-fSin,(Real)0.0,
-        fSin,fCos,(Real)0.0,
-        (Real)0.0,(Real)0.0,(Real)1.0);
+        fCos, -fSin, (Real)0.0,
+        fSin, fCos, (Real)0.0,
+        (Real)0.0, (Real)0.0, (Real)1.0);
 
-    *this = kYMat*(kXMat*kZMat);
+    *this = kYMat * (kXMat * kZMat);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::FromEulerAnglesYZX (Real fYAngle, Real fPAngle,
-    Real fRAngle)
+void Matrix3<Real>::FromEulerAnglesYZX(Real fYAngle, Real fPAngle,
+                                       Real fRAngle)
 {
     Real fCos, fSin;
 
     fCos = Math<Real>::Cos(fYAngle);
     fSin = Math<Real>::Sin(fYAngle);
     Matrix3 kYMat(
-        fCos,(Real)0.0,fSin,
-        (Real)0.0,(Real)1.0,(Real)0.0,
-        -fSin,(Real)0.0,fCos);
+        fCos, (Real)0.0, fSin,
+        (Real)0.0, (Real)1.0, (Real)0.0,
+        -fSin, (Real)0.0, fCos);
 
     fCos = Math<Real>::Cos(fPAngle);
     fSin = Math<Real>::Sin(fPAngle);
     Matrix3 kZMat(
-        fCos,-fSin,(Real)0.0,
-        fSin,fCos,(Real)0.0,
-        (Real)0.0,(Real)0.0,(Real)1.0);
+        fCos, -fSin, (Real)0.0,
+        fSin, fCos, (Real)0.0,
+        (Real)0.0, (Real)0.0, (Real)1.0);
 
     fCos = Math<Real>::Cos(fRAngle);
     fSin = Math<Real>::Sin(fRAngle);
     Matrix3 kXMat(
-        (Real)1.0,(Real)0.0,(Real)0.0,
-        (Real)0.0,fCos,-fSin,
-        (Real)0.0,fSin,fCos);
+        (Real)1.0, (Real)0.0, (Real)0.0,
+        (Real)0.0, fCos, -fSin,
+        (Real)0.0, fSin, fCos);
 
-    *this = kYMat*(kZMat*kXMat);
+    *this = kYMat * (kZMat * kXMat);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::FromEulerAnglesZXY (Real fYAngle, Real fPAngle,
-    Real fRAngle)
+void Matrix3<Real>::FromEulerAnglesZXY(Real fYAngle, Real fPAngle,
+                                       Real fRAngle)
 {
     Real fCos, fSin;
 
     fCos = Math<Real>::Cos(fYAngle);
     fSin = Math<Real>::Sin(fYAngle);
     Matrix3 kZMat(
-        fCos,-fSin,(Real)0.0,
-        fSin,fCos,(Real)0.0,
-        (Real)0.0,(Real)0.0,(Real)1.0);
+        fCos, -fSin, (Real)0.0,
+        fSin, fCos, (Real)0.0,
+        (Real)0.0, (Real)0.0, (Real)1.0);
 
     fCos = Math<Real>::Cos(fPAngle);
     fSin = Math<Real>::Sin(fPAngle);
     Matrix3 kXMat(
-        (Real)1.0,(Real)0.0,(Real)0.0,
-        (Real)0.0,fCos,-fSin,
-        (Real)0.0,fSin,fCos);
+        (Real)1.0, (Real)0.0, (Real)0.0,
+        (Real)0.0, fCos, -fSin,
+        (Real)0.0, fSin, fCos);
 
     fCos = Math<Real>::Cos(fRAngle);
     fSin = Math<Real>::Sin(fRAngle);
     Matrix3 kYMat(
-        fCos,(Real)0.0,fSin,
-        (Real)0.0,(Real)1.0,(Real)0.0,
-        -fSin,(Real)0.0,fCos);
+        fCos, (Real)0.0, fSin,
+        (Real)0.0, (Real)1.0, (Real)0.0,
+        -fSin, (Real)0.0, fCos);
 
-    *this = kZMat*(kXMat*kYMat);
+    *this = kZMat * (kXMat * kYMat);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::FromEulerAnglesZYX (Real fYAngle, Real fPAngle,
-    Real fRAngle)
+void Matrix3<Real>::FromEulerAnglesZYX(Real fYAngle, Real fPAngle,
+                                       Real fRAngle)
 {
     Real fCos, fSin;
 
     fCos = Math<Real>::Cos(fYAngle);
     fSin = Math<Real>::Sin(fYAngle);
     Matrix3 kZMat(
-        fCos,-fSin,(Real)0.0,
-        fSin,fCos,(Real)0.0,
-        (Real)0.0,(Real)0.0,(Real)1.0);
+        fCos, -fSin, (Real)0.0,
+        fSin, fCos, (Real)0.0,
+        (Real)0.0, (Real)0.0, (Real)1.0);
 
     fCos = Math<Real>::Cos(fPAngle);
     fSin = Math<Real>::Sin(fPAngle);
     Matrix3 kYMat(
-        fCos,(Real)0.0,fSin,
-        (Real)0.0,(Real)1.0,(Real)0.0,
-        -fSin,(Real)0.0,fCos);
+        fCos, (Real)0.0, fSin,
+        (Real)0.0, (Real)1.0, (Real)0.0,
+        -fSin, (Real)0.0, fCos);
 
     fCos = Math<Real>::Cos(fRAngle);
     fSin = Math<Real>::Sin(fRAngle);
     Matrix3 kXMat(
-        (Real)1.0,(Real)0.0,(Real)0.0,
-        (Real)0.0,fCos,-fSin,
-        (Real)0.0,fSin,fCos);
+        (Real)1.0, (Real)0.0, (Real)0.0,
+        (Real)0.0, fCos, -fSin,
+        (Real)0.0, fSin, fCos);
 
-    *this = kZMat*(kYMat*kXMat);
+    *this = kZMat * (kYMat * kXMat);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Matrix3<Real> Matrix3<Real>::Slerp (Real fT, const Matrix3& rkR0,
-    const Matrix3& rkR1)
+Matrix3<Real> Matrix3<Real>::Slerp(Real fT, const Matrix3 &rkR0,
+                                   const Matrix3 &rkR1)
 {
     Vector3<Real> kAxis;
     Real fAngle;
     Matrix3 kProd = rkR0.TransposeTimes(rkR1);
-    kProd.ToAxisAngle(kAxis,fAngle);
-    return rkR0*Matrix3<Real>(kAxis,fT*fAngle);
+    kProd.ToAxisAngle(kAxis, fAngle);
+    return rkR0 * Matrix3<Real>(kAxis, fT * fAngle);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::Tridiagonalize (Real afDiag[3], Real afSubDiag[3])
+void Matrix3<Real>::Tridiagonalize(Real afDiag[3], Real afSubDiag[3])
 {
     // Householder reduction T = Q^t M Q
-    //   Input:   
+    //   Input:
     //     mat, symmetric 3x3 matrix M
-    //   Output:  
+    //   Output:
     //     mat, orthogonal matrix Q (a reflection)
     //     diag, diagonal entries of T
     //     subd, subdiagonal entries of T (T is symmetric)
@@ -847,17 +847,17 @@ void Matrix3<Real>::Tridiagonalize (Real afDiag[3], Real afSubDiag[3])
 
     afDiag[0] = fA;
     afSubDiag[2] = (Real)0.0;
-    if ( Math<Real>::FAbs(fC) >= Math<Real>::EPSILON )
+    if (Math<Real>::FAbs(fC) >= Math<Real>::EPSILON)
     {
-        Real fLength = Math<Real>::Sqrt(fB*fB+fC*fC);
-        Real fInvLength = ((Real)1.0)/fLength;
+        Real fLength = Math<Real>::Sqrt(fB * fB + fC * fC);
+        Real fInvLength = ((Real)1.0) / fLength;
         fB *= fInvLength;
         fC *= fInvLength;
-        Real fQ = ((Real)2.0)*fB*fE+fC*(fF-fD);
-        afDiag[1] = fD+fC*fQ;
-        afDiag[2] = fF-fC*fQ;
+        Real fQ = ((Real)2.0) * fB * fE + fC * (fF - fD);
+        afDiag[1] = fD + fC * fQ;
+        afDiag[2] = fF - fC * fQ;
         afSubDiag[0] = fLength;
-        afSubDiag[1] = fE-fB*fQ;
+        afSubDiag[1] = fE - fB * fQ;
 
         Matrix3<Real>::m_afEntry[0] = (Real)1.0;
         Matrix3<Real>::m_afEntry[1] = (Real)0.0;
@@ -889,7 +889,7 @@ void Matrix3<Real>::Tridiagonalize (Real afDiag[3], Real afSubDiag[3])
 }
 //----------------------------------------------------------------------------
 template <class Real>
-bool Matrix3<Real>::QLAlgorithm (Real afDiag[3], Real afSubDiag[3])
+bool Matrix3<Real>::QLAlgorithm(Real afDiag[3], Real afSubDiag[3])
 {
     // QL iteration with implicit shifting to reduce matrix from tridiagonal
     // to diagonal
@@ -904,56 +904,56 @@ bool Matrix3<Real>::QLAlgorithm (Real afDiag[3], Real afSubDiag[3])
             for (i1 = i0; i1 <= 1; i1++)
             {
                 Real fSum = Math<Real>::FAbs(afDiag[i1]) +
-                    Math<Real>::FAbs(afDiag[i1+1]);
-                if ( Math<Real>::FAbs(afSubDiag[i1]) + fSum == fSum )
+                            Math<Real>::FAbs(afDiag[i1 + 1]);
+                if (Math<Real>::FAbs(afSubDiag[i1]) + fSum == fSum)
                     break;
             }
-            if ( i1 == i0 )
+            if (i1 == i0)
                 break;
 
-            Real fTmp0 = (afDiag[i0+1] - afDiag[i0]) /
-                (((Real)2.0)*afSubDiag[i0]);
-            Real fTmp1 = Math<Real>::Sqrt(fTmp0*fTmp0+(Real)1.0);
-            if ( fTmp0 < (Real)0.0 )
-                fTmp0 = afDiag[i1]-afDiag[i0]+afSubDiag[i0]/(fTmp0-fTmp1);
+            Real fTmp0 = (afDiag[i0 + 1] - afDiag[i0]) /
+                         (((Real)2.0) * afSubDiag[i0]);
+            Real fTmp1 = Math<Real>::Sqrt(fTmp0 * fTmp0 + (Real)1.0);
+            if (fTmp0 < (Real)0.0)
+                fTmp0 = afDiag[i1] - afDiag[i0] + afSubDiag[i0] / (fTmp0 - fTmp1);
             else
-                fTmp0 = afDiag[i1]-afDiag[i0]+afSubDiag[i0]/(fTmp0+fTmp1);
+                fTmp0 = afDiag[i1] - afDiag[i0] + afSubDiag[i0] / (fTmp0 + fTmp1);
             Real fSin = (Real)1.0;
             Real fCos = (Real)1.0;
             Real fTmp2 = (Real)0.0;
-            for (int i2 = i1-1; i2 >= i0; i2--)
+            for (int i2 = i1 - 1; i2 >= i0; i2--)
             {
-                Real fTmp3 = fSin*afSubDiag[i2];
-                Real fTmp4 = fCos*afSubDiag[i2];
-                if ( Math<Real>::FAbs(fTmp3) >= Math<Real>::FAbs(fTmp0) )
+                Real fTmp3 = fSin * afSubDiag[i2];
+                Real fTmp4 = fCos * afSubDiag[i2];
+                if (Math<Real>::FAbs(fTmp3) >= Math<Real>::FAbs(fTmp0))
                 {
-                    fCos = fTmp0/fTmp3;
-                    fTmp1 = Math<Real>::Sqrt(fCos*fCos+(Real)1.0);
-                    afSubDiag[i2+1] = fTmp3*fTmp1;
-                    fSin = ((Real)1.0)/fTmp1;
+                    fCos = fTmp0 / fTmp3;
+                    fTmp1 = Math<Real>::Sqrt(fCos * fCos + (Real)1.0);
+                    afSubDiag[i2 + 1] = fTmp3 * fTmp1;
+                    fSin = ((Real)1.0) / fTmp1;
                     fCos *= fSin;
                 }
                 else
                 {
-                    fSin = fTmp3/fTmp0;
-                    fTmp1 = Math<Real>::Sqrt(fSin*fSin+(Real)1.0);
-                    afSubDiag[i2+1] = fTmp0*fTmp1;
-                    fCos = ((Real)1.0)/fTmp1;
+                    fSin = fTmp3 / fTmp0;
+                    fTmp1 = Math<Real>::Sqrt(fSin * fSin + (Real)1.0);
+                    afSubDiag[i2 + 1] = fTmp0 * fTmp1;
+                    fCos = ((Real)1.0) / fTmp1;
                     fSin *= fCos;
                 }
-                fTmp0 = afDiag[i2+1]-fTmp2;
-                fTmp1 = (afDiag[i2]-fTmp0)*fSin+((Real)2.0)*fTmp4*fCos;
-                fTmp2 = fSin*fTmp1;
-                afDiag[i2+1] = fTmp0+fTmp2;
-                fTmp0 = fCos*fTmp1-fTmp4;
+                fTmp0 = afDiag[i2 + 1] - fTmp2;
+                fTmp1 = (afDiag[i2] - fTmp0) * fSin + ((Real)2.0) * fTmp4 * fCos;
+                fTmp2 = fSin * fTmp1;
+                afDiag[i2 + 1] = fTmp0 + fTmp2;
+                fTmp0 = fCos * fTmp1 - fTmp4;
 
                 for (int iRow = 0; iRow < 3; iRow++)
                 {
-                    fTmp3 = Matrix3<Real>::m_afEntry[Matrix<3,Real>::I(iRow,i2+1)];
-                    Matrix3<Real>::m_afEntry[Matrix<3,Real>::I(iRow,i2+1)] = fSin*Matrix3<Real>::m_afEntry[Matrix<3,Real>::I(iRow,i2)] +
-                        fCos*fTmp3;
-                    Matrix3<Real>::m_afEntry[Matrix<3,Real>::I(iRow,i2)] = fCos*Matrix3<Real>::m_afEntry[Matrix<3,Real>::I(iRow,i2)] -
-                        fSin*fTmp3;
+                    fTmp3 = Matrix3<Real>::m_afEntry[Matrix<3, Real>::I(iRow, i2 + 1)];
+                    Matrix3<Real>::m_afEntry[Matrix<3, Real>::I(iRow, i2 + 1)] = fSin * Matrix3<Real>::m_afEntry[Matrix<3, Real>::I(iRow, i2)] +
+                                                                                 fCos * fTmp3;
+                    Matrix3<Real>::m_afEntry[Matrix<3, Real>::I(iRow, i2)] = fCos * Matrix3<Real>::m_afEntry[Matrix<3, Real>::I(iRow, i2)] -
+                                                                             fSin * fTmp3;
                 }
             }
             afDiag[i0] -= fTmp2;
@@ -961,10 +961,10 @@ bool Matrix3<Real>::QLAlgorithm (Real afDiag[3], Real afSubDiag[3])
             afSubDiag[i1] = (Real)0.0;
         }
 
-        if ( iIter == iMaxIter )
+        if (iIter == iMaxIter)
         {
             // should not get here under normal circumstances
-            assert( false );
+            assert(false);
             return false;
         }
     }
@@ -973,15 +973,15 @@ bool Matrix3<Real>::QLAlgorithm (Real afDiag[3], Real afSubDiag[3])
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::EigenDecomposition (Matrix3& rkRot, Matrix3& rkDiag)
+void Matrix3<Real>::EigenDecomposition(Matrix3 &rkRot, Matrix3 &rkDiag)
     const
 {
     // Factor M = R*D*R^T.  The columns of R are the eigenvectors.  The
     // diagonal entries of D are the corresponding eigenvalues.
     Real afDiag[3], afSubDiag[3];
     rkRot = *this;
-    rkRot.Tridiagonalize(afDiag,afSubDiag);
-    rkRot.QLAlgorithm(afDiag,afSubDiag);
+    rkRot.Tridiagonalize(afDiag, afSubDiag);
+    rkRot.QLAlgorithm(afDiag, afSubDiag);
 
     // The Householder transformation is a reflection.  Make the eigenvectors
     // a right--handed system by changing sign on the last column.
@@ -993,7 +993,7 @@ void Matrix3<Real>::EigenDecomposition (Matrix3& rkRot, Matrix3& rkDiag)
     int i;
     Real fSave;
 
-    if ( afDiag[1] < afDiag[0] )
+    if (afDiag[1] < afDiag[0])
     {
         // swap d0 and d1
         fSave = afDiag[0];
@@ -1009,7 +1009,7 @@ void Matrix3<Real>::EigenDecomposition (Matrix3& rkRot, Matrix3& rkDiag)
         }
     }
 
-    if ( afDiag[2] < afDiag[1] )
+    if (afDiag[2] < afDiag[1])
     {
         // swap d1 and d2
         fSave = afDiag[1];
@@ -1025,7 +1025,7 @@ void Matrix3<Real>::EigenDecomposition (Matrix3& rkRot, Matrix3& rkDiag)
         }
     }
 
-    if ( afDiag[1] < afDiag[0] )
+    if (afDiag[1] < afDiag[0])
     {
         // swap d0 and d1
         fSave = afDiag[0];
@@ -1041,48 +1041,48 @@ void Matrix3<Real>::EigenDecomposition (Matrix3& rkRot, Matrix3& rkDiag)
         }
     }
 
-    rkDiag.MakeDiagonal(afDiag[0],afDiag[1],afDiag[2]);
+    rkDiag.MakeDiagonal(afDiag[0], afDiag[1], afDiag[2]);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::Bidiagonalize (Matrix3& rkA, Matrix3& rkL, Matrix3& rkR)
+void Matrix3<Real>::Bidiagonalize(Matrix3 &rkA, Matrix3 &rkL, Matrix3 &rkR)
 {
     Real afV[3], afW[3];
     Real fLength, fSign, fT1, fInvT1, fT2;
     bool bIdentity;
 
     // map first column to (*,0,0)
-    fLength = Math<Real>::Sqrt(rkA[0][0]*rkA[0][0] + rkA[1][0]*rkA[1][0] +
-        rkA[2][0]*rkA[2][0]);
-    if ( fLength > (Real)0.0 )
+    fLength = Math<Real>::Sqrt(rkA[0][0] * rkA[0][0] + rkA[1][0] * rkA[1][0] +
+                               rkA[2][0] * rkA[2][0]);
+    if (fLength > (Real)0.0)
     {
         fSign = (rkA[0][0] > (Real)0.0 ? (Real)1.0 : -(Real)1.0);
-        fT1 = rkA[0][0] + fSign*fLength;
-        fInvT1 = ((Real)1.0)/fT1;
-        afV[1] = rkA[1][0]*fInvT1;
-        afV[2] = rkA[2][0]*fInvT1;
+        fT1 = rkA[0][0] + fSign * fLength;
+        fInvT1 = ((Real)1.0) / fT1;
+        afV[1] = rkA[1][0] * fInvT1;
+        afV[2] = rkA[2][0] * fInvT1;
 
-        fT2 = -((Real)2.0)/(((Real)1.0)+afV[1]*afV[1]+afV[2]*afV[2]);
-        afW[0] = fT2*(rkA[0][0]+rkA[1][0]*afV[1]+rkA[2][0]*afV[2]);
-        afW[1] = fT2*(rkA[0][1]+rkA[1][1]*afV[1]+rkA[2][1]*afV[2]);
-        afW[2] = fT2*(rkA[0][2]+rkA[1][2]*afV[1]+rkA[2][2]*afV[2]);
+        fT2 = -((Real)2.0) / (((Real)1.0) + afV[1] * afV[1] + afV[2] * afV[2]);
+        afW[0] = fT2 * (rkA[0][0] + rkA[1][0] * afV[1] + rkA[2][0] * afV[2]);
+        afW[1] = fT2 * (rkA[0][1] + rkA[1][1] * afV[1] + rkA[2][1] * afV[2]);
+        afW[2] = fT2 * (rkA[0][2] + rkA[1][2] * afV[1] + rkA[2][2] * afV[2]);
         rkA[0][0] += afW[0];
         rkA[0][1] += afW[1];
         rkA[0][2] += afW[2];
-        rkA[1][1] += afV[1]*afW[1];
-        rkA[1][2] += afV[1]*afW[2];
-        rkA[2][1] += afV[2]*afW[1];
-        rkA[2][2] += afV[2]*afW[2];
+        rkA[1][1] += afV[1] * afW[1];
+        rkA[1][2] += afV[1] * afW[2];
+        rkA[2][1] += afV[2] * afW[1];
+        rkA[2][2] += afV[2] * afW[2];
 
-        rkL[0][0] = ((Real)1.0)+fT2;
-        rkL[0][1] = fT2*afV[1];
+        rkL[0][0] = ((Real)1.0) + fT2;
+        rkL[0][1] = fT2 * afV[1];
         rkL[1][0] = rkL[0][1];
-        rkL[0][2] = fT2*afV[2];
+        rkL[0][2] = fT2 * afV[2];
         rkL[2][0] = rkL[0][2];
-        rkL[1][1] = ((Real)1.0)+fT2*afV[1]*afV[1];
-        rkL[1][2] = fT2*afV[1]*afV[2];
+        rkL[1][1] = ((Real)1.0) + fT2 * afV[1] * afV[1];
+        rkL[1][2] = fT2 * afV[1] * afV[2];
         rkL[2][1] = rkL[1][2];
-        rkL[2][2] = ((Real)1.0)+fT2*afV[2]*afV[2];
+        rkL[2][2] = ((Real)1.0) + fT2 * afV[2] * afV[2];
         bIdentity = false;
     }
     else
@@ -1092,32 +1092,32 @@ void Matrix3<Real>::Bidiagonalize (Matrix3& rkA, Matrix3& rkL, Matrix3& rkR)
     }
 
     // map first row to (*,*,0)
-    fLength = Math<Real>::Sqrt(rkA[0][1]*rkA[0][1]+rkA[0][2]*rkA[0][2]);
-    if ( fLength > (Real)0.0 )
+    fLength = Math<Real>::Sqrt(rkA[0][1] * rkA[0][1] + rkA[0][2] * rkA[0][2]);
+    if (fLength > (Real)0.0)
     {
         fSign = (rkA[0][1] > (Real)0.0 ? (Real)1.0 : -(Real)1.0);
-        fT1 = rkA[0][1] + fSign*fLength;
-        afV[2] = rkA[0][2]/fT1;
+        fT1 = rkA[0][1] + fSign * fLength;
+        afV[2] = rkA[0][2] / fT1;
 
-        fT2 = -((Real)2.0)/(((Real)1.0)+afV[2]*afV[2]);
-        afW[0] = fT2*(rkA[0][1]+rkA[0][2]*afV[2]);
-        afW[1] = fT2*(rkA[1][1]+rkA[1][2]*afV[2]);
-        afW[2] = fT2*(rkA[2][1]+rkA[2][2]*afV[2]);
+        fT2 = -((Real)2.0) / (((Real)1.0) + afV[2] * afV[2]);
+        afW[0] = fT2 * (rkA[0][1] + rkA[0][2] * afV[2]);
+        afW[1] = fT2 * (rkA[1][1] + rkA[1][2] * afV[2]);
+        afW[2] = fT2 * (rkA[2][1] + rkA[2][2] * afV[2]);
         rkA[0][1] += afW[0];
         rkA[1][1] += afW[1];
-        rkA[1][2] += afW[1]*afV[2];
+        rkA[1][2] += afW[1] * afV[2];
         rkA[2][1] += afW[2];
-        rkA[2][2] += afW[2]*afV[2];
-        
+        rkA[2][2] += afW[2] * afV[2];
+
         rkR[0][0] = (Real)1.0;
         rkR[0][1] = (Real)0.0;
         rkR[1][0] = (Real)0.0;
         rkR[0][2] = (Real)0.0;
         rkR[2][0] = (Real)0.0;
-        rkR[1][1] = ((Real)1.0)+fT2;
-        rkR[1][2] = fT2*afV[2];
+        rkR[1][1] = ((Real)1.0) + fT2;
+        rkR[1][2] = fT2 * afV[2];
         rkR[2][1] = rkR[1][2];
-        rkR[2][2] = ((Real)1.0)+fT2*afV[2]*afV[2];
+        rkR[2][2] = ((Real)1.0) + fT2 * afV[2] * afV[2];
     }
     else
     {
@@ -1125,25 +1125,25 @@ void Matrix3<Real>::Bidiagonalize (Matrix3& rkA, Matrix3& rkL, Matrix3& rkR)
     }
 
     // map second column to (*,*,0)
-    fLength = Math<Real>::Sqrt(rkA[1][1]*rkA[1][1]+rkA[2][1]*rkA[2][1]);
-    if ( fLength > (Real)0.0 )
+    fLength = Math<Real>::Sqrt(rkA[1][1] * rkA[1][1] + rkA[2][1] * rkA[2][1]);
+    if (fLength > (Real)0.0)
     {
         fSign = (rkA[1][1] > (Real)0.0 ? (Real)1.0 : -(Real)1.0);
-        fT1 = rkA[1][1] + fSign*fLength;
-        afV[2] = rkA[2][1]/fT1;
+        fT1 = rkA[1][1] + fSign * fLength;
+        afV[2] = rkA[2][1] / fT1;
 
-        fT2 = -((Real)2.0)/(((Real)1.0)+afV[2]*afV[2]);
-        afW[1] = fT2*(rkA[1][1]+rkA[2][1]*afV[2]);
-        afW[2] = fT2*(rkA[1][2]+rkA[2][2]*afV[2]);
+        fT2 = -((Real)2.0) / (((Real)1.0) + afV[2] * afV[2]);
+        afW[1] = fT2 * (rkA[1][1] + rkA[2][1] * afV[2]);
+        afW[2] = fT2 * (rkA[1][2] + rkA[2][2] * afV[2]);
         rkA[1][1] += afW[1];
         rkA[1][2] += afW[2];
-        rkA[2][2] += afV[2]*afW[2];
+        rkA[2][2] += afV[2] * afW[2];
 
-        Real fA = ((Real)1.0)+fT2;
-        Real fB = fT2*afV[2];
-        Real fC = ((Real)1.0)+fB*afV[2];
+        Real fA = ((Real)1.0) + fT2;
+        Real fB = fT2 * afV[2];
+        Real fC = ((Real)1.0) + fB * afV[2];
 
-        if ( bIdentity )
+        if (bIdentity)
         {
             rkL[0][0] = (Real)1.0;
             rkL[0][1] = (Real)0.0;
@@ -1161,38 +1161,40 @@ void Matrix3<Real>::Bidiagonalize (Matrix3& rkA, Matrix3& rkL, Matrix3& rkR)
             {
                 Real fTmp0 = rkL[iRow][1];
                 Real fTmp1 = rkL[iRow][2];
-                rkL[iRow][1] = fA*fTmp0+fB*fTmp1;
-                rkL[iRow][2] = fB*fTmp0+fC*fTmp1;
+                rkL[iRow][1] = fA * fTmp0 + fB * fTmp1;
+                rkL[iRow][2] = fB * fTmp0 + fC * fTmp1;
             }
         }
     }
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::GolubKahanStep (Matrix3& rkA, Matrix3& rkL, Matrix3& rkR)
+void Matrix3<Real>::GolubKahanStep(Matrix3 &rkA, Matrix3 &rkL, Matrix3 &rkR)
 {
-    Real fT11 = rkA[0][1]*rkA[0][1]+rkA[1][1]*rkA[1][1];
-    Real fT22 = rkA[1][2]*rkA[1][2]+rkA[2][2]*rkA[2][2];
-    Real fT12 = rkA[1][1]*rkA[1][2];
-    Real fTrace = fT11+fT22;
-    Real fDiff = fT11-fT22;
-    Real fDiscr = Math<Real>::Sqrt(fDiff*fDiff+((Real)4.0)*fT12*fT12);
-    Real fRoot1 = ((Real)0.5)*(fTrace+fDiscr);
-    Real fRoot2 = ((Real)0.5)*(fTrace-fDiscr);
+    Real fT11 = rkA[0][1] * rkA[0][1] + rkA[1][1] * rkA[1][1];
+    Real fT22 = rkA[1][2] * rkA[1][2] + rkA[2][2] * rkA[2][2];
+    Real fT12 = rkA[1][1] * rkA[1][2];
+    Real fTrace = fT11 + fT22;
+    Real fDiff = fT11 - fT22;
+    Real fDiscr = Math<Real>::Sqrt(fDiff * fDiff + ((Real)4.0) * fT12 * fT12);
+    Real fRoot1 = ((Real)0.5) * (fTrace + fDiscr);
+    Real fRoot2 = ((Real)0.5) * (fTrace - fDiscr);
 
     // adjust right
-    Real fY = rkA[0][0] - (Math<Real>::FAbs(fRoot1-fT22) <=
-        Math<Real>::FAbs(fRoot2-fT22) ? fRoot1 : fRoot2);
+    Real fY = rkA[0][0] - (Math<Real>::FAbs(fRoot1 - fT22) <=
+                                   Math<Real>::FAbs(fRoot2 - fT22)
+                               ? fRoot1
+                               : fRoot2);
     Real fZ = rkA[0][1];
-    Real fInvLength = Math<Real>::InvSqrt(fY*fY+fZ*fZ);
-    Real fSin = fZ*fInvLength;
-    Real fCos = -fY*fInvLength;
+    Real fInvLength = Math<Real>::InvSqrt(fY * fY + fZ * fZ);
+    Real fSin = fZ * fInvLength;
+    Real fCos = -fY * fInvLength;
 
     Real fTmp0 = rkA[0][0];
     Real fTmp1 = rkA[0][1];
-    rkA[0][0] = fCos*fTmp0-fSin*fTmp1;
-    rkA[0][1] = fSin*fTmp0+fCos*fTmp1;
-    rkA[1][0] = -fSin*rkA[1][1];
+    rkA[0][0] = fCos * fTmp0 - fSin * fTmp1;
+    rkA[0][1] = fSin * fTmp0 + fCos * fTmp1;
+    rkA[1][0] = -fSin * rkA[1][1];
     rkA[1][1] *= fCos;
 
     int iRow;
@@ -1200,23 +1202,23 @@ void Matrix3<Real>::GolubKahanStep (Matrix3& rkA, Matrix3& rkL, Matrix3& rkR)
     {
         fTmp0 = rkR[0][iRow];
         fTmp1 = rkR[1][iRow];
-        rkR[0][iRow] = fCos*fTmp0-fSin*fTmp1;
-        rkR[1][iRow] = fSin*fTmp0+fCos*fTmp1;
+        rkR[0][iRow] = fCos * fTmp0 - fSin * fTmp1;
+        rkR[1][iRow] = fSin * fTmp0 + fCos * fTmp1;
     }
 
     // adjust left
     fY = rkA[0][0];
     fZ = rkA[1][0];
-    fInvLength = Math<Real>::InvSqrt(fY*fY+fZ*fZ);
-    fSin = fZ*fInvLength;
-    fCos = -fY*fInvLength;
+    fInvLength = Math<Real>::InvSqrt(fY * fY + fZ * fZ);
+    fSin = fZ * fInvLength;
+    fCos = -fY * fInvLength;
 
-    rkA[0][0] = fCos*rkA[0][0]-fSin*rkA[1][0];
+    rkA[0][0] = fCos * rkA[0][0] - fSin * rkA[1][0];
     fTmp0 = rkA[0][1];
     fTmp1 = rkA[1][1];
-    rkA[0][1] = fCos*fTmp0-fSin*fTmp1;
-    rkA[1][1] = fSin*fTmp0+fCos*fTmp1;
-    rkA[0][2] = -fSin*rkA[1][2];
+    rkA[0][1] = fCos * fTmp0 - fSin * fTmp1;
+    rkA[1][1] = fSin * fTmp0 + fCos * fTmp1;
+    rkA[0][2] = -fSin * rkA[1][2];
     rkA[1][2] *= fCos;
 
     int iCol;
@@ -1224,63 +1226,63 @@ void Matrix3<Real>::GolubKahanStep (Matrix3& rkA, Matrix3& rkL, Matrix3& rkR)
     {
         fTmp0 = rkL[iCol][0];
         fTmp1 = rkL[iCol][1];
-        rkL[iCol][0] = fCos*fTmp0-fSin*fTmp1;
-        rkL[iCol][1] = fSin*fTmp0+fCos*fTmp1;
+        rkL[iCol][0] = fCos * fTmp0 - fSin * fTmp1;
+        rkL[iCol][1] = fSin * fTmp0 + fCos * fTmp1;
     }
 
     // adjust right
     fY = rkA[0][1];
     fZ = rkA[0][2];
-    fInvLength = Math<Real>::InvSqrt(fY*fY+fZ*fZ);
-    fSin = fZ*fInvLength;
-    fCos = -fY*fInvLength;
+    fInvLength = Math<Real>::InvSqrt(fY * fY + fZ * fZ);
+    fSin = fZ * fInvLength;
+    fCos = -fY * fInvLength;
 
-    rkA[0][1] = fCos*rkA[0][1]-fSin*rkA[0][2];
+    rkA[0][1] = fCos * rkA[0][1] - fSin * rkA[0][2];
     fTmp0 = rkA[1][1];
     fTmp1 = rkA[1][2];
-    rkA[1][1] = fCos*fTmp0-fSin*fTmp1;
-    rkA[1][2] = fSin*fTmp0+fCos*fTmp1;
-    rkA[2][1] = -fSin*rkA[2][2];
+    rkA[1][1] = fCos * fTmp0 - fSin * fTmp1;
+    rkA[1][2] = fSin * fTmp0 + fCos * fTmp1;
+    rkA[2][1] = -fSin * rkA[2][2];
     rkA[2][2] *= fCos;
 
     for (iRow = 0; iRow < 3; iRow++)
     {
         fTmp0 = rkR[1][iRow];
         fTmp1 = rkR[2][iRow];
-        rkR[1][iRow] = fCos*fTmp0-fSin*fTmp1;
-        rkR[2][iRow] = fSin*fTmp0+fCos*fTmp1;
+        rkR[1][iRow] = fCos * fTmp0 - fSin * fTmp1;
+        rkR[2][iRow] = fSin * fTmp0 + fCos * fTmp1;
     }
 
     // adjust left
     fY = rkA[1][1];
     fZ = rkA[2][1];
-    fInvLength = Math<Real>::InvSqrt(fY*fY+fZ*fZ);
-    fSin = fZ*fInvLength;
-    fCos = -fY*fInvLength;
+    fInvLength = Math<Real>::InvSqrt(fY * fY + fZ * fZ);
+    fSin = fZ * fInvLength;
+    fCos = -fY * fInvLength;
 
-    rkA[1][1] = fCos*rkA[1][1]-fSin*rkA[2][1];
+    rkA[1][1] = fCos * rkA[1][1] - fSin * rkA[2][1];
     fTmp0 = rkA[1][2];
     fTmp1 = rkA[2][2];
-    rkA[1][2] = fCos*fTmp0-fSin*fTmp1;
-    rkA[2][2] = fSin*fTmp0+fCos*fTmp1;
+    rkA[1][2] = fCos * fTmp0 - fSin * fTmp1;
+    rkA[2][2] = fSin * fTmp0 + fCos * fTmp1;
 
     for (iCol = 0; iCol < 3; iCol++)
     {
         fTmp0 = rkL[iCol][1];
         fTmp1 = rkL[iCol][2];
-        rkL[iCol][1] = fCos*fTmp0-fSin*fTmp1;
-        rkL[iCol][2] = fSin*fTmp0+fCos*fTmp1;
+        rkL[iCol][1] = fCos * fTmp0 - fSin * fTmp1;
+        rkL[iCol][2] = fSin * fTmp0 + fCos * fTmp1;
     }
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::SingularValueDecomposition (Matrix3& rkL, Matrix3& rkS,
-    Matrix3& rkR) const
+void Matrix3<Real>::SingularValueDecomposition(Matrix3 &rkL, Matrix3 &rkS,
+                                               Matrix3 &rkR) const
 {
     int iRow, iCol;
 
     Matrix3 kA = *this;
-    Bidiagonalize(kA,rkL,rkR);
+    Bidiagonalize(kA, rkL, rkR);
     rkS.MakeZero();
 
     const int iMax = 32;
@@ -1292,14 +1294,14 @@ void Matrix3<Real>::SingularValueDecomposition (Matrix3& rkL, Matrix3& rkS,
         Real fSin1, fCos1, fTan1;
 
         bool bTest1 = (Math<Real>::FAbs(kA[0][1]) <=
-            fEpsilon*(Math<Real>::FAbs(kA[0][0]) +
-            Math<Real>::FAbs(kA[1][1])));
+                       fEpsilon * (Math<Real>::FAbs(kA[0][0]) +
+                                   Math<Real>::FAbs(kA[1][1])));
         bool bTest2 = (Math<Real>::FAbs(kA[1][2]) <=
-            fEpsilon*(Math<Real>::FAbs(kA[1][1]) +
-            Math<Real>::FAbs(kA[2][2])));
-        if ( bTest1 )
+                       fEpsilon * (Math<Real>::FAbs(kA[1][1]) +
+                                   Math<Real>::FAbs(kA[2][2])));
+        if (bTest1)
         {
-            if ( bTest2 )
+            if (bTest2)
             {
                 rkS[0][0] = kA[0][0];
                 rkS[1][1] = kA[1][1];
@@ -1309,83 +1311,85 @@ void Matrix3<Real>::SingularValueDecomposition (Matrix3& rkL, Matrix3& rkS,
             else
             {
                 // 2x2 closed form factorization
-                fTmp = (kA[1][1]*kA[1][1] - kA[2][2]*kA[2][2] +
-                    kA[1][2]*kA[1][2])/(kA[1][2]*kA[2][2]);
-                fTan0 = ((Real)0.5)*(fTmp + Math<Real>::Sqrt(fTmp*fTmp +
-                    ((Real)4.0)));
-                fCos0 = Math<Real>::InvSqrt(((Real)1.0)+fTan0*fTan0);
-                fSin0 = fTan0*fCos0;
+                fTmp = (kA[1][1] * kA[1][1] - kA[2][2] * kA[2][2] +
+                        kA[1][2] * kA[1][2]) /
+                       (kA[1][2] * kA[2][2]);
+                fTan0 = ((Real)0.5) * (fTmp + Math<Real>::Sqrt(fTmp * fTmp +
+                                                               ((Real)4.0)));
+                fCos0 = Math<Real>::InvSqrt(((Real)1.0) + fTan0 * fTan0);
+                fSin0 = fTan0 * fCos0;
 
                 for (iCol = 0; iCol < 3; iCol++)
                 {
                     fTmp0 = rkL[iCol][1];
                     fTmp1 = rkL[iCol][2];
-                    rkL[iCol][1] = fCos0*fTmp0-fSin0*fTmp1;
-                    rkL[iCol][2] = fSin0*fTmp0+fCos0*fTmp1;
+                    rkL[iCol][1] = fCos0 * fTmp0 - fSin0 * fTmp1;
+                    rkL[iCol][2] = fSin0 * fTmp0 + fCos0 * fTmp1;
                 }
-                
-                fTan1 = (kA[1][2]-kA[2][2]*fTan0)/kA[1][1];
-                fCos1 = Math<Real>::InvSqrt(((Real)1.0)+fTan1*fTan1);
-                fSin1 = -fTan1*fCos1;
+
+                fTan1 = (kA[1][2] - kA[2][2] * fTan0) / kA[1][1];
+                fCos1 = Math<Real>::InvSqrt(((Real)1.0) + fTan1 * fTan1);
+                fSin1 = -fTan1 * fCos1;
 
                 for (iRow = 0; iRow < 3; iRow++)
                 {
                     fTmp0 = rkR[1][iRow];
                     fTmp1 = rkR[2][iRow];
-                    rkR[1][iRow] = fCos1*fTmp0-fSin1*fTmp1;
-                    rkR[2][iRow] = fSin1*fTmp0+fCos1*fTmp1;
+                    rkR[1][iRow] = fCos1 * fTmp0 - fSin1 * fTmp1;
+                    rkR[2][iRow] = fSin1 * fTmp0 + fCos1 * fTmp1;
                 }
 
                 rkS[0][0] = kA[0][0];
-                rkS[1][1] = fCos0*fCos1*kA[1][1] -
-                    fSin1*(fCos0*kA[1][2]-fSin0*kA[2][2]);
-                rkS[2][2] = fSin0*fSin1*kA[1][1] +
-                    fCos1*(fSin0*kA[1][2]+fCos0*kA[2][2]);
+                rkS[1][1] = fCos0 * fCos1 * kA[1][1] -
+                            fSin1 * (fCos0 * kA[1][2] - fSin0 * kA[2][2]);
+                rkS[2][2] = fSin0 * fSin1 * kA[1][1] +
+                            fCos1 * (fSin0 * kA[1][2] + fCos0 * kA[2][2]);
                 break;
             }
         }
-        else 
+        else
         {
-            if ( bTest2 )
+            if (bTest2)
             {
-                // 2x2 closed form factorization 
-                fTmp = (kA[0][0]*kA[0][0] + kA[1][1]*kA[1][1] -
-                    kA[0][1]*kA[0][1])/(kA[0][1]*kA[1][1]);
-                fTan0 = ((Real)0.5)*(-fTmp + Math<Real>::Sqrt(fTmp*fTmp +
-                    ((Real)4.0)));
-                fCos0 = Math<Real>::InvSqrt(((Real)1.0)+fTan0*fTan0);
-                fSin0 = fTan0*fCos0;
+                // 2x2 closed form factorization
+                fTmp = (kA[0][0] * kA[0][0] + kA[1][1] * kA[1][1] -
+                        kA[0][1] * kA[0][1]) /
+                       (kA[0][1] * kA[1][1]);
+                fTan0 = ((Real)0.5) * (-fTmp + Math<Real>::Sqrt(fTmp * fTmp +
+                                                                ((Real)4.0)));
+                fCos0 = Math<Real>::InvSqrt(((Real)1.0) + fTan0 * fTan0);
+                fSin0 = fTan0 * fCos0;
 
                 for (iCol = 0; iCol < 3; iCol++)
                 {
                     fTmp0 = rkL[iCol][0];
                     fTmp1 = rkL[iCol][1];
-                    rkL[iCol][0] = fCos0*fTmp0-fSin0*fTmp1;
-                    rkL[iCol][1] = fSin0*fTmp0+fCos0*fTmp1;
+                    rkL[iCol][0] = fCos0 * fTmp0 - fSin0 * fTmp1;
+                    rkL[iCol][1] = fSin0 * fTmp0 + fCos0 * fTmp1;
                 }
-                
-                fTan1 = (kA[0][1]-kA[1][1]*fTan0)/kA[0][0];
-                fCos1 = Math<Real>::InvSqrt(((Real)1.0)+fTan1*fTan1);
-                fSin1 = -fTan1*fCos1;
+
+                fTan1 = (kA[0][1] - kA[1][1] * fTan0) / kA[0][0];
+                fCos1 = Math<Real>::InvSqrt(((Real)1.0) + fTan1 * fTan1);
+                fSin1 = -fTan1 * fCos1;
 
                 for (iRow = 0; iRow < 3; iRow++)
                 {
                     fTmp0 = rkR[0][iRow];
                     fTmp1 = rkR[1][iRow];
-                    rkR[0][iRow] = fCos1*fTmp0-fSin1*fTmp1;
-                    rkR[1][iRow] = fSin1*fTmp0+fCos1*fTmp1;
+                    rkR[0][iRow] = fCos1 * fTmp0 - fSin1 * fTmp1;
+                    rkR[1][iRow] = fSin1 * fTmp0 + fCos1 * fTmp1;
                 }
 
-                rkS[0][0] = fCos0*fCos1*kA[0][0] -
-                    fSin1*(fCos0*kA[0][1]-fSin0*kA[1][1]);
-                rkS[1][1] = fSin0*fSin1*kA[0][0] +
-                    fCos1*(fSin0*kA[0][1]+fCos0*kA[1][1]);
+                rkS[0][0] = fCos0 * fCos1 * kA[0][0] -
+                            fSin1 * (fCos0 * kA[0][1] - fSin0 * kA[1][1]);
+                rkS[1][1] = fSin0 * fSin1 * kA[0][0] +
+                            fCos1 * (fSin0 * kA[0][1] + fCos0 * kA[1][1]);
                 rkS[2][2] = kA[2][2];
                 break;
             }
             else
             {
-                GolubKahanStep(kA,rkL,rkR);
+                GolubKahanStep(kA, rkL, rkR);
             }
         }
     }
@@ -1393,7 +1397,7 @@ void Matrix3<Real>::SingularValueDecomposition (Matrix3& rkL, Matrix3& rkS,
     // positize diagonal
     for (iRow = 0; iRow < 3; iRow++)
     {
-        if ( rkS[iRow][iRow] < (Real)0.0 )
+        if (rkS[iRow][iRow] < (Real)0.0)
         {
             rkS[iRow][iRow] = -rkS[iRow][iRow];
             for (iCol = 0; iCol < 3; iCol++)
@@ -1403,15 +1407,15 @@ void Matrix3<Real>::SingularValueDecomposition (Matrix3& rkL, Matrix3& rkS,
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::SingularValueComposition (const Matrix3& rkL,
-    const Matrix3& rkS, const Matrix3& rkR)
+void Matrix3<Real>::SingularValueComposition(const Matrix3 &rkL,
+                                             const Matrix3 &rkS, const Matrix3 &rkR)
 {
-    *this = rkL*(rkS*rkR);
+    *this = rkL * (rkS * rkR);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Matrix3<Real>::QDUDecomposition (Matrix3& rkQ, Matrix3& rkD,
-    Matrix3& rkU) const
+void Matrix3<Real>::QDUDecomposition(Matrix3 &rkQ, Matrix3 &rkD,
+                                     Matrix3 &rkU) const
 {
     // Factor M = QR = QDU where Q is orthogonal (rotation), D is diagonal
     // (scaling),  and U is upper triangular with ones on its diagonal
@@ -1435,45 +1439,43 @@ void Matrix3<Real>::QDUDecomposition (Matrix3& rkQ, Matrix3& rkD,
     // u02 = r02/r00, and u12 = r12/r11.
 
     // build orthogonal matrix Q
-    Real fInvLength = Math<Real>::InvSqrt(Matrix3<Real>::m_afEntry[0]*Matrix3<Real>::m_afEntry[0] +
-        Matrix3<Real>::m_afEntry[3]*Matrix3<Real>::m_afEntry[3] + Matrix3<Real>::m_afEntry[6]*Matrix3<Real>::m_afEntry[6]);
-    rkQ[0][0] = Matrix3<Real>::m_afEntry[0]*fInvLength;
-    rkQ[1][0] = Matrix3<Real>::m_afEntry[3]*fInvLength;
-    rkQ[2][0] = Matrix3<Real>::m_afEntry[6]*fInvLength;
+    Real fInvLength = Math<Real>::InvSqrt(Matrix3<Real>::m_afEntry[0] * Matrix3<Real>::m_afEntry[0] +
+                                          Matrix3<Real>::m_afEntry[3] * Matrix3<Real>::m_afEntry[3] + Matrix3<Real>::m_afEntry[6] * Matrix3<Real>::m_afEntry[6]);
+    rkQ[0][0] = Matrix3<Real>::m_afEntry[0] * fInvLength;
+    rkQ[1][0] = Matrix3<Real>::m_afEntry[3] * fInvLength;
+    rkQ[2][0] = Matrix3<Real>::m_afEntry[6] * fInvLength;
 
-    Real fDot = rkQ[0][0]*Matrix3<Real>::m_afEntry[1] + rkQ[1][0]*Matrix3<Real>::m_afEntry[4] +
-        rkQ[2][0]*Matrix3<Real>::m_afEntry[7];
-    rkQ[0][1] = Matrix3<Real>::m_afEntry[1]-fDot*rkQ[0][0];
-    rkQ[1][1] = Matrix3<Real>::m_afEntry[4]-fDot*rkQ[1][0];
-    rkQ[2][1] = Matrix3<Real>::m_afEntry[7]-fDot*rkQ[2][0];
-    fInvLength = Math<Real>::InvSqrt(rkQ[0][1]*rkQ[0][1] +
-        rkQ[1][1]*rkQ[1][1] + rkQ[2][1]*rkQ[2][1]);
+    Real fDot = rkQ[0][0] * Matrix3<Real>::m_afEntry[1] + rkQ[1][0] * Matrix3<Real>::m_afEntry[4] +
+                rkQ[2][0] * Matrix3<Real>::m_afEntry[7];
+    rkQ[0][1] = Matrix3<Real>::m_afEntry[1] - fDot * rkQ[0][0];
+    rkQ[1][1] = Matrix3<Real>::m_afEntry[4] - fDot * rkQ[1][0];
+    rkQ[2][1] = Matrix3<Real>::m_afEntry[7] - fDot * rkQ[2][0];
+    fInvLength = Math<Real>::InvSqrt(rkQ[0][1] * rkQ[0][1] +
+                                     rkQ[1][1] * rkQ[1][1] + rkQ[2][1] * rkQ[2][1]);
     rkQ[0][1] *= fInvLength;
     rkQ[1][1] *= fInvLength;
     rkQ[2][1] *= fInvLength;
 
-    fDot = rkQ[0][0]*Matrix3<Real>::m_afEntry[2] + rkQ[1][0]*Matrix3<Real>::m_afEntry[5] +
-        rkQ[2][0]*Matrix3<Real>::m_afEntry[8];
-    rkQ[0][2] = Matrix3<Real>::m_afEntry[2]-fDot*rkQ[0][0];
-    rkQ[1][2] = Matrix3<Real>::m_afEntry[5]-fDot*rkQ[1][0];
-    rkQ[2][2] = Matrix3<Real>::m_afEntry[8]-fDot*rkQ[2][0];
-    fDot = rkQ[0][1]*Matrix3<Real>::m_afEntry[2] + rkQ[1][1]*Matrix3<Real>::m_afEntry[5] +
-        rkQ[2][1]*Matrix3<Real>::m_afEntry[8];
-    rkQ[0][2] -= fDot*rkQ[0][1];
-    rkQ[1][2] -= fDot*rkQ[1][1];
-    rkQ[2][2] -= fDot*rkQ[2][1];
-    fInvLength = Math<Real>::InvSqrt(rkQ[0][2]*rkQ[0][2] +
-        rkQ[1][2]*rkQ[1][2] + rkQ[2][2]*rkQ[2][2]);
+    fDot = rkQ[0][0] * Matrix3<Real>::m_afEntry[2] + rkQ[1][0] * Matrix3<Real>::m_afEntry[5] +
+           rkQ[2][0] * Matrix3<Real>::m_afEntry[8];
+    rkQ[0][2] = Matrix3<Real>::m_afEntry[2] - fDot * rkQ[0][0];
+    rkQ[1][2] = Matrix3<Real>::m_afEntry[5] - fDot * rkQ[1][0];
+    rkQ[2][2] = Matrix3<Real>::m_afEntry[8] - fDot * rkQ[2][0];
+    fDot = rkQ[0][1] * Matrix3<Real>::m_afEntry[2] + rkQ[1][1] * Matrix3<Real>::m_afEntry[5] +
+           rkQ[2][1] * Matrix3<Real>::m_afEntry[8];
+    rkQ[0][2] -= fDot * rkQ[0][1];
+    rkQ[1][2] -= fDot * rkQ[1][1];
+    rkQ[2][2] -= fDot * rkQ[2][1];
+    fInvLength = Math<Real>::InvSqrt(rkQ[0][2] * rkQ[0][2] +
+                                     rkQ[1][2] * rkQ[1][2] + rkQ[2][2] * rkQ[2][2]);
     rkQ[0][2] *= fInvLength;
     rkQ[1][2] *= fInvLength;
     rkQ[2][2] *= fInvLength;
 
     // guarantee that orthogonal matrix has determinant 1 (no reflections)
-    Real fDet = rkQ[0][0]*rkQ[1][1]*rkQ[2][2] + rkQ[0][1]*rkQ[1][2]*rkQ[2][0]
-        +  rkQ[0][2]*rkQ[1][0]*rkQ[2][1] - rkQ[0][2]*rkQ[1][1]*rkQ[2][0]
-        -  rkQ[0][1]*rkQ[1][0]*rkQ[2][2] - rkQ[0][0]*rkQ[1][2]*rkQ[2][1];
+    Real fDet = rkQ[0][0] * rkQ[1][1] * rkQ[2][2] + rkQ[0][1] * rkQ[1][2] * rkQ[2][0] + rkQ[0][2] * rkQ[1][0] * rkQ[2][1] - rkQ[0][2] * rkQ[1][1] * rkQ[2][0] - rkQ[0][1] * rkQ[1][0] * rkQ[2][2] - rkQ[0][0] * rkQ[1][2] * rkQ[2][1];
 
-    if ( fDet < (Real)0.0 )
+    if (fDet < (Real)0.0)
     {
         for (int iRow = 0; iRow < 3; iRow++)
         {
@@ -1484,30 +1486,30 @@ void Matrix3<Real>::QDUDecomposition (Matrix3& rkQ, Matrix3& rkD,
 
     // build "right" matrix R
     Matrix3 kR;
-    kR[0][0] = rkQ[0][0]*Matrix3<Real>::m_afEntry[0] + rkQ[1][0]*Matrix3<Real>::m_afEntry[3] +
-        rkQ[2][0]*Matrix3<Real>::m_afEntry[6];
-    kR[0][1] = rkQ[0][0]*Matrix3<Real>::m_afEntry[1] + rkQ[1][0]*Matrix3<Real>::m_afEntry[4] +
-        rkQ[2][0]*Matrix3<Real>::m_afEntry[7];
-    kR[1][1] = rkQ[0][1]*Matrix3<Real>::m_afEntry[1] + rkQ[1][1]*Matrix3<Real>::m_afEntry[4] +
-        rkQ[2][1]*Matrix3<Real>::m_afEntry[7];
-    kR[0][2] = rkQ[0][0]*Matrix3<Real>::m_afEntry[2] + rkQ[1][0]*Matrix3<Real>::m_afEntry[5] +
-        rkQ[2][0]*Matrix3<Real>::m_afEntry[8];
-    kR[1][2] = rkQ[0][1]*Matrix3<Real>::m_afEntry[2] + rkQ[1][1]*Matrix3<Real>::m_afEntry[5] +
-        rkQ[2][1]*Matrix3<Real>::m_afEntry[8];
-    kR[2][2] = rkQ[0][2]*Matrix3<Real>::m_afEntry[2] + rkQ[1][2]*Matrix3<Real>::m_afEntry[5] +
-        rkQ[2][2]*Matrix3<Real>::m_afEntry[8];
+    kR[0][0] = rkQ[0][0] * Matrix3<Real>::m_afEntry[0] + rkQ[1][0] * Matrix3<Real>::m_afEntry[3] +
+               rkQ[2][0] * Matrix3<Real>::m_afEntry[6];
+    kR[0][1] = rkQ[0][0] * Matrix3<Real>::m_afEntry[1] + rkQ[1][0] * Matrix3<Real>::m_afEntry[4] +
+               rkQ[2][0] * Matrix3<Real>::m_afEntry[7];
+    kR[1][1] = rkQ[0][1] * Matrix3<Real>::m_afEntry[1] + rkQ[1][1] * Matrix3<Real>::m_afEntry[4] +
+               rkQ[2][1] * Matrix3<Real>::m_afEntry[7];
+    kR[0][2] = rkQ[0][0] * Matrix3<Real>::m_afEntry[2] + rkQ[1][0] * Matrix3<Real>::m_afEntry[5] +
+               rkQ[2][0] * Matrix3<Real>::m_afEntry[8];
+    kR[1][2] = rkQ[0][1] * Matrix3<Real>::m_afEntry[2] + rkQ[1][1] * Matrix3<Real>::m_afEntry[5] +
+               rkQ[2][1] * Matrix3<Real>::m_afEntry[8];
+    kR[2][2] = rkQ[0][2] * Matrix3<Real>::m_afEntry[2] + rkQ[1][2] * Matrix3<Real>::m_afEntry[5] +
+               rkQ[2][2] * Matrix3<Real>::m_afEntry[8];
 
     // the scaling component
-    rkD.MakeDiagonal(kR[0][0],kR[1][1],kR[2][2]);
+    rkD.MakeDiagonal(kR[0][0], kR[1][1], kR[2][2]);
 
     // the shear component
-    Real fInvD0 = ((Real)1.0)/rkD[0][0];
+    Real fInvD0 = ((Real)1.0) / rkD[0][0];
     rkU[0][0] = (Real)1.0;
-    rkU[0][1] = kR[0][1]*fInvD0;
-    rkU[0][2] = kR[0][2]*fInvD0;
+    rkU[0][1] = kR[0][1] * fInvD0;
+    rkU[0][2] = kR[0][2] * fInvD0;
     rkU[1][0] = (Real)0.0;
     rkU[1][1] = (Real)1.0;
-    rkU[1][2] = kR[1][2]/rkD[1][1];
+    rkU[1][2] = kR[1][2] / rkD[1][1];
     rkU[2][0] = (Real)0.0;
     rkU[2][1] = (Real)0.0;
     rkU[2][2] = (Real)1.0;

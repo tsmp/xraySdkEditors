@@ -15,24 +15,22 @@
 
 #include "MgcVector3.h"
 
-namespace Mgc {
+namespace Mgc
+{
 
-// Least-squares fit of a line to (x,y,z) data by using distance measurements
-// orthogonal to the proposed line.  The resulting line is represented by
-// Offset + t*Direction where the returned direction is a unit-length vector.
+    // Least-squares fit of a line to (x,y,z) data by using distance measurements
+    // orthogonal to the proposed line.  The resulting line is represented by
+    // Offset + t*Direction where the returned direction is a unit-length vector.
 
-MAGICFM void OrthogonalLineFit (int iQuantity, const Vector3* akPoint,
-    Vector3& rkOffset, Vector3& rkDirection);
+    MAGICFM void OrthogonalLineFit(int iQuantity, const Vector3 *akPoint,
+                                   Vector3 &rkOffset, Vector3 &rkDirection);
 
+    // This function allows for selection of vertices from a pool.  The return
+    // value is 'true' if and only if at least one vertex is valid.
 
-// This function allows for selection of vertices from a pool.  The return
-// value is 'true' if and only if at least one vertex is valid.
-
-MAGICFM bool OrthogonalLineFit (int iQuantity, const Vector3* akPoint,
-    const bool* abValid, Vector3& rkOffset, Vector3& rkDirection);
+    MAGICFM bool OrthogonalLineFit(int iQuantity, const Vector3 *akPoint,
+                                   const bool *abValid, Vector3 &rkOffset, Vector3 &rkDirection);
 
 } // namespace Mgc
 
 #endif
-
-

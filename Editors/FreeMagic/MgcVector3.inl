@@ -11,21 +11,19 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline Vector3::Vector3 ()
+inline Vector3::Vector3()
 {
     // For efficiency in construction of large arrays of vectors, the
     // default constructor does not initialize the vector.
 }
 //----------------------------------------------------------------------------
-inline Real& Vector3::operator[] (int i) const
+inline Real &Vector3::operator[](int i) const
 {
-    return ((Real*)this)[i];
+    return ((Real *)this)[i];
 }
 //----------------------------------------------------------------------------
-inline Vector3::operator Real* ()
+inline Vector3::operator Real *()
 {
-    return (Real*)this;
+    return (Real *)this;
 }
 //----------------------------------------------------------------------------
-
-

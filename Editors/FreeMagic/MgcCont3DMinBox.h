@@ -17,12 +17,11 @@
 
 #include "MgcBox3.h"
 
-namespace Mgc {
+namespace Mgc
+{
 
-MAGICFM Box3 MinBox (int iQuantity, const Vector3* akPoint);
+    MAGICFM Box3 MinBox(int iQuantity, const Vector3 *akPoint);
 
 } // namespace Mgc
 
 #endif
-
-

@@ -14,43 +14,47 @@
 #include <boost/noncopyable.hpp>
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
-class property_holder_collection;
+	class property_holder_collection;
 
-namespace environment {
-	namespace effects {
-		class manager;
-	} // namespace effects
+	namespace environment
+	{
+		namespace effects
+		{
+			class manager;
+		} // namespace effects
 
-namespace ambients {
+		namespace ambients
+		{
 
-class effect_id :
-	public XrWeatherEditor::property_holder_holder,
-	private boost::noncopyable {
-public:
-							effect_id		(effects::manager const& manager, shared_str const& id);
-	virtual					~effect_id		();
-			void			fill			(XrWeatherEditor::property_holder_collection* collection);
-	inline	shared_str const& id			() const { return m_id; }
+			class effect_id : public XrWeatherEditor::property_holder_holder,
+							  private boost::noncopyable
+			{
+			public:
+				effect_id(effects::manager const &manager, shared_str const &id);
+				virtual ~effect_id();
+				void fill(XrWeatherEditor::property_holder_collection *collection);
+				inline shared_str const &id() const { return m_id; }
 
-private:
-	typedef XrWeatherEditor::property_holder			property_holder_type;
+			private:
+				typedef XrWeatherEditor::property_holder property_holder_type;
 
-public:
-	virtual	property_holder_type* object	();
+			public:
+				virtual property_holder_type *object();
 
-private:
-	LPCSTR const* xr_stdcall collection		();
-	u32  xr_stdcall			collection_size	();
+			private:
+				LPCSTR const *xr_stdcall collection();
+				u32 xr_stdcall collection_size();
 
-private:
-	property_holder_type*	m_property_holder;
-	effects::manager const&	m_manager;
-	shared_str				m_id;
-}; // class effect_id
-} // namespace ambients
-} // namespace environment
+			private:
+				property_holder_type *m_property_holder;
+				effects::manager const &m_manager;
+				shared_str m_id;
+			}; // class effect_id
+		}	   // namespace ambients
+	}		   // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

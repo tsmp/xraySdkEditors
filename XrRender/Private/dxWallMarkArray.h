@@ -15,11 +15,12 @@ public:
 	virtual bool empty();
 	virtual wm_shader GenerateWallmark();
 
-	ref_shader*	dxGenerateWallmark();
-private:
-	DEFINE_VECTOR(ref_shader,ShaderVec,ShaderIt);
+	ref_shader *dxGenerateWallmark();
 
-	ShaderVec	m_CollideMarks;
+private:
+	DEFINE_VECTOR(ref_shader, ShaderVec, ShaderIt);
+
+	ShaderVec m_CollideMarks;
 };
 
-#endif	//	WallMarkArray_included
+#endif //	WallMarkArray_included

@@ -9,44 +9,44 @@
 //
 // FREE SOURCE CODE
 // http://www.magic-software.com/License/free.pdf
- #pragma hdrstop
+#pragma hdrstop
 #include "MgcAppr3DGaussPointsFit.h"
 #include "MgcCont3DBox.h"
 #include "MgcQuaternion.h"
 using namespace Mgc;
 
 //----------------------------------------------------------------------------
-void Mgc::ContAlignedBox (int iQuantity, const Vector3* akPoint,
-    Vector3& rkMin, Vector3& rkMax)
+void Mgc::ContAlignedBox(int iQuantity, const Vector3 *akPoint,
+                         Vector3 &rkMin, Vector3 &rkMax)
 {
     rkMin = akPoint[0];
     rkMax = rkMin;
 
     for (int i = 1; i < iQuantity; i++)
     {
-        if ( akPoint[i].x < rkMin.x )
+        if (akPoint[i].x < rkMin.x)
             rkMin.x = akPoint[i].x;
-        else if ( akPoint[i].x > rkMax.x )
+        else if (akPoint[i].x > rkMax.x)
             rkMax.x = akPoint[i].x;
 
-        if ( akPoint[i].y < rkMin.y )
+        if (akPoint[i].y < rkMin.y)
             rkMin.y = akPoint[i].y;
-        else if ( akPoint[i].y > rkMax.y )
+        else if (akPoint[i].y > rkMax.y)
             rkMax.y = akPoint[i].y;
 
-        if ( akPoint[i].z < rkMin.z )
+        if (akPoint[i].z < rkMin.z)
             rkMin.z = akPoint[i].z;
-        else if ( akPoint[i].z > rkMax.z )
+        else if (akPoint[i].z > rkMax.z)
             rkMax.z = akPoint[i].z;
     }
 }
 //----------------------------------------------------------------------------
-Box3 Mgc::ContOrientedBox (int iQuantity, const Vector3* akPoint)
+Box3 Mgc::ContOrientedBox(int iQuantity, const Vector3 *akPoint)
 {
     Box3 kBox;
 
-    GaussPointsFit(iQuantity,akPoint,kBox.Center(),kBox.Axes(),
-        kBox.Extents());
+    GaussPointsFit(iQuantity, akPoint, kBox.Center(), kBox.Axes(),
+                   kBox.Extents());
 
     // Let C be the box center and let U0, U1, and U2 be the box axes.  Each
     // input point is of the form X = C + y0*U0 + y1*U1 + y2*U2.  The
@@ -65,40 +65,40 @@ Box3 Mgc::ContOrientedBox (int iQuantity, const Vector3* akPoint)
         kDiff = akPoint[i] - kBox.Center();
 
         Real fY0 = kDiff.Dot(kBox.Axis(0));
-        if ( fY0 < fY0Min )
+        if (fY0 < fY0Min)
             fY0Min = fY0;
-        else if ( fY0 > fY0Max )
+        else if (fY0 > fY0Max)
             fY0Max = fY0;
 
         Real fY1 = kDiff.Dot(kBox.Axis(1));
-        if ( fY1 < fY1Min )
+        if (fY1 < fY1Min)
             fY1Min = fY1;
-        else if ( fY1 > fY1Max )
+        else if (fY1 > fY1Max)
             fY1Max = fY1;
 
         Real fY2 = kDiff.Dot(kBox.Axis(2));
-        if ( fY2 < fY2Min )
+        if (fY2 < fY2Min)
             fY2Min = fY2;
-        else if ( fY2 > fY2Max )
+        else if (fY2 > fY2Max)
             fY2Max = fY2;
     }
 
-    kBox.Center() += (0.5f*(fY0Min+fY0Max))*kBox.Axis(0) +
-        (0.5f*(fY1Min+fY1Max))*kBox.Axis(1) +
-        (0.5f*(fY2Min+fY2Max))*kBox.Axis(2);
+    kBox.Center() += (0.5f * (fY0Min + fY0Max)) * kBox.Axis(0) +
+                     (0.5f * (fY1Min + fY1Max)) * kBox.Axis(1) +
+                     (0.5f * (fY2Min + fY2Max)) * kBox.Axis(2);
 
-    kBox.Extent(0) = 0.5f*(fY0Max - fY0Min);
-    kBox.Extent(1) = 0.5f*(fY1Max - fY1Min);
-    kBox.Extent(2) = 0.5f*(fY2Max - fY2Min);
+    kBox.Extent(0) = 0.5f * (fY0Max - fY0Min);
+    kBox.Extent(1) = 0.5f * (fY1Max - fY1Min);
+    kBox.Extent(2) = 0.5f * (fY2Max - fY2Min);
 
     return kBox;
 }
 //----------------------------------------------------------------------------
-bool Mgc::ContOrientedBox (int iQuantity, const Vector3* akPoint,
-    const bool* abValid, Box3& rkBox)
+bool Mgc::ContOrientedBox(int iQuantity, const Vector3 *akPoint,
+                          const bool *abValid, Box3 &rkBox)
 {
-    if ( !GaussPointsFit(iQuantity,akPoint,abValid,rkBox.Center(),
-         rkBox.Axes(),rkBox.Extents()) )
+    if (!GaussPointsFit(iQuantity, akPoint, abValid, rkBox.Center(),
+                        rkBox.Axes(), rkBox.Extents()))
     {
         return false;
     }
@@ -116,7 +116,7 @@ bool Mgc::ContOrientedBox (int iQuantity, const Vector3* akPoint,
     int i;
     for (i = 0; i < iQuantity; i++)
     {
-        if ( abValid[i] )
+        if (abValid[i])
         {
             kDiff = akPoint[i] - rkBox.Center();
             fY0Min = kDiff.Dot(rkBox.Axis(0));
@@ -131,55 +131,54 @@ bool Mgc::ContOrientedBox (int iQuantity, const Vector3* akPoint,
 
     for (i++; i < iQuantity; i++)
     {
-        if ( abValid[i] )
+        if (abValid[i])
         {
             kDiff = akPoint[i] - rkBox.Center();
 
             Real fY0 = kDiff.Dot(rkBox.Axis(0));
-            if ( fY0 < fY0Min )
+            if (fY0 < fY0Min)
                 fY0Min = fY0;
-            else if ( fY0 > fY0Max )
+            else if (fY0 > fY0Max)
                 fY0Max = fY0;
 
             Real fY1 = kDiff.Dot(rkBox.Axis(1));
-            if ( fY1 < fY1Min )
+            if (fY1 < fY1Min)
                 fY1Min = fY1;
-            else if ( fY1 > fY1Max )
+            else if (fY1 > fY1Max)
                 fY1Max = fY1;
 
             Real fY2 = kDiff.Dot(rkBox.Axis(2));
-            if ( fY2 < fY2Min )
+            if (fY2 < fY2Min)
                 fY2Min = fY2;
-            else if ( fY2 > fY2Max )
+            else if (fY2 > fY2Max)
                 fY2Max = fY2;
         }
     }
 
-    rkBox.Center() += (0.5f*(fY0Min+fY0Max))*rkBox.Axis(0)
-        + (0.5f*(fY1Min+fY1Max))*rkBox.Axis(1) +
-        (0.5f*(fY2Min+fY2Max))*rkBox.Axis(2);
+    rkBox.Center() += (0.5f * (fY0Min + fY0Max)) * rkBox.Axis(0) + (0.5f * (fY1Min + fY1Max)) * rkBox.Axis(1) +
+                      (0.5f * (fY2Min + fY2Max)) * rkBox.Axis(2);
 
-    rkBox.Extent(0) = 0.5f*(fY0Max - fY0Min);
-    rkBox.Extent(1) = 0.5f*(fY1Max - fY1Min);
-    rkBox.Extent(2) = 0.5f*(fY2Max - fY2Min);
+    rkBox.Extent(0) = 0.5f * (fY0Max - fY0Min);
+    rkBox.Extent(1) = 0.5f * (fY1Max - fY1Min);
+    rkBox.Extent(2) = 0.5f * (fY2Max - fY2Min);
 
     return true;
 }
 //----------------------------------------------------------------------------
-Box3 Mgc::MergeBoxes (const Box3& rkBox0, const Box3& rkBox1)
+Box3 Mgc::MergeBoxes(const Box3 &rkBox0, const Box3 &rkBox1)
 {
     Box3 kBox;
-    kBox.Center() = 0.5f*(rkBox0.Center() + rkBox1.Center());
+    kBox.Center() = 0.5f * (rkBox0.Center() + rkBox1.Center());
 
     Quaternion kQ0, kQ1;
     kQ0.FromAxes(rkBox0.Axes());
     kQ1.FromAxes(rkBox1.Axes());
-    if ( kQ0.Dot(kQ1) < 0.0f )
+    if (kQ0.Dot(kQ1) < 0.0f)
         kQ1 = -kQ1;
 
     Quaternion kQ = kQ0 + kQ1;
     Real fInvLength = Math::InvSqrt(kQ.Norm());
-    kQ = fInvLength*kQ;
+    kQ = fInvLength * kQ;
     kQ.ToAxes(kBox.Axes());
 
     int i, j;
@@ -197,7 +196,7 @@ Box3 Mgc::MergeBoxes (const Box3& rkBox0, const Box3& rkBox1)
         for (j = 0; j < 3; j++)
         {
             fADot = Math::FAbs(kDiff.Dot(kBox.Axis(j)));
-            if ( fADot > kBox.Extent(j) )
+            if (fADot > kBox.Extent(j))
                 kBox.Extent(j) = fADot;
         }
     }
@@ -209,7 +208,7 @@ Box3 Mgc::MergeBoxes (const Box3& rkBox0, const Box3& rkBox1)
         for (j = 0; j < 3; j++)
         {
             fADot = Math::FAbs(kDiff.Dot(kBox.Axis(j)));
-            if ( fADot > kBox.Extent(j) )
+            if (fADot > kBox.Extent(j))
                 kBox.Extent(j) = fADot;
         }
     }
@@ -217,17 +216,15 @@ Box3 Mgc::MergeBoxes (const Box3& rkBox0, const Box3& rkBox1)
     return kBox;
 }
 //----------------------------------------------------------------------------
-bool Mgc::InBox (const Vector3& rkPoint, const Box3& rkBox, Real fEpsilon)
+bool Mgc::InBox(const Vector3 &rkPoint, const Box3 &rkBox, Real fEpsilon)
 {
     Vector3 kDiff = rkPoint - rkBox.Center();
     for (int i = 0; i < 3; i++)
     {
         Real fCoeff = kDiff.Dot(rkBox.Axis(i));
-        if ( Math::FAbs(fCoeff) > rkBox.Extent(i) + fEpsilon )
+        if (Math::FAbs(fCoeff) > rkBox.Extent(i) + fEpsilon)
             return false;
     }
     return true;
 }
 //----------------------------------------------------------------------------
-
-

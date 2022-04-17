@@ -1,19 +1,20 @@
 #pragma once
-class UIPropertiesModal :
-	public XrUI
+class UIPropertiesModal : public XrUI
 {
 public:
 	UIPropertiesModal();
 	virtual ~UIPropertiesModal();
 	virtual void Draw();
 	static void Update();
-	static bool GetResult(bool& ok);
-	static void Show(PropItemVec&items);
-	static IC UIPropertiesForm* GetProperties() { return Form->m_Props; }
+	static bool GetResult(bool &ok);
+	static void Show(PropItemVec &items);
+	static IC UIPropertiesForm *GetProperties() { return Form->m_Props; }
+
 private:
-	static UIPropertiesModal* Form;
+	static UIPropertiesModal *Form;
+
 private:
-	UIPropertiesForm* m_Props;
+	UIPropertiesForm *m_Props;
 
 private:
 	enum Result

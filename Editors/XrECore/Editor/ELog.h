@@ -6,17 +6,17 @@
 #define ELogH
 enum TMsgDlgType
 {
-	mtCustom =0,
-	mtError =1,
+	mtCustom = 0,
+	mtError = 1,
 	mtInformation = 2,
 	mtConfirmation = 4,
 
 };
 enum TMsgDlgButtons
 {
-	mbYes=1,
-	mbNo=2,
-	mbCancel=4,
+	mbYes = 1,
+	mbNo = 2,
+	mbCancel = 4,
 	mbOK = 8,
 	mrNone = 0,
 	mrYes,
@@ -24,14 +24,16 @@ enum TMsgDlgButtons
 	mrCancel,
 	mrOK,
 };
-class ECORE_API CLog{
+class ECORE_API CLog
+{
 public:
-	bool 		in_use;
+	bool in_use;
+
 public:
-				CLog	(){in_use=false;}
-	void 		Msg   	(TMsgDlgType mt, LPCSTR _Format, ...);
-	int 		DlgMsg 	(TMsgDlgType mt, LPCSTR _Format, ...);
-	int 		DlgMsg 	(TMsgDlgType mt, int btn, LPCSTR _Format, ...);
+	CLog() { in_use = false; }
+	void Msg(TMsgDlgType mt, LPCSTR _Format, ...);
+	int DlgMsg(TMsgDlgType mt, LPCSTR _Format, ...);
+	int DlgMsg(TMsgDlgType mt, int btn, LPCSTR _Format, ...);
 	void Close();
 };
 
@@ -40,4 +42,3 @@ void ECORE_API ELogCallback(LPCSTR txt);
 extern ECORE_API CLog ELog;
 
 #endif /*_INCDEF_NETDEVICELOG_H_*/
-

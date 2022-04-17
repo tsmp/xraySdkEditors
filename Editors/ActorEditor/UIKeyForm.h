@@ -1,5 +1,5 @@
 #pragma once
-class UIKeyForm :public XrUI
+class UIKeyForm : public XrUI
 {
 public:
 	UIKeyForm();
@@ -15,6 +15,5 @@ private:
 	float m_Position;
 	bool m_AutoChange;
 	float m_TimeFactor;
-	CSMotion* m_currentEditMotion;
+	CSMotion *m_currentEditMotion;
 };
-

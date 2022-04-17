@@ -21,27 +21,27 @@ namespace xray_nvi
 {
     struct ConvolutionKernelElement
     {
-        int	x_offset; // Coordinates of sample point
+        int x_offset; // Coordinates of sample point
         int y_offset; //   relative to center
         float weight; // Weight to multiply sample point by
     };
 
-    // Kernel with arbitrary sample placement - 
+    // Kernel with arbitrary sample placement -
     // Doesn't have to be square or evenly distributed
     class ConvolutionKernel
     {
     public:
-        ConvolutionKernelElement* m_pElements;
+        ConvolutionKernelElement *m_pElements;
         int m_nNumElements;
         ConvolutionKernel();
         ~ConvolutionKernel();
         HRESULT Initialize(int numElements);
         HRESULT Free();
-        void SetElements(int numElements, ConvolutionKernelElement* pElements);
+        void SetElements(int numElements, ConvolutionKernelElement *pElements);
         // Find extent (rectangle) over which the kernel samples
         // Values are the offset from the (0,0) element
-        void GetKernelExtents(int* xlow, int* xhigh, int* ylow, int* yhigh);
-        ConvolutionKernel& operator=(const ConvolutionKernel& src);
+        void GetKernelExtents(int *xlow, int *xhigh, int *ylow, int *yhigh);
+        ConvolutionKernel &operator=(const ConvolutionKernel &src);
     };
 
     // A class to drive convolutions.
@@ -49,20 +49,20 @@ namespace xray_nvi
     class Convolver
     {
     private:
-        NVI_Image** m_hSrcImage;
+        NVI_Image **m_hSrcImage;
         NVI_ImageBordered m_BorderedImage;
-        ConvolutionKernel* m_pKernels;
+        ConvolutionKernel *m_pKernels;
         int m_nNumKernels;
 
     public:
         Convolver();
         ~Convolver();
-        HRESULT Initialize(NVI_Image** pSrcImage, const ConvolutionKernel* pKernels, int numKernels, bool wrap);
+        HRESULT Initialize(NVI_Image **pSrcImage, const ConvolutionKernel *pKernels, int numKernels, bool wrap);
         HRESULT Free();
         // Coords in source image
         // numResults must equal numKernels set on Initialize();
-        void Convolve_Alpha_At(int i, int j, float* results, int numResults);
+        void Convolve_Alpha_At(int i, int j, float *results, int numResults);
     };
 };
 
-#endif			// __NVIMAGELIB_CONVOLUTION_H
+#endif // __NVIMAGELIB_CONVOLUTION_H

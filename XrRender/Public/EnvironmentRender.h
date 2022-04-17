@@ -2,7 +2,8 @@
 #define EnvironmentRender_included
 #pragma once
 
-namespace particles_systems {
+namespace particles_systems
+{
 	class library_interface;
 } // namespace particle_systems
 
@@ -12,7 +13,7 @@ class CEnvDescriptor;
 class IEnvDescriptorRender
 {
 public:
-	virtual ~IEnvDescriptorRender() {;}
+	virtual ~IEnvDescriptorRender() { ; }
 	virtual void Copy(IEnvDescriptorRender &_in) = 0;
 
 	virtual void OnDeviceCreate(CEnvDescriptor &owner) = 0;
@@ -22,7 +23,7 @@ public:
 class IEnvDescriptorMixerRender
 {
 public:
-	virtual ~IEnvDescriptorMixerRender() {;}
+	virtual ~IEnvDescriptorMixerRender() { ; }
 	virtual void Copy(IEnvDescriptorMixerRender &_in) = 0;
 
 	virtual void Destroy() = 0;
@@ -33,7 +34,7 @@ public:
 class IEnvironmentRender
 {
 public:
-	virtual ~IEnvironmentRender() {;}
+	virtual ~IEnvironmentRender() { ; }
 	virtual void Copy(IEnvironmentRender &_in) = 0;
 	virtual void OnFrame(CEnvironment &env) = 0;
 	virtual void OnLoad() = 0;
@@ -42,7 +43,7 @@ public:
 	virtual void RenderClouds(CEnvironment &env) = 0;
 	virtual void OnDeviceCreate() = 0;
 	virtual void OnDeviceDestroy() = 0;
-	virtual particles_systems::library_interface const& particles_systems_library	() = 0;
+	virtual particles_systems::library_interface const &particles_systems_library() = 0;
 };
 
-#endif	//	EnvironmentRender_included
+#endif //	EnvironmentRender_included

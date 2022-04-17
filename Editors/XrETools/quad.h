@@ -1,4 +1,4 @@
-/* Copyright (C) Tom Forsyth, 2001. 
+/* Copyright (C) Tom Forsyth, 2001.
  * All rights reserved worldwide.
  *
  * This software is provided "as is" without express or implied
@@ -27,13 +27,12 @@
 struct Quad3
 {
 	float A00, A01, A02;
-	float      A11, A12;
-	float           A22;
+	float A11, A12;
+	float A22;
 	float B0, B1, B2;
 	float C;
 
-
-	Quad3 ( void )
+	Quad3(void)
 	{
 		A00 = A01 = A02 = A11 = A12 = A22 = 0.0f;
 		B0 = B1 = B2 = 0.0f;
@@ -41,22 +40,24 @@ struct Quad3
 	}
 
 	// Create a quad from a triangle (numbered clockwise).
-	Quad3 ( const Fvector3 &vec1, const Fvector3 &vec2, const Fvector3 &vec3 )
+	Quad3(const Fvector3 &vec1, const Fvector3 &vec2, const Fvector3 &vec3)
 	{
-		Fvector3 vec12; vec12.sub(vec2,vec1);
-		Fvector3 vec13; vec13.sub(vec3,vec1);
+		Fvector3 vec12;
+		vec12.sub(vec2, vec1);
+		Fvector3 vec13;
+		vec13.sub(vec3, vec1);
 
 		Fvector3 vNorm;
-		vNorm.crossproduct(vec12,vec13);
+		vNorm.crossproduct(vec12, vec13);
 		float fArea = vNorm.magnitude();
-		vNorm.div(vNorm,fArea);
+		vNorm.div(vNorm, fArea);
 		// Use the area of the tri, not the parallelogram.
 		fArea *= 0.5f;
 
 		// Find the distance of the origin from the plane, so that
 		// P*N + D = 0
 		// => D = -P*N
-		float fDist = - vNorm.dotproduct(vec1);
+		float fDist = -vNorm.dotproduct(vec1);
 
 		// And now form the Quadric.
 		// A = NNt (and bin the lower half, since it is symmetrical).
@@ -69,13 +70,13 @@ struct Quad3
 		A11 = fArea * vNorm.y * vNorm.y;
 		A12 = fArea * vNorm.y * vNorm.z;
 		A22 = fArea * vNorm.z * vNorm.z;
-		B0  = fArea * vNorm.x * fDist;
-		B1  = fArea * vNorm.y * fDist;
-		B2  = fArea * vNorm.z * fDist;
-		C   = fArea * fDist   * fDist;
+		B0 = fArea * vNorm.x * fDist;
+		B1 = fArea * vNorm.y * fDist;
+		B2 = fArea * vNorm.z * fDist;
+		C = fArea * fDist * fDist;
 	}
 
-	const float FindError ( const Fvector3 &vec )
+	const float FindError(const Fvector3 &vec)
 	{
 		return (
 			A00 * vec.x * vec.x +
@@ -84,14 +85,13 @@ struct Quad3
 			A11 * vec.y * vec.y +
 			A12 * vec.y * vec.z * 2 +
 			A22 * vec.z * vec.z +
-			B0  * vec.x * 2 +
-			B1  * vec.y * 2 +
-			B2  * vec.z * 2 +
-			C
-				);
+			B0 * vec.x * 2 +
+			B1 * vec.y * 2 +
+			B2 * vec.z * 2 +
+			C);
 	}
 
-	Quad3 operator+ ( const Quad3 &q )
+	Quad3 operator+(const Quad3 &q)
 	{
 		Quad3 rq;
 		rq.A00 = A00 + q.A00;
@@ -100,14 +100,14 @@ struct Quad3
 		rq.A11 = A11 + q.A11;
 		rq.A12 = A12 + q.A12;
 		rq.A22 = A22 + q.A22;
-		rq.B0  = B0  + q.B0 ;
-		rq.B1  = B1  + q.B1 ;
-		rq.B2  = B2  + q.B2 ;
-		rq.C   = C   + q.C  ;
+		rq.B0 = B0 + q.B0;
+		rq.B1 = B1 + q.B1;
+		rq.B2 = B2 + q.B2;
+		rq.C = C + q.C;
 		return rq;
 	}
 
-	Quad3 &operator+= ( const Quad3 &q )
+	Quad3 &operator+=(const Quad3 &q)
 	{
 		A00 += q.A00;
 		A01 += q.A01;
@@ -115,10 +115,10 @@ struct Quad3
 		A11 += q.A11;
 		A12 += q.A12;
 		A22 += q.A22;
-		B0  += q.B0 ;
-		B1  += q.B1 ;
-		B2  += q.B2 ;
-		C   += q.C  ;
+		B0 += q.B0;
+		B1 += q.B1;
+		B2 += q.B2;
+		C += q.C;
 		return (*this);
 	}
 };

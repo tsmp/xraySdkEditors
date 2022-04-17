@@ -14,53 +14,59 @@
 #include <boost/noncopyable.hpp>
 #include "../xrserverentities/associative_vector.h"
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
 	class property_holder;
 
-namespace environment {
+	namespace environment
+	{
 
-	namespace weathers {
-		class manager;
-	} // namespace weathers
-
-namespace levels {
-
-class manager : private boost::noncopyable {
-public:
-							manager			(::XrWeatherEditor::environment::weathers::manager* environment);
-							~manager		();
-			void			load			();
-			void			save			();
-			void			fill			();
-
-private:
-			void			fill_levels		(CInifile& config, LPCSTR prefix, LPCSTR category);
-
-private:
-	LPCSTR const* xr_stdcall collection		();
-	u32  xr_stdcall			collection_size	();
-
-private:
-	struct predicate {
-		inline	bool	operator()			(shared_str const& left, shared_str const& right) const
+		namespace weathers
 		{
-			return			(xr_strcmp(left.c_str(), right.c_str()) < 0);
-		}
-	}; // struct predicate
+			class manager;
+		} // namespace weathers
 
-	typedef associative_vector<shared_str, std::pair<LPCSTR, shared_str>, predicate>	levels_container_type;
+		namespace levels
+		{
 
-private:
-	levels_container_type						m_levels;
-	::XrWeatherEditor::environment::weathers::manager&	m_weathers;
-	CInifile*									m_config_single;
-	CInifile*									m_config_mp;
-	XrWeatherEditor::property_holder*					m_property_holder;
-}; // class levels_manager
+			class manager : private boost::noncopyable
+			{
+			public:
+				manager(::XrWeatherEditor::environment::weathers::manager *environment);
+				~manager();
+				void load();
+				void save();
+				void fill();
 
-} // namespace levels
-} // namespace environment
+			private:
+				void fill_levels(CInifile &config, LPCSTR prefix, LPCSTR category);
+
+			private:
+				LPCSTR const *xr_stdcall collection();
+				u32 xr_stdcall collection_size();
+
+			private:
+				struct predicate
+				{
+					inline bool operator()(shared_str const &left, shared_str const &right) const
+					{
+						return (xr_strcmp(left.c_str(), right.c_str()) < 0);
+					}
+				}; // struct predicate
+
+				typedef associative_vector<shared_str, std::pair<LPCSTR, shared_str>, predicate> levels_container_type;
+
+			private:
+				levels_container_type m_levels;
+				::XrWeatherEditor::environment::weathers::manager &m_weathers;
+				CInifile *m_config_single;
+				CInifile *m_config_mp;
+				XrWeatherEditor::property_holder *m_property_holder;
+			}; // class levels_manager
+
+		} // namespace levels
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

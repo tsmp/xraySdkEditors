@@ -11,19 +11,23 @@
 
 #ifdef INGAME_EDITOR
 
-namespace XrWeatherEditor {
-namespace environment {
-namespace detail {
+namespace XrWeatherEditor
+{
+	namespace environment
+	{
+		namespace detail
+		{
 
-struct logical_string_predicate {
-	bool		operator()	(LPCSTR const& first, LPCSTR const& second) const;
-	bool		operator()	(shared_str const& first, shared_str const& second) const;
-}; // struct logical_string_predicate
+			struct logical_string_predicate
+			{
+				bool operator()(LPCSTR const &first, LPCSTR const &second) const;
+				bool operator()(shared_str const &first, shared_str const &second) const;
+			}; // struct logical_string_predicate
 
-	shared_str	real_path	(LPCSTR folder, LPCSTR path);
+			shared_str real_path(LPCSTR folder, LPCSTR path);
 
-} // namespace detail
-} // namespace environment
+		} // namespace detail
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

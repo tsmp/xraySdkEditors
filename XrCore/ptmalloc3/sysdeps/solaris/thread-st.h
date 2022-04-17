@@ -8,12 +8,13 @@
 #include <stdio.h>
 
 #ifndef STACKSIZE
-#define STACKSIZE	32768
+#define STACKSIZE 32768
 #endif
 
-struct thread_st {
+struct thread_st
+{
 	char *sp;							/* stack pointer, can be 0 */
-	void (*func)(struct thread_st* st);	/* must be set by user */
+	void (*func)(struct thread_st *st); /* must be set by user */
 	thread_id id;
 	int flags;
 	struct user_data u;
@@ -28,7 +29,7 @@ thread_init(void)
 static void *
 thread_wrapper(void *ptr)
 {
-	struct thread_st *st = (struct thread_st*)ptr;
+	struct thread_st *st = (struct thread_st *)ptr;
 
 	/*printf("begin %p\n", st->sp);*/
 	st->func(st);
@@ -41,9 +42,10 @@ static int
 thread_create(struct thread_st *st)
 {
 	st->flags = 0;
-	if(!st->sp)
+	if (!st->sp)
 		st->sp = malloc(STACKSIZE);
-	if(!st->sp) return -1;
+	if (!st->sp)
+		return -1;
 	thr_create(st->sp, STACKSIZE, thread_wrapper, st, THR_NEW_LWP, &st->id);
 	return 0;
 }
@@ -51,15 +53,16 @@ thread_create(struct thread_st *st)
 /* Wait for one of several subthreads to finish. */
 static void
 wait_for_thread(struct thread_st st[], int n_thr,
-				int (*end_thr)(struct thread_st*))
+				int (*end_thr)(struct thread_st *))
 {
 	int i;
 	thread_t id;
 
 	thr_join(0, &id, NULL);
-	for(i=0; i<n_thr; i++)
-		if(id == st[i].id) {
-			if(end_thr)
+	for (i = 0; i < n_thr; i++)
+		if (id == st[i].id)
+		{
+			if (end_thr)
 				end_thr(&st[i]);
 			break;
 		}

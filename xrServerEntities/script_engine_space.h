@@ -8,8 +8,10 @@
 
 #pragma once
 
-namespace ScriptEngine {
-	enum EScriptProcessors {
+namespace ScriptEngine
+{
+	enum EScriptProcessors
+	{
 		eScriptProcessorLevel = u32(0),
 		eScriptProcessorGame,
 		eScriptProcessorDummy = u32(-1),

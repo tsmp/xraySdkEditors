@@ -15,46 +15,46 @@
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 #include "thunderbolt.h"
 
-namespace XrWeatherEditor {
-
-class property_holder;
-
-namespace environment {
-
-class manager;
-
-namespace thunderbolts {
-
-class gradient :
-	public SThunderboltDesc::SFlare,
-	private boost::noncopyable
+namespace XrWeatherEditor
 {
-public:
-						gradient		();
-						~gradient		();
-			void		load			(CInifile& config, shared_str const& section_id, LPCSTR prefix);
-			void		save			(CInifile& config, shared_str const& section_id, LPCSTR prefix);
-			void		fill			(
-							::XrWeatherEditor::environment::manager& environment,
-							LPCSTR name,
-							LPCSTR description,
-							XrWeatherEditor::property_holder& holder
-						);
 
-private:
-	LPCSTR	xr_stdcall	shader_getter	() const;
-	void	xr_stdcall	shader_setter	(LPCSTR	value);
+	class property_holder;
 
-	LPCSTR	xr_stdcall	texture_getter	() const;
-	void	xr_stdcall	texture_setter	(LPCSTR	value);
+	namespace environment
+	{
 
-private:
-	property_holder*	m_property_holder;
-}; // class gradient
+		class manager;
 
+		namespace thunderbolts
+		{
 
-} // namespace thunderbolts
-} // namespace environment
+			class gradient : public SThunderboltDesc::SFlare,
+							 private boost::noncopyable
+			{
+			public:
+				gradient();
+				~gradient();
+				void load(CInifile &config, shared_str const &section_id, LPCSTR prefix);
+				void save(CInifile &config, shared_str const &section_id, LPCSTR prefix);
+				void fill(
+					::XrWeatherEditor::environment::manager &environment,
+					LPCSTR name,
+					LPCSTR description,
+					XrWeatherEditor::property_holder &holder);
+
+			private:
+				LPCSTR xr_stdcall shader_getter() const;
+				void xr_stdcall shader_setter(LPCSTR value);
+
+				LPCSTR xr_stdcall texture_getter() const;
+				void xr_stdcall texture_setter(LPCSTR value);
+
+			private:
+				property_holder *m_property_holder;
+			}; // class gradient
+
+		} // namespace thunderbolts
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

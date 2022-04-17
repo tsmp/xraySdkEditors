@@ -3,11 +3,11 @@
 #include "Edit\LevelPreferences.h"
 #include "../XrECore/Editor/EditorChooseEvents.h"
 #include "UI\UIObjectList.h"
-UIMainForm* MainForm = nullptr;
+UIMainForm *MainForm = nullptr;
 UIMainForm::UIMainForm()
 {
     EnableReceiveCommands();
-    if (!ExecCommand(COMMAND_INITIALIZE, (u32)0, (u32)0)) 
+    if (!ExecCommand(COMMAND_INITIALIZE, (u32)0, (u32)0))
     {
         FlushLog();
         exit(-1);
@@ -21,11 +21,11 @@ UIMainForm::UIMainForm()
     m_LeftBar = xr_new<UILeftBarForm>();
     m_Properties = xr_new<UILPropertiesFrom>();
     m_Render->SetContextMenuEvent(TOnRenderContextMenu(this, &UIMainForm::DrawContextMenu));
-    if (dynamic_cast<CLevelPreferences*>(EPrefs)->OpenObjectList)
+    if (dynamic_cast<CLevelPreferences *>(EPrefs)->OpenObjectList)
     {
         UIObjectList::Show();
     }
-    if (!dynamic_cast<CLevelPreferences*>(EPrefs)->OpenProperties)
+    if (!dynamic_cast<CLevelPreferences *>(EPrefs)->OpenProperties)
     {
         m_Properties->Close();
     }
@@ -33,8 +33,8 @@ UIMainForm::UIMainForm()
 
 UIMainForm::~UIMainForm()
 {
-    dynamic_cast<CLevelPreferences*>(EPrefs)->OpenProperties = !m_Properties->IsClosed();
-    dynamic_cast<CLevelPreferences*>(EPrefs)->OpenObjectList = UIObjectList::IsOpen();
+    dynamic_cast<CLevelPreferences *>(EPrefs)->OpenProperties = !m_Properties->IsClosed();
+    dynamic_cast<CLevelPreferences *>(EPrefs)->OpenObjectList = UIObjectList::IsOpen();
     ClearChooseEvents();
     xr_delete(m_Properties);
     xr_delete(m_LeftBar);
@@ -50,13 +50,14 @@ void UIMainForm::Draw()
     m_TopBar->Draw();
     m_LeftBar->Draw();
     m_Properties->Draw();
-    //ImGui::ShowDemoWindow(&bOpen);
+    // ImGui::ShowDemoWindow(&bOpen);
     m_Render->Draw();
 }
 
 bool UIMainForm::Frame()
 {
-    if(UI)  return UI->Idle();
+    if (UI)
+        return UI->Idle();
     return false;
 }
 
@@ -110,6 +111,4 @@ void UIMainForm::DrawContextMenu()
     {
         ExecCommand(COMMAND_SHOW_PROPERTIES);
     }
-   
-   
 }

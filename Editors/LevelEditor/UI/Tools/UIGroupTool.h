@@ -1,13 +1,14 @@
 #pragma once
 class ESceneGroupTool;
-class UIGroupTool :public UIToolCustom
+class UIGroupTool : public UIToolCustom
 {
 public:
 	UIGroupTool();
 	virtual ~UIGroupTool();
 	virtual void Draw();
 	virtual void OnDrawUI();
-	ESceneGroupTool* ParentTools;
+	ESceneGroupTool *ParentTools;
+
 private:
 	void MultiSelByRefObject(bool clear_prev);
 	void SelByRefObject(bool flag);

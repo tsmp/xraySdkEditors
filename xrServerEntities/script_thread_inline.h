@@ -8,22 +8,22 @@
 
 #pragma once
 
-IC	bool CScriptThread::active				() const
+IC bool CScriptThread::active() const
 {
-	return		(m_active);
+	return (m_active);
 }
 
-IC	shared_str CScriptThread::script_name	() const
+IC shared_str CScriptThread::script_name() const
 {
-	return		(m_script_name);
+	return (m_script_name);
 }
 
-IC	int	 CScriptThread::thread_reference	() const
+IC int CScriptThread::thread_reference() const
 {
-	return		(m_thread_reference);
+	return (m_thread_reference);
 }
 
-IC	lua_State *CScriptThread::lua			() const
+IC lua_State *CScriptThread::lua() const
 {
-	return		(m_virtual_machine);
+	return (m_virtual_machine);
 }

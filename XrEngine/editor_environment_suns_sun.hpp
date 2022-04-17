@@ -15,50 +15,52 @@
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 #include "xr_efflensflare.h"
 
-namespace XrWeatherEditor {
-
-class property_holder;
-class property_holder_collection;
-
-namespace environment {
-namespace suns {
-
-class flare;
-class manager;
-
-class sun :
-	public CLensFlare,
-	public XrWeatherEditor::property_holder_holder,
-	private boost::noncopyable
+namespace XrWeatherEditor
 {
-public:
-								sun			(manager const& manager, shared_str const &section);
-								~sun		();
-			void				load		(CInifile& config);
-			void				save		(CInifile& config);
-			void				fill		(XrWeatherEditor::property_holder_collection* collection);
 
-private:
-			LPCSTR xr_stdcall	id_getter	() const;
-			void   xr_stdcall	id_setter	(LPCSTR value);
-public:
-	inline	shared_str const&	id			() const { return m_id; }
-	virtual	property_holder*	object		();
+	class property_holder;
+	class property_holder_collection;
 
-private:
+	namespace environment
+	{
+		namespace suns
+		{
 
-	shared_str					m_id;
-    shared_str					m_shader;
-    shared_str					m_texture;
-	manager const&				m_manager;
-	XrWeatherEditor::property_holder*	m_property_holder;
-    float						m_radius;
-    bool						m_use;
-    bool						m_ignore_color;
-}; // class sun
+			class flare;
+			class manager;
 
-} // namespace suns
-} // namespace environment
+			class sun : public CLensFlare,
+						public XrWeatherEditor::property_holder_holder,
+						private boost::noncopyable
+			{
+			public:
+				sun(manager const &manager, shared_str const &section);
+				~sun();
+				void load(CInifile &config);
+				void save(CInifile &config);
+				void fill(XrWeatherEditor::property_holder_collection *collection);
+
+			private:
+				LPCSTR xr_stdcall id_getter() const;
+				void xr_stdcall id_setter(LPCSTR value);
+
+			public:
+				inline shared_str const &id() const { return m_id; }
+				virtual property_holder *object();
+
+			private:
+				shared_str m_id;
+				shared_str m_shader;
+				shared_str m_texture;
+				manager const &m_manager;
+				XrWeatherEditor::property_holder *m_property_holder;
+				float m_radius;
+				bool m_use;
+				bool m_ignore_color;
+			}; // class sun
+
+		} // namespace suns
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

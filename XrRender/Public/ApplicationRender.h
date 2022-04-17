@@ -7,7 +7,7 @@ class CApplication;
 class IApplicationRender
 {
 public:
-	virtual ~IApplicationRender() {;}
+	virtual ~IApplicationRender() { ; }
 	virtual void Copy(IApplicationRender &_in) = 0;
 
 	virtual void LoadBegin() = 0;
@@ -18,4 +18,4 @@ public:
 	virtual void KillHW() = 0;
 };
 
-#endif	//	ApplicationRender_included
+#endif //	ApplicationRender_included

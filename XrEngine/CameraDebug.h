@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
-# error using of unused old header
+#error using of unused old header
 
 /*
 #include "CameraBase.h"
@@ -15,8 +15,8 @@ class ENGINE_API CCameraDebug :
 	public IInputReceiver
 {
 	D3DXMATRIX      g_matPosition;
-    D3DXVECTOR3		g_vecVelocity;
-    D3DXVECTOR3		g_vecAngularVelocity;
+	D3DXVECTOR3		g_vecVelocity;
+	D3DXVECTOR3		g_vecAngularVelocity;
 	Fvector			savedP,savedD,savedN;
 	ECameraStyle	savedStyle;
 	Flags32			savedDF;

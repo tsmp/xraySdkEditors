@@ -19,12 +19,11 @@
 
 #include "MgcSphere.h"
 
-namespace Mgc {
+namespace Mgc
+{
 
-MAGICFM Sphere MinSphere (int iQuantity, const Vector3* akPoint);
+    MAGICFM Sphere MinSphere(int iQuantity, const Vector3 *akPoint);
 
 } // namespace Mgc
 
 #endif
-
-

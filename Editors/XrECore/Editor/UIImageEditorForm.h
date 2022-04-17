@@ -2,40 +2,44 @@
 
 #ifndef ImageLibH
 #define ImageLibH
-class UIImageEditorForm :public XrUI
+class UIImageEditorForm : public XrUI
 {
 public:
 	UIImageEditorForm();
 	virtual ~UIImageEditorForm();
 	virtual void Draw();
+
 public:
 	static void Update();
 	static void Show(bool bImport);
 	static void ImportTextures();
+
 private:
-	DEFINE_VECTOR(ETextureThumbnail*, THMVec, THMIt);
-	DEFINE_MAP(shared_str, ETextureThumbnail*, THMMap, THMMapIt);
+	DEFINE_VECTOR(ETextureThumbnail *, THMVec, THMIt);
+	DEFINE_MAP(shared_str, ETextureThumbnail *, THMMap, THMMapIt);
 	THMMap m_THM_Used;
 	THMVec m_THM_Current;
-	UIItemListForm* m_ItemList;
-	UIPropertiesForm* m_ItemProps;
-	FS_FileSet	texture_map;
-	FS_FileSet	modif_map;
+	UIItemListForm *m_ItemList;
+	UIPropertiesForm *m_ItemProps;
+	FS_FileSet texture_map;
+	FS_FileSet modif_map;
 	bool bImportMode;
 	bool bReadonlyMode;
-	static UIImageEditorForm* Form;
+	static UIImageEditorForm *Form;
 	ImTextureID m_Texture;
 	ImTextureID m_TextureRemove;
+
 private:
-	ETextureThumbnail* FindUsedTHM(const shared_str& name);
+	ETextureThumbnail *FindUsedTHM(const shared_str &name);
 	void RegisterModifiedTHM();
-	void OnCubeMapBtnClick(ButtonValue* value, bool& bModif, bool& bSafe);
-	void OnTypeChange(PropValue* prop);
+	void OnCubeMapBtnClick(ButtonValue *value, bool &bModif, bool &bSafe);
+	void OnTypeChange(PropValue *prop);
 	void InitItemList();
 	void HideLib();
 	void UpdateLib();
-	void OnItemsFocused(ListItem* item);
+	void OnItemsFocused(ListItem *item);
 	void SaveUsedTHM();
+
 private:
 	bool m_bFilterImage;
 	bool m_bFilterTerrain;
@@ -90,11 +94,11 @@ __published:	// IDE-managed Components
 	TPanel *Panel2;
 	TExtBtn *btFilter;
 	TExtBtn *ExtBtn1;
-    void  ebOkClick(TObject *Sender);
-    void  FormShow(TObject *Sender);
-    void  FormClose(TObject *Sender, TCloseAction &Action);
-    void  FormKeyDown(TObject *Sender, WORD &Key,
-          TShiftState Shift);
+	void  ebOkClick(TObject *Sender);
+	void  FormShow(TObject *Sender);
+	void  FormClose(TObject *Sender, TCloseAction &Action);
+	void  FormKeyDown(TObject *Sender, WORD &Key,
+		  TShiftState Shift);
 	void  fsStorageRestorePlacement(TObject *Sender);
 	void  fsStorageSavePlacement(TObject *Sender);
 	void  FormCreate(TObject *Sender);
@@ -107,54 +111,54 @@ __published:	// IDE-managed Components
 	void  ExtBtn1Click(TObject *Sender);
 private:
 // list functions
-    void  		RemoveTexture		(LPCSTR fname, EItemType type, bool& res);
+	void  		RemoveTexture		(LPCSTR fname, EItemType type, bool& res);
 
-    void 				InitItemsList		();
+	void 				InitItemsList		();
 	void   	OnItemsFocused		(ListItemsVec& items);
 
-    void   	OnCubeMapBtnClick	(ButtonValue* value, bool& bModif, bool& bSafe);
-    
+	void   	OnCubeMapBtnClick	(ButtonValue* value, bool& bModif, bool& bSafe);
+
 	enum{
-    	flUpdateProperties = (1<<0),
-    };    
-    static Flags32		m_Flags;
+		flUpdateProperties = (1<<0),
+	};
+	static Flags32		m_Flags;
 private:	// User declarations
 	static TfrmImageLib* form;
 
-    DEFINE_VECTOR		(ETextureThumbnail*,THMVec,THMIt);
-    DEFINE_MAP			(shared_str,ETextureThumbnail*,THMMap,THMMapIt);
-    THMMap				m_THM_Used;
-    THMVec				m_THM_Current;
-    TItemList*			m_ItemList;
-    TProperties* 		m_ItemProps;
+	DEFINE_VECTOR		(ETextureThumbnail*,THMVec,THMIt);
+	DEFINE_MAP			(shared_str,ETextureThumbnail*,THMMap,THMMapIt);
+	THMMap				m_THM_Used;
+	THMVec				m_THM_Current;
+	TItemList*			m_ItemList;
+	TProperties* 		m_ItemProps;
 
-    ETextureThumbnail*	FindUsedTHM			(const shared_str& name);
-    void				SaveUsedTHM			();
-    void				DestroyUsedTHM		();
+	ETextureThumbnail*	FindUsedTHM			(const shared_str& name);
+	void				SaveUsedTHM			();
+	void				DestroyUsedTHM		();
 
 	void  	RegisterModifiedTHM	();
-    
-    void 				OnModified			();
-    static FS_FileSet	texture_map;
-    static FS_FileSet	modif_map;
-    bool 				bImportMode;
-    bool 				bReadonlyMode;
-    void  	UpdateLib			();
-    static bool 		bFormLocked;
-    static void 		LockForm			(){ bFormLocked = true;	form->paProperties->Enabled = false; 	form->paItems->Enabled = false; }
-    static void 		UnlockForm			(){ bFormLocked = false;form->paProperties->Enabled = true; 	form->paItems->Enabled = true; 	}
 
-    void 		OnTypeChange		(PropValue* prop);
-    void 				SortList			(ETextureThumbnail* thm, xr_vector<xr_string>& sel_str_vec);
-    void bool  HideLib			();
+	void 				OnModified			();
+	static FS_FileSet	texture_map;
+	static FS_FileSet	modif_map;
+	bool 				bImportMode;
+	bool 				bReadonlyMode;
+	void  	UpdateLib			();
+	static bool 		bFormLocked;
+	static void 		LockForm			(){ bFormLocked = true;	form->paProperties->Enabled = false; 	form->paItems->Enabled = false; }
+	static void 		UnlockForm			(){ bFormLocked = false;form->paProperties->Enabled = true; 	form->paItems->Enabled = true; 	}
+
+	void 		OnTypeChange		(PropValue* prop);
+	void 				SortList			(ETextureThumbnail* thm, xr_vector<xr_string>& sel_str_vec);
+	void bool  HideLib			();
 public:		// User declarations
-     			TfrmImageLib		(TComponent* Owner);
+				TfrmImageLib		(TComponent* Owner);
 // static function
-    static void  ImportTextures	();
-    static void  EditLib			(xr_string& title, bool bImport=false);
-    static bool  Visible			(){return !!form;}
-    static void 		OnFrame				();
-    static void			UpdateProperties	(){m_Flags.set(flUpdateProperties,TRUE);}
+	static void  ImportTextures	();
+	static void  EditLib			(xr_string& title, bool bImport=false);
+	static bool  Visible			(){return !!form;}
+	static void 		OnFrame				();
+	static void			UpdateProperties	(){m_Flags.set(flUpdateProperties,TRUE);}
 };
 //---------------------------------------------------------------------------*/
 #endif

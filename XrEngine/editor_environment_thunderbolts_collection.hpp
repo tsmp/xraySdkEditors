@@ -16,52 +16,55 @@
 #include "property_collection_forward.hpp"
 #include "thunderbolt.h"
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
-class property_holder_collection;
+	class property_holder_collection;
 
-namespace environment {
-namespace thunderbolts {
+	namespace environment
+	{
+		namespace thunderbolts
+		{
 
-class manager;
-class thunderbolt_id;
+			class manager;
+			class thunderbolt_id;
 
-class collection :
-	public SThunderboltCollection,
-	public XrWeatherEditor::property_holder_holder,
-	private boost::noncopyable {
-public:
-							collection		(manager const& manager, shared_str const& id);
-	virtual					~collection		();
-			void			load			(CInifile& config);
-			void			save			(CInifile& config);
-			void			fill			(XrWeatherEditor::property_holder_collection* collection);
-	inline	LPCSTR			id				() const { return section.c_str(); }
+			class collection : public SThunderboltCollection,
+							   public XrWeatherEditor::property_holder_holder,
+							   private boost::noncopyable
+			{
+			public:
+				collection(manager const &manager, shared_str const &id);
+				virtual ~collection();
+				void load(CInifile &config);
+				void save(CInifile &config);
+				void fill(XrWeatherEditor::property_holder_collection *collection);
+				inline LPCSTR id() const { return section.c_str(); }
 
+			private:
+				LPCSTR xr_stdcall id_getter() const;
+				void xr_stdcall id_setter(LPCSTR value);
 
-private:
-			LPCSTR	xr_stdcall	id_getter	() const;
-			void	xr_stdcall	id_setter	(LPCSTR value);
-private:
-	typedef XrWeatherEditor::property_holder			property_holder_type;
+			private:
+				typedef XrWeatherEditor::property_holder property_holder_type;
 
-public:
-	virtual	property_holder_type* object	();
+			public:
+				virtual property_holder_type *object();
 
-private:
-	typedef xr_vector<thunderbolt_id*>						container_type;
-	typedef property_collection<container_type, collection>	collection_type;
+			private:
+				typedef xr_vector<thunderbolt_id *> container_type;
+				typedef property_collection<container_type, collection> collection_type;
 
-private:
-	container_type			m_ids;
-	collection_type*		m_collection;
-	property_holder_type*	m_property_holder;
+			private:
+				container_type m_ids;
+				collection_type *m_collection;
+				property_holder_type *m_property_holder;
 
-public:
-	manager const&			m_manager;
-}; // class collection
-} // namespace thunderbolts
-} // namespace environment
+			public:
+				manager const &m_manager;
+			}; // class collection
+		}	   // namespace thunderbolts
+	}		   // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

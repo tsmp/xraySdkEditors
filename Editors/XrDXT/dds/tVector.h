@@ -1,11 +1,11 @@
 #pragma once
 #include <assert.h>
 
-template<class _Type>
+template <class _Type>
 class nvMatrix
 {
 private:
-    _Type** m;
+    _Type **m;
     size_t rows, cols;
 
 public:
@@ -16,7 +16,7 @@ public:
         m = 0;
     }
 
-    nvMatrix(const nvMatrix& v)
+    nvMatrix(const nvMatrix &v)
     {
         rows = 0;
         cols = 0;
@@ -42,7 +42,7 @@ public:
         tvfree();
     }
 
-    _Type& operator[](size_t i)
+    _Type &operator[](size_t i)
     {
         size_t r = i / cols;
         size_t c = i % cols;
@@ -53,7 +53,7 @@ public:
         return m[r][c];
     }
 
-    _Type* pixels(size_t i = 0)
+    _Type *pixels(size_t i = 0)
     {
         size_t r = i / cols;
         size_t c = i % cols;
@@ -64,7 +64,7 @@ public:
         return &m[r][c];
     }
 
-    _Type& operator()(const size_t& r, const size_t& c) const
+    _Type &operator()(const size_t &r, const size_t &c) const
     {
 #if _DEBUG
         assert(r < rows);
@@ -73,7 +73,7 @@ public:
         return m[r][c];
     }
 
-    _Type& operator()(const size_t& r, const size_t& c)
+    _Type &operator()(const size_t &r, const size_t &c)
     {
 #if _DEBUG
         assert(r < rows);
@@ -82,7 +82,7 @@ public:
         return m[r][c];
     }
 
-    _Type* pixelsRC(size_t r, size_t c)
+    _Type *pixelsRC(size_t r, size_t c)
     {
 #if _DEBUG
         assert(r < rows);
@@ -91,7 +91,7 @@ public:
         return &m[r][c];
     }
 
-    _Type* pixelsXY(size_t x, size_t y)
+    _Type *pixelsXY(size_t x, size_t y)
     {
 #if _DEBUG
         assert(y < rows);
@@ -99,8 +99,8 @@ public:
 #endif
         return &m[y][x];
     }
-    
-    _Type* pixelsYX(size_t y, size_t x)
+
+    _Type *pixelsYX(size_t y, size_t x)
     {
 #if _DEBUG
         assert(y < rows);
@@ -108,8 +108,8 @@ public:
 #endif
         return &m[y][x];
     }
-    
-    _Type* pixelsXY_wrapped(int x, int y)
+
+    _Type *pixelsXY_wrapped(int x, int y)
     {
         y = iModulo(y, (int)rows);
         x = iModulo(x, (int)cols);
@@ -146,14 +146,14 @@ public:
         cols = c;
         if (r == 0 || c == 0)
             return;
-        m = new _Type*[r];
+        m = new _Type *[r];
         for (size_t i = 0; i < r; i++)
         {
             m[i] = new _Type[c];
         }
     }
 
-    nvMatrix& operator=(const nvMatrix& v)
+    nvMatrix &operator=(const nvMatrix &v)
     {
         resize(v.width(), v.height());
         for (size_t i = 0; i < v.rows; i++)
@@ -163,7 +163,7 @@ public:
         }
         return *this;
     }
-    
+
     void SetToZero()
     {
         for (size_t i = 0; i < rows; i++)
@@ -172,7 +172,7 @@ public:
                 m[i][j].SetToZero();
         }
     }
-    
+
     // destructive
     void resize(size_t width, size_t height)
     {
@@ -182,7 +182,7 @@ public:
             tvallocate(height, width);
         }
     }
-    
+
     void Release()
     {
         tvfree();
@@ -197,10 +197,10 @@ public:
     {
         return rows * cols;
     }
-    
+
     void FlipTopToBottom()
     {
-        _Type* swap = new _Type[cols];
+        _Type *swap = new _Type[cols];
         size_t row;
         int end_row;
         int start_row;
@@ -270,25 +270,23 @@ public:
 
 #include <new>
 
-template<typename T>
+template <typename T>
 class nvVector
 {
 public:
     // Ctor.
-    nvVector() :
-        m_buffer(NULL), m_size(0), m_buffer_size(0)
-    {}
+    nvVector() : m_buffer(NULL), m_size(0), m_buffer_size(0)
+    {
+    }
 
     // Copy ctor.
-    nvVector(const nvVector& a) :
-        m_buffer(NULL), m_size(0), m_buffer_size(0)
+    nvVector(const nvVector &a) : m_buffer(NULL), m_size(0), m_buffer_size(0)
     {
         copy(a.m_buffer, a.m_size);
     }
 
     // Ctor that initializes the array with the given elements.
-    nvVector(const T* ptr, size_t num) :
-        m_buffer(NULL), m_size(0), m_buffer_size(0)
+    nvVector(const T *ptr, size_t num) : m_buffer(NULL), m_size(0), m_buffer_size(0)
     {
         copy(ptr, num);
     }
@@ -301,14 +299,14 @@ public:
     }
 
     // Const and save array access.
-    const T& operator[](size_t index) const
+    const T &operator[](size_t index) const
     {
         assert(index < m_size);
         return m_buffer[index];
     }
 
     // Safe array access.
-    T& operator[] (size_t index)
+    T &operator[](size_t index)
     {
         assert(index < m_size);
         return m_buffer[index];
@@ -318,13 +316,13 @@ public:
     size_t size() const { return m_size; }
 
     // Push an element at the end of the array.
-    void push_back(const T& val)
+    void push_back(const T &val)
     {
         // DO NOT pass elements of your own vector into
         // push_back()!  Since we're using references,
         // resize() may munge the element storage!
         assert(&val < &m_buffer[0] || &val > &m_buffer[m_size]);
-        int	new_size = m_size + 1;
+        int new_size = m_size + 1;
         resize(new_size);
         m_buffer[new_size - 1] = val;
     }
@@ -337,28 +335,28 @@ public:
     }
 
     // Get back element.
-    const T& back() const
+    const T &back() const
     {
         assert(m_size > 0);
         return m_buffer[m_size - 1];
     }
 
     // Get back element.
-    T& back()
+    T &back()
     {
         assert(m_size > 0);
         return m_buffer[m_size - 1];
     }
 
     // Get back element.
-    const T& front() const
+    const T &front() const
     {
         assert(m_size > 0);
         return m_buffer[0];
     }
 
     // Get back element.
-    T& front()
+    T &front()
     {
         assert(m_size > 0);
         return m_buffer[0];
@@ -411,13 +409,13 @@ public:
         // Call default constructors
         for (size_t i = old_size; i < new_size; i++)
         {
-            new(m_buffer + i) T(); // placement new
+            new (m_buffer + i) T(); // placement new
         }
     }
 
     // Resize the array preserving existing elements and initializing the
-    // new ones with the given value.    
-    void resize(size_t new_size, const T& elem)
+    // new ones with the given value.
+    void resize(size_t new_size, const T &elem)
     {
         size_t old_size = m_size;
         m_size = new_size;
@@ -457,7 +455,7 @@ public:
         // Call copy constructors
         for (size_t i = old_size; i < new_size; i++)
         {
-            new(m_buffer + i) T(elem); // placement new
+            new (m_buffer + i) T(elem); // placement new
         }
     }
 
@@ -486,7 +484,7 @@ public:
     }
 
     // Assignment operator.
-    void operator=(const nvVector& a)
+    void operator=(const nvVector &a)
     {
         copy(a.m_buffer, a.m_size);
     }
@@ -507,12 +505,12 @@ private:
         }
         else // realloc the buffer
         {
-            m_buffer = (T*)::realloc(m_buffer, sizeof(T) * m_buffer_size);
+            m_buffer = (T *)::realloc(m_buffer, sizeof(T) * m_buffer_size);
         }
     }
 
     // Copy memory to our array. Resizes the array if needed.
-    void copy(const T* ptr, size_t num)
+    void copy(const T *ptr, size_t num)
     {
         resize(num);
         for (size_t i = 0; i < m_size; i++)
@@ -522,7 +520,7 @@ private:
     }
 
 private:
-    T* m_buffer;
+    T *m_buffer;
     size_t m_size;
     size_t m_buffer_size;
 };

@@ -11,25 +11,23 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline int ConvexHull2D::GetQuantity () const
+inline int ConvexHull2D::GetQuantity() const
 {
     return m_iHQuantity;
 }
 //----------------------------------------------------------------------------
-inline const int* ConvexHull2D::GetIndices () const
+inline const int *ConvexHull2D::GetIndices() const
 {
     return m_aiHIndex;
 }
 //----------------------------------------------------------------------------
-inline Real& ConvexHull2D::VertexEqualityEpsilon ()
+inline Real &ConvexHull2D::VertexEqualityEpsilon()
 {
     return ms_fVeqEpsilon;
 }
 //----------------------------------------------------------------------------
-inline Real& ConvexHull2D::CollinearEpsilon ()
+inline Real &ConvexHull2D::CollinearEpsilon()
 {
     return ms_fColEpsilon;
 }
 //----------------------------------------------------------------------------
-
-

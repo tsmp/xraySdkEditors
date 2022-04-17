@@ -1,51 +1,53 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-
-struct SExts{
-	xr_vector<LPSTR>	exts;
-    void format_register(LPCSTR ext)
-    {
-    	if (ext&&ext[0]){
-			for (u32 i=0; i<exts.size(); i++)
-    			if (0==stricmp(exts[i],ext)) return;
-    		exts.push_back(xr_strdup(ext));
-        }
-    }
-    u32 size()	{	return (u32)exts.size();	}
-    LPSTR operator [](int k){return exts[k];}
+struct SExts
+{
+	xr_vector<LPSTR> exts;
+	void format_register(LPCSTR ext)
+	{
+		if (ext && ext[0])
+		{
+			for (u32 i = 0; i < exts.size(); i++)
+				if (0 == stricmp(exts[i], ext))
+					return;
+			exts.push_back(xr_strdup(ext));
+		}
+	}
+	u32 size() { return (u32)exts.size(); }
+	LPSTR operator[](int k) { return exts[k]; }
 	~SExts()
-    {
-		for (u32 i=0; i<exts.size(); i++)
-    		xr_free(exts[i]);
-        exts.clear();
-    }
+	{
+		for (u32 i = 0; i < exts.size(); i++)
+			xr_free(exts[i]);
+		exts.clear();
+	}
 };
 SExts formats;
 /*
 void	Surface_FormatExt(FREE_IMAGE_FORMAT f)
 {
 	LPCSTR n=FreeImage_GetFIFExtensionList(f);
-    if (n){
-        LPSTR base = xr_strdup(n);
-        LPSTR ext = base;
-        LPSTR cur = ext;
-        for	(; ext[0]; ext++){
-        if (ext[0]==','){
-                ext[0] = 0;
-                formats.format_register(cur);
-                cur = ++ext;
-            }
-        }
-        if (cur&&cur[0]) formats.format_register(cur);
-        xr_free(base);
-    }
+	if (n){
+		LPSTR base = xr_strdup(n);
+		LPSTR ext = base;
+		LPSTR cur = ext;
+		for	(; ext[0]; ext++){
+		if (ext[0]==','){
+				ext[0] = 0;
+				formats.format_register(cur);
+				cur = ++ext;
+			}
+		}
+		if (cur&&cur[0]) formats.format_register(cur);
+		xr_free(base);
+	}
 }
 void	Surface_Init()
 {
 	Msg("* ImageLibrary version: %s",FreeImage_GetVersion());
 
-    formats.format_register("tga");
+	formats.format_register("tga");
 	Surface_FormatExt(FIF_BMP);
 	Surface_FormatExt(FIF_ICO);
 	Surface_FormatExt(FIF_JPEG);
@@ -99,7 +101,7 @@ FIBITMAP*	Surface_Load(char* full_name)
 	if (0==map32)		map32	= map;
 	else				FreeImage_Unload(map);
 
- 	return				map32;
+	return				map32;
 }
 
 u32*	Surface_Load(char* name, u32& w, u32& h)

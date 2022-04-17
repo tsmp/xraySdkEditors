@@ -12,9 +12,9 @@ public:
 	virtual void CreateShader(LPCSTR sh_name, LPCSTR tex_name);
 	virtual void DestroyShader();
 
-//private:
+	// private:
 public:
-	ref_shader		hShader;
+	ref_shader hShader;
 };
 
 class dxLensFlareRender : public ILensFlareRender
@@ -26,8 +26,9 @@ public:
 
 	virtual void OnDeviceCreate();
 	virtual void OnDeviceDestroy();
+
 private:
-	ref_geom		hGeom;
+	ref_geom hGeom;
 };
 
-#endif	//	LensFlareRender_included
+#endif //	LensFlareRender_included

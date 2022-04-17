@@ -13,48 +13,47 @@
 #include "ide.hpp"
 #include "editor_environment_thunderbolts_manager.hpp"
 
-using XrWeatherEditor::environment::thunderbolts::thunderbolt_id;
 using XrWeatherEditor::environment::thunderbolts::manager;
+using XrWeatherEditor::environment::thunderbolts::thunderbolt_id;
 
-thunderbolt_id::thunderbolt_id			(manager const& manager, shared_str const& id) :
-	m_manager						(manager),
-	m_id							(id),
-	m_property_holder				(0)
+thunderbolt_id::thunderbolt_id(manager const &manager, shared_str const &id) : m_manager(manager),
+																			   m_id(id),
+																			   m_property_holder(0)
 {
 }
 
-thunderbolt_id::~thunderbolt_id			()
+thunderbolt_id::~thunderbolt_id()
 {
 	if (!Device.editor())
 		return;
 
-	::ide().destroy					(m_property_holder);
+	::ide().destroy(m_property_holder);
 }
 
-LPCSTR const* thunderbolt_id::collection()
+LPCSTR const *thunderbolt_id::collection()
 {
-	return							(&*m_manager.thunderbolts_ids().begin());
+	return (&*m_manager.thunderbolts_ids().begin());
 }
 
-u32 thunderbolt_id::collection_size		()
+u32 thunderbolt_id::collection_size()
 {
-	return							(m_manager.thunderbolts_ids().size());
+	return (m_manager.thunderbolts_ids().size());
 }
 
-void thunderbolt_id::fill				(XrWeatherEditor::property_holder_collection* collection)
+void thunderbolt_id::fill(XrWeatherEditor::property_holder_collection *collection)
 {
-	VERIFY							(!m_property_holder);
-	m_property_holder				= ::ide().create_property_holder(m_id.c_str(), collection, this);
+	VERIFY(!m_property_holder);
+	m_property_holder = ::ide().create_property_holder(m_id.c_str(), collection, this);
 
-	typedef XrWeatherEditor::property_holder::string_collection_getter_type	collection_getter_type;
-	collection_getter_type			collection_getter;
-	collection_getter.bind			(this, &thunderbolt_id::collection);
+	typedef XrWeatherEditor::property_holder::string_collection_getter_type collection_getter_type;
+	collection_getter_type collection_getter;
+	collection_getter.bind(this, &thunderbolt_id::collection);
 
-	typedef XrWeatherEditor::property_holder::string_collection_size_getter_type	collection_size_getter_type;
-	collection_size_getter_type		collection_size_getter;
-	collection_size_getter.bind		(this, &thunderbolt_id::collection_size);
+	typedef XrWeatherEditor::property_holder::string_collection_size_getter_type collection_size_getter_type;
+	collection_size_getter_type collection_size_getter;
+	collection_size_getter.bind(this, &thunderbolt_id::collection_size);
 
-	m_property_holder->add_property	(
+	m_property_holder->add_property(
 		"thunderbolt",
 		"properties",
 		"this option is resposible for thunderbolt",
@@ -63,13 +62,12 @@ void thunderbolt_id::fill				(XrWeatherEditor::property_holder_collection* colle
 		collection_getter,
 		collection_size_getter,
 		XrWeatherEditor::property_holder::value_editor_combo_box,
-		XrWeatherEditor::property_holder::cannot_enter_text
-	);
+		XrWeatherEditor::property_holder::cannot_enter_text);
 }
 
-thunderbolt_id::property_holder_type* thunderbolt_id::object	()
+thunderbolt_id::property_holder_type *thunderbolt_id::object()
 {
-	return							(m_property_holder);
+	return (m_property_holder);
 }
 
 #endif // #ifdef INGAME_EDITOR

@@ -7,7 +7,7 @@
 #	include <errno.h>
 #endif*/
 
-xr_event::xr_event(bool broadcast, bool signalled )
+xr_event::xr_event(bool broadcast, bool signalled)
 {
 	m_event = CreateEvent(0, broadcast, signalled, 0);
 }
@@ -73,8 +73,8 @@ bool xr_mutex::unlock()
 	return true;
 }
 
-xr_sync::xr_sync(xr_mutex & mutex)
-: m_mutex(mutex)
+xr_sync::xr_sync(xr_mutex &mutex)
+	: m_mutex(mutex)
 {
 	m_mutex.lock();
 }
@@ -85,19 +85,20 @@ xr_sync::~xr_sync()
 }
 
 ////////////////////////////////////////////////////////////
-DWORD __stdcall xrThreadStart(void * th)
+DWORD __stdcall xrThreadStart(void *th)
 {
-	((xr_thread*)th)->run();
+	((xr_thread *)th)->run();
 	return 0;
 }
 
 xr_thread::xr_thread()
-: m_thread(0)
-{}
+	: m_thread(0)
+{
+}
 
 xr_thread::~xr_thread()
 {
-	if (m_thread) 
+	if (m_thread)
 		CloseHandle(m_thread);
 }
 
@@ -105,13 +106,14 @@ bool xr_thread::start()
 {
 	kill();
 	DWORD dwID;
-	m_thread = CreateThread(0, 0, &xrThreadStart, (void*)this, 0, &dwID);
+	m_thread = CreateThread(0, 0, &xrThreadStart, (void *)this, 0, &dwID);
 	return m_thread != 0;
 }
 
 bool xr_thread::kill()
 {
-	if (!m_thread) return true;
+	if (!m_thread)
+		return true;
 
 	BOOL res = TRUE;
 	if (WaitForSingleObject(m_thread, 0) != WAIT_OBJECT_0)
@@ -151,13 +153,14 @@ unsigned xr_thread::getTickCount()
 	return GetTickCount();
 }
 
-
 xr_waitableThread::xr_waitableThread()
-: m_event(true, true)
-{}
+	: m_event(true, true)
+{
+}
 
 xr_waitableThread::~xr_waitableThread()
-{}
+{
+}
 
 bool xr_waitableThread::start()
 {

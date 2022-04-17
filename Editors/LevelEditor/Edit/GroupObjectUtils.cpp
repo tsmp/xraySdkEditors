@@ -5,39 +5,40 @@
 
 static const float EMPTY_GROUP_SIZE = 0.5f;
 
-bool CGroupObject::GetBox(Fbox& bb) 
+bool CGroupObject::GetBox(Fbox &bb)
 {
-    bb.invalidate		();
+    bb.invalidate();
     // update box
-    for (ObjectsInGroup::const_iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
+    for (ObjectsInGroup::const_iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
     {
-        switch(it->pObject->FClassID)
+        switch (it->pObject->FClassID)
         {
         case OBJCLASS_SPAWNPOINT:
         case OBJCLASS_SCENEOBJECT:
         case OBJCLASS_WAY:
         {
-            Fbox 	box;
+            Fbox box;
             if (it->pObject->GetBox(box))
                 bb.merge(box);
-        }break;
+        }
+        break;
         default:
             bb.modify(it->pObject->GetPosition());
         }
     }
     if (!bb.is_valid())
     {
-    	bb.set			(GetPosition(),GetPosition());
-        bb.grow			(EMPTY_GROUP_SIZE);
+        bb.set(GetPosition(), GetPosition());
+        bb.grow(EMPTY_GROUP_SIZE);
     }
     return bb.is_valid();
 }
 
 void CGroupObject::OnUpdateTransform()
 {
-	inherited::OnUpdateTransform();
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-    	it->pObject->OnUpdateTransform();
+    inherited::OnUpdateTransform();
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+        it->pObject->OnUpdateTransform();
 }
 
 void CGroupObject::UpdatePivot(LPCSTR nm, bool center)
@@ -45,262 +46,276 @@ void CGroupObject::UpdatePivot(LPCSTR nm, bool center)
     // first init
     VERIFY(m_ObjectsInGroup.size());
     ObjectsInGroup::iterator it;
-    if (false==center)
+    if (false == center)
     {
-    	CCustomObject* object = 0;
-    	if (nm&&nm[0])
+        CCustomObject *object = 0;
+        if (nm && nm[0])
         {
-            for (it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
+            for (it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
             {
-            	if (0==strcmp(nm,it->pObject->GetName()))
+                if (0 == strcmp(nm, it->pObject->GetName()))
                 {
-                	object = it->pObject;
-                	break;
+                    object = it->pObject;
+                    break;
                 }
             }
-        }else
+        }
+        else
         {
-        	bool bValidPivot = false;
-            for (it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
+            bool bValidPivot = false;
+            for (it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
             {
-                if (it->pObject->FClassID==OBJCLASS_SCENEOBJECT)
+                if (it->pObject->FClassID == OBJCLASS_SCENEOBJECT)
                 {
-                	object		= it->pObject;
+                    object = it->pObject;
                     bValidPivot = true;
                     break;
                 }
             }
             if (!bValidPivot)
-            	object			= m_ObjectsInGroup.front().pObject;
+                object = m_ObjectsInGroup.front().pObject;
         }
         if (object)
         {
-            SetPosition( object->GetPosition());
-            SetRotation( object->GetRotation());
-			UpdateTransform(true);
+            SetPosition(object->GetPosition());
+            SetRotation(object->GetRotation());
+            UpdateTransform(true);
         }
-    }else
+    }
+    else
     {
         // center alignment
-        it=m_ObjectsInGroup.begin();
-        Fvector C; 
-        C.set(it->pObject->GetPosition()); 
+        it = m_ObjectsInGroup.begin();
+        Fvector C;
+        C.set(it->pObject->GetPosition());
         it++;
 
-        for (; it!=m_ObjectsInGroup.end(); ++it)
+        for (; it != m_ObjectsInGroup.end(); ++it)
             C.add(it->pObject->GetPosition());
-            
-        FPosition.div(C,m_ObjectsInGroup.size());
-        FRotation.set(0,0,0);
-		UpdateTransform(true);
+
+        FPosition.div(C, m_ObjectsInGroup.size());
+        FRotation.set(0, 0, 0);
+        UpdateTransform(true);
     }
 }
 
-void CGroupObject::MoveTo(const Fvector& pos, const Fvector& up)
+void CGroupObject::MoveTo(const Fvector &pos, const Fvector &up)
 {
-	Fvector old_r=FRotation;
-	inherited::MoveTo(pos,up);
-    Fmatrix prev; prev.invert(FTransform);
-    UpdateTransform(true);
-
-    Fvector dr; dr.sub(FRotation,old_r);
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-    {
-    	Fvector r=it->pObject->GetRotation(); 
-        r.add(dr); 
-        it->pObject->SetRotation(r);
-    	Fvector v=it->pObject->GetPosition();
-        prev.transform_tiny(v);
-        FTransform.transform_tiny(v);
-    	it->pObject->SetPosition(v);
-    }
-}
-
-void CGroupObject::NumSetPosition(const Fvector& pos)
-{
-	inherited::NumSetPosition(pos);
-    Fmatrix prev; prev.invert(FTransform);
-    UpdateTransform(true);
-
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-    {
-    	Fvector v=it->pObject->GetPosition();
-        prev.transform_tiny(v);
-        FTransform.transform_tiny(v);
-        it->pObject->SetPosition(v);
-    }
-}
-void CGroupObject::NumSetRotation(const Fvector& rot)
-{
-	Fvector old_r;
-    FTransformR.getXYZ(old_r);
-	inherited::NumSetRotation(rot);
-    Fmatrix prev; prev.invert(FTransform);
-    UpdateTransform(true);
-
-    Fvector dr; dr.sub(FRotation,old_r);
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-    {
-    	Fvector r=it->pObject->GetRotation(); 
-        r.add(dr); 
-        it->pObject->SetRotation(r);
-    	Fvector v=it->pObject->GetPosition();
-        prev.transform_tiny(v);
-        FTransform.transform_tiny(v);
-        it->pObject->SetPosition(v);
-    }
-}
-void CGroupObject::NumSetScale(const Fvector& scale)
-{
-	Fvector old_s = GetScale();
-	inherited::NumSetScale(scale);
-    Fmatrix prev; 
+    Fvector old_r = FRotation;
+    inherited::MoveTo(pos, up);
+    Fmatrix prev;
     prev.invert(FTransform);
     UpdateTransform(true);
 
-    Fvector ds; ds.sub(FScale,old_s);
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
+    Fvector dr;
+    dr.sub(FRotation, old_r);
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
     {
-    	Fvector s=it->pObject->GetScale(); 
-        s.add(ds); 
-        it->pObject->SetScale(s);
-    	Fvector v=it->pObject->GetPosition();
+        Fvector r = it->pObject->GetRotation();
+        r.add(dr);
+        it->pObject->SetRotation(r);
+        Fvector v = it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
         it->pObject->SetPosition(v);
     }
 }
 
-void CGroupObject::Move(Fvector& amount)
+void CGroupObject::NumSetPosition(const Fvector &pos)
 {
-	Fvector old_r=FRotation;
-	inherited::Move(amount);
-    Fmatrix prev; prev.invert(FTransform);
+    inherited::NumSetPosition(pos);
+    Fmatrix prev;
+    prev.invert(FTransform);
     UpdateTransform(true);
 
-    Fvector dr; dr.sub(FRotation,old_r);
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
     {
-    	Fvector r=it->pObject->GetRotation(); 
-        r.add(dr); 
-        it->pObject->SetRotation(r);
-    	Fvector v=it->pObject->GetPosition();
+        Fvector v = it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
         it->pObject->SetPosition(v);
     }
 }
-void CGroupObject::RotateParent(Fvector& axis, float angle )
+void CGroupObject::NumSetRotation(const Fvector &rot)
 {
-	inherited::RotateParent(axis,angle);
-    Fmatrix  Ginv;
-    Ginv.set		(FITransformRP);
-	UpdateTransform	(true);
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
+    Fvector old_r;
+    FTransformR.getXYZ(old_r);
+    inherited::NumSetRotation(rot);
+    Fmatrix prev;
+    prev.invert(FTransform);
+    UpdateTransform(true);
+
+    Fvector dr;
+    dr.sub(FRotation, old_r);
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
     {
-    	Fmatrix 	O,On;
-        O.mul		(Ginv,it->pObject->FTransformRP);
-        On.mul		(FTransform,O);
-        Fvector 	xyz;
-        On.getXYZ	(xyz);
+        Fvector r = it->pObject->GetRotation();
+        r.add(dr);
+        it->pObject->SetRotation(r);
+        Fvector v = it->pObject->GetPosition();
+        prev.transform_tiny(v);
+        FTransform.transform_tiny(v);
+        it->pObject->SetPosition(v);
+    }
+}
+void CGroupObject::NumSetScale(const Fvector &scale)
+{
+    Fvector old_s = GetScale();
+    inherited::NumSetScale(scale);
+    Fmatrix prev;
+    prev.invert(FTransform);
+    UpdateTransform(true);
+
+    Fvector ds;
+    ds.sub(FScale, old_s);
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+    {
+        Fvector s = it->pObject->GetScale();
+        s.add(ds);
+        it->pObject->SetScale(s);
+        Fvector v = it->pObject->GetPosition();
+        prev.transform_tiny(v);
+        FTransform.transform_tiny(v);
+        it->pObject->SetPosition(v);
+    }
+}
+
+void CGroupObject::Move(Fvector &amount)
+{
+    Fvector old_r = FRotation;
+    inherited::Move(amount);
+    Fmatrix prev;
+    prev.invert(FTransform);
+    UpdateTransform(true);
+
+    Fvector dr;
+    dr.sub(FRotation, old_r);
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+    {
+        Fvector r = it->pObject->GetRotation();
+        r.add(dr);
+        it->pObject->SetRotation(r);
+        Fvector v = it->pObject->GetPosition();
+        prev.transform_tiny(v);
+        FTransform.transform_tiny(v);
+        it->pObject->SetPosition(v);
+    }
+}
+void CGroupObject::RotateParent(Fvector &axis, float angle)
+{
+    inherited::RotateParent(axis, angle);
+    Fmatrix Ginv;
+    Ginv.set(FITransformRP);
+    UpdateTransform(true);
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+    {
+        Fmatrix O, On;
+        O.mul(Ginv, it->pObject->FTransformRP);
+        On.mul(FTransform, O);
+        Fvector xyz;
+        On.getXYZ(xyz);
         it->pObject->NumSetRotation(xyz);
         it->pObject->NumSetPosition(On.c);
     }
 }
 
-void CGroupObject::RotateLocal(Fvector& axis, float angle )
+void CGroupObject::RotateLocal(Fvector &axis, float angle)
 {
-	inherited::RotateLocal(axis,angle);
-    Fmatrix  			Ginv;
-    Ginv.set			(FITransformRP);
-	UpdateTransform		(true);
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
+    inherited::RotateLocal(axis, angle);
+    Fmatrix Ginv;
+    Ginv.set(FITransformRP);
+    UpdateTransform(true);
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
     {
-    	Fmatrix 	O,On;
-        O.mul		(Ginv,it->pObject->FTransformRP);
-        On.mul		(FTransform,O);
-        Fvector 	xyz;
-        On.getXYZ	(xyz);
+        Fmatrix O, On;
+        O.mul(Ginv, it->pObject->FTransformRP);
+        On.mul(FTransform, O);
+        Fvector xyz;
+        On.getXYZ(xyz);
         it->pObject->NumSetRotation(xyz);
         it->pObject->NumSetPosition(On.c);
     }
 }
 
-void CGroupObject::Scale(Fvector& amount )
+void CGroupObject::Scale(Fvector &amount)
 {
-	inherited::Scale(amount);
-    Fmatrix  m_old;
+    inherited::Scale(amount);
+    Fmatrix m_old;
     m_old.invert(FTransform);
-	UpdateTransform(true);
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-		it->pObject->ScalePivot(m_old,FTransform,amount);
+    UpdateTransform(true);
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+        it->pObject->ScalePivot(m_old, FTransform, amount);
 }
 
 void CGroupObject::Render(int priority, bool strictB2F)
 {
-	inherited::Render(priority, strictB2F);
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
+    inherited::Render(priority, strictB2F);
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
     {
-    	if (it->pObject->IsRender())
+        if (it->pObject->IsRender())
         {
-	    	switch (it->pObject->FClassID)
+            switch (it->pObject->FClassID)
             {
-    	    case OBJCLASS_SCENEOBJECT: it->pObject->Render(priority,strictB2F); break;
+            case OBJCLASS_SCENEOBJECT:
+                it->pObject->Render(priority, strictB2F);
+                break;
             default:
-                EDevice.SetShader(strictB2F?EDevice.m_SelectionShader:EDevice.m_WireShader);
+                EDevice.SetShader(strictB2F ? EDevice.m_SelectionShader : EDevice.m_WireShader);
                 RCache.set_xform_world(Fidentity);
-                it->pObject->Render(priority,strictB2F);
-        	}
-    	}
+                it->pObject->Render(priority, strictB2F);
+            }
+        }
     }
-	if ((1==priority) && (false==strictB2F))
+    if ((1 == priority) && (false == strictB2F))
     {
-    	Fbox bb;
-    	if (Selected()&&GetBox(bb))
+        Fbox bb;
+        if (Selected() && GetBox(bb))
         {
             EDevice.SetShader(EDevice.m_WireShader);
             RCache.set_xform_world(Fidentity);
             u32 clr = 0xFF7070FF;
-            DU_impl.DrawSelectionBoxB(bb,&clr);
+            DU_impl.DrawSelectionBoxB(bb, &clr);
         }
     }
 }
 
-bool CGroupObject::FrustumPick(const CFrustum& frustum)
+bool CGroupObject::FrustumPick(const CFrustum &frustum)
 {
     if (m_ObjectsInGroup.empty())
     {
-        Fbox 		bb;
-        GetBox		(bb);
-        u32 mask	= u32(-1); 
-        return 		(frustum.testAABB(bb.data(),mask));
-    }else{
-        for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-            if (it->pObject->FrustumPick(frustum)) 
-            return true;
+        Fbox bb;
+        GetBox(bb);
+        u32 mask = u32(-1);
+        return (frustum.testAABB(bb.data(), mask));
+    }
+    else
+    {
+        for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+            if (it->pObject->FrustumPick(frustum))
+                return true;
     }
     return false;
 }
 
-bool CGroupObject::RayPick(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)
+bool CGroupObject::RayPick(float &distance, const Fvector &start, const Fvector &direction, SRayPickInfo *pinf)
 {
-	bool bPick = false;
+    bool bPick = false;
 
-    for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-        if (it->pObject->RayPick(distance,start,direction,pinf)) 
-            bPick=true;
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+        if (it->pObject->RayPick(distance, start, direction, pinf))
+            bPick = true;
 
     return bPick;
 }
 
 void CGroupObject::OnDeviceCreate()
 {
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-    	it->pObject->OnDeviceCreate();
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+        it->pObject->OnDeviceCreate();
 }
 
 void CGroupObject::OnDeviceDestroy()
 {
-	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-    	it->pObject->OnDeviceDestroy();
+    for (ObjectsInGroup::iterator it = m_ObjectsInGroup.begin(); it != m_ObjectsInGroup.end(); ++it)
+        it->pObject->OnDeviceDestroy();
 }

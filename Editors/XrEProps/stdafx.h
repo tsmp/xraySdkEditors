@@ -1,6 +1,6 @@
 #pragma once
 #ifdef XREPROPS_EXPORTS
-#	define smart_cast dynamic_cast
+#define smart_cast dynamic_cast
 #define XREPROPS_API __declspec(dllexport)
 #else
 #define XREPROPS_API __declspec(dllimport)
@@ -13,7 +13,8 @@ inline void not_implemented()
 {
 	if (IsDebuggerPresent())
 		DebugBreak();
-	else R_ASSERT(0);
+	else
+		R_ASSERT(0);
 }
 #endif
 

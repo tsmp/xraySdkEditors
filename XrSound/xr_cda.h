@@ -1,7 +1,8 @@
 #ifndef __XR_CDAUDIO_H__
 #define __XR_CDAUDIO_H__
 
-typedef enum CDA_STATE{
+typedef enum CDA_STATE
+{
 	CDA_STATE_PLAY,
 	CDA_STATE_STOP,
 	CDA_STATE_PAUSE,
@@ -11,30 +12,31 @@ typedef enum CDA_STATE{
 
 class CCDA
 {
-	char					retStr[64];
-	UINT					retLen;
-	MCIERROR				err;
+	char retStr[64];
+	UINT retLen;
+	MCIERROR err;
 
-	u32						dwCurTrack;
-	BOOL					bWorking;
-	BOOL					bPaused;
+	u32 dwCurTrack;
+	BOOL bWorking;
+	BOOL bPaused;
 
-	int 					lKeepTime;
-	int 					lTotalTime;
+	int lKeepTime;
+	int lTotalTime;
 
-	CDA_STATE				GetState( );
+	CDA_STATE GetState();
+
 public:
-							CCDA					( );
-							~CCDA					( );
+	CCDA();
+	~CCDA();
 
-	void					Open					( );
-	void					Close					( );
-	void					SetTrack				( int track );
-	void					Play					( );
-	void					Stop					( );
-	void					Pause					( );
+	void Open();
+	void Close();
+	void SetTrack(int track);
+	void Play();
+	void Stop();
+	void Pause();
 
-	void					OnMove					( );
+	void OnMove();
 };
 
 #endif //__XR_CDAudio_H__

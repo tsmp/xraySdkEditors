@@ -10,13 +10,13 @@
 
 //----------------------------------------------------------------------------
 template <class Real>
-Vector4<Real>::Vector4 ()
+Vector4<Real>::Vector4()
 {
     // the vector is uninitialized
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector4<Real>::Vector4 (Real fX, Real fY, Real fZ, Real fW)
+Vector4<Real>::Vector4(Real fX, Real fY, Real fZ, Real fW)
 {
     Vector4<Real>::m_afTuple[0] = fX;
     Vector4<Real>::m_afTuple[1] = fY;
@@ -25,75 +25,75 @@ Vector4<Real>::Vector4 (Real fX, Real fY, Real fZ, Real fW)
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector4<Real>::Vector4 (const Vector4& rkV)
+Vector4<Real>::Vector4(const Vector4 &rkV)
 {
-    memcpy(Vector4<Real>::m_afTuple,rkV.Vector4<Real>::m_afTuple,4*sizeof(Real));
+    memcpy(Vector4<Real>::m_afTuple, rkV.Vector4<Real>::m_afTuple, 4 * sizeof(Real));
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector4<Real>::Vector4 (const Vector<4,Real>& rkV)
+Vector4<Real>::Vector4(const Vector<4, Real> &rkV)
 {
-    memcpy(Vector4<Real>::m_afTuple,(const Real*)rkV,4*sizeof(Real));
+    memcpy(Vector4<Real>::m_afTuple, (const Real *)rkV, 4 * sizeof(Real));
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector4<Real>& Vector4<Real>::operator= (const Vector4& rkV)
+Vector4<Real> &Vector4<Real>::operator=(const Vector4 &rkV)
 {
-    memcpy(Vector4<Real>::m_afTuple,rkV.Vector4<Real>::m_afTuple,4*sizeof(Real));
+    memcpy(Vector4<Real>::m_afTuple, rkV.Vector4<Real>::m_afTuple, 4 * sizeof(Real));
     return *this;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector4<Real>& Vector4<Real>::operator= (const Vector<4,Real>& rkV)
+Vector4<Real> &Vector4<Real>::operator=(const Vector<4, Real> &rkV)
 {
-    memcpy(Vector4<Real>::m_afTuple,(const Real*)rkV,4*sizeof(Real));
+    memcpy(Vector4<Real>::m_afTuple, (const Real *)rkV, 4 * sizeof(Real));
     return *this;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector4<Real>::X () const
+Real Vector4<Real>::X() const
 {
     return Vector4<Real>::m_afTuple[0];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector4<Real>::X ()
+Real &Vector4<Real>::X()
 {
     return Vector4<Real>::m_afTuple[0];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector4<Real>::Y () const
+Real Vector4<Real>::Y() const
 {
     return Vector4<Real>::m_afTuple[1];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector4<Real>::Y ()
+Real &Vector4<Real>::Y()
 {
     return Vector4<Real>::m_afTuple[1];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector4<Real>::Z () const
+Real Vector4<Real>::Z() const
 {
     return Vector4<Real>::m_afTuple[2];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector4<Real>::Z ()
+Real &Vector4<Real>::Z()
 {
     return Vector4<Real>::m_afTuple[2];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector4<Real>::W () const
+Real Vector4<Real>::W() const
 {
     return Vector4<Real>::m_afTuple[3];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector4<Real>::W ()
+Real &Vector4<Real>::W()
 {
     return Vector4<Real>::m_afTuple[3];
 }

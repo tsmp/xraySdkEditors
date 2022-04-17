@@ -1,10 +1,9 @@
 #pragma once
 
-//class CCustomObject;
-class UIEditLibrary :public XrUI
+// class CCustomObject;
+class UIEditLibrary : public XrUI
 {
 public:
-
 	UIEditLibrary();
 	virtual ~UIEditLibrary();
 
@@ -12,32 +11,32 @@ public:
 	static void Show();
 	static void Close();
 	static void OnRender();
-	
+
 	ImTextureID m_NullTexture;
 	ImTextureID m_RealTexture;
 
-	void OnItemFocused(ListItem* item);
+	void OnItemFocused(ListItem *item);
 
 private:
-	static UIEditLibrary* Form;
-	
+	static UIEditLibrary *Form;
+
 	virtual void Draw();
 	void DrawObjects();
-	
+
 	void DrawRightBar();
-	void DrawObject(CCustomObject* obj, const char* name);
+	void DrawObject(CCustomObject *obj, const char *name);
 	void InitObjects();
 	void OnPropertiesClick();
 
-	void ChangeReference(const RStringVec& items);
-	bool SelectionToReference(ListItemsVec* props);
+	void ChangeReference(const RStringVec &items);
+	bool SelectionToReference(ListItemsVec *props);
 
-	UIItemListForm* m_ObjectList;
-	UIPropertiesForm* m_Props;
+	UIItemListForm *m_ObjectList;
+	UIPropertiesForm *m_Props;
 	LPCSTR m_Current;
 	bool m_Preview;
 
-	xr_vector<CSceneObject*> m_pEditObjects;
+	xr_vector<CSceneObject *> m_pEditObjects;
 
 	/*
 
@@ -59,7 +58,6 @@ private:
 	CCustomObject* m_SelectedObject;
 	string_path m_Filter;*/
 };
-
 
 ////---------------------------------------------------------------------------
 //
@@ -88,11 +86,11 @@ private:
 //#include "MXCtrls.hpp"
 ////---------------------------------------------------------------------------
 //// refs
-//class TObjectPreview;
-//class EObjectThumbnail;
+// class TObjectPreview;
+// class EObjectThumbnail;
 ////---------------------------------------------------------------------------
 //
-//class TfrmEditLibrary : public TForm
+// class TfrmEditLibrary : public TForm
 //{
 //__published:	// IDE-managed Components
 //	TPanel* paCommands;
@@ -141,7 +139,7 @@ private:
 //	void __fastcall ebRemoveObjectClick(TObject* Sender);
 //	void __fastcall ebMakeLOD_lowClick(TObject* Sender);
 //	void __fastcall ebExportOBJClick(TObject* Sender);
-//private:	// User declarations
+// private:	// User declarations
 //	void InitObjects();
 //	EObjectThumbnail* m_Thm;
 //	static TfrmEditLibrary* form;
@@ -167,7 +165,7 @@ private:
 //	void __fastcall 		RefreshSelected();
 //	bool					SelectionToReference(ListItemsVec* props);
 //	void					ExportOneOBJ(CEditableObject*);
-//public:		// User declarations
+// public:		// User declarations
 //	void __stdcall  		OnModified();
 //	__fastcall 				TfrmEditLibrary(TComponent* Owner);
 //	static bool 			FinalClose();

@@ -3,97 +3,107 @@
 
 #include "tss_def.h"
 
-IDirect3DStateBlock9* SimulatorStates::record	()
+IDirect3DStateBlock9 *SimulatorStates::record()
 {
 //	TODO: DX10: Implement equivalent for SimulatorStates::record for DX10
 #if defined(USE_DX10) || defined(USE_DX11)
-	//VERIFY(!"SimulatorStates::record not implemented!");
+	// VERIFY(!"SimulatorStates::record not implemented!");
 	return 0;
-#else	//	USE_DX10
+#else  //	USE_DX10
 	CHK_DX(HW.pDevice->BeginStateBlock());
-	for (u32 it=0; it<States.size(); it++)
+	for (u32 it = 0; it < States.size(); it++)
 	{
-		State& S	= States[it];
+		State &S = States[it];
 		switch (S.type)
 		{
-		case 0:	CHK_DX(HW.pDevice->SetRenderState		((D3DRENDERSTATETYPE)S.v1,S.v2));				break;
-		case 1: CHK_DX(HW.pDevice->SetTextureStageState	(S.v1,(D3DTEXTURESTAGESTATETYPE)S.v2,S.v3));	break;
-		case 2: 
-			{
-				CHK_DX(HW.pDevice->SetSamplerState		(S.v1,
-														(D3DSAMPLERSTATETYPE)S.v2,
-														((D3DSAMPLERSTATETYPE)S.v2==D3DSAMP_MAGFILTER&&S.v3==D3DTEXF_ANISOTROPIC)?D3DTEXF_LINEAR:S.v3));
-			}break;
+		case 0:
+			CHK_DX(HW.pDevice->SetRenderState((D3DRENDERSTATETYPE)S.v1, S.v2));
+			break;
+		case 1:
+			CHK_DX(HW.pDevice->SetTextureStageState(S.v1, (D3DTEXTURESTAGESTATETYPE)S.v2, S.v3));
+			break;
+		case 2:
+		{
+			CHK_DX(HW.pDevice->SetSamplerState(S.v1,
+											   (D3DSAMPLERSTATETYPE)S.v2,
+											   ((D3DSAMPLERSTATETYPE)S.v2 == D3DSAMP_MAGFILTER && S.v3 == D3DTEXF_ANISOTROPIC) ? D3DTEXF_LINEAR : S.v3));
+		}
+		break;
 		}
 	}
-	IDirect3DStateBlock9*	SB = 0;
-	CHK_DX	(HW.pDevice->EndStateBlock(&SB));
-	return	SB;
-#endif	//	USE_DX10
+	IDirect3DStateBlock9 *SB = 0;
+	CHK_DX(HW.pDevice->EndStateBlock(&SB));
+	return SB;
+#endif //	USE_DX10
 }
 
-void	SimulatorStates::set_RS	(u32 a, u32 b)
+void SimulatorStates::set_RS(u32 a, u32 b)
 {
 	// Search duplicates
-	for (int t=0; t<int(States.size()); t++)
+	for (int t = 0; t < int(States.size()); t++)
 	{
-		State& S	= States[t];
-		if ((0==S.type)&&(a==S.v1)) {
-			States.erase(States.begin()+t);
+		State &S = States[t];
+		if ((0 == S.type) && (a == S.v1))
+		{
+			States.erase(States.begin() + t);
 			break;
 		}
 	}
 
 	// Register
-	State		st;
-	st.set_RS	(a,b);
+	State st;
+	st.set_RS(a, b);
 	States.push_back(st);
 }
 
-void	SimulatorStates::set_TSS	(u32 a, u32 b, u32 c)
+void SimulatorStates::set_TSS(u32 a, u32 b, u32 c)
 {
 	// Search duplicates
-	for (int t=0; t<int(States.size()); t++)
+	for (int t = 0; t < int(States.size()); t++)
 	{
-		State& S	= States[t];
-		if ((1==S.type)&&(a==S.v1)&&(b==S.v2)) {
-			States.erase(States.begin()+t);
+		State &S = States[t];
+		if ((1 == S.type) && (a == S.v1) && (b == S.v2))
+		{
+			States.erase(States.begin() + t);
 			break;
 		}
 	}
 
 	// Register
-	State		st;
-	st.set_TSS	(a,b,c);
+	State st;
+	st.set_TSS(a, b, c);
 	States.push_back(st);
 }
 
-void	SimulatorStates::set_SAMP	(u32 a, u32 b, u32 c)
+void SimulatorStates::set_SAMP(u32 a, u32 b, u32 c)
 {
 	// Search duplicates
-	for (int t=0; t<int(States.size()); t++)
+	for (int t = 0; t < int(States.size()); t++)
 	{
-		State& S	= States[t];
-		if ((2==S.type)&&(a==S.v1)&&(b==S.v2)) {
-			States.erase(States.begin()+t);
+		State &S = States[t];
+		if ((2 == S.type) && (a == S.v1) && (b == S.v2))
+		{
+			States.erase(States.begin() + t);
 			break;
 		}
 	}
 
 	// Register
-	State		st;
-	st.set_SAMP	(a,b,c);
+	State st;
+	st.set_SAMP(a, b, c);
 	States.push_back(st);
 }
 
-BOOL	SimulatorStates::equal	(SimulatorStates& S)
+BOOL SimulatorStates::equal(SimulatorStates &S)
 {
-	if (States.size()!=S.States.size())												return FALSE;
-	if (0!=memcmp(&*States.begin(),&*S.States.begin(),States.size()*sizeof(State))) return FALSE;
+	if (States.size() != S.States.size())
+		return FALSE;
+	if (0 != memcmp(&*States.begin(), &*S.States.begin(), States.size() * sizeof(State)))
+		return FALSE;
 	return TRUE;
 }
 
-void	SimulatorStates::clear	()
+void SimulatorStates::clear()
 {
 	States.clear();
 }
@@ -102,12 +112,12 @@ void	SimulatorStates::clear	()
 
 #include "..\DX10\dx10StateUtils.h"
 
-void SimulatorStates::UpdateState( dx10State &state) const
+void SimulatorStates::UpdateState(dx10State &state) const
 {
-	for (u32 it=0; it<States.size(); it++)
+	for (u32 it = 0; it < States.size(); it++)
 	{
-		const State& S	= States[it];
-		if (S.type==0)
+		const State &S = States[it];
+		if (S.type == 0)
 		{
 			switch (S.v1)
 			{
@@ -122,22 +132,22 @@ void SimulatorStates::UpdateState( dx10State &state) const
 	}
 }
 
-void SimulatorStates::UpdateDesc( D3D_RASTERIZER_DESC &desc ) const
+void SimulatorStates::UpdateDesc(D3D_RASTERIZER_DESC &desc) const
 {
-	for (u32 it=0; it<States.size(); it++)
+	for (u32 it = 0; it < States.size(); it++)
 	{
-		const State& S	= States[it];
-		if (S.type==0)
+		const State &S = States[it];
+		if (S.type == 0)
 		{
-			//CHK_DX(HW.pDevice->SetRenderState		((D3DRENDERSTATETYPE)S.v1,S.v2));
+			// CHK_DX(HW.pDevice->SetRenderState		((D3DRENDERSTATETYPE)S.v1,S.v2));
 			switch (S.v1)
 			{
 			case D3DRS_FILLMODE:
-				if (S.v2==D3DFILL_SOLID)
+				if (S.v2 == D3DFILL_SOLID)
 					desc.FillMode = D3D_FILL_SOLID;
 				else
 				{
-					VERIFY(S.v2==D3DFILL_WIREFRAME);
+					VERIFY(S.v2 == D3DFILL_WIREFRAME);
 					desc.FillMode = D3D_FILL_WIREFRAME;
 				}
 				break;
@@ -169,46 +179,46 @@ void SimulatorStates::UpdateDesc( D3D_RASTERIZER_DESC &desc ) const
 			case D3DRS_DEPTHBIAS:
 				VERIFY(0);
 				break;
-				
+
 			//	desc.DepthBiasClamp = 0.0f;
 
 			//	TODO: DX10: Check slope scaled depth bias is used
 			case D3DRS_SLOPESCALEDEPTHBIAS:
-				//desc.SlopeScaledDepthBias = 0.0f;
+				// desc.SlopeScaledDepthBias = 0.0f;
 				VERIFY(0);
 				break;
-				
-			//	desc.DepthClipEnable = TRUE;
-			
+
+				//	desc.DepthClipEnable = TRUE;
+
 			case D3DRS_SCISSORTESTENABLE:
 				desc.ScissorEnable = S.v2;
 				break;
 
-			//desc.MultisampleEnable = FALSE;
-			//desc.AntialiasedLineEnable = FALSE;
+				// desc.MultisampleEnable = FALSE;
+				// desc.AntialiasedLineEnable = FALSE;
 			}
 		}
 
-		//case 1: 
-		//	
-		//CHK_DX(HW.pDevice->SetTextureStageState	(S.v1,(D3DTEXTURESTAGESTATETYPE)S.v2,S.v3));
+		// case 1:
+		//
+		// CHK_DX(HW.pDevice->SetTextureStageState	(S.v1,(D3DTEXTURESTAGESTATETYPE)S.v2,S.v3));
 		//	TODO: DX10: Enable
 		//	VERIFY(!"DirectX 10 doesn't support texture stage states. Implement shader instead!");
 		//	break;
 	}
 }
 
-void SimulatorStates::UpdateDesc( D3D_DEPTH_STENCIL_DESC &desc ) const
+void SimulatorStates::UpdateDesc(D3D_DEPTH_STENCIL_DESC &desc) const
 {
-	for (u32 it=0; it<States.size(); it++)
+	for (u32 it = 0; it < States.size(); it++)
 	{
-		const State& S	= States[it];
-		if (S.type==0)
+		const State &S = States[it];
+		if (S.type == 0)
 		{
 			switch (S.v1)
 			{
 			case D3DRS_ZENABLE:
-				desc.DepthEnable = S.v2?1:0;
+				desc.DepthEnable = S.v2 ? 1 : 0;
 				break;
 
 			case D3DRS_ZWRITEENABLE:
@@ -220,7 +230,7 @@ void SimulatorStates::UpdateDesc( D3D_DEPTH_STENCIL_DESC &desc ) const
 				break;
 
 			case D3DRS_STENCILENABLE:
-				desc.StencilEnable = S.v2?1:0;
+				desc.StencilEnable = S.v2 ? 1 : 0;
 				break;
 
 			case D3DRS_STENCILMASK:
@@ -268,55 +278,55 @@ void SimulatorStates::UpdateDesc( D3D_DEPTH_STENCIL_DESC &desc ) const
 }
 
 #ifdef USE_DX11
-void SimulatorStates::UpdateDesc( D3D_BLEND_DESC &desc ) const
+void SimulatorStates::UpdateDesc(D3D_BLEND_DESC &desc) const
 {
-	for (u32 it=0; it<States.size(); it++)
+	for (u32 it = 0; it < States.size(); it++)
 	{
-		const State& S	= States[it];
-		if (S.type==0)
+		const State &S = States[it];
+		if (S.type == 0)
 		{
 			switch (S.v1)
 			{
 			case XRDX10RS_ALPHATOCOVERAGE:
-				for ( int i=0; i<8; ++i)
-					desc.AlphaToCoverageEnable = S.v2?1:0;
+				for (int i = 0; i < 8; ++i)
+					desc.AlphaToCoverageEnable = S.v2 ? 1 : 0;
 				break;
-				
+
 			case D3DRS_SRCBLEND:
-				for ( int i=0; i<8; ++i)
+				for (int i = 0; i < 8; ++i)
 					desc.RenderTarget[i].SrcBlend = dx10StateUtils::ConvertBlendArg((D3DBLEND)S.v2);
 				break;
 
 			case D3DRS_DESTBLEND:
-				for ( int i=0; i<8; ++i)
+				for (int i = 0; i < 8; ++i)
 					desc.RenderTarget[i].DestBlend = dx10StateUtils::ConvertBlendArg((D3DBLEND)S.v2);
 				break;
-			
-				//D3DRS_ALPHAFUNC
+
+				// D3DRS_ALPHAFUNC
 
 			case D3DRS_BLENDOP:
-				for ( int i=0; i<8; ++i)
+				for (int i = 0; i < 8; ++i)
 					desc.RenderTarget[i].BlendOp = dx10StateUtils::ConvertBlendOp((D3DBLENDOP)S.v2);
 				break;
 
 			case D3DRS_SRCBLENDALPHA:
-				for ( int i=0; i<8; ++i)
+				for (int i = 0; i < 8; ++i)
 					desc.RenderTarget[i].SrcBlendAlpha = dx10StateUtils::ConvertBlendArg((D3DBLEND)S.v2);
 				break;
 
 			case D3DRS_DESTBLENDALPHA:
-				for ( int i=0; i<8; ++i)
+				for (int i = 0; i < 8; ++i)
 					desc.RenderTarget[i].DestBlendAlpha = dx10StateUtils::ConvertBlendArg((D3DBLEND)S.v2);
 				break;
 
 			case D3DRS_BLENDOPALPHA:
-				for ( int i=0; i<8; ++i)
+				for (int i = 0; i < 8; ++i)
 					desc.RenderTarget[i].BlendOpAlpha = dx10StateUtils::ConvertBlendOp((D3DBLENDOP)S.v2);
 				break;
 
 			case D3DRS_ALPHABLENDENABLE:
-				for ( int i=0; i<8; ++i)
-					desc.RenderTarget[i].BlendEnable = S.v2?1:0;
+				for (int i = 0; i < 8; ++i)
+					desc.RenderTarget[i].BlendEnable = S.v2 ? 1 : 0;
 				break;
 
 			case D3DRS_COLORWRITEENABLE:
@@ -339,19 +349,19 @@ void SimulatorStates::UpdateDesc( D3D_BLEND_DESC &desc ) const
 	}
 }
 #else
-void SimulatorStates::UpdateDesc( D3D_BLEND_DESC &desc ) const
+void SimulatorStates::UpdateDesc(D3D_BLEND_DESC &desc) const
 {
-	for (u32 it=0; it<States.size(); it++)
+	for (u32 it = 0; it < States.size(); it++)
 	{
-		const State& S	= States[it];
-		if (S.type==0)
+		const State &S = States[it];
+		if (S.type == 0)
 		{
 			switch (S.v1)
 			{
 			case XRDX10RS_ALPHATOCOVERAGE:
-				desc.AlphaToCoverageEnable = S.v2?1:0;
+				desc.AlphaToCoverageEnable = S.v2 ? 1 : 0;
 				break;
-				
+
 			case D3DRS_SRCBLEND:
 				desc.SrcBlend = dx10StateUtils::ConvertBlendArg((D3DBLEND)S.v2);
 				break;
@@ -359,8 +369,8 @@ void SimulatorStates::UpdateDesc( D3D_BLEND_DESC &desc ) const
 			case D3DRS_DESTBLEND:
 				desc.DestBlend = dx10StateUtils::ConvertBlendArg((D3DBLEND)S.v2);
 				break;
-			
-				//D3DRS_ALPHAFUNC
+
+				// D3DRS_ALPHAFUNC
 
 			case D3DRS_BLENDOP:
 				desc.BlendOp = dx10StateUtils::ConvertBlendOp((D3DBLENDOP)S.v2);
@@ -379,8 +389,8 @@ void SimulatorStates::UpdateDesc( D3D_BLEND_DESC &desc ) const
 				break;
 
 			case D3DRS_ALPHABLENDENABLE:
-				for ( int i=0; i<8; ++i)
-					desc.BlendEnable[i] = S.v2?1:0;
+				for (int i = 0; i < 8; ++i)
+					desc.BlendEnable[i] = S.v2 ? 1 : 0;
 				break;
 
 			case D3DRS_COLORWRITEENABLE:
@@ -404,25 +414,24 @@ void SimulatorStates::UpdateDesc( D3D_BLEND_DESC &desc ) const
 }
 #endif
 
-void SimulatorStates::UpdateDesc( D3D_SAMPLER_DESC descArray[D3D_COMMONSHADER_SAMPLER_SLOT_COUNT], bool SamplerUsed[D3D_COMMONSHADER_SAMPLER_SLOT_COUNT], int iBaseSamplerIndex ) const
+void SimulatorStates::UpdateDesc(D3D_SAMPLER_DESC descArray[D3D_COMMONSHADER_SAMPLER_SLOT_COUNT], bool SamplerUsed[D3D_COMMONSHADER_SAMPLER_SLOT_COUNT], int iBaseSamplerIndex) const
 {
-	const int MipfilterLinear	= 0x01;
-	const int MagfilterLinear	= 0x04;
-	const int MinfilterLinear	= 0x10;
-	const int AllfilterLinear	= 0x15;
-	const int FilterAnisotropic	= 0x40;
-	const int FilterComparison	= 0x80;
+	const int MipfilterLinear = 0x01;
+	const int MagfilterLinear = 0x04;
+	const int MinfilterLinear = 0x10;
+	const int AllfilterLinear = 0x15;
+	const int FilterAnisotropic = 0x40;
+	const int FilterComparison = 0x80;
 
-	for (u32 it=0; it<States.size(); it++)
+	for (u32 it = 0; it < States.size(); it++)
 	{
-		const State& S	= States[it];
-		if (S.type==2)
+		const State &S = States[it];
+		if (S.type == 2)
 		{
 			int iSamplerIndex = int(S.v1);
 			iSamplerIndex -= iBaseSamplerIndex;
 
-			if ( (iSamplerIndex>=D3D_COMMONSHADER_SAMPLER_SLOT_COUNT)
-				|| iSamplerIndex<0)
+			if ((iSamplerIndex >= D3D_COMMONSHADER_SAMPLER_SLOT_COUNT) || iSamplerIndex < 0)
 				continue;
 
 			SamplerUsed[iSamplerIndex] = true;
@@ -430,8 +439,8 @@ void SimulatorStates::UpdateDesc( D3D_SAMPLER_DESC descArray[D3D_COMMONSHADER_SA
 
 			switch (S.v2)
 			{
-			//D3D_FILTER Filter;
-			case D3DSAMP_MAGFILTER:	/* D3DTEXTUREFILTER filter to use for magnification */
+			// D3D_FILTER Filter;
+			case D3DSAMP_MAGFILTER: /* D3DTEXTUREFILTER filter to use for magnification */
 				switch (S.v3)
 				{
 				case D3DTEXF_NONE:
@@ -440,81 +449,81 @@ void SimulatorStates::UpdateDesc( D3D_SAMPLER_DESC descArray[D3D_COMMONSHADER_SA
 					break;
 				case D3DTEXF_LINEAR:
 					desc.Filter = (D3D_FILTER)(desc.Filter | MagfilterLinear);
-//					desc.Filter |= MagfilterLinear;
+					//					desc.Filter |= MagfilterLinear;
 					break;
 				default:
 					NODEFAULT;
 				}
 				break;
 
-			case D3DSAMP_MINFILTER:	/* D3DTEXTUREFILTER filter to use for minification */
+			case D3DSAMP_MINFILTER: /* D3DTEXTUREFILTER filter to use for minification */
 				switch (S.v3)
 				{
 				case D3DTEXF_NONE:
 				case D3DTEXF_POINT:
-					//desc.Filter &= ~MinfilterLinear;
+					// desc.Filter &= ~MinfilterLinear;
 					desc.Filter = (D3D_FILTER)(desc.Filter & (~MinfilterLinear));
 					break;
 				case D3DTEXF_LINEAR:
 					desc.Filter = (D3D_FILTER)(desc.Filter | MinfilterLinear);
-					//desc.Filter |= MinfilterLinear;
+					// desc.Filter |= MinfilterLinear;
 					break;
 				default:
 					NODEFAULT;
 				}
 				break;
 
-			case D3DSAMP_MIPFILTER:	/* D3DTEXTUREFILTER filter to use between mipmaps during minification */
+			case D3DSAMP_MIPFILTER: /* D3DTEXTUREFILTER filter to use between mipmaps during minification */
 				switch (S.v3)
 				{
 				case D3DTEXF_NONE:
 				case D3DTEXF_POINT:
 					desc.Filter = (D3D_FILTER)(desc.Filter & (~MipfilterLinear));
-					//desc.Filter &= ~MipfilterLinear;
+					// desc.Filter &= ~MipfilterLinear;
 					break;
 				case D3DTEXF_LINEAR:
 					desc.Filter = (D3D_FILTER)(desc.Filter | MipfilterLinear);
-					//desc.Filter |= MipfilterLinear;
+					// desc.Filter |= MipfilterLinear;
 					break;
 				default:
 					NODEFAULT;
 				}
 				break;
-				
+
 			case XRDX10SAMP_ANISOTROPICFILTER:
 				if (S.v3)
 					desc.Filter = (D3D_FILTER)(desc.Filter | FilterAnisotropic);
-					//desc.Filter |= FilterAnisotropic;
+				// desc.Filter |= FilterAnisotropic;
 				else
 					desc.Filter = (D3D_FILTER)(desc.Filter & (~FilterAnisotropic));
-					//desc.Filter &= ~FilterAnisotropic;
+				// desc.Filter &= ~FilterAnisotropic;
 				break;
 
 			case XRDX10SAMP_COMPARISONFILTER:
 				if (S.v3)
 					desc.Filter = (D3D_FILTER)(desc.Filter | FilterComparison);
-					//desc.Filter |= FilterComparison;
+				// desc.Filter |= FilterComparison;
 				else
 					desc.Filter = (D3D_FILTER)(desc.Filter & (~FilterComparison));
-					//desc.Filter &= ~FilterComparison;	
+				// desc.Filter &= ~FilterComparison;
 				break;
 
-			//D3Dxx_TEXTURE_ADDRESS_MODE AddressU;
-			case D3DSAMP_ADDRESSU:	/* D3DTEXTUREADDRESS for U coordinate */
+			// D3Dxx_TEXTURE_ADDRESS_MODE AddressU;
+			case D3DSAMP_ADDRESSU: /* D3DTEXTUREADDRESS for U coordinate */
 				desc.AddressU = dx10StateUtils::ConvertTextureAddressMode(D3DTEXTUREADDRESS(S.v3));
 				break;
 
-			case D3DSAMP_ADDRESSV:	/* D3DTEXTUREADDRESS for V coordinate */
+			case D3DSAMP_ADDRESSV: /* D3DTEXTUREADDRESS for V coordinate */
 				desc.AddressV = dx10StateUtils::ConvertTextureAddressMode(D3DTEXTUREADDRESS(S.v3));
 				break;
 
-			case D3DSAMP_ADDRESSW:	/* D3DTEXTUREADDRESS for W coordinate */
+			case D3DSAMP_ADDRESSW: /* D3DTEXTUREADDRESS for W coordinate */
 				desc.AddressW = dx10StateUtils::ConvertTextureAddressMode(D3DTEXTUREADDRESS(S.v3));
 				break;
-				
+
 			//	FLOAT MipLODBias
 			case D3DSAMP_MIPMAPLODBIAS:
-				desc.MipLODBias = *((float*)(&(S.v3)));
+				desc.MipLODBias = *((float *)(&(S.v3)));
 				break;
 
 			//	UINT MaxAnisotropy;
@@ -529,13 +538,13 @@ void SimulatorStates::UpdateDesc( D3D_SAMPLER_DESC descArray[D3D_COMMONSHADER_SA
 
 			//	FLOAT BorderColor[4];
 			case D3DSAMP_BORDERCOLOR:
-				{
-					desc.BorderColor[0] = ((S.v3>>16)&0xff)/255.0f;
-					desc.BorderColor[1] = ((S.v3>>8)&0xff)/255.0f;
-					desc.BorderColor[2] = ((S.v3)&0xff)/255.0f;
-					desc.BorderColor[3] = ((S.v3>>24)&0xff)/255.0f;
-				}
-				break;
+			{
+				desc.BorderColor[0] = ((S.v3 >> 16) & 0xff) / 255.0f;
+				desc.BorderColor[1] = ((S.v3 >> 8) & 0xff) / 255.0f;
+				desc.BorderColor[2] = ((S.v3) & 0xff) / 255.0f;
+				desc.BorderColor[3] = ((S.v3 >> 24) & 0xff) / 255.0f;
+			}
+			break;
 
 			//	FLOAT MinLOD;
 			case XRDX10SAMP_MINLOD:
@@ -551,19 +560,19 @@ void SimulatorStates::UpdateDesc( D3D_SAMPLER_DESC descArray[D3D_COMMONSHADER_SA
 	}
 
 	//	Validate data
-	for ( int i=0; i<D3D_COMMONSHADER_SAMPLER_SLOT_COUNT; ++i)
+	for (int i = 0; i < D3D_COMMONSHADER_SAMPLER_SLOT_COUNT; ++i)
 	{
 		D3D_SAMPLER_DESC &desc = descArray[i];
-		if ( desc.Filter & FilterAnisotropic )
+		if (desc.Filter & FilterAnisotropic)
 		{
 			desc.Filter = (D3D_FILTER)(desc.Filter | AllfilterLinear);
-			//desc.Filter |= AllfilterLinear;
+			// desc.Filter |= AllfilterLinear;
 		}
 
-		VERIFY(desc.MinLOD<=desc.MaxLOD);
-		if (desc.MinLOD>desc.MaxLOD)
+		VERIFY(desc.MinLOD <= desc.MaxLOD);
+		if (desc.MinLOD > desc.MaxLOD)
 			desc.MaxLOD = desc.MinLOD;
 	}
 }
 
-#endif	//	USE_DX10
+#endif //	USE_DX10

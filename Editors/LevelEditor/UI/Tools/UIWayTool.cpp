@@ -3,8 +3,8 @@
 #include "WayPoint.h"
 UIWayTool::UIWayTool()
 {
-	m_WayMode = true;
-	m_AutoLink = true;
+    m_WayMode = true;
+    m_AutoLink = true;
 }
 
 UIWayTool::~UIWayTool()
@@ -41,14 +41,14 @@ void UIWayTool::Draw()
         {
             if (ImGui::Checkbox("Auto Link", &m_AutoLink))
             {
-               
             }
             ImGui::PushItemWidth(-1);
             float size = float(ImGui::CalcItemWidth());
             {
-                if (ImGui::Button("Create 1-Link", ImVec2(size / 2, 0))) 
+                if (ImGui::Button("Create 1-Link", ImVec2(size / 2, 0)))
                 {
-                    if (m_WayMode) {
+                    if (m_WayMode)
+                    {
                         ELog.DlgMsg(mtInformation, "Before editing enter Point Mode.");
                         return;
                     }
@@ -56,27 +56,31 @@ void UIWayTool::Draw()
                     ObjectList lst;
                     Scene->GetQueryObjects(lst, OBJCLASS_WAY, 1, 1, 0);
                     // remove links
-                    for (ObjectIt it = lst.begin(); it != lst.end(); it++) {
-                        ((CWayObject*)(*it))->RemoveLink();
-                        bRes |= ((CWayObject*)(*it))->Add1Link();
+                    for (ObjectIt it = lst.begin(); it != lst.end(); it++)
+                    {
+                        ((CWayObject *)(*it))->RemoveLink();
+                        bRes |= ((CWayObject *)(*it))->Add1Link();
                     }
-                    if (bRes) Scene->UndoSave();
+                    if (bRes)
+                        Scene->UndoSave();
                     ExecCommand(COMMAND_UPDATE_PROPERTIES);
                 }
                 ImGui::SameLine(0, 2);
-                if (ImGui::Button("Convert to 1-Link", ImVec2(size / 2, 0))) 
+                if (ImGui::Button("Convert to 1-Link", ImVec2(size / 2, 0)))
                 {
                     ObjectList lst;
                     int cnt = Scene->GetQueryObjects(lst, OBJCLASS_WAY, 1, 1, 0);
                     for (ObjectIt it = lst.begin(); it != lst.end(); it++)
-                        ((CWayObject*)(*it))->Convert1Link();
-                    if (cnt) Scene->UndoSave();
+                        ((CWayObject *)(*it))->Convert1Link();
+                    if (cnt)
+                        Scene->UndoSave();
                     ExecCommand(COMMAND_UPDATE_PROPERTIES);
                 }
 
-                if (ImGui::Button("Create 2-Link", ImVec2(size / 2, 0))) 
+                if (ImGui::Button("Create 2-Link", ImVec2(size / 2, 0)))
                 {
-                    if (m_WayMode) {
+                    if (m_WayMode)
+                    {
                         ELog.DlgMsg(mtInformation, "Before editing enter Point Mode.");
                         return;
                     }
@@ -84,50 +88,55 @@ void UIWayTool::Draw()
                     ObjectList lst;
                     Scene->GetQueryObjects(lst, OBJCLASS_WAY, 1, 1, 0);
                     for (ObjectIt it = lst.begin(); it != lst.end(); it++)
-                        bRes |= ((CWayObject*)(*it))->Add2Link();
-                    if (bRes) Scene->UndoSave();
+                        bRes |= ((CWayObject *)(*it))->Add2Link();
+                    if (bRes)
+                        Scene->UndoSave();
                     ExecCommand(COMMAND_UPDATE_PROPERTIES);
                 }
                 ImGui::SameLine(0, 2);
-                if (ImGui::Button("Convert to 2-Link", ImVec2(size / 2, 0))) 
+                if (ImGui::Button("Convert to 2-Link", ImVec2(size / 2, 0)))
                 {
                     ObjectList lst;
                     int cnt = Scene->GetQueryObjects(lst, OBJCLASS_WAY, 1, 1, 0);
                     for (ObjectIt it = lst.begin(); it != lst.end(); it++)
-                        ((CWayObject*)(*it))->Convert2Link();
-                    if (cnt) Scene->UndoSave();
+                        ((CWayObject *)(*it))->Convert2Link();
+                    if (cnt)
+                        Scene->UndoSave();
                     ExecCommand(COMMAND_UPDATE_PROPERTIES);
                 }
 
-                if (ImGui::Button("Invert Link", ImVec2(size / 2, 0))) 
+                if (ImGui::Button("Invert Link", ImVec2(size / 2, 0)))
                 {
-                    if (m_WayMode) {
+                    if (m_WayMode)
+                    {
                         ELog.DlgMsg(mtInformation, "Before editing enter Point Mode.");
                         return;
                     }
                     ObjectList lst;
                     int cnt = Scene->GetQueryObjects(lst, OBJCLASS_WAY, 1, 1, 0);
                     for (ObjectIt it = lst.begin(); it != lst.end(); it++)
-                        ((CWayObject*)(*it))->InvertLink();
-                    if (cnt) Scene->UndoSave();
+                        ((CWayObject *)(*it))->InvertLink();
+                    if (cnt)
+                        Scene->UndoSave();
                     ExecCommand(COMMAND_UPDATE_PROPERTIES);
                 }
                 ImGui::SameLine(0, 2);
                 if (ImGui::Button("Remove Link", ImVec2(size / 2, 0)))
                 {
-                    if (m_WayMode) {
+                    if (m_WayMode)
+                    {
                         ELog.DlgMsg(mtInformation, "Before editing enter Point Mode.");
                         return;
                     }
                     ObjectList lst;
                     int cnt = Scene->GetQueryObjects(lst, OBJCLASS_WAY, 1, 1, 0);
                     for (ObjectIt it = lst.begin(); it != lst.end(); it++)
-                        ((CWayObject*)(*it))->RemoveLink();
-                    if (cnt) Scene->UndoSave();
+                        ((CWayObject *)(*it))->RemoveLink();
+                    if (cnt)
+                        Scene->UndoSave();
                     ExecCommand(COMMAND_UPDATE_PROPERTIES);
                 }
             }
-
         }
         ImGui::Separator();
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());

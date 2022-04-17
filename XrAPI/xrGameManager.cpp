@@ -20,5 +20,5 @@ EGame xrGameManager::GetGame()
 
 EGamePath xrGameManager::GetPath()
 {
-    return GCurrentGame;
+	return GCurrentGame;
 }

@@ -4,7 +4,7 @@
 #include "Edit\ESceneCustomOTools.h"
 #include "Edit\CustomObject.h"
 #include "Edit\GroupObject.h"
-UIObjectList* UIObjectList::Form = nullptr;
+UIObjectList *UIObjectList::Form = nullptr;
 UIObjectList::UIObjectList()
 {
 	m_Mode = M_Visible;
@@ -28,7 +28,7 @@ void UIObjectList::Draw()
 	}
 	{
 		ImGui::BeginGroup();
-		if (ImGui::BeginChild("Left", ImVec2(-130, -ImGui::GetFrameHeight()-4), true))
+		if (ImGui::BeginChild("Left", ImVec2(-130, -ImGui::GetFrameHeight() - 4), true))
 		{
 			DrawObjects();
 		}
@@ -37,24 +37,21 @@ void UIObjectList::Draw()
 		ImGui::SetNextItemWidth(-130);
 		ImGui::InputText("##value", m_Filter, sizeof(m_Filter));
 		ImGui::EndGroup();
-
-	}ImGui::SameLine();
+	}
+	ImGui::SameLine();
 	if (ImGui::BeginChild("Right", ImVec2(130, 0)))
 	{
 		if (ImGui::RadioButton("All", m_Mode == M_All))
 		{
 			m_Mode = M_All;
-
 		}
 		if (ImGui::RadioButton("Visible Only", m_Mode == M_Visible))
 		{
 			m_Mode = M_Visible;
-
 		}
 		if (ImGui::RadioButton("Invisible Only", m_Mode == M_Inbvisible))
 		{
 			m_Mode = M_Inbvisible;
-
 		}
 		ImGui::Separator();
 		if (ImGui::Button("Show Selected", ImVec2(-1, 0)))
@@ -64,7 +61,6 @@ void UIObjectList::Draw()
 				m_SelectedObject->Show(true);
 				m_SelectedObject->Select(true);
 			}
-			
 		}
 		if (ImGui::Button("Hide Selected", ImVec2(-1, 0)))
 		{
@@ -93,12 +89,12 @@ void UIObjectList::Update()
 			xr_delete(Form);
 		}
 	}
-
 }
 
 void UIObjectList::Show()
 {
-	if (Form == nullptr)Form = xr_new< UIObjectList>();
+	if (Form == nullptr)
+		Form = xr_new<UIObjectList>();
 }
 
 void UIObjectList::Close()
@@ -108,18 +104,18 @@ void UIObjectList::Close()
 
 void UIObjectList::DrawObjects()
 {
-	
+
 	m_cur_cls = LTools->CurrentClassID();
-	string1024				str_name;
+	string1024 str_name;
 
 	for (SceneToolsMapPairIt it = Scene->FirstTool(); it != Scene->LastTool(); ++it)
 	{
-		ESceneCustomOTool* ot = dynamic_cast<ESceneCustomOTool*>(it->second);
+		ESceneCustomOTool *ot = dynamic_cast<ESceneCustomOTool *>(it->second);
 		if (ot && ((m_cur_cls == OBJCLASS_DUMMY) || (it->first == m_cur_cls)))
 		{
 			if (it->first == OBJCLASS_DUMMY)
 				continue;
-			ObjectList& lst = ot->GetObjects();
+			ObjectList &lst = ot->GetObjects();
 			ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 			if (ImGui::TreeNode("floder", ("%ss", it->second->ClassDesc())))
 			{
@@ -132,24 +128,26 @@ void UIObjectList::DrawObjects()
 						case UIObjectList::M_All:
 							break;
 						case UIObjectList::M_Visible:
-							if (!(*_F)->Visible())continue;
+							if (!(*_F)->Visible())
+								continue;
 							break;
 						case UIObjectList::M_Inbvisible:
-							if ((*_F)->Visible())continue;
+							if ((*_F)->Visible())
+								continue;
 							break;
 						default:
 							break;
 						}
 						{
-							strcpy(str_name, ((CGroupObject*)(*_F))->GetName());
+							strcpy(str_name, ((CGroupObject *)(*_F))->GetName());
 						}
 						DrawObject(*_F, str_name);
 						ImGui::PushID(str_name);
 						if (ImGui::TreeNode(str_name))
 						{
-							ObjectList 					grp_lst;
+							ObjectList grp_lst;
 
-							((CGroupObject*)(*_F))->GetObjects(grp_lst);
+							((CGroupObject *)(*_F))->GetObjects(grp_lst);
 
 							for (ObjectIt _G = grp_lst.begin(); _G != grp_lst.end(); _G++)
 							{
@@ -170,40 +168,41 @@ void UIObjectList::DrawObjects()
 						case UIObjectList::M_All:
 							break;
 						case UIObjectList::M_Visible:
-							if (!(*_F)->Visible())continue;
+							if (!(*_F)->Visible())
+								continue;
 							break;
 						case UIObjectList::M_Inbvisible:
-							if ((*_F)->Visible())continue;
+							if ((*_F)->Visible())
+								continue;
 							break;
 						default:
 							break;
 						}
-						DrawObject(*_F,0);
+						DrawObject(*_F, 0);
 						FindSelectedObj = FindSelectedObj | (*_F) == m_SelectedObject;
 					}
-					if (!FindSelectedObj)m_SelectedObject = nullptr;
-
+					if (!FindSelectedObj)
+						m_SelectedObject = nullptr;
 				}
 				ImGui::TreePop();
 			}
-
-
-			
 		}
 	}
 }
 
-void UIObjectList::DrawObject(CCustomObject* obj, const char* name)
+void UIObjectList::DrawObject(CCustomObject *obj, const char *name)
 {
 	if (m_Filter[0])
 	{
 		if (name)
 		{
-			if (strstr(name, m_Filter) == 0)return;
+			if (strstr(name, m_Filter) == 0)
+				return;
 		}
 		else
 		{
-			if (strstr(obj->GetName(), m_Filter) == 0)return;
+			if (strstr(obj->GetName(), m_Filter) == 0)
+				return;
 		}
 	}
 	ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
@@ -216,18 +215,15 @@ void UIObjectList::DrawObject(CCustomObject* obj, const char* name)
 	{
 		Flags |= ImGuiTreeNodeFlags_Selected;
 	}
-	if(name)
+	if (name)
 		ImGui::TreeNodeEx(name, Flags);
 	else
 		ImGui::TreeNodeEx(obj->GetName(), Flags);
 	if (ImGui::IsItemClicked())
 	{
-		if(!ImGui::GetIO().KeyCtrl)
+		if (!ImGui::GetIO().KeyCtrl)
 			Scene->SelectObjects(false, OBJCLASS_DUMMY);
 		obj->Select(true);
 		m_SelectedObject = obj;
 	}
 }
-
-
-

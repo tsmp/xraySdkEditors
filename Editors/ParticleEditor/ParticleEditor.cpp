@@ -3,15 +3,16 @@
 #include "stdafx.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-    if (!IsDebuggerPresent()) Debug._initialize(false);
+    if (!IsDebuggerPresent())
+        Debug._initialize(false);
     Core._initialize("Patricle", ELogCallback, 1, "fs.ltx", true);
 
     Tools = xr_new<CParticleTool>();
-    PTools = (CParticleTool*)Tools;
+    PTools = (CParticleTool *)Tools;
     UI = xr_new<CParticleMain>();
     UI->RegisterCommands();
 
-    UIMainForm* MainForm = xr_new< UIMainForm>();
+    UIMainForm *MainForm = xr_new<UIMainForm>();
     ::MainForm = MainForm;
     UI->Push(MainForm, false);
     while (MainForm->Frame())

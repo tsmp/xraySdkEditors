@@ -4,7 +4,7 @@
 #include "../../XrEUI/imgui_internal.h"
 #include "SceneObject.h"
 
-UIEditLibrary* UIEditLibrary::Form = nullptr;
+UIEditLibrary *UIEditLibrary::Form = nullptr;
 
 UIEditLibrary::UIEditLibrary()
 {
@@ -17,24 +17,24 @@ UIEditLibrary::UIEditLibrary()
 		m_NullTexture = texture_null->surface_get();
 		m_RealTexture = nullptr;
 	}
-	
-	m_ObjectList = xr_new<UIItemListForm>();	
+
+	m_ObjectList = xr_new<UIItemListForm>();
 	InitObjects();
 	m_ObjectList->SetOnItemFocusedEvent(TOnILItemFocused(this, &UIEditLibrary::OnItemFocused));
 	m_Props = xr_new<UIPropertiesForm>();
 }
 
-void UIEditLibrary::OnItemFocused(ListItem* item)
+void UIEditLibrary::OnItemFocused(ListItem *item)
 {
 	// TODO: возможно нужно текстуру удалять
-	//if (m_RealTexture)m_RemoveTexture = m_RealTexture;
+	// if (m_RealTexture)m_RemoveTexture = m_RealTexture;
 	m_RealTexture = nullptr;
 	m_Props->ClearProperties();
 	m_Current = nullptr;
 	if (item)
 	{
 		m_Current = item->Key();
-		auto* m_Thm = ImageLib.CreateThumbnail(m_Current, EImageThumbnail::ETObject);
+		auto *m_Thm = ImageLib.CreateThumbnail(m_Current, EImageThumbnail::ETObject);
 		if (m_Thm)
 		{
 			m_Thm->Update(m_RealTexture);
@@ -51,13 +51,12 @@ void UIEditLibrary::OnItemFocused(ListItem* item)
 		}
 	}
 
-    //UpdateObjectProperties();
-    UI->RedrawScene();
+	// UpdateObjectProperties();
+	UI->RedrawScene();
 }
 
 UIEditLibrary::~UIEditLibrary()
 {
-
 }
 
 void UIEditLibrary::InitObjects()
@@ -65,30 +64,30 @@ void UIEditLibrary::InitObjects()
 	ListItemsVec items;
 	FS_FileSet lst;
 
-	if (Lib.GetObjects(lst)) 
+	if (Lib.GetObjects(lst))
 	{
-		FS_FileSetIt	it = lst.begin();
-		FS_FileSetIt	_E = lst.end();
-		for (; it != _E; it++) 
+		FS_FileSetIt it = lst.begin();
+		FS_FileSetIt _E = lst.end();
+		for (; it != _E; it++)
 		{
 			xr_string fn;
-			ListItem* I = LHelper().CreateItem(items, it->name.c_str(), 0, ListItem::flDrawThumbnail, 0);
+			ListItem *I = LHelper().CreateItem(items, it->name.c_str(), 0, ListItem::flDrawThumbnail, 0);
 		}
 	}
-	//if (m_RealTexture)m_RemoveTexture = m_RealTexture;
-	//m_RealTexture = nullptr;
-	//m_Props->ClearProperties();
+	// if (m_RealTexture)m_RemoveTexture = m_RealTexture;
+	// m_RealTexture = nullptr;
+	// m_Props->ClearProperties();
 	m_ObjectList->AssignItems(items);
 
-	//m_Items.clear();
- //   //ListItemsVec items;
- //   FS_FileSet lst;
- //   Lib.GetObjects(lst);
- //   FS_FileSetIt it = lst.begin();
- //   FS_FileSetIt _E = lst.end();
- //   for (; it != _E; it++)
- //       LHelper().CreateItem(m_Items, it->name.c_str(), 0, 0, 0);
- //   //m_Items->AssignItems(items, false, true);
+	// m_Items.clear();
+	//   //ListItemsVec items;
+	//   FS_FileSet lst;
+	//   Lib.GetObjects(lst);
+	//   FS_FileSetIt it = lst.begin();
+	//   FS_FileSetIt _E = lst.end();
+	//   for (; it != _E; it++)
+	//       LHelper().CreateItem(m_Items, it->name.c_str(), 0, 0, 0);
+	//   //m_Items->AssignItems(items, false, true);
 }
 
 void UIEditLibrary::Update()
@@ -119,15 +118,15 @@ void UIEditLibrary::Close()
 
 void UIEditLibrary::DrawObjects()
 {
-	//if (ImGui::TreeNode("Object List"))
+	// if (ImGui::TreeNode("Object List"))
 	//{
 	//	ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-		ImGui::BeginChild("Object List");
-		ImGui::Separator();
-		//m_ObjectList->m_Flags.set(m_ObjectList->fMultiSelect, true);
-		m_ObjectList->Draw();
-		ImGui::Separator();
-		ImGui::EndChild();
+	ImGui::BeginChild("Object List");
+	ImGui::Separator();
+	// m_ObjectList->m_Flags.set(m_ObjectList->fMultiSelect, true);
+	m_ObjectList->Draw();
+	ImGui::Separator();
+	ImGui::EndChild();
 	//	ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 	//	ImGui::TreePop();
 	//}
@@ -209,11 +208,10 @@ void UIEditLibrary::DrawObjects()
 		}
 	}*/
 
+	// m_cur_cls = LTools->CurrentClassID();
+	// string1024				str_name;
 
-	//m_cur_cls = LTools->CurrentClassID();
-	//string1024				str_name;
-
-	//for (SceneToolsMapPairIt it = Scene->FirstTool(); it != Scene->LastTool(); ++it)
+	// for (SceneToolsMapPairIt it = Scene->FirstTool(); it != Scene->LastTool(); ++it)
 	//{
 	//	ESceneCustomOTool* ot = dynamic_cast<ESceneCustomOTool*>(it->second);
 	//	if (ot && ((m_cur_cls == OBJCLASS_DUMMY) || (it->first == m_cur_cls)))
@@ -291,7 +289,7 @@ void UIEditLibrary::DrawObjects()
 	//}
 }
 
-void UIEditLibrary::DrawObject(CCustomObject* obj, const char* name)
+void UIEditLibrary::DrawObject(CCustomObject *obj, const char *name)
 {
 	/*if (m_Filter[0])
 	{
@@ -348,7 +346,7 @@ void UIEditLibrary::DrawRightBar()
 
 		m_Props->Draw();
 
-		//if (disabled)
+		// if (disabled)
 		{
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
 			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
@@ -357,11 +355,17 @@ void UIEditLibrary::DrawRightBar()
 		if (ImGui::Button("Properties", ImVec2(-1, 0)))
 			OnPropertiesClick();
 
-		if (ImGui::Button("Make Thumbnail", ImVec2(-1, 0))) {}
-		if (ImGui::Button("Make LOD (High Quality)", ImVec2(-1, 0))) {}
-		if (ImGui::Button("Make LOD (Low Quality)", ImVec2(-1, 0))) {}
+		if (ImGui::Button("Make Thumbnail", ImVec2(-1, 0)))
+		{
+		}
+		if (ImGui::Button("Make LOD (High Quality)", ImVec2(-1, 0)))
+		{
+		}
+		if (ImGui::Button("Make LOD (Low Quality)", ImVec2(-1, 0)))
+		{
+		}
 
-		//if (disabled)
+		// if (disabled)
 		{
 			ImGui::PopItemFlag();
 			ImGui::PopStyleVar();
@@ -369,117 +373,128 @@ void UIEditLibrary::DrawRightBar()
 
 		ImGui::Checkbox("Preview", &m_Preview);
 
-		//if (m_Preview)
+		// if (m_Preview)
 		//	DrawSceneObjects();
 
-		//if (disabled)
+		// if (disabled)
 		{
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
 			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
 		}
 
-		if (ImGui::Button("Rename Object", ImVec2(-1, 0))) {}
-		if (ImGui::Button("Remove Object", ImVec2(-1, 0))) {}
+		if (ImGui::Button("Rename Object", ImVec2(-1, 0)))
+		{
+		}
+		if (ImGui::Button("Remove Object", ImVec2(-1, 0)))
+		{
+		}
 
-		if (ImGui::Button("Import Object", ImVec2(-1, 0))){}
-		if (ImGui::Button("Export LWO", ImVec2(-1, 0))){}			
+		if (ImGui::Button("Import Object", ImVec2(-1, 0)))
+		{
+		}
+		if (ImGui::Button("Export LWO", ImVec2(-1, 0)))
+		{
+		}
 
-		if (ImGui::Button("Save", ImVec2(-1, 0))){}
+		if (ImGui::Button("Save", ImVec2(-1, 0)))
+		{
+		}
 
-		//if (disabled)
+		// if (disabled)
 		{
 			ImGui::PopItemFlag();
 			ImGui::PopStyleVar();
 		}
 
-		if (ImGui::Button("Close", ImVec2(-1, 0))) Close();
+		if (ImGui::Button("Close", ImVec2(-1, 0)))
+			Close();
 
 		ImGui::EndChild();
 	}
 }
 
 ////---------------------------------------------------------------------------
-bool UIEditLibrary::SelectionToReference(ListItemsVec* props)
+bool UIEditLibrary::SelectionToReference(ListItemsVec *props)
 {
-    RStringVec					sel_strings;
-    ListItemsVec 				sel_items;
+	RStringVec sel_strings;
+	ListItemsVec sel_items;
 
-    //if (props == NULL)
-    //    m_Items->GetSelected(NULL, sel_items, false /*true*/);
-    //else
-        sel_items = *props;
+	// if (props == NULL)
+	//     m_Items->GetSelected(NULL, sel_items, false /*true*/);
+	// else
+	sel_items = *props;
 
-    ListItemsIt it = sel_items.begin();
-    ListItemsIt it_e = sel_items.end();
+	ListItemsIt it = sel_items.begin();
+	ListItemsIt it_e = sel_items.end();
 
-    for (; it != it_e; ++it)
-    {
-        ListItem* item = *it;
-        sel_strings.push_back(item->Key());
-    }
-    ChangeReference(sel_strings);
-    return                       sel_strings.size() > 0;
+	for (; it != it_e; ++it)
+	{
+		ListItem *item = *it;
+		sel_strings.push_back(item->Key());
+	}
+	ChangeReference(sel_strings);
+	return sel_strings.size() > 0;
 }
 
-void UIEditLibrary::ChangeReference(const RStringVec& items)
+void UIEditLibrary::ChangeReference(const RStringVec &items)
 {
-    xr_vector<CSceneObject*>::iterator it = m_pEditObjects.begin();
-    xr_vector<CSceneObject*>::iterator it_e = m_pEditObjects.end();
-    for (; it != it_e; ++it)
-    {
-        CSceneObject* SO = *it;
-        xr_delete(SO);
-    }
+	xr_vector<CSceneObject *>::iterator it = m_pEditObjects.begin();
+	xr_vector<CSceneObject *>::iterator it_e = m_pEditObjects.end();
+	for (; it != it_e; ++it)
+	{
+		CSceneObject *SO = *it;
+		xr_delete(SO);
+	}
 
-    m_pEditObjects.clear();
+	m_pEditObjects.clear();
 
-    RStringVec::const_iterator sit = items.begin();
-    RStringVec::const_iterator sit_e = items.end();
+	RStringVec::const_iterator sit = items.begin();
+	RStringVec::const_iterator sit_e = items.end();
 
-    for (; sit != sit_e; ++sit)
-    {
-        CSceneObject* SO = xr_new<CSceneObject>((LPVOID)0, (LPSTR)0);
-        m_pEditObjects.push_back(SO);
-        SO->SetReference((*sit).c_str());
+	for (; sit != sit_e; ++sit)
+	{
+		CSceneObject *SO = xr_new<CSceneObject>((LPVOID)0, (LPSTR)0);
+		m_pEditObjects.push_back(SO);
+		SO->SetReference((*sit).c_str());
 
-        CEditableObject* NE = SO->GetReference();
-        if (NE)
-        {
-            SO->FPosition = NE->t_vPosition;
-            SO->FScale = NE->t_vScale;
-            SO->FRotation = NE->t_vRotate;
-        }
-        // update transformation
-        SO->UpdateTransform();
+		CEditableObject *NE = SO->GetReference();
+		if (NE)
+		{
+			SO->FPosition = NE->t_vPosition;
+			SO->FScale = NE->t_vScale;
+			SO->FRotation = NE->t_vRotate;
+		}
+		// update transformation
+		SO->UpdateTransform();
 
-        /*
-            // save new position
-            CEditableObject* E				= m_pEditObject->GetReference();
+		/*
+			// save new position
+			CEditableObject* E				= m_pEditObject->GetReference();
 
-            if (E && new_name && (stricmp(E->GetName(),new_name))==0 ) return;
+			if (E && new_name && (stricmp(E->GetName(),new_name))==0 ) return;
 
-            if (E)
-            {
-                E->t_vPosition.set			(m_pEditObject->PPosition);
-                E->t_vScale.set				(m_pEditObject->PScale);
-                E->t_vRotate.set			(m_pEditObject->PRotation);
-            }
-            m_pEditObject->SetReference		(new_name);
-            // get old position
-            E								= m_pEditObject->GetReference();
-            if (E)
-            {
-                m_pEditObject->PPosition 	= E->t_vPosition;
-                m_pEditObject->PScale 		= E->t_vScale;
-                m_pEditObject->PRotation	= E->t_vRotate;
-            }
-            // update transformation
-            m_pEditObject->UpdateTransform	();
-        */
-    }
+			if (E)
+			{
+				E->t_vPosition.set			(m_pEditObject->PPosition);
+				E->t_vScale.set				(m_pEditObject->PScale);
+				E->t_vRotate.set			(m_pEditObject->PRotation);
+			}
+			m_pEditObject->SetReference		(new_name);
+			// get old position
+			E								= m_pEditObject->GetReference();
+			if (E)
+			{
+				m_pEditObject->PPosition 	= E->t_vPosition;
+				m_pEditObject->PScale 		= E->t_vScale;
+				m_pEditObject->PRotation	= E->t_vRotate;
+			}
+			// update transformation
+			m_pEditObject->UpdateTransform	();
+		*/
+	}
 
-    ExecCommand(COMMAND_EVICT_OBJECTS);
-    ExecCommand(COMMAND_EVICT_TEXTURES);
+	ExecCommand(COMMAND_EVICT_OBJECTS);
+	ExecCommand(COMMAND_EVICT_TEXTURES);
 }
 
 void UIEditLibrary::OnRender()
@@ -487,34 +502,34 @@ void UIEditLibrary::OnRender()
 	if (!Form)
 		return;
 
-    if (!Form->m_Preview) 
+	if (!Form->m_Preview)
 		return;
 
 	for (auto &it : Form->m_pEditObjects)
-    {
-        CSceneObject* SO = it;
-        CSceneObject* S = SO;
+	{
+		CSceneObject *SO = it;
+		CSceneObject *S = SO;
 
-        CEditableObject* O = SO->GetReference();		
-        if (O)
-        {
-			S->m_RT_Flags.set(S->flRT_Visible,true);
+		CEditableObject *O = SO->GetReference();
+		if (O)
+		{
+			S->m_RT_Flags.set(S->flRT_Visible, true);
 
-            if (!S->FPosition.similar(O->t_vPosition))
-                S->FPosition = O->t_vPosition;
+			if (!S->FPosition.similar(O->t_vPosition))
+				S->FPosition = O->t_vPosition;
 
-            if (!S->FRotation.similar(O->t_vRotate))
-                S->FRotation = O->t_vRotate;
+			if (!S->FRotation.similar(O->t_vRotate))
+				S->FRotation = O->t_vRotate;
 
-            if (!S->FScale.similar(O->t_vScale))
-                S->FScale = O->t_vScale;
+			if (!S->FScale.similar(O->t_vScale))
+				S->FScale = O->t_vScale;
 
-            SO->OnFrame();
-            SO->RenderSingle();
-			//static bool strict = true;
-			//SO->Render(0, strict);
-        }
-    }
+			SO->OnFrame();
+			SO->RenderSingle();
+			// static bool strict = true;
+			// SO->Render(0, strict);
+		}
+	}
 }
 
 void UIEditLibrary::Draw()
@@ -530,14 +545,14 @@ void UIEditLibrary::Draw()
 
 	{
 		ImGui::BeginGroup();
-		
-		if (ImGui::BeginChild("Left", ImVec2(-192, -ImGui::GetFrameHeight() - 4), true))		
+
+		if (ImGui::BeginChild("Left", ImVec2(-192, -ImGui::GetFrameHeight() - 4), true))
 			DrawObjects();
-		
+
 		ImGui::EndChild();
 		ImGui::SetNextItemWidth(-192);
 		ImGui::Text(" Items count: %u", m_ObjectList->m_Items.size());
-		//ImGui::InputText("##value", m_Filter, sizeof(m_Filter));
+		// ImGui::InputText("##value", m_Filter, sizeof(m_Filter));
 		ImGui::EndGroup();
 	}
 
@@ -548,14 +563,14 @@ void UIEditLibrary::Draw()
 	ImGui::End();
 }
 
-//TfrmObjectList
-//UIObjectList
+// TfrmObjectList
+// UIObjectList
 //
-//TfrmEditLibrary::ShowEditor()
+// TfrmEditLibrary::ShowEditor()
 //
-//esEditLibrary
+// esEditLibrary
 //
-//OpenObjectList
+// OpenObjectList
 
 //
 //
@@ -595,10 +610,10 @@ void UIEditLibrary::Draw()
 //#pragma link "MXCtrls"
 //#pragma resource "*.dfm"
 //
-//TfrmEditLibrary* TfrmEditLibrary::form = 0;
-//FS_FileSet TfrmEditLibrary::modif_map;
-//bool TfrmEditLibrary::bFinalExit = false;
-//bool TfrmEditLibrary::bExitResult = true;
+// TfrmEditLibrary* TfrmEditLibrary::form = 0;
+// FS_FileSet TfrmEditLibrary::modif_map;
+// bool TfrmEditLibrary::bFinalExit = false;
+// bool TfrmEditLibrary::bExitResult = true;
 //
 ////---------------------------------------------------------------------------
 //__fastcall TfrmEditLibrary::TfrmEditLibrary(TComponent* Owner)
@@ -615,199 +630,199 @@ void UIEditLibrary::Draw()
 //    bReadOnly = false;
 //}
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::ShowEditor()
+// void __fastcall TfrmEditLibrary::ShowEditor()
 //{
-//    if (!form) {
-//        form = xr_new<TfrmEditLibrary>((TComponent*)0);
-//        Scene->lock();
-//    }
-//    form->Show();
-//}
+//     if (!form) {
+//         form = xr_new<TfrmEditLibrary>((TComponent*)0);
+//         Scene->lock();
+//     }
+//     form->Show();
+// }
 ////---------------------------------------------------------------------------
-//CSceneObject* __fastcall TfrmEditLibrary::RayPick(const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)
+// CSceneObject* __fastcall TfrmEditLibrary::RayPick(const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)
 //{
-//    if (!form) return 0;
-//    if (form->cbPreview->Checked)
-//    {
-//        float dist = UI->ZFar();
-//        xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
-//        xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
-//        for (; it != it_e; ++it)
-//        {
-//            CSceneObject* SO = *it;
+//     if (!form) return 0;
+//     if (form->cbPreview->Checked)
+//     {
+//         float dist = UI->ZFar();
+//         xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
+//         xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
+//         for (; it != it_e; ++it)
+//         {
+//             CSceneObject* SO = *it;
 //
-//            if (SO->RayPick(dist, start, direction, pinf))
-//            {
-//                R_ASSERT(pinf && pinf->e_mesh && pinf->e_obj);
-//                form->m_Props->OnPick(*pinf);
-//                pinf->s_obj = SO;
-//                return SO;
-//            }
-//        }
-//    }
-//    return 0;
-//}
+//             if (SO->RayPick(dist, start, direction, pinf))
+//             {
+//                 R_ASSERT(pinf && pinf->e_mesh && pinf->e_obj);
+//                 form->m_Props->OnPick(*pinf);
+//                 pinf->s_obj = SO;
+//                 return SO;
+//             }
+//         }
+//     }
+//     return 0;
+// }
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::OnRender()
+// void __fastcall TfrmEditLibrary::OnRender()
 //{
-//    if (!form) return;
-//    if (!form->cbPreview->Checked) return;
-//    xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
-//    xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
-//    for (; it != it_e; ++it)
-//    {
-//        CSceneObject* SO = *it;
+//     if (!form) return;
+//     if (!form->cbPreview->Checked) return;
+//     xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
+//     xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
+//     for (; it != it_e; ++it)
+//     {
+//         CSceneObject* SO = *it;
 //
-//        CSceneObject* S = SO;
+//         CSceneObject* S = SO;
 //
-//        CEditableObject* O = SO->GetReference();
-//        if (O)
-//        {
-//            if (!S->PPosition.similar(O->t_vPosition))
-//                S->PPosition = O->t_vPosition;
+//         CEditableObject* O = SO->GetReference();
+//         if (O)
+//         {
+//             if (!S->PPosition.similar(O->t_vPosition))
+//                 S->PPosition = O->t_vPosition;
 //
-//            if (!S->PRotation.similar(O->t_vRotate))
-//                S->PRotation = O->t_vRotate;
+//             if (!S->PRotation.similar(O->t_vRotate))
+//                 S->PRotation = O->t_vRotate;
 //
-//            if (!S->PScale.similar(O->t_vScale))
-//                S->PScale = O->t_vScale;
+//             if (!S->PScale.similar(O->t_vScale))
+//                 S->PScale = O->t_vScale;
 //
-//            SO->OnFrame();
-//            SO->RenderSingle();
-//        }
-//    }
-//}
-//
-////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::ZoomObject()
-//{
-//    if (!form) return;
-//    if (!form->cbPreview->Checked) return;
-//
-//    xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
-//    xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
-//    Fbox bb_max;
-//    for (; it != it_e; ++it)
-//    {
-//        CSceneObject* SO = *it;
-//        Fbox bb;
-//        if (SO->GetBox(bb))
-//            bb_max.merge(bb);
-//    }
-//    EDevice.m_Camera.ZoomExtents(bb_max);
-//}
+//             SO->OnFrame();
+//             SO->RenderSingle();
+//         }
+//     }
+// }
 //
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::FormShow(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ZoomObject()
 //{
-//    UI->BeginEState(esEditLibrary);
-//    modif_map.clear();
+//     if (!form) return;
+//     if (!form->cbPreview->Checked) return;
 //
-//    InitObjects();
-//    ebSave->Enabled = false;
-//    // add directional light
-//    Flight L;
-//    ZeroMemory(&L, sizeof(Flight));
-//    L.type = D3DLIGHT_DIRECTIONAL;
-//    L.diffuse.set(1, 1, 1, 1);
-//    L.direction.set(1, -1, 1); L.direction.normalize();
-//    EDevice.SetLight(0, L);
-//    EDevice.LightEnable(0, true);
-//    L.diffuse.set(0.5, 0.5, 0.5, 1);
-//    L.direction.set(1, -1, -1); L.direction.normalize();
-//    EDevice.SetLight(1, L);
-//    EDevice.LightEnable(1, true);
+//     xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
+//     xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
+//     Fbox bb_max;
+//     for (; it != it_e; ++it)
+//     {
+//         CSceneObject* SO = *it;
+//         Fbox bb;
+//         if (SO->GetBox(bb))
+//             bb_max.merge(bb);
+//     }
+//     EDevice.m_Camera.ZoomExtents(bb_max);
+// }
 //
-//    // check window position
-//    UI->CheckWindowPos(this);
-//}
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::FormClose(TObject* Sender, TCloseAction& Action)
+// void __fastcall TfrmEditLibrary::FormShow(TObject* Sender)
 //{
-//    Action = caFree;
+//     UI->BeginEState(esEditLibrary);
+//     modif_map.clear();
 //
-//    if (!bFinalExit && ebSave->Enabled) {
-//        bFinalExit = false;
-//        UI->SetStatus("Objects reloading...");
-//        FS_FileSetIt it = modif_map.begin();
-//        FS_FileSetIt _E = modif_map.end();
-//        for (; it != _E; it++)
-//            Lib.ReloadObject(it->name.c_str());
-//        UI->ResetStatus();
-//    }
-//    Scene->unlock();
+//     InitObjects();
+//     ebSave->Enabled = false;
+//     // add directional light
+//     Flight L;
+//     ZeroMemory(&L, sizeof(Flight));
+//     L.type = D3DLIGHT_DIRECTIONAL;
+//     L.diffuse.set(1, 1, 1, 1);
+//     L.direction.set(1, -1, 1); L.direction.normalize();
+//     EDevice.SetLight(0, L);
+//     EDevice.LightEnable(0, true);
+//     L.diffuse.set(0.5, 0.5, 0.5, 1);
+//     L.direction.set(1, -1, -1); L.direction.normalize();
+//     EDevice.SetLight(1, L);
+//     EDevice.LightEnable(1, true);
 //
-//    UI->EndEState(esEditLibrary);
-//
-//    // remove directional light                             
-//    EDevice.LightEnable(0, false);
-//    EDevice.LightEnable(1, false);
-//
-//    xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
-//    xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
-//    for (; it != it_e; ++it)
-//    {
-//        CSceneObject* SO = *it;
-//        xr_delete(SO);
-//    }
-//    form->m_pEditObjects.clear();
-//    xr_delete(m_Thm);
-//
-//
-//}
+//     // check window position
+//     UI->CheckWindowPos(this);
+// }
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::FormDestroy(TObject* Sender)
+// void __fastcall TfrmEditLibrary::FormClose(TObject* Sender, TCloseAction& Action)
 //{
-//    TItemList::DestroyForm(m_Items);
-//    TfrmPropertiesEObject::DestroyProperties(m_Props);
+//     Action = caFree;
 //
-//    form = 0;
+//     if (!bFinalExit && ebSave->Enabled) {
+//         bFinalExit = false;
+//         UI->SetStatus("Objects reloading...");
+//         FS_FileSetIt it = modif_map.begin();
+//         FS_FileSetIt _E = modif_map.end();
+//         for (; it != _E; it++)
+//             Lib.ReloadObject(it->name.c_str());
+//         UI->ResetStatus();
+//     }
+//     Scene->unlock();
 //
-//    ExecCommand(COMMAND_CLEAR);
-//}
+//     UI->EndEState(esEditLibrary);
+//
+//     // remove directional light
+//     EDevice.LightEnable(0, false);
+//     EDevice.LightEnable(1, false);
+//
+//     xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
+//     xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
+//     for (; it != it_e; ++it)
+//     {
+//         CSceneObject* SO = *it;
+//         xr_delete(SO);
+//     }
+//     form->m_pEditObjects.clear();
+//     xr_delete(m_Thm);
+//
+//
+// }
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::FormCloseQuery(TObject* Sender, bool& CanClose)
+// void __fastcall TfrmEditLibrary::FormDestroy(TObject* Sender)
 //{
-//    CanClose = true;
-//    if (ebSave->Enabled) {
-//        int res = ELog.DlgMsg(mtConfirmation, "Library was change. Do you want save?");
-//        if (res == mrCancel) CanClose = false;
-//        if (res == mrYes) ebSaveClick(0);
-//    }
-//    bExitResult = CanClose;
-//}
-////---------------------------------------------------------------------------
-//bool TfrmEditLibrary::FinalClose()
-//{
-//    if (!form) return true;
-//    bFinalExit = true;
-//    form->Close();
-//    return bExitResult;
-//}
-////---------------------------------------------------------------------------
-//void TfrmEditLibrary::OnModified()
-//{
-//    if (!form) 				return;
-//    form->ebSave->Enabled = true;
+//     TItemList::DestroyForm(m_Items);
+//     TfrmPropertiesEObject::DestroyProperties(m_Props);
 //
-//    xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
-//    xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
-//    for (; it != it_e; ++it)
-//    {
-//        CSceneObject* SO = *it;
-//        CEditableObject* E = SO->GetReference();
-//        if (E)
-//        {
-//            modif_map.insert(FS_File(E->GetName()));
-//            E->Modified();
-//            SO->UpdateTransform();
-//        }
-//    }
-//    UI->RedrawScene();
-//}
+//     form = 0;
+//
+//     ExecCommand(COMMAND_CLEAR);
+// }
+////---------------------------------------------------------------------------
+// void __fastcall TfrmEditLibrary::FormCloseQuery(TObject* Sender, bool& CanClose)
+//{
+//     CanClose = true;
+//     if (ebSave->Enabled) {
+//         int res = ELog.DlgMsg(mtConfirmation, "Library was change. Do you want save?");
+//         if (res == mrCancel) CanClose = false;
+//         if (res == mrYes) ebSaveClick(0);
+//     }
+//     bExitResult = CanClose;
+// }
+////---------------------------------------------------------------------------
+// bool TfrmEditLibrary::FinalClose()
+//{
+//     if (!form) return true;
+//     bFinalExit = true;
+//     form->Close();
+//     return bExitResult;
+// }
+////---------------------------------------------------------------------------
+// void TfrmEditLibrary::OnModified()
+//{
+//     if (!form) 				return;
+//     form->ebSave->Enabled = true;
+//
+//     xr_vector<CSceneObject*>::iterator it = form->m_pEditObjects.begin();
+//     xr_vector<CSceneObject*>::iterator it_e = form->m_pEditObjects.end();
+//     for (; it != it_e; ++it)
+//     {
+//         CSceneObject* SO = *it;
+//         CEditableObject* E = SO->GetReference();
+//         if (E)
+//         {
+//             modif_map.insert(FS_File(E->GetName()));
+//             E->Modified();
+//             SO->UpdateTransform();
+//         }
+//     }
+//     UI->RedrawScene();
+// }
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::OnItemsFocused(ListItemsVec& items)
+// void __fastcall TfrmEditLibrary::OnItemsFocused(ListItemsVec& items)
 //{
 //    xr_delete(m_Thm);
 //    //    bool mt			= false;
@@ -865,13 +880,13 @@ void UIEditLibrary::Draw()
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::cbPreviewClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::cbPreviewClick(TObject* Sender)
 //{
 //    RefreshSelected();
 //}
 ////---------------------------------------------------------------------------
 //
-//void TfrmEditLibrary::InitObjects()
+// void TfrmEditLibrary::InitObjects()
 //{
 //    ListItemsVec items;
 //    FS_FileSet lst;
@@ -884,7 +899,7 @@ void UIEditLibrary::Draw()
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::FormKeyDown(TObject* Sender, WORD& Key,
+// void __fastcall TfrmEditLibrary::FormKeyDown(TObject* Sender, WORD& Key,
 //    TShiftState Shift)
 //{
 //    if (Shift.Contains(ssCtrl)) {
@@ -901,37 +916,37 @@ void UIEditLibrary::Draw()
 ////---------------------------------------------------------------------------
 //
 //
-//void __fastcall TfrmEditLibrary::ebPropertiesClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebPropertiesClick(TObject* Sender)
 //{
 //    SelectionToReference(NULL);
 //    UpdateObjectProperties();
 //    m_Props->ShowProperties();
 //}
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::ebSaveClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebSaveClick(TObject* Sender)
 //{
-//    RStringVec			sel_strings;
-//    ebSave->Enabled = false;
-//    ChangeReference(sel_strings);
-//    Lib.Save(&modif_map);
-//    modif_map.clear();
-//    RefreshSelected();
-//}
+//     RStringVec			sel_strings;
+//     ebSave->Enabled = false;
+//     ChangeReference(sel_strings);
+//     Lib.Save(&modif_map);
+//     modif_map.clear();
+//     RefreshSelected();
+// }
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::ebCancelClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebCancelClick(TObject* Sender)
 //{
 //    Close();
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::tvItemsDblClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::tvItemsDblClick(TObject* Sender)
 //{
 //    ebPropertiesClick(Sender);
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::ebMakeThmClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebMakeThmClick(TObject* Sender)
 //{
 //    U32Vec 						pixels;
 //
@@ -992,7 +1007,7 @@ void UIEditLibrary::Draw()
 //}
 ////---------------------------------------------------------------------------
 //
-//bool TfrmEditLibrary::GenerateLOD(ListItemsVec& props, bool bHighQuality)
+// bool TfrmEditLibrary::GenerateLOD(ListItemsVec& props, bool bHighQuality)
 //{
 //    ListItemsIt it = props.begin();
 //    ListItemsIt it_e = props.end();
@@ -1070,7 +1085,7 @@ void UIEditLibrary::Draw()
 //}
 ////---------------------------------------------------------------------------
 //
-//void TfrmEditLibrary::MakeLOD(bool bHighQuality)
+// void TfrmEditLibrary::MakeLOD(bool bHighQuality)
 //{
 //    if (ebSave->Enabled) {
 //        ELog.DlgMsg(mtError, "Save library changes before generating LOD.");
@@ -1154,19 +1169,19 @@ void UIEditLibrary::Draw()
 //    */
 //}
 //
-//void __fastcall TfrmEditLibrary::ebMakeLOD_highClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebMakeLOD_highClick(TObject* Sender)
 //{
 //    MakeLOD(true);
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::ebMakeLOD_lowClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebMakeLOD_lowClick(TObject* Sender)
 //{
 //    MakeLOD(false);
 //}
 ////---------------------------------------------------------------------------
 //
-//void TfrmEditLibrary::ChangeReference(const RStringVec& items)
+// void TfrmEditLibrary::ChangeReference(const RStringVec& items)
 //{
 //    xr_vector<CSceneObject*>::iterator it = m_pEditObjects.begin();
 //    xr_vector<CSceneObject*>::iterator it_e = m_pEditObjects.end();
@@ -1226,7 +1241,7 @@ void UIEditLibrary::Draw()
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::ResetSelected()
+// void __fastcall TfrmEditLibrary::ResetSelected()
 //{
 //    if (form)
 //    {
@@ -1240,50 +1255,50 @@ void UIEditLibrary::Draw()
 //    }
 //}
 ////---------------------------------------------------------------------------
-//bool TfrmEditLibrary::SelectionToReference(ListItemsVec* props)
+// bool TfrmEditLibrary::SelectionToReference(ListItemsVec* props)
 //{
-//    RStringVec					sel_strings;
-//    ListItemsVec 				sel_items;
+//     RStringVec					sel_strings;
+//     ListItemsVec 				sel_items;
 //
-//    if (props == NULL)
-//        m_Items->GetSelected(NULL, sel_items, false /*true*/);
-//    else
-//        sel_items = *props;
+//     if (props == NULL)
+//         m_Items->GetSelected(NULL, sel_items, false /*true*/);
+//     else
+//         sel_items = *props;
 //
-//    ListItemsIt it = sel_items.begin();
-//    ListItemsIt it_e = sel_items.end();
+//     ListItemsIt it = sel_items.begin();
+//     ListItemsIt it_e = sel_items.end();
 //
-//    for (; it != it_e; ++it)
-//    {
-//        ListItem* item = *it;
-//        sel_strings.push_back(item->Key());
-//    }
-//    ChangeReference(sel_strings);
-//    return                       sel_strings.size() > 0;
-//}
+//     for (; it != it_e; ++it)
+//     {
+//         ListItem* item = *it;
+//         sel_strings.push_back(item->Key());
+//     }
+//     ChangeReference(sel_strings);
+//     return                       sel_strings.size() > 0;
+// }
 //
-//void __fastcall TfrmEditLibrary::RefreshSelected()
+// void __fastcall TfrmEditLibrary::RefreshSelected()
 //{
-//    if (form)
-//    {
-//        bool mt = false;
-//        if (cbPreview->Checked)
-//            mt = SelectionToReference(NULL);
+//     if (form)
+//     {
+//         bool mt = false;
+//         if (cbPreview->Checked)
+//             mt = SelectionToReference(NULL);
 //
-//        ebMakeThm->Enabled = !bReadOnly && mt;
-//        ebMakeLOD_high->Enabled = !bReadOnly && cbPreview->Checked;
-//        ebMakeLOD_low->Enabled = !bReadOnly && cbPreview->Checked;
-//        UI->RedrawScene();
-//    }
-//}
+//         ebMakeThm->Enabled = !bReadOnly && mt;
+//         ebMakeLOD_high->Enabled = !bReadOnly && cbPreview->Checked;
+//         ebMakeLOD_low->Enabled = !bReadOnly && cbPreview->Checked;
+//         UI->RedrawScene();
+//     }
+// }
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::paImagePaint(TObject* Sender)
+// void __fastcall TfrmEditLibrary::paImagePaint(TObject* Sender)
 //{
-//    if (m_Thm) m_Thm->Draw(paImage);
-//}
+//     if (m_Thm) m_Thm->Draw(paImage);
+// }
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::ebExportLWOClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebExportLWOClick(TObject* Sender)
 //{
 //    TElTreeItem* node = m_Items->GetSelected();
 //    if (node && FHelper.IsObject(node))
@@ -1318,109 +1333,109 @@ void UIEditLibrary::Draw()
 //}
 //
 ////---------------------------------------------------------------------------
-//void __fastcall TfrmEditLibrary::ebImportClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebImportClick(TObject* Sender)
 //{
-//    xr_string open_nm, save_nm, nm;
-//    if (EFS.GetOpenName(_import_, open_nm, true))
-//    {
-//        // remove selected object
-//        ResetSelected();
-//        // load
-//        AStringVec 				lst;
-//        _SequenceToList(lst, open_nm.c_str());
-//        bool bNeedUpdate = false;
-//        // folder name
-//        AnsiString 				folder;
+//     xr_string open_nm, save_nm, nm;
+//     if (EFS.GetOpenName(_import_, open_nm, true))
+//     {
+//         // remove selected object
+//         ResetSelected();
+//         // load
+//         AStringVec 				lst;
+//         _SequenceToList(lst, open_nm.c_str());
+//         bool bNeedUpdate = false;
+//         // folder name
+//         AnsiString 				folder;
 //
 //
-//        ListItemsVec 				sel_items;
-//        m_Items->GetSelected(NULL, sel_items, false);
-//        if (sel_items.size())
-//            FHelper.GetFolderName(sel_items[0]->Key(), folder);
+//         ListItemsVec 				sel_items;
+//         m_Items->GetSelected(NULL, sel_items, false);
+//         if (sel_items.size())
+//             FHelper.GetFolderName(sel_items[0]->Key(), folder);
 //
-//        xr_string m_LastSelection;
-//        for (AStringIt it = lst.begin(); it != lst.end(); ++it)
-//        {
-//            nm = ChangeFileExt(ExtractFileName(*it), "").c_str();
-//            CEditableObject* O = xr_new<CEditableObject>(nm.c_str());
-//            if (O->Load(it->c_str()))
-//            {
-//                save_nm = xr_string(FS.get_path(_objects_)->m_Path) + folder.c_str() + EFS.ChangeFileExt(nm, ".object");
+//         xr_string m_LastSelection;
+//         for (AStringIt it = lst.begin(); it != lst.end(); ++it)
+//         {
+//             nm = ChangeFileExt(ExtractFileName(*it), "").c_str();
+//             CEditableObject* O = xr_new<CEditableObject>(nm.c_str());
+//             if (O->Load(it->c_str()))
+//             {
+//                 save_nm = xr_string(FS.get_path(_objects_)->m_Path) + folder.c_str() + EFS.ChangeFileExt(nm, ".object");
 //
-//                if (FS.exist(save_nm.c_str()))
-//                    if (mrNo == ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Object '%s' already exist. Owerwrite it?", nm.c_str()))
-//                    {
-//                        xr_delete(O);
-//                        break;
-//                    }
+//                 if (FS.exist(save_nm.c_str()))
+//                     if (mrNo == ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Object '%s' already exist. Owerwrite it?", nm.c_str()))
+//                     {
+//                         xr_delete(O);
+//                         break;
+//                     }
 //
-//                O->Save(save_nm.c_str());
-//                EFS.MarkFile(it->c_str(), true);
-//                bNeedUpdate = true;
-//            }
-//            else
-//                ELog.DlgMsg(mtError, "Can't load file '%s'.", it->c_str());
+//                 O->Save(save_nm.c_str());
+//                 EFS.MarkFile(it->c_str(), true);
+//                 bNeedUpdate = true;
+//             }
+//             else
+//                 ELog.DlgMsg(mtError, "Can't load file '%s'.", it->c_str());
 //
-//            xr_delete(O);
+//             xr_delete(O);
 //
-//            LPCSTR p = FS.get_path(_objects_)->m_Path;
-//            if (folder.Pos(p) > 0)
-//            {
-//                m_LastSelection = xr_string(folder.c_str() + strlen(p)) + nm;
-//                xr_strlwr(m_LastSelection);
-//            }
-//            else {
-//                m_LastSelection = xr_string(folder.c_str()) + nm;
-//            }
-//        }
-//        if (bNeedUpdate)
-//        {
-//            Lib.CleanLibrary();
-//            InitObjects();
-//            m_Items->SelectItem(m_LastSelection.c_str(), true, false, true);
-//        }
-//    }
-//}
+//             LPCSTR p = FS.get_path(_objects_)->m_Path;
+//             if (folder.Pos(p) > 0)
+//             {
+//                 m_LastSelection = xr_string(folder.c_str() + strlen(p)) + nm;
+//                 xr_strlwr(m_LastSelection);
+//             }
+//             else {
+//                 m_LastSelection = xr_string(folder.c_str()) + nm;
+//             }
+//         }
+//         if (bNeedUpdate)
+//         {
+//             Lib.CleanLibrary();
+//             InitObjects();
+//             m_Items->SelectItem(m_LastSelection.c_str(), true, false, true);
+//         }
+//     }
+// }
 ////---------------------------------------------------------------------------
 //
-//void TfrmEditLibrary::UpdateObjectProperties()
+// void TfrmEditLibrary::UpdateObjectProperties()
 //{
 //    m_Props->UpdateProperties(m_pEditObjects, bReadOnly);
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::FormActivate(TObject* Sender)
+// void __fastcall TfrmEditLibrary::FormActivate(TObject* Sender)
 //{
 //    m_Items->SetILFocus();
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::OnObjectRename(LPCSTR p0, LPCSTR p1, EItemType type)
+// void __fastcall TfrmEditLibrary::OnObjectRename(LPCSTR p0, LPCSTR p1, EItemType type)
 //{
 //    Lib.RenameObject(p0, p1, type);
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::fsStorageRestorePlacement(TObject* Sender)
+// void __fastcall TfrmEditLibrary::fsStorageRestorePlacement(TObject* Sender)
 //{
 //    m_Items->LoadSelection(fsStorage);
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::fsStorageSavePlacement(TObject* Sender)
+// void __fastcall TfrmEditLibrary::fsStorageSavePlacement(TObject* Sender)
 //{
 //    m_Items->SaveSelection(fsStorage);
 //}
 ////---------------------------------------------------------------------------
 //
 //
-//void __fastcall TfrmEditLibrary::ebRenameObjectClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebRenameObjectClick(TObject* Sender)
 //{
 //    m_Items->RenameSelItem();
 //}
 ////---------------------------------------------------------------------------
 //
-//void __fastcall TfrmEditLibrary::ebRemoveObjectClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebRemoveObjectClick(TObject* Sender)
 //{
 //    m_Items->RemoveSelItems();
 //}
@@ -1428,7 +1443,7 @@ void UIEditLibrary::Draw()
 //
 //#include "../ECore/Editor/ExportObjectOGF.h"
 //
-//void __fastcall TfrmEditLibrary::ebExportOBJClick(TObject* Sender)
+// void __fastcall TfrmEditLibrary::ebExportOBJClick(TObject* Sender)
 //{
 //    if (!cbPreview->Checked)
 //    {
@@ -1481,7 +1496,7 @@ void UIEditLibrary::Draw()
 //    ELog.DlgMsg(mtInformation, "Done.");
 //}
 //
-//void TfrmEditLibrary::ExportOneOBJ(CEditableObject* EO)
+// void TfrmEditLibrary::ExportOneOBJ(CEditableObject* EO)
 //{
 //    string_path			fn;
 //    FS.update_path(fn, _import_, EO->m_LibName.c_str());

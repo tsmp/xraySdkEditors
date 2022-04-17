@@ -15,61 +15,59 @@
 #include "editor_environment_manager.hpp"
 #include "editor_environment_detail.hpp"
 
-using XrWeatherEditor::environment::suns::gradient;
 using XrWeatherEditor::property_holder;
 using XrWeatherEditor::property_holder_collection;
+using XrWeatherEditor::environment::suns::gradient;
 using XrWeatherEditor::environment::suns::manager;
 
-gradient::gradient			() :
-	m_use					(false),
-    m_opacity				(.0f),
-    m_radius				(.0f),
-    m_shader				(""),
-    m_texture				("")
+gradient::gradient() : m_use(false),
+					   m_opacity(.0f),
+					   m_radius(.0f),
+					   m_shader(""),
+					   m_texture("")
 {
 }
 
-void gradient::load			(CInifile& config, shared_str const& section)
+void gradient::load(CInifile &config, shared_str const &section)
 {
-	m_use					= !!READ_IF_EXISTS(&config, r_bool,		section, "gradient",				true);
-    m_opacity				=   READ_IF_EXISTS(&config, r_float,	section, "gradient_opacity",		.7f);
-    m_radius				=   READ_IF_EXISTS(&config, r_float,	section, "gradient_radius",		.9f);
-    m_shader				=   READ_IF_EXISTS(&config, r_string,	section, "gradient_shader",		"effects\\flare");
-    m_texture				=   READ_IF_EXISTS(&config, r_string,	section, "gradient_texture",		"fx\\fx_gradient.tga");
+	m_use = !!READ_IF_EXISTS(&config, r_bool, section, "gradient", true);
+	m_opacity = READ_IF_EXISTS(&config, r_float, section, "gradient_opacity", .7f);
+	m_radius = READ_IF_EXISTS(&config, r_float, section, "gradient_radius", .9f);
+	m_shader = READ_IF_EXISTS(&config, r_string, section, "gradient_shader", "effects\\flare");
+	m_texture = READ_IF_EXISTS(&config, r_string, section, "gradient_texture", "fx\\fx_gradient.tga");
 }
 
-bool gradient::use_getter	()
+bool gradient::use_getter()
 {
-	return					(m_use);
+	return (m_use);
 }
 
-void gradient::use_setter	(bool value)
+void gradient::use_setter(bool value)
 {
 	if (m_use == value)
 		return;
 
-	m_use					= value;
-//	m_property_holder->clear();
-//	fill_internal			();
+	m_use = value;
+	//	m_property_holder->clear();
+	//	fill_internal			();
 }
 
-void gradient::fill			(
-		manager const& manager,
-		property_holder* holder,
-		property_holder_collection* collection
-	)
+void gradient::fill(
+	manager const &manager,
+	property_holder *holder,
+	property_holder_collection *collection)
 {
-	XrWeatherEditor::property_holder*	properties = holder;
-	VERIFY						(properties);
+	XrWeatherEditor::property_holder *properties = holder;
+	VERIFY(properties);
 
-	typedef XrWeatherEditor::property_holder::boolean_getter_type	boolean_getter_type;
-	boolean_getter_type			boolean_getter;
+	typedef XrWeatherEditor::property_holder::boolean_getter_type boolean_getter_type;
+	boolean_getter_type boolean_getter;
 
-	typedef XrWeatherEditor::property_holder::boolean_setter_type	boolean_setter_type;
-	boolean_setter_type			boolean_setter;
+	typedef XrWeatherEditor::property_holder::boolean_setter_type boolean_setter_type;
+	boolean_setter_type boolean_setter;
 
-	boolean_getter.bind			(this, &gradient::use_getter);
-	boolean_setter.bind			(this, &gradient::use_setter);
+	boolean_getter.bind(this, &gradient::use_getter);
+	boolean_setter.bind(this, &gradient::use_setter);
 
 	properties->add_property(
 		"use",
@@ -81,22 +79,19 @@ void gradient::fill			(
 		property_holder::property_read_write,
 		property_holder::notify_parent_on_change,
 		property_holder::no_password_char,
-		property_holder::do_not_refresh_grid_on_change
-	);
+		property_holder::do_not_refresh_grid_on_change);
 	properties->add_property(
 		"opacity",
 		"gradient",
 		"this option is resposible for gradient opacity",
 		m_opacity,
-		m_opacity
-	);
+		m_opacity);
 	properties->add_property(
 		"radius",
 		"gradient",
 		"this option is resposible for gradient radius",
 		m_radius,
-		m_radius
-	);
+		m_radius);
 	properties->add_property(
 		"shader",
 		"gradient",
@@ -106,8 +101,7 @@ void gradient::fill			(
 		&*manager.m_environment.shader_ids().begin(),
 		manager.m_environment.shader_ids().size(),
 		XrWeatherEditor::property_holder::value_editor_tree_view,
-		XrWeatherEditor::property_holder::cannot_enter_text
-	);
+		XrWeatherEditor::property_holder::cannot_enter_text);
 	properties->add_property(
 		"texture",
 		"gradient",
@@ -119,8 +113,7 @@ void gradient::fill			(
 		detail::real_path("$game_textures$", "").c_str(),
 		"Select texture...",
 		XrWeatherEditor::property_holder::cannot_enter_text,
-		XrWeatherEditor::property_holder::remove_extension
-	);
+		XrWeatherEditor::property_holder::remove_extension);
 }
 
 #endif // #ifdef INGAME_EDITOR

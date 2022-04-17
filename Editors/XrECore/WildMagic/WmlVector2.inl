@@ -10,104 +10,104 @@
 
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real>::Vector2 ()
+Vector2<Real>::Vector2()
 {
     // the vector is uninitialized
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real>::Vector2 (Real fX, Real fY)
+Vector2<Real>::Vector2(Real fX, Real fY)
 {
-   Vector2<Real>::m_afTuple[0] = fX;
+    Vector2<Real>::m_afTuple[0] = fX;
     Vector2<Real>::m_afTuple[1] = fY;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real>::Vector2 (const Vector2& rkV)
+Vector2<Real>::Vector2(const Vector2 &rkV)
 {
-    memcpy(Vector2<Real>::m_afTuple,rkV.Vector2<Real>::m_afTuple,2*sizeof(Real));
+    memcpy(Vector2<Real>::m_afTuple, rkV.Vector2<Real>::m_afTuple, 2 * sizeof(Real));
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real>::Vector2 (const Vector<2,Real>& rkV)
+Vector2<Real>::Vector2(const Vector<2, Real> &rkV)
 {
-    memcpy(Vector2<Real>::m_afTuple,(const Real*)rkV,2*sizeof(Real));
+    memcpy(Vector2<Real>::m_afTuple, (const Real *)rkV, 2 * sizeof(Real));
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real>& Vector2<Real>::operator= (const Vector2& rkV)
+Vector2<Real> &Vector2<Real>::operator=(const Vector2 &rkV)
 {
-    memcpy(Vector2<Real>::m_afTuple,rkV.Vector2<Real>::m_afTuple,2*sizeof(Real));
+    memcpy(Vector2<Real>::m_afTuple, rkV.Vector2<Real>::m_afTuple, 2 * sizeof(Real));
     return *this;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real>& Vector2<Real>::operator= (const Vector<2,Real>& rkV)
+Vector2<Real> &Vector2<Real>::operator=(const Vector<2, Real> &rkV)
 {
-    memcpy(Vector2<Real>::m_afTuple,(const Real*)rkV,2*sizeof(Real));
+    memcpy(Vector2<Real>::m_afTuple, (const Real *)rkV, 2 * sizeof(Real));
     return *this;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector2<Real>::X () const
+Real Vector2<Real>::X() const
 {
     return Vector2<Real>::m_afTuple[0];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector2<Real>::X ()
+Real &Vector2<Real>::X()
 {
     return Vector2<Real>::m_afTuple[0];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector2<Real>::Y () const
+Real Vector2<Real>::Y() const
 {
     return Vector2<Real>::m_afTuple[1];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real& Vector2<Real>::Y ()
+Real &Vector2<Real>::Y()
 {
     return Vector2<Real>::m_afTuple[1];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real> Vector2<Real>::Perp () const
+Vector2<Real> Vector2<Real>::Perp() const
 {
-    return Vector2(Vector2<Real>::m_afTuple[1],-Vector2<Real>::m_afTuple[0]);
+    return Vector2(Vector2<Real>::m_afTuple[1], -Vector2<Real>::m_afTuple[0]);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real> Vector2<Real>::UnitPerp () const
+Vector2<Real> Vector2<Real>::UnitPerp() const
 {
-    Vector2 kPerp(Vector2<Real>::m_afTuple[1],-Vector2<Real>::m_afTuple[0]);
+    Vector2 kPerp(Vector2<Real>::m_afTuple[1], -Vector2<Real>::m_afTuple[0]);
     kPerp.Normalize();
     return kPerp;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Real Vector2<Real>::Kross (const Vector2& rkV) const
+Real Vector2<Real>::Kross(const Vector2 &rkV) const
 {
-    return Vector2<Real>::m_afTuple[0]*rkV.Vector2<Real>::m_afTuple[1] - Vector2<Real>::m_afTuple[1]*rkV.Vector2<Real>::m_afTuple[0];
+    return Vector2<Real>::m_afTuple[0] * rkV.Vector2<Real>::m_afTuple[1] - Vector2<Real>::m_afTuple[1] * rkV.Vector2<Real>::m_afTuple[0];
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real> Vector2<Real>::Cross (const Vector2&) const
+Vector2<Real> Vector2<Real>::Cross(const Vector2 &) const
 {
-    return Vector2(Vector2<Real>::m_afTuple[1],-Vector2<Real>::m_afTuple[0]);
+    return Vector2(Vector2<Real>::m_afTuple[1], -Vector2<Real>::m_afTuple[0]);
 }
 //----------------------------------------------------------------------------
 template <class Real>
-Vector2<Real> Vector2<Real>::UnitCross (const Vector2&) const
+Vector2<Real> Vector2<Real>::UnitCross(const Vector2 &) const
 {
-    Vector2 kPerp(Vector2<Real>::m_afTuple[1],-Vector2<Real>::m_afTuple[0]);
+    Vector2 kPerp(Vector2<Real>::m_afTuple[1], -Vector2<Real>::m_afTuple[0]);
     kPerp.Normalize();
     return kPerp;
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Vector2<Real>::Orthonormalize (Vector2& rkU, Vector2& rkV)
+void Vector2<Real>::Orthonormalize(Vector2 &rkU, Vector2 &rkV)
 {
     // If the input vectors are v0 and v1, then the Gram-Schmidt
     // orthonormalization produces vectors u0 and u1 as follows,
@@ -122,16 +122,16 @@ void Vector2<Real>::Orthonormalize (Vector2& rkU, Vector2& rkV)
     rkU.Normalize();
 
     // compute u1
-    Real fDot0 = rkU.Dot(rkV); 
-    rkV -= fDot0*rkU;
+    Real fDot0 = rkU.Dot(rkV);
+    rkV -= fDot0 * rkU;
     rkV.Normalize();
 }
 //----------------------------------------------------------------------------
 template <class Real>
-void Vector2<Real>::GenerateOrthonormalBasis (Vector2& rkU, Vector2& rkV,
-    bool bUnitLengthV)
+void Vector2<Real>::GenerateOrthonormalBasis(Vector2 &rkU, Vector2 &rkV,
+                                             bool bUnitLengthV)
 {
-    if ( !bUnitLengthV )
+    if (!bUnitLengthV)
         rkV.Normalize();
 
     rkU = rkV.Perp();

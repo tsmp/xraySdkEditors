@@ -28,7 +28,7 @@ ConvolutionKernel::~ConvolutionKernel()
     Free();
 }
 
-ConvolutionKernel& ConvolutionKernel::operator=(const ConvolutionKernel& src)
+ConvolutionKernel &ConvolutionKernel::operator=(const ConvolutionKernel &src)
 {
     Initialize(src.m_nNumElements);
     for (int n = 0; n < src.m_nNumElements; n++)
@@ -38,7 +38,7 @@ ConvolutionKernel& ConvolutionKernel::operator=(const ConvolutionKernel& src)
     return *this;
 }
 
-HRESULT	ConvolutionKernel::Initialize(int numElements)
+HRESULT ConvolutionKernel::Initialize(int numElements)
 {
     Free();
     m_pElements = new ConvolutionKernelElement[numElements];
@@ -47,20 +47,20 @@ HRESULT	ConvolutionKernel::Initialize(int numElements)
     return S_OK;
 }
 
-HRESULT	ConvolutionKernel::Free()
+HRESULT ConvolutionKernel::Free()
 {
     if (m_pElements != NULL)
     {
-        delete[]	m_pElements;
+        delete[] m_pElements;
         m_pElements = NULL;
     }
 
     m_nNumElements = 0;
 
-    return(S_OK);
+    return (S_OK);
 }
 
-void ConvolutionKernel::SetElements(int numElements, ConvolutionKernelElement* pElements)
+void ConvolutionKernel::SetElements(int numElements, ConvolutionKernelElement *pElements)
 {
     assert(pElements != NULL);
     if (numElements != m_nNumElements)
@@ -78,14 +78,14 @@ void ConvolutionKernel::SetElements(int numElements, ConvolutionKernelElement* p
 
 //===============================================================
 // Function:    ConvolutionKernel::GetKernelExtents
-// Description: Querries the kernel elements & finds out what area they 
+// Description: Querries the kernel elements & finds out what area they
 //              extend over.
 // Parameters:  Pointers to values to be written
 // Returns:     Return values written to pointer addresses
 //===============================================================
-void ConvolutionKernel::GetKernelExtents(int* xlow, int* xhigh, int* ylow, int* yhigh)
+void ConvolutionKernel::GetKernelExtents(int *xlow, int *xhigh, int *ylow, int *yhigh)
 {
-    // querries the kernel elements & finds out what area they 
+    // querries the kernel elements & finds out what area they
     //  extend over.
     // Return values written to pointer addresses
     //.	ASSERT_MSG( m_pElements, "Initialize the m_pElements pointer!!\n");
@@ -106,8 +106,7 @@ void ConvolutionKernel::GetKernelExtents(int* xlow, int* xhigh, int* ylow, int* 
     }
 }
 
-Convolver::Convolver() :
-    m_BorderedImage()
+Convolver::Convolver() : m_BorderedImage()
 {
     m_hSrcImage = NULL;
     m_pKernels = NULL;
@@ -129,7 +128,7 @@ HRESULT Convolver::Free()
     return S_OK;
 }
 
-HRESULT Convolver::Initialize(NVI_Image** hSrcImage, const ConvolutionKernel* pKernels, int numKernels, bool wrap)
+HRESULT Convolver::Initialize(NVI_Image **hSrcImage, const ConvolutionKernel *pKernels, int numKernels, bool wrap)
 {
     assert(hSrcImage != NULL);
     assert(*hSrcImage != NULL);
@@ -159,10 +158,10 @@ HRESULT Convolver::Initialize(NVI_Image** hSrcImage, const ConvolutionKernel* pK
     return S_OK;
 }
 
-void Convolver::Convolve_Alpha_At(int i, int j, float* results, int num_results)
+void Convolver::Convolve_Alpha_At(int i, int j, float *results, int num_results)
 {
     assert(num_results == m_nNumKernels);
-    assert(m_BorderedImage.m_pArray != NULL);    
+    assert(m_BorderedImage.m_pArray != NULL);
     float byte_to_float = 1.0f / 255.0f;
     for (int nkern = 0; nkern < m_nNumKernels; nkern++)
     {
@@ -172,8 +171,8 @@ void Convolver::Convolve_Alpha_At(int i, int j, float* results, int num_results)
             // extract alpha
             DWORD color;
             m_BorderedImage.GetPixel(&color,
-                i + m_pKernels[nkern].m_pElements[n].x_offset,
-                j + m_pKernels[nkern].m_pElements[n].y_offset);
+                                     i + m_pKernels[nkern].m_pElements[n].x_offset,
+                                     j + m_pKernels[nkern].m_pElements[n].y_offset);
             // byte_to_float takes 0,255 to 0,1
             float height = (float)(color >> 24) * byte_to_float;
             height *= m_pKernels[nkern].m_pElements[n].weight;

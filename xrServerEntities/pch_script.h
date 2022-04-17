@@ -11,15 +11,15 @@
 
 #include "stdafx.h"
 
-extern "C" 
+extern "C"
 {
-	#include "..\External\LuaJIT\src\lua.h"
-	#include "..\External\LuaJIT\src\lualib.h"
-	#include "..\External\LuaJIT\src\lauxlib.h"
+#include "..\External\LuaJIT\src\lua.h"
+#include "..\External\LuaJIT\src\lualib.h"
+#include "..\External\LuaJIT\src\lauxlib.h"
 };
 
 #pragma warning(push)
-#pragma warning(disable:4995)
+#pragma warning(disable : 4995)
 #include "..\External\Luabind\luabind\luabind.hpp"
 #pragma warning(pop)
 

@@ -13,5 +13,4 @@
 
 #include "psystem.h"
 
-
-#endif //stdafxH
+#endif // stdafxH

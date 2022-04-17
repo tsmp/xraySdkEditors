@@ -8,8 +8,10 @@
 
 #pragma once
 
-namespace ScriptStorage {
-	enum ELuaMessageType {
+namespace ScriptStorage
+{
+	enum ELuaMessageType
+	{
 		eLuaMessageTypeInfo = u32(0),
 		eLuaMessageTypeError,
 		eLuaMessageTypeMessage,

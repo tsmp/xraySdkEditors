@@ -1,6 +1,6 @@
 #include "stdafx.h"
-UITextForm* UITextForm::Form = nullptr;
-UITextForm::UITextForm(const char* text) :m_Text(text)
+UITextForm *UITextForm::Form = nullptr;
+UITextForm::UITextForm(const char *text) : m_Text(text)
 {
     m_Ok = false;
     xr_strcpy(m_EditText, m_Text.c_str());
@@ -12,23 +12,31 @@ UITextForm::~UITextForm()
 
 void UITextForm::Draw()
 {
-     ImGui::BeginGroup();
-    if (ImGui::Button("Ok"))CLBOk(); ImGui::SameLine(0);
-    if (ImGui::Button("Cancel"))CLBCancel();
+    ImGui::BeginGroup();
+    if (ImGui::Button("Ok"))
+        CLBOk();
+    ImGui::SameLine(0);
+    if (ImGui::Button("Cancel"))
+        CLBCancel();
     ImGui::SameLine(150);
 
-    if (ImGui::Button("Load"))CLBLoad(); ImGui::SameLine(0);
-    if (ImGui::Button("Save"))CLBSave(); ImGui::SameLine(0);
-    if (ImGui::Button("Clear"))CLBClear(); 
+    if (ImGui::Button("Load"))
+        CLBLoad();
+    ImGui::SameLine(0);
+    if (ImGui::Button("Save"))
+        CLBSave();
+    ImGui::SameLine(0);
+    if (ImGui::Button("Clear"))
+        CLBClear();
 
     ImGui::EndGroup();
     ImGui::InputTextMultiline("", m_EditText, sizeof(m_EditText), ImVec2(500, 200));
 }
 
-void UITextForm::RunEditor(const char* str)
+void UITextForm::RunEditor(const char *str)
 {
     VERIFY(!Form);
-    Form = xr_new< UITextForm>(str);
+    Form = xr_new<UITextForm>(str);
 }
 
 void UITextForm::Update()
@@ -43,7 +51,7 @@ void UITextForm::Update()
     }
 }
 
-bool UITextForm::GetResult(bool& change, xr_string& result)
+bool UITextForm::GetResult(bool &change, xr_string &result)
 {
     if (Form->IsClosed())
     {
@@ -62,7 +70,6 @@ void UITextForm::CLBOk()
     bOpen = false;
     m_Ok = true;
 }
-
 
 void UITextForm::CLBCancel()
 {

@@ -15,31 +15,29 @@
 
 #include "MgcVector3.h"
 
-namespace Mgc {
-
-
-class MAGICFM Segment3
+namespace Mgc
 {
-public:
-    // Segment is S(t) = P+t*D for 0 <= t <= 1.  D is not necessarily unit
-    // length.  The end points are P and P+D.
-    Segment3 ();
 
-    Vector3& Origin ();
-    const Vector3& Origin () const;
+    class MAGICFM Segment3
+    {
+    public:
+        // Segment is S(t) = P+t*D for 0 <= t <= 1.  D is not necessarily unit
+        // length.  The end points are P and P+D.
+        Segment3();
 
-    Vector3& Direction ();
-    const Vector3& Direction () const;
+        Vector3 &Origin();
+        const Vector3 &Origin() const;
 
-protected:
-    Vector3 m_kOrigin;  // P
-    Vector3 m_kDirection;  // D
-};
+        Vector3 &Direction();
+        const Vector3 &Direction() const;
+
+    protected:
+        Vector3 m_kOrigin;    // P
+        Vector3 m_kDirection; // D
+    };
 
 #include "MgcSegment3.inl"
 
 } // namespace Mgc
 
 #endif
-
-

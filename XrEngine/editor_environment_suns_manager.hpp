@@ -16,57 +16,60 @@
 
 class CLensFlareDescriptor;
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
-class property_holder;
+	class property_holder;
 
-namespace environment {
+	namespace environment
+	{
 
-class manager;
+		class manager;
 
-namespace suns {
+		namespace suns
+		{
 
-class sun;
+			class sun;
 
-class manager : private boost::noncopyable {
-public:
-					manager			(environment::manager* environment);
-					~manager		();
-			void	load			();
-			void	save			();
-			void	fill			(XrWeatherEditor::property_holder* holder);
-			shared_str	unique_id	(shared_str const& id) const;
-	CLensFlareDescriptor* get_flare	(shared_str const& id) const;
+			class manager : private boost::noncopyable
+			{
+			public:
+				manager(environment::manager *environment);
+				~manager();
+				void load();
+				void save();
+				void fill(XrWeatherEditor::property_holder *holder);
+				shared_str unique_id(shared_str const &id) const;
+				CLensFlareDescriptor *get_flare(shared_str const &id) const;
 
-private:
-			void	add				(CInifile& config, shared_str const& sun);
+			private:
+				void add(CInifile &config, shared_str const &sun);
 
-public:
-	typedef	xr_vector<sun*>			container_type;
-	typedef xr_vector<LPSTR>		suns_ids_type;
+			public:
+				typedef xr_vector<sun *> container_type;
+				typedef xr_vector<LPSTR> suns_ids_type;
 
-public:
-	suns_ids_type const&	suns_ids() const;
+			public:
+				suns_ids_type const &suns_ids() const;
 
-private:
-	typedef property_collection<
-				container_type,
-				manager
-			>						collection_type;
+			private:
+				typedef property_collection<
+					container_type,
+					manager>
+					collection_type;
 
+			private:
+				container_type m_suns;
+				mutable suns_ids_type m_suns_ids;
+				collection_type *m_collection;
+				mutable bool m_changed;
 
-private:
-	container_type					m_suns;
-	mutable suns_ids_type			m_suns_ids;
-	collection_type*				m_collection;
-	mutable bool					m_changed;
+			public:
+				environment::manager const &m_environment;
+			}; // class suns_manager
 
-public:
-	environment::manager const&		m_environment;
-}; // class suns_manager
-
-} // namespace suns
-} // namespace environment
+		} // namespace suns
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

@@ -15,24 +15,23 @@
 
 using XrWeatherEditor::environment::sound_channels::source;
 
-source::source				(shared_str const& source) :
-	m_source			(source),
-	m_property_holder	(0)
+source::source(shared_str const &source) : m_source(source),
+										   m_property_holder(0)
 {
 }
 
-source::~source				()
+source::~source()
 {
 	if (!Device.editor())
 		return;
 
-	::ide().destroy		(m_property_holder);
+	::ide().destroy(m_property_holder);
 }
 
-void source::fill			(XrWeatherEditor::property_holder_collection* collection)
+void source::fill(XrWeatherEditor::property_holder_collection *collection)
 {
-	VERIFY				(!m_property_holder);
-	m_property_holder	= ::ide().create_property_holder(m_source.c_str(), collection, this);
+	VERIFY(!m_property_holder);
+	m_property_holder = ::ide().create_property_holder(m_source.c_str(), collection, this);
 
 	m_property_holder->add_property(
 		"sound",
@@ -45,13 +44,12 @@ void source::fill			(XrWeatherEditor::property_holder_collection* collection)
 		detail::real_path("$game_sounds$", "").c_str(),
 		"Select sound...",
 		XrWeatherEditor::property_holder::cannot_enter_text,
-		XrWeatherEditor::property_holder::remove_extension
-	);
+		XrWeatherEditor::property_holder::remove_extension);
 }
 
-source::property_holder_type* source::object()
+source::property_holder_type *source::object()
 {
-	return				(m_property_holder);
+	return (m_property_holder);
 }
 
 #endif // #ifdef INGAME_EDITOR

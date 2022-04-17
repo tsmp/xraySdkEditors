@@ -11,30 +11,28 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline Ray3::Ray3 ()
+inline Ray3::Ray3()
 {
     // no initialization for efficiency
 }
 //----------------------------------------------------------------------------
-inline Vector3& Ray3::Origin ()
+inline Vector3 &Ray3::Origin()
 {
     return m_kOrigin;
 }
 //----------------------------------------------------------------------------
-inline const Vector3& Ray3::Origin () const
+inline const Vector3 &Ray3::Origin() const
 {
     return m_kOrigin;
 }
 //----------------------------------------------------------------------------
-inline Vector3& Ray3::Direction ()
+inline Vector3 &Ray3::Direction()
 {
     return m_kDirection;
 }
 //----------------------------------------------------------------------------
-inline const Vector3& Ray3::Direction () const
+inline const Vector3 &Ray3::Direction() const
 {
     return m_kDirection;
 }
 //----------------------------------------------------------------------------
-
-

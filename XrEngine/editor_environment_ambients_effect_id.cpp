@@ -17,47 +17,45 @@ using XrWeatherEditor::environment::ambients::effect_id;
 using XrWeatherEditor::environment::effects::manager;
 
 effect_id::effect_id(
-	effects::manager const& manager,
-		shared_str const& id
-	) :
-	m_manager						(manager),
-	m_id							(id),
-	m_property_holder				(0)
+	effects::manager const &manager,
+	shared_str const &id) : m_manager(manager),
+							m_id(id),
+							m_property_holder(0)
 {
 }
 
-effect_id::~effect_id								()
+effect_id::~effect_id()
 {
 	if (!Device.editor())
 		return;
 
-	::ide().destroy					(m_property_holder);
+	::ide().destroy(m_property_holder);
 }
 
-LPCSTR const* effect_id::collection					()
+LPCSTR const *effect_id::collection()
 {
-	return							(&*m_manager.effects_ids().begin());
+	return (&*m_manager.effects_ids().begin());
 }
 
-u32 effect_id::collection_size						()
+u32 effect_id::collection_size()
 {
-	return							(m_manager.effects_ids().size());
+	return (m_manager.effects_ids().size());
 }
 
-void effect_id::fill								(XrWeatherEditor::property_holder_collection* collection)
+void effect_id::fill(XrWeatherEditor::property_holder_collection *collection)
 {
-	VERIFY							(!m_property_holder);
-	m_property_holder				= ::ide().create_property_holder(m_id.c_str(), collection, this);
+	VERIFY(!m_property_holder);
+	m_property_holder = ::ide().create_property_holder(m_id.c_str(), collection, this);
 
-	typedef XrWeatherEditor::property_holder::string_collection_getter_type	collection_getter_type;
-	collection_getter_type			collection_getter;
-	collection_getter.bind			(this, &effect_id::collection);
+	typedef XrWeatherEditor::property_holder::string_collection_getter_type collection_getter_type;
+	collection_getter_type collection_getter;
+	collection_getter.bind(this, &effect_id::collection);
 
-	typedef XrWeatherEditor::property_holder::string_collection_size_getter_type	collection_size_getter_type;
-	collection_size_getter_type		collection_size_getter;
-	collection_size_getter.bind		(this, &effect_id::collection_size);
+	typedef XrWeatherEditor::property_holder::string_collection_size_getter_type collection_size_getter_type;
+	collection_size_getter_type collection_size_getter;
+	collection_size_getter.bind(this, &effect_id::collection_size);
 
-	m_property_holder->add_property	(
+	m_property_holder->add_property(
 		"effect",
 		"properties",
 		"this option is resposible for effect",
@@ -66,13 +64,12 @@ void effect_id::fill								(XrWeatherEditor::property_holder_collection* collec
 		collection_getter,
 		collection_size_getter,
 		XrWeatherEditor::property_holder::value_editor_combo_box,
-		XrWeatherEditor::property_holder::cannot_enter_text
-	);
+		XrWeatherEditor::property_holder::cannot_enter_text);
 }
 
-effect_id::property_holder_type* effect_id::object	()
+effect_id::property_holder_type *effect_id::object()
 {
-	return							(m_property_holder);
+	return (m_property_holder);
 }
 
 #endif // #ifdef INGAME_EDITOR

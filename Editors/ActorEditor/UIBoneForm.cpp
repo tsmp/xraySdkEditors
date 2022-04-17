@@ -1,5 +1,5 @@
 #include "stdafx.h"
-UIBoneForm* UIBoneForm::Form = nullptr;
+UIBoneForm *UIBoneForm::Form = nullptr;
 UIBoneForm::UIBoneForm()
 {
 }
@@ -22,7 +22,13 @@ void UIBoneForm::Draw()
 		{
 			ImGui::BeginChild("Part1", ImVec2(300, 300));
 			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Part #1:(%d B)", m_List[0].size()); ImGui::SameLine(); ImGui::SetNextItemWidth(-50);	ImGui::InputText("##name", m_Name[0], sizeof(m_Name[0])); ImGui::SameLine(); if (ImGui::Button("set", ImVec2(-1, 0)))Move(0);
+			ImGui::Text("Part #1:(%d B)", m_List[0].size());
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(-50);
+			ImGui::InputText("##name", m_Name[0], sizeof(m_Name[0]));
+			ImGui::SameLine();
+			if (ImGui::Button("set", ImVec2(-1, 0)))
+				Move(0);
 			{
 				ImGui::BeginChild("List", ImVec2(0, 0), true, ImGuiWindowFlags_None);
 				for (int n = 0; n < m_List[0].size(); n++)
@@ -35,7 +41,13 @@ void UIBoneForm::Draw()
 		{
 			ImGui::BeginChild("Part2", ImVec2(300, 300));
 			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Part #2:(%d B)", m_List[1].size()); ImGui::SameLine(); ImGui::SetNextItemWidth(-50);	ImGui::InputText("##name", m_Name[1], sizeof(m_Name[1])); ImGui::SameLine(); if (ImGui::Button("set", ImVec2(-1, 0)))Move(1);
+			ImGui::Text("Part #2:(%d B)", m_List[1].size());
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(-50);
+			ImGui::InputText("##name", m_Name[1], sizeof(m_Name[1]));
+			ImGui::SameLine();
+			if (ImGui::Button("set", ImVec2(-1, 0)))
+				Move(1);
 			{
 				ImGui::BeginChild("List", ImVec2(0, 0), true, ImGuiWindowFlags_None);
 				for (int n = 0; n < m_List[1].size(); n++)
@@ -48,7 +60,13 @@ void UIBoneForm::Draw()
 		{
 			ImGui::BeginChild("Part3", ImVec2(300, 300));
 			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Part #3:(%d B)", m_List[2].size()); ImGui::SameLine(); ImGui::SetNextItemWidth(-50);	ImGui::InputText("##name", m_Name[2], sizeof(m_Name[2])); ImGui::SameLine(); if (ImGui::Button("set", ImVec2(-1, 0)))Move(2);
+			ImGui::Text("Part #3:(%d B)", m_List[2].size());
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(-50);
+			ImGui::InputText("##name", m_Name[2], sizeof(m_Name[2]));
+			ImGui::SameLine();
+			if (ImGui::Button("set", ImVec2(-1, 0)))
+				Move(2);
 			{
 				ImGui::BeginChild("List", ImVec2(0, 0), true, ImGuiWindowFlags_None);
 				for (int n = 0; n < m_List[2].size(); n++)
@@ -61,7 +79,13 @@ void UIBoneForm::Draw()
 		{
 			ImGui::BeginChild("Part4", ImVec2(300, 300));
 			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Part #4:(%d B)", m_List[3].size()); ImGui::SameLine(); ImGui::SetNextItemWidth(-50);	ImGui::InputText("##name", m_Name[3], sizeof(m_Name[3])); ImGui::SameLine(); if (ImGui::Button("set", ImVec2(-1, 0)))Move(3);
+			ImGui::Text("Part #4:(%d B)", m_List[3].size());
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(-50);
+			ImGui::InputText("##name", m_Name[3], sizeof(m_Name[3]));
+			ImGui::SameLine();
+			if (ImGui::Button("set", ImVec2(-1, 0)))
+				Move(3);
 			{
 				ImGui::BeginChild("List", ImVec2(0, 0), true, ImGuiWindowFlags_None);
 				for (int n = 0; n < m_List[3].size(); n++)
@@ -71,17 +95,32 @@ void UIBoneForm::Draw()
 			ImGui::EndChild();
 		}
 
-		if (ImGui::Button("Ok", ImVec2(70, 0))) { Save(); } ImGui::SameLine();
+		if (ImGui::Button("Ok", ImVec2(70, 0)))
+		{
+			Save();
+		}
+		ImGui::SameLine();
 		if (ImGui::Button("Cancel", ImVec2(70, 0)))
 		{
 			bOpen = false;
 			ImGui::CloseCurrentPopup();
-		} ImGui::SameLine(0, 20);
-		if(ImGui::Button("Reset To Default")) { ToDefault(); } ImGui::SameLine(0, 20);
-		if (ImGui::Button("Load From")) { LoadFrom(); } ImGui::SameLine();
-		if (ImGui::Button("Save To")) { SaveTo(); }
+		}
+		ImGui::SameLine(0, 20);
+		if (ImGui::Button("Reset To Default"))
+		{
+			ToDefault();
+		}
+		ImGui::SameLine(0, 20);
+		if (ImGui::Button("Load From"))
+		{
+			LoadFrom();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Save To"))
+		{
+			SaveTo();
+		}
 		ImGui::EndPopup();
-
 	}
 }
 
@@ -119,11 +158,13 @@ void UIBoneForm::Show()
 
 void UIBoneForm::Move(int to)
 {
-	if (!Form->m_EditObject)return;
-	auto& to_vector = m_List[to];
+	if (!Form->m_EditObject)
+		return;
+	auto &to_vector = m_List[to];
 	for (int i = 0; i < 4; i++)
 	{
-		if (i == to)continue;
+		if (i == to)
+			continue;
 		for (auto b = m_List[i].begin(), e = m_List[i].end(); b != e; b++)
 		{
 			if (b->select)
@@ -139,12 +180,18 @@ void UIBoneForm::Move(int to)
 
 void UIBoneForm::FillBoneParts()
 {
-	if (!Form->m_EditObject)return;
+	if (!Form->m_EditObject)
+		return;
 
-	for (int k = 0; k < 4; k++) { m_List[k].clear(); m_Name[k][0] = 0; }
-	for (BPIt it = m_BoneParts->begin(); it != m_BoneParts->end(); it++) {
+	for (int k = 0; k < 4; k++)
+	{
+		m_List[k].clear();
+		m_Name[k][0] = 0;
+	}
+	for (BPIt it = m_BoneParts->begin(); it != m_BoneParts->end(); it++)
+	{
 		xr_strcpy(m_Name[it - m_BoneParts->begin()], it->alias.c_str());
-		//E[it - m_BoneParts->begin()]->Text = it->alias.c_str();
+		// E[it - m_BoneParts->begin()]->Text = it->alias.c_str();
 		for (RStringVecIt w_it = it->bones.begin(); w_it != it->bones.end(); w_it++)
 			m_List[it - m_BoneParts->begin()].push_back(*w_it);
 	}
@@ -154,20 +201,23 @@ void UIBoneForm::Save()
 {
 	for (int k = 0; k < 4; k++)
 	{
-		if (m_List[k].size()&&!xr_strlen(m_Name[k])) 
+		if (m_List[k].size() && !xr_strlen(m_Name[k]))
 		{
 			ELog.DlgMsg(mtError, "Verify parts name.");
 			return;
 		}
 		for (int i = 0; i < 4; i++)
 		{
-			if (i == k)continue;
-			if (!m_List[k].size()) continue;
+			if (i == k)
+				continue;
+			if (!m_List[k].size())
+				continue;
 			string_path Name[2];
 			xr_strcpy(Name[0], m_Name[k]);
 			xr_strcpy(Name[1], m_Name[i]);
-			_strupr_s(Name[0]); _strupr_s(Name[1]);
-			if (xr_strcmp(Name[0], Name[1])==0)
+			_strupr_s(Name[0]);
+			_strupr_s(Name[1]);
+			if (xr_strcmp(Name[0], Name[1]) == 0)
 			{
 				ELog.DlgMsg(mtError, "Unique name required.");
 				return;
@@ -185,9 +235,7 @@ void UIBoneForm::Save()
 			{
 				b_use[m_EditObject->FindBoneByNameIdx(node.name.c_str())]++;
 			}
-			
 		}
-			
 	}
 	for (U8It u_it = b_use.begin(); u_it != b_use.end(); u_it++)
 	{
@@ -197,20 +245,19 @@ void UIBoneForm::Save()
 			return;
 		}
 	}
-	// save    
+	// save
 	m_BoneParts->clear();
-	for (int k = 0; k < 4; k++) 
+	for (int k = 0; k < 4; k++)
 	{
 		if (m_List[k].size())
 		{
 			m_BoneParts->push_back(SBonePart());
-			SBonePart& BP = m_BoneParts->back();
+			SBonePart &BP = m_BoneParts->back();
 			BP.alias = m_Name[k];
 			for (auto node : m_List[k])
 			{
 				BP.bones.push_back(node.name);
 			}
-				
 		}
 	}
 	ATools->OnMotionDefsModified();
@@ -224,7 +271,7 @@ void UIBoneForm::SaveTo()
 	if (EFS.GetSaveName(_import_, temp_fn))
 	{
 		CInifile ini(temp_fn.c_str(), FALSE, FALSE, TRUE);
-		string64		buff;
+		string64 buff;
 		for (int i = 0; i < 4; ++i)
 		{
 			sprintf(buff, "part_%d", i);
@@ -240,16 +287,20 @@ void UIBoneForm::SaveTo()
 void UIBoneForm::LoadFrom()
 {
 	xr_string temp_fn;
-	if (EFS.GetOpenName(EDevice.m_hWnd,_import_, temp_fn, false, NULL, 0))
+	if (EFS.GetOpenName(EDevice.m_hWnd, _import_, temp_fn, false, NULL, 0))
 	{
-		for (int k = 0; k < 4; k++) { m_List[k].clear(); m_Name[k][0] = 0; }
+		for (int k = 0; k < 4; k++)
+		{
+			m_List[k].clear();
+			m_Name[k][0] = 0;
+		}
 		CInifile ini(temp_fn.c_str(), TRUE, TRUE, FALSE);
-		string64		buff;
+		string64 buff;
 		for (int i = 0; i < 4; ++i)
 		{
 			sprintf(buff, "part_%d", i);
 			xr_strcpy(m_Name[i], ini.r_string(buff, "partition_name"));
-			CInifile::Sect& S = ini.r_section(buff);
+			CInifile::Sect &S = ini.r_section(buff);
 			CInifile::SectCIt it = S.Data.begin();
 			CInifile::SectCIt e = S.Data.end();
 			for (; it != e; ++it)
@@ -259,14 +310,17 @@ void UIBoneForm::LoadFrom()
 					m_List[i].push_back(it->first);
 				}
 			}
-
 		}
 	}
 }
 
 void UIBoneForm::ToDefault()
 {
-	for (int k = 0; k < 4; k++) { m_List[k].clear(); m_Name[k][0] = 0; }
+	for (int k = 0; k < 4; k++)
+	{
+		m_List[k].clear();
+		m_Name[k][0] = 0;
+	}
 	xr_strcpy(m_Name[0], "default");
 	for (BoneIt it = m_EditObject->FirstBone(); it != m_EditObject->LastBone(); it++)
 	{

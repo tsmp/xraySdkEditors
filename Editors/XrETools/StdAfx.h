@@ -8,13 +8,13 @@
 #define AFX_STDAFX_H__A9DB83DB_A9FD_11D0_BFD1_444553540000__INCLUDED_
 
 #pragma once
-#define ENGINE_API 
+#define ENGINE_API
 #define NO_XRC_STATS
 
 #include "../../xrCore/xrCore.h"
 
 #pragma warning(push)
-#pragma warning(disable:4995)
+#pragma warning(disable : 4995)
 #include "..\..\Components\DirectX\include\d3dx9.h"
 #pragma warning(pop)
 

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-UIKeyPressForm* UIKeyPressForm::Form = nullptr;
+UIKeyPressForm *UIKeyPressForm::Form = nullptr;
 UIKeyPressForm::UIKeyPressForm()
 {
 	m_Ok = true;
@@ -21,9 +21,9 @@ void UIKeyPressForm::Draw()
 		ImGui::CloseCurrentPopup();
 		return;
 	}
-	if (fmod(m_TimeGlobal*1000, 1000.f) >500.f)
+	if (fmod(m_TimeGlobal * 1000, 1000.f) > 500.f)
 	{
-		ImGui::TextColored(ImVec4(1,0,0,1),"PRESS ANY KEY!!!");
+		ImGui::TextColored(ImVec4(1, 0, 0, 1), "PRESS ANY KEY!!!");
 	}
 	else
 	{
@@ -57,18 +57,18 @@ void UIKeyPressForm::Show()
 	Form = xr_new<UIKeyPressForm>();
 }
 
-bool UIKeyPressForm::SetResult(const xr_shortcut& result)
+bool UIKeyPressForm::SetResult(const xr_shortcut &result)
 {
 	if (Form && !Form->IsClosed())
 	{
-		 Form->m_Resutl= result;
-		 Form->bOpen = false;
-		 return true;
+		Form->m_Resutl = result;
+		Form->bOpen = false;
+		return true;
 	}
 	return false;
 }
 
-bool UIKeyPressForm::GetResult(bool& Ok, xr_shortcut& result)
+bool UIKeyPressForm::GetResult(bool &Ok, xr_shortcut &result)
 {
 	if (Form && Form->IsClosed())
 	{

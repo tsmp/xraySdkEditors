@@ -1,9 +1,9 @@
-#ifndef	STDAFX_3DA
+#ifndef STDAFX_3DA
 #define STDAFX_3DA
 #pragma once
 
 #ifdef _EDITOR
-	#include "..\editors\XrECore\stdafx.h"
+#include "..\editors\XrECore\stdafx.h"
 #else
 
 #include "../xrCore/xrCore.h"
@@ -14,24 +14,23 @@
 #endif
 
 #ifdef _DEBUG
-#	define D3D_DEBUG_INFO
+#define D3D_DEBUG_INFO
 #endif
-
 
 // you must define ENGINE_BUILD then building the engine itself
 // and not define it if you are about to build DLL
 #ifndef NO_ENGINE_API
-	#ifdef	ENGINE_BUILD
-		#define DLL_API			__declspec(dllimport)
-		#define ENGINE_API		__declspec(dllexport)
-	#else
-		#undef	DLL_API
-		#define DLL_API			__declspec(dllexport)
-		#define ENGINE_API		__declspec(dllimport)
-	#endif
+#ifdef ENGINE_BUILD
+#define DLL_API __declspec(dllimport)
+#define ENGINE_API __declspec(dllexport)
 #else
-	#define ENGINE_API
-	#define DLL_API
+#undef DLL_API
+#define DLL_API __declspec(dllexport)
+#define ENGINE_API __declspec(dllimport)
+#endif
+#else
+#define ENGINE_API
+#define DLL_API
 #endif // NO_ENGINE_API
 
 #define ECORE_API
@@ -55,17 +54,17 @@ extern ENGINE_API CInifile *pGameIni;
 #include "luabind/library_linkage.h"
 
 #ifndef DEBUG
-#	define LUABIND_NO_ERROR_CHECKING
+#define LUABIND_NO_ERROR_CHECKING
 #endif
 
-#if	!defined(DEBUG) || defined(FORCE_NO_EXCEPTIONS)
-#	define LUABIND_NO_EXCEPTIONS
-#	define BOOST_NO_EXCEPTIONS
+#if !defined(DEBUG) || defined(FORCE_NO_EXCEPTIONS)
+#define LUABIND_NO_EXCEPTIONS
+#define BOOST_NO_EXCEPTIONS
 #endif
 
 #define LUABIND_DONT_COPY_STRINGS
 
-#define READ_IF_EXISTS(ltx,method,section,name,default_value)\
+#define READ_IF_EXISTS(ltx, method, section, name, default_value) \
 	(((ltx)->line_exist(section, name)) ? ((ltx)->method(section, name)) : (default_value))
 
 #endif // !M_BORLAND

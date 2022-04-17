@@ -32,4 +32,3 @@ using namespace std;
 #endif
 
 #endif
-

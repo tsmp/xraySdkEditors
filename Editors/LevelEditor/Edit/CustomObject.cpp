@@ -6,14 +6,14 @@
 #include "motion.h"
 #include "ESceneCustomOTools.h"
 
-#define CUSTOMOBJECT_CHUNK_PARAMS 		0xF900
-#define CUSTOMOBJECT_CHUNK_LOCK	 		0xF902
-#define CUSTOMOBJECT_CHUNK_TRANSFORM	0xF903
-#define CUSTOMOBJECT_CHUNK_GROUP		0xF904
-#define CUSTOMOBJECT_CHUNK_MOTION		0xF905
-#define CUSTOMOBJECT_CHUNK_FLAGS		0xF906
-#define CUSTOMOBJECT_CHUNK_NAME			0xF907
-#define CUSTOMOBJECT_CHUNK_MOTION_PARAM	0xF908
+#define CUSTOMOBJECT_CHUNK_PARAMS 0xF900
+#define CUSTOMOBJECT_CHUNK_LOCK 0xF902
+#define CUSTOMOBJECT_CHUNK_TRANSFORM 0xF903
+#define CUSTOMOBJECT_CHUNK_GROUP 0xF904
+#define CUSTOMOBJECT_CHUNK_MOTION 0xF905
+#define CUSTOMOBJECT_CHUNK_FLAGS 0xF906
+#define CUSTOMOBJECT_CHUNK_NAME 0xF907
+#define CUSTOMOBJECT_CHUNK_MOTION_PARAM 0xF908
 
 enum class SocFlags : u32
 {
@@ -34,9 +34,9 @@ CCustomObject::CCustomObject(LPVOID data, LPCSTR name)
 	FParentTools = nullptr;
 
 	if (name)
-        FName = name;
-	
-    m_CO_Flags.assign(0);
+		FName = name;
+
+	m_CO_Flags.assign(0);
 	m_RT_Flags.assign(flRT_Valid | flRT_Visible);
 	m_pOwnerObject = 0;
 	ResetTransform();
@@ -57,19 +57,19 @@ CCustomObject::~CCustomObject()
 
 bool CCustomObject::IsRender()
 {
-	Fbox bb; 
+	Fbox bb;
 	GetBox(bb);
-    
-	float distance = 0.f;    
+
+	float distance = 0.f;
 	Fvector center;
 
 	bb.getcenter(center);
 	distance = center.distance_to(EDevice.vCameraPosition);
-    
-    if (distance > bb.getradius() + EDevice.RadiusRender)
-        return false;
 
-    return ::Render->occ_visible(bb)||( Selected() && m_CO_Flags.is_any(flRenderAnyWayIfSelected|flMotion) );
+	if (distance > bb.getradius() + EDevice.RadiusRender)
+		return false;
+
+	return ::Render->occ_visible(bb) || (Selected() && m_CO_Flags.is_any(flRenderAnyWayIfSelected | flMotion));
 }
 
 void CCustomObject::OnUpdateTransform()
@@ -86,7 +86,7 @@ void CCustomObject::OnUpdateTransform()
 	FITransformRP.invert(FTransformRP);
 	FITransform.invert(FTransform);
 
-	if (Motionable() && Visible() && Selected() && m_CO_Flags.is(flAutoKey)) 
+	if (Motionable() && Visible() && Selected() && m_CO_Flags.is(flAutoKey))
 		AnimationCreateKey(m_MotionParams->Frame());
 }
 
@@ -105,10 +105,10 @@ void CCustomObject::Show(BOOL flag)
 {
 	m_RT_Flags.set(flRT_Visible, flag);
 
-    if (!m_RT_Flags.is(flRT_Visible)) 
-    	m_RT_Flags.set(flRT_Selected, FALSE);
-        
-    UI->RedrawScene();
+	if (!m_RT_Flags.is(flRT_Visible))
+		m_RT_Flags.set(flRT_Selected, FALSE);
+
+	UI->RedrawScene();
 }
 
 BOOL CCustomObject::Editable() const
@@ -118,7 +118,7 @@ BOOL CCustomObject::Editable() const
 	return !b1 || (b1 && b2);
 }
 
-bool CCustomObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
+bool CCustomObject::LoadLTX(CInifile &ini, LPCSTR sect_name)
 {
 	m_CO_Flags.assign(ini.r_u32(sect_name, "co_flags"));
 
@@ -133,15 +133,15 @@ bool CCustomObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
 	// object motion
 	if (m_CO_Flags.is(flMotion))
 		m_CO_Flags.set(flMotion, FALSE);
-    
+
 	return true;
 }
 
-bool CCustomObject::LoadStream(IReader& F)
+bool CCustomObject::LoadStream(IReader &F)
 {
 	R_ASSERT(F.find_chunk(CUSTOMOBJECT_CHUNK_FLAGS));
 
-	if (!Core.SocSdk)	
+	if (!Core.SocSdk)
 		m_CO_Flags.assign(F.r_u32());
 	else
 	{
@@ -157,7 +157,7 @@ bool CCustomObject::LoadStream(IReader& F)
 	}
 
 	R_ASSERT(F.find_chunk(CUSTOMOBJECT_CHUNK_NAME));
-	F.r_stringZ(FName);	
+	F.r_stringZ(FName);
 
 	if (F.find_chunk(CUSTOMOBJECT_CHUNK_TRANSFORM))
 	{
@@ -172,7 +172,7 @@ bool CCustomObject::LoadStream(IReader& F)
 	{
 		m_Motion = xr_new<COMotion>();
 
-		if (!m_Motion->Load(F)) 
+		if (!m_Motion->Load(F))
 		{
 			ELog.Msg(mtError, "CustomObject: '%s' - motion has different version. Load failed.", GetName());
 			xr_delete(m_Motion);
@@ -183,7 +183,7 @@ bool CCustomObject::LoadStream(IReader& F)
 		AnimationUpdate(m_MotionParams->Frame());
 	}
 
-	if (F.find_chunk(CUSTOMOBJECT_CHUNK_MOTION_PARAM)) 
+	if (F.find_chunk(CUSTOMOBJECT_CHUNK_MOTION_PARAM))
 	{
 		m_MotionParams->t_current = F.r_float();
 		AnimationUpdate(m_MotionParams->Frame());
@@ -193,7 +193,7 @@ bool CCustomObject::LoadStream(IReader& F)
 	return true;
 }
 
-void CCustomObject::SaveLTX(CInifile& ini, LPCSTR sect_name)
+void CCustomObject::SaveLTX(CInifile &ini, LPCSTR sect_name)
 {
 	ini.w_u32(sect_name, "co_flags", m_CO_Flags.get());
 	ini.w_string(sect_name, "name", FName.c_str());
@@ -203,23 +203,23 @@ void CCustomObject::SaveLTX(CInifile& ini, LPCSTR sect_name)
 	ini.w_fvector3(sect_name, "scale", FScale);
 }
 
-void CCustomObject::SaveStream(IWriter& F)
+void CCustomObject::SaveStream(IWriter &F)
 {
 	F.open_chunk(CUSTOMOBJECT_CHUNK_FLAGS);
 
-    if (!Core.SocSdk)
-        F.w_u32(m_CO_Flags.get());	
-    else
-    {
-        Flags32 tempFlags;
-        tempFlags.set((u32)SocFlags::flSelected, m_RT_Flags.is(flRT_Selected));
-        tempFlags.set((u32)SocFlags::flVisible, m_RT_Flags.is(flRT_Visible));
-        tempFlags.set((u32)SocFlags::flLocked, false);
-        tempFlags.set((u32)SocFlags::flMotion, m_CO_Flags.is(flMotion));
-        tempFlags.set((u32)SocFlags::flAutoKey, m_CO_Flags.is(flAutoKey));
-        tempFlags.set((u32)SocFlags::flCameraView, m_CO_Flags.is(flCameraView));
-        F.w_u32(tempFlags.get());
-    }
+	if (!Core.SocSdk)
+		F.w_u32(m_CO_Flags.get());
+	else
+	{
+		Flags32 tempFlags;
+		tempFlags.set((u32)SocFlags::flSelected, m_RT_Flags.is(flRT_Selected));
+		tempFlags.set((u32)SocFlags::flVisible, m_RT_Flags.is(flRT_Visible));
+		tempFlags.set((u32)SocFlags::flLocked, false);
+		tempFlags.set((u32)SocFlags::flMotion, m_CO_Flags.is(flMotion));
+		tempFlags.set((u32)SocFlags::flAutoKey, m_CO_Flags.is(flAutoKey));
+		tempFlags.set((u32)SocFlags::flCameraView, m_CO_Flags.is(flCameraView));
+		F.w_u32(tempFlags.get());
+	}
 
 	F.close_chunk();
 
@@ -252,17 +252,17 @@ void CCustomObject::OnFrame()
 {
 	if (m_Motion)
 		AnimationOnFrame();
-	
-	if (m_RT_Flags.is(flRT_UpdateTransform)) 
+
+	if (m_RT_Flags.is(flRT_UpdateTransform))
 		OnUpdateTransform();
-    
-	if(m_CO_Flags.test(flObjectInGroup) && m_pOwnerObject==NULL)
+
+	if (m_CO_Flags.test(flObjectInGroup) && m_pOwnerObject == NULL)
 		m_CO_Flags.set(flObjectInGroup, FALSE);
 }
 
 void CCustomObject::RenderRoot(int priority, bool strictB2F)
 {
-	if(FParentTools->IsVisible())
+	if (FParentTools->IsVisible())
 		Render(priority, strictB2F);
 }
 
@@ -270,49 +270,49 @@ void CCustomObject::Render(int priority, bool strictB2F)
 {
 	if ((1 == priority) && (false == strictB2F))
 	{
-        if (EPrefs->object_flags.is(epoDrawPivot)&&Selected())		
-            DU_impl.DrawObjectAxis(FTransformRP,0.1f,Selected());
-        
-        if (m_Motion&&Visible()&&Selected())
-            AnimationDrawPath();
-    }
+		if (EPrefs->object_flags.is(epoDrawPivot) && Selected())
+			DU_impl.DrawObjectAxis(FTransformRP, 0.1f, Selected());
+
+		if (m_Motion && Visible() && Selected())
+			AnimationDrawPath();
+	}
 }
 
-bool CCustomObject::RaySelect(int flag, const Fvector& start, const Fvector& dir, bool bRayTest)
+bool CCustomObject::RaySelect(int flag, const Fvector &start, const Fvector &dir, bool bRayTest)
 {
 	float dist = UI->ZFar();
-	
+
 	if ((bRayTest && RayPick(dist, start, dir)) || !bRayTest)
 	{
 		Select(flag);
-        return true;
-    }
-
-    return false;
-}
-
-bool CCustomObject::FrustumSelect(int flag, const CFrustum& frustum)
-{
-	if (FrustumPick(frustum))
-	{
-    	Select(flag);
-        return true;
-    }
+		return true;
+	}
 
 	return false;
 }
 
-bool CCustomObject::GetSummaryInfo(SSceneSummary* inf)
+bool CCustomObject::FrustumSelect(int flag, const CFrustum &frustum)
 {
-	Fbox bb; 
-
-    if (GetBox(bb))
+	if (FrustumPick(frustum))
 	{
-        inf->bbox.modify(bb.min);
-        inf->bbox.modify(bb.max);
-    }
+		Select(flag);
+		return true;
+	}
 
-    return true;
+	return false;
+}
+
+bool CCustomObject::GetSummaryInfo(SSceneSummary *inf)
+{
+	Fbox bb;
+
+	if (GetBox(bb))
+	{
+		inf->bbox.modify(bb.min);
+		inf->bbox.modify(bb.max);
+	}
+
+	return true;
 }
 
 void CCustomObject::OnSynchronize()

@@ -11,20 +11,18 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline Matrix3::Matrix3 ()
+inline Matrix3::Matrix3()
 {
     // For efficiency reasons, do not initialize matrix.
 }
 //----------------------------------------------------------------------------
-inline Real* Matrix3::operator[] (int iRow) const
+inline Real *Matrix3::operator[](int iRow) const
 {
-    return (Real*)&m_aafEntry[iRow][0];
+    return (Real *)&m_aafEntry[iRow][0];
 }
 //----------------------------------------------------------------------------
-inline Matrix3::operator Real* ()
+inline Matrix3::operator Real *()
 {
     return &m_aafEntry[0][0];
 }
 //----------------------------------------------------------------------------
-
-

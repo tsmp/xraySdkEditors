@@ -5,7 +5,7 @@
 class IFlareRender
 {
 public:
-	virtual ~IFlareRender() {;}
+	virtual ~IFlareRender() { ; }
 	virtual void Copy(IFlareRender &_in) = 0;
 
 	virtual void CreateShader(LPCSTR sh_name, LPCSTR tex_name) = 0;
@@ -17,7 +17,7 @@ class CLensFlare;
 class ILensFlareRender
 {
 public:
-	virtual ~ILensFlareRender() {;}
+	virtual ~ILensFlareRender() { ; }
 	virtual void Copy(ILensFlareRender &_in) = 0;
 
 	virtual void Render(CLensFlare &owner, BOOL bSun, BOOL bFlares, BOOL bGradient) = 0;
@@ -25,4 +25,4 @@ public:
 	virtual void OnDeviceDestroy() = 0;
 };
 
-#endif	//	LensFlareRender_included
+#endif //	LensFlareRender_included

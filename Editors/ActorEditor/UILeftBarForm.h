@@ -1,6 +1,5 @@
 #pragma once
-class UILeftBarForm :
-	public XrUI
+class UILeftBarForm : public XrUI
 {
 public:
 	enum RenderMode
@@ -11,11 +10,11 @@ public:
 	UILeftBarForm();
 	virtual ~UILeftBarForm();
 	virtual void Draw();
-	IC RenderMode GetRenderMode() {return m_RenderMode;}
+	IC RenderMode GetRenderMode() { return m_RenderMode; }
 	void SetRenderMode(bool bEngineNode);
-	IC int GetPickMode()const { return m_PickMode; }
+	IC int GetPickMode() const { return m_PickMode; }
+
 private:
 	int m_PickMode;
 	RenderMode m_RenderMode;
 };
-

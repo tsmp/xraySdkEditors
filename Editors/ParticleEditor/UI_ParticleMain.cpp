@@ -1,24 +1,24 @@
 //---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop       
+#pragma hdrstop
 
 #include "UI_ParticleMain.h"
-#include "UI_ParticleTools.h"     
+#include "UI_ParticleTools.h"
 #include "xr_input.h"
 
 //---------------------------------------------------------------------------
-CParticleMain*	PUI=(CParticleMain*)UI;
+CParticleMain *PUI = (CParticleMain *)UI;
 //---------------------------------------------------------------------------
 
-CParticleMain::CParticleMain()  
+CParticleMain::CParticleMain()
 {
-    EPrefs			= xr_new<CCustomPreferences>();
+    EPrefs = xr_new<CCustomPreferences>();
 }
 //---------------------------------------------------------------------------
 
 CParticleMain::~CParticleMain()
 {
-    xr_delete		(EPrefs);
+    xr_delete(EPrefs);
 }
 //---------------------------------------------------------------------------
 
@@ -34,19 +34,19 @@ CCommandVar CParticleTool::CommandEditPreviewProps(CCommandVar p1, CCommandVar p
 
 CCommandVar CParticleTool::CommandSaveXR(CCommandVar p1, CCommandVar p2)
 {
-    Save							(true);
-    ExecCommand						(COMMAND_UPDATE_CAPTION);
+    Save(true);
+    ExecCommand(COMMAND_UPDATE_CAPTION);
     return TRUE;
 }
 
 CCommandVar CParticleTool::CommandLoadXR(CCommandVar p1, CCommandVar p2)
 {
-	xr_string temp_fn;
-    if (EFS.GetOpenName				(EDevice.m_hWnd, "$game_data$", temp_fn, false, NULL, 0))
-	{
-        ::Render->PSLibrary.OnDestroy	();
-        ::Render->PSLibrary.Load		(temp_fn.c_str());
-		ResetCurrent();
+    xr_string temp_fn;
+    if (EFS.GetOpenName(EDevice.m_hWnd, "$game_data$", temp_fn, false, NULL, 0))
+    {
+        ::Render->PSLibrary.OnDestroy();
+        ::Render->PSLibrary.Load(temp_fn.c_str());
+        ResetCurrent();
         ExecCommand(COMMAND_UPDATE_PROPERTIES);
         ExecCommand(COMMAND_UPDATE_CAPTION);
     }
@@ -55,9 +55,9 @@ CCommandVar CParticleTool::CommandLoadXR(CCommandVar p1, CCommandVar p2)
 
 CCommandVar CParticleTool::CommandSave(CCommandVar p1, CCommandVar p2)
 {
-    Save		(false);
-    ExecCommand	(COMMAND_UPDATE_CAPTION);
-    return 		TRUE;
+    Save(false);
+    ExecCommand(COMMAND_UPDATE_CAPTION);
+    return TRUE;
 }
 CCommandVar CParticleTool::CommandSaveBackup(CCommandVar p1, CCommandVar p2)
 {
@@ -66,14 +66,15 @@ CCommandVar CParticleTool::CommandSaveBackup(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CParticleTool::CommandReload(CCommandVar p1, CCommandVar p2)
 {
-    if (!IfModified()) 	return FALSE;
-    Reload				();
+    if (!IfModified())
+        return FALSE;
+    Reload();
     ExecCommand(COMMAND_UPDATE_CAPTION);
     return TRUE;
 }
 CCommandVar CParticleTool::CommandValidate(CCommandVar p1, CCommandVar p2)
 {
-	Validate(true);
+    Validate(true);
     return TRUE;
 }
 CCommandVar CParticleTool::CommandClear(CCommandVar p1, CCommandVar p2)
@@ -103,16 +104,16 @@ CCommandVar CommandRefreshUIBar(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandRestoreUIBar(CCommandVar p1, CCommandVar p2)
 {
-   /* fraTopBar->fsStorage->RestoreFormPlacement();
-    fraLeftBar->fsStorage->RestoreFormPlacement();
-    fraBottomBar->fsStorage->RestoreFormPlacement();*/
+    /* fraTopBar->fsStorage->RestoreFormPlacement();
+     fraLeftBar->fsStorage->RestoreFormPlacement();
+     fraBottomBar->fsStorage->RestoreFormPlacement();*/
     return TRUE;
 }
 CCommandVar CommandSaveUIBar(CCommandVar p1, CCommandVar p2)
 {
-  /*  fraTopBar->fsStorage->SaveFormPlacement();
-    fraLeftBar->fsStorage->SaveFormPlacement();
-    fraBottomBar->fsStorage->SaveFormPlacement();*/
+    /*  fraTopBar->fsStorage->SaveFormPlacement();
+      fraLeftBar->fsStorage->SaveFormPlacement();
+      fraBottomBar->fsStorage->SaveFormPlacement();*/
     return TRUE;
 }
 CCommandVar CommandUpdateToolBar(CCommandVar p1, CCommandVar p2)
@@ -134,30 +135,30 @@ CCommandVar CommandJumpToItem(CCommandVar p1, CCommandVar p2)
 
 void CParticleMain::RegisterCommands()
 {
-	inherited::RegisterCommands();
-    // tools       
-	//REGISTER_CMD_CE	(COMMAND_SELECT_PREVIEW_OBJ,"Select Preview Object",PTools,CParticleTool::CommandSelectPreviewObj, true);
-	//REGISTER_CMD_CE	(COMMAND_EDIT_PREVIEW_PROPS,"Select Preview Props",	PTools,CParticleTool::CommandEditPreviewProps, true);
-	REGISTER_CMD_CE	(COMMAND_SAVE,            	"File\\Save",			PTools,CParticleTool::CommandSave, true);
-	REGISTER_CMD_C	(COMMAND_SAVE_BACKUP,       PTools,CParticleTool::CommandSaveBackup);
-	REGISTER_CMD_CE	(COMMAND_LOAD,            	"File\\Reload",			PTools,CParticleTool::CommandReload, true);
-	REGISTER_CMD_C	(COMMAND_VALIDATE,          PTools,CParticleTool::CommandValidate);
-	REGISTER_CMD_CE	(COMMAND_CLEAR,             "File\\Clear",			PTools,CParticleTool::CommandClear, true);
-	REGISTER_CMD_CE	(COMMAND_PLAY_CURRENT,      "Particles\\Play",		PTools,CParticleTool::CommandPlayCurrent, true);
-    REGISTER_SUB_CMD_CE (COMMAND_STOP_CURRENT,	"Particles",			PTools,CParticleTool::CommandStopCurrent, true);
-    	APPEND_SUB_CMD	("Stop Immediate",		0,0);
-    	APPEND_SUB_CMD	("Stop Deffered", 		1,0);
+    inherited::RegisterCommands();
+    // tools
+    // REGISTER_CMD_CE	(COMMAND_SELECT_PREVIEW_OBJ,"Select Preview Object",PTools,CParticleTool::CommandSelectPreviewObj, true);
+    // REGISTER_CMD_CE	(COMMAND_EDIT_PREVIEW_PROPS,"Select Preview Props",	PTools,CParticleTool::CommandEditPreviewProps, true);
+    REGISTER_CMD_CE(COMMAND_SAVE, "File\\Save", PTools, CParticleTool::CommandSave, true);
+    REGISTER_CMD_C(COMMAND_SAVE_BACKUP, PTools, CParticleTool::CommandSaveBackup);
+    REGISTER_CMD_CE(COMMAND_LOAD, "File\\Reload", PTools, CParticleTool::CommandReload, true);
+    REGISTER_CMD_C(COMMAND_VALIDATE, PTools, CParticleTool::CommandValidate);
+    REGISTER_CMD_CE(COMMAND_CLEAR, "File\\Clear", PTools, CParticleTool::CommandClear, true);
+    REGISTER_CMD_CE(COMMAND_PLAY_CURRENT, "Particles\\Play", PTools, CParticleTool::CommandPlayCurrent, true);
+    REGISTER_SUB_CMD_CE(COMMAND_STOP_CURRENT, "Particles", PTools, CParticleTool::CommandStopCurrent, true);
+    APPEND_SUB_CMD("Stop Immediate", 0, 0);
+    APPEND_SUB_CMD("Stop Deffered", 1, 0);
     REGISTER_SUB_CMD_END;
-	REGISTER_CMD_S	(COMMAND_REFRESH_UI_BAR,    CommandRefreshUIBar);
-	REGISTER_CMD_S	(COMMAND_RESTORE_UI_BAR,    CommandRestoreUIBar);
-	REGISTER_CMD_S	(COMMAND_SAVE_UI_BAR,     	CommandSaveUIBar);
-	REGISTER_CMD_S	(COMMAND_UPDATE_TOOLBAR,    CommandUpdateToolBar);
-	REGISTER_CMD_S	(COMMAND_UPDATE_CAPTION,    CommandUpdateCaption);
-	REGISTER_CMD_S	(COMMAND_JUMP_TO_ITEM,     CommandJumpToItem);
-	REGISTER_CMD_C	(COMMAND_SAVE_XR,     		PTools, CParticleTool::CommandSaveXR);
-	REGISTER_CMD_C	(COMMAND_LOAD_XR,     		PTools, CParticleTool::CommandLoadXR);
-	REGISTER_CMD_C	(COMMAND_COMPACT_PARTICLES,	PTools, CParticleTool::Compact);
-	REGISTER_CMD_CE	(COMMAND_CREATE_GROUP_FROM_SELECTED,"Particles\\CreateGroupFromEffect",	PTools, CParticleTool::CreateGroupFromSelected, true);
+    REGISTER_CMD_S(COMMAND_REFRESH_UI_BAR, CommandRefreshUIBar);
+    REGISTER_CMD_S(COMMAND_RESTORE_UI_BAR, CommandRestoreUIBar);
+    REGISTER_CMD_S(COMMAND_SAVE_UI_BAR, CommandSaveUIBar);
+    REGISTER_CMD_S(COMMAND_UPDATE_TOOLBAR, CommandUpdateToolBar);
+    REGISTER_CMD_S(COMMAND_UPDATE_CAPTION, CommandUpdateCaption);
+    REGISTER_CMD_S(COMMAND_JUMP_TO_ITEM, CommandJumpToItem);
+    REGISTER_CMD_C(COMMAND_SAVE_XR, PTools, CParticleTool::CommandSaveXR);
+    REGISTER_CMD_C(COMMAND_LOAD_XR, PTools, CParticleTool::CommandLoadXR);
+    REGISTER_CMD_C(COMMAND_COMPACT_PARTICLES, PTools, CParticleTool::Compact);
+    REGISTER_CMD_CE(COMMAND_CREATE_GROUP_FROM_SELECTED, "Particles\\CreateGroupFromEffect", PTools, CParticleTool::CreateGroupFromSelected, true);
 }
 
 void CParticleMain::OnDrawUI()
@@ -166,68 +167,67 @@ void CParticleMain::OnDrawUI()
     PTools->OnDrawUI();
 }
 
-char* CParticleMain::GetCaption()
+char *CParticleMain::GetCaption()
 {
-	return "particles";
+    return "particles";
 }
 
-bool  CParticleMain::ApplyShortCut(DWORD Key, TShiftState Shift)
+bool CParticleMain::ApplyShortCut(DWORD Key, TShiftState Shift)
 {
-    return inherited::ApplyShortCut(Key,Shift);
+    return inherited::ApplyShortCut(Key, Shift);
 }
 //---------------------------------------------------------------------------
 
-bool  CParticleMain::ApplyGlobalShortCut(DWORD Key, TShiftState Shift)
+bool CParticleMain::ApplyGlobalShortCut(DWORD Key, TShiftState Shift)
 {
-    return inherited::ApplyGlobalShortCut(Key,Shift);
+    return inherited::ApplyGlobalShortCut(Key, Shift);
 }
 //---------------------------------------------------------------------------
 
 void CParticleMain::RealUpdateScene()
 {
-	inherited::RealUpdateScene	();
+    inherited::RealUpdateScene();
 }
 //---------------------------------------------------------------------------
-
 
 //---------------------------------------------------------------------------
 // Common
 //---------------------------------------------------------------------------
 void CParticleMain::ResetStatus()
 {
-	/*VERIFY(m_bReady);
+    /*VERIFY(m_bReady);
     if (fraBottomBar->paStatus->Caption!=""){
-	    fraBottomBar->paStatus->Caption=""; fraBottomBar->paStatus->Repaint();
+        fraBottomBar->paStatus->Caption=""; fraBottomBar->paStatus->Repaint();
     }*/
 }
 void CParticleMain::SetStatus(LPCSTR s, bool bOutLog)
 {
-	/*VERIFY(m_bReady);
+    /*VERIFY(m_bReady);
     if (fraBottomBar->paStatus->Caption!=s){
-	    fraBottomBar->paStatus->Caption=s; fraBottomBar->paStatus->Repaint();
-    	if (bOutLog&&s&&s[0]) ELog.Msg(mtInformation,s);
+        fraBottomBar->paStatus->Caption=s; fraBottomBar->paStatus->Repaint();
+        if (bOutLog&&s&&s[0]) ELog.Msg(mtInformation,s);
     }*/
 }
 void CParticleMain::ProgressDraw()
 {
     inherited::ProgressDraw();
-/*	fraBottomBar->RedrawBar();*/
+    /*	fraBottomBar->RedrawBar();*/
 }
 //---------------------------------------------------------------------------
 void CParticleMain::OutCameraPos()
 {
-	VERIFY(m_bReady);
-   /* xr_string s;
-	const Fvector& c 	= EDevice.m_Camera.GetPosition();
-	s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
-//	const Fvector& hpb 	= EDevice.m_Camera.GetHPB();
-//	s.sprintf(" Cam: %3.1f�, %3.1f�, %3.1f�",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
-    fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();*/
+    VERIFY(m_bReady);
+    /* xr_string s;
+     const Fvector& c 	= EDevice.m_Camera.GetPosition();
+     s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
+ //	const Fvector& hpb 	= EDevice.m_Camera.GetHPB();
+ //	s.sprintf(" Cam: %3.1f�, %3.1f�, %3.1f�",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
+     fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();*/
 }
 //---------------------------------------------------------------------------
 void CParticleMain::OutUICursorPos()
 {
-	VERIFY(m_bReady);
+    VERIFY(m_bReady);
     /*xr_string s; POINT pt;
     GetCursorPos(&pt);
     s.sprintf("Cur: %d, %d",pt.x,pt.y);
@@ -236,7 +236,7 @@ void CParticleMain::OutUICursorPos()
 //---------------------------------------------------------------------------
 void CParticleMain::OutGridSize()
 {
-	/*VERIFY(fraBottomBar);
+    /*VERIFY(fraBottomBar);
     xr_string s;
     s.sprintf("Grid: %1.1f",EPrefs->grid_cell_size);
     fraBottomBar->paGridSquareSize->Caption=s; fraBottomBar->paGridSquareSize->Repaint();*/
@@ -244,7 +244,7 @@ void CParticleMain::OutGridSize()
 //---------------------------------------------------------------------------
 void CParticleMain::OutInfo()
 {
-	/*fraBottomBar->paSel->Caption = Tools->GetInfo();*/
+    /*fraBottomBar->paSel->Caption = Tools->GetInfo();*/
 }
 //---------------------------------------------------------------------------
 void CParticleMain::RealQuit()
@@ -252,4 +252,3 @@ void CParticleMain::RealQuit()
     inherited::Quit();
 }
 //---------------------------------------------------------------------------
-

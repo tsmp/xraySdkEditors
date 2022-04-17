@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "UIMinimapEditorForm.h"
-UIMinimapEditorForm*    UIMinimapEditorForm::Form = nullptr;
-bool                    UIMinimapEditorForm::bOpen = false;
+UIMinimapEditorForm *UIMinimapEditorForm::Form = nullptr;
+bool UIMinimapEditorForm::bOpen = false;
 UIMinimapEditorForm::UIMinimapEditorForm()
 {
     m_TextureRemove = nullptr;
@@ -10,7 +10,8 @@ UIMinimapEditorForm::UIMinimapEditorForm()
 
 UIMinimapEditorForm::~UIMinimapEditorForm()
 {
-    if (m_Texture)m_Texture->Release();
+    if (m_Texture)
+        m_Texture->Release();
 }
 
 void UIMinimapEditorForm::Draw()
@@ -26,9 +27,8 @@ void UIMinimapEditorForm::Draw()
         m_Texture = RImplementation.texture_load("ed\\ed_nodata", mem);
     }
     ImGui::Image(m_Texture, ImVec2(330, 530));
-    if (ImGui::Button("Load"))LoadClick();
- 
-
+    if (ImGui::Button("Load"))
+        LoadClick();
 }
 
 void UIMinimapEditorForm::Update()
@@ -52,28 +52,27 @@ void UIMinimapEditorForm::Update()
         {
             xr_delete(Form);
         }
-
     }
 }
 
 void UIMinimapEditorForm::Show()
 {
-	VERIFY(!Form);
-	Form = xr_new< UIMinimapEditorForm>();
+    VERIFY(!Form);
+    Form = xr_new<UIMinimapEditorForm>();
     bOpen = true;
 }
-extern bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a);
+extern bool Stbi_Load(LPCSTR full_name, U32Vec &data, u32 &w, u32 &h, u32 &a);
 void UIMinimapEditorForm::LoadClick()
 {
-    xr_string                   fn;
+    xr_string fn;
     m_ImageData.clear();
 
-    if (EFS.GetOpenName(EDevice.m_hWnd,"$app_root$", fn, false, NULL, 0))
+    if (EFS.GetOpenName(EDevice.m_hWnd, "$app_root$", fn, false, NULL, 0))
     {
         if (Stbi_Load(fn.c_str(), m_ImageData, m_ImageW, m_ImageH, m_ImageA))
         {
             m_TextureRemove = m_Texture;
-            ID3DTexture2D* pTexture = nullptr;
+            ID3DTexture2D *pTexture = nullptr;
             {
                 R_CHK(HW.pDevice->CreateTexture(m_ImageW, m_ImageH, 1, 0, D3DFMT_X8R8G8B8, D3DPOOL_MANAGED, &pTexture, 0));
                 m_Texture = pTexture;
@@ -84,7 +83,7 @@ void UIMinimapEditorForm::LoadClick()
                     for (int i = 0; i < m_ImageH; i++)
                     {
 
-                        unsigned char* dest = static_cast<unsigned char*>(rect.pBits) + (rect.Pitch * i);
+                        unsigned char *dest = static_cast<unsigned char *>(rect.pBits) + (rect.Pitch * i);
                         memcpy(dest, m_ImageData.data() + (m_ImageW * i), sizeof(unsigned char) * m_ImageW * 4);
                     }
                     R_CHK(pTexture->UnlockRect(0));

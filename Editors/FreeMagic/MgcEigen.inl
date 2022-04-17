@@ -11,29 +11,28 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline Real& Eigen::Matrix (int iRow, int iCol)
+inline Real &Eigen::Matrix(int iRow, int iCol)
 {
     return m_aafMat[iRow][iCol];
 }
 //----------------------------------------------------------------------------
-inline Real Eigen::GetEigenvalue (int i) const
+inline Real Eigen::GetEigenvalue(int i) const
 {
     return m_afDiag[i];
 }
 //----------------------------------------------------------------------------
-inline Real Eigen::GetEigenvector (int iRow, int iCol) const
+inline Real Eigen::GetEigenvector(int iRow, int iCol) const
 {
     return m_aafMat[iRow][iCol];
 }
 //----------------------------------------------------------------------------
-inline Real* Eigen::GetEigenvalue ()
+inline Real *Eigen::GetEigenvalue()
 {
     return m_afDiag;
 }
 //----------------------------------------------------------------------------
-inline Real** Eigen::GetEigenvector ()
+inline Real **Eigen::GetEigenvector()
 {
     return m_aafMat;
 }
 //----------------------------------------------------------------------------
-

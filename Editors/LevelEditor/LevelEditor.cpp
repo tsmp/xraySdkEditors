@@ -9,23 +9,24 @@ class ISE_Abstract;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-    if(!IsDebuggerPresent()) Debug._initialize(false);
+    if (!IsDebuggerPresent())
+        Debug._initialize(false);
     Core._initialize("Actor", ELogCallback, 1, "fs.ltx", true);
     XrSE_Factory::initialize();
     Tools = xr_new<CLevelTool>();
-    LTools = (CLevelTool*)Tools;
+    LTools = (CLevelTool *)Tools;
 
     UI = xr_new<CLevelMain>();
     UI->RegisterCommands();
-    LUI = (CLevelMain*)UI;
+    LUI = (CLevelMain *)UI;
 
     Scene = xr_new<EScene>();
 
-    UIMainForm* MainForm = xr_new< UIMainForm>();
+    UIMainForm *MainForm = xr_new<UIMainForm>();
     HICON icon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON_LE));
 
     if (icon)
-    {        
+    {
         SendMessage(EDevice.m_hWnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(icon));
         SendMessage(EDevice.m_hWnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(icon));
     }

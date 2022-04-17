@@ -11,32 +11,32 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline int ConvexHull3D::GetType () const
+inline int ConvexHull3D::GetType() const
 {
     return m_iHullType;
 }
 //----------------------------------------------------------------------------
-inline int ConvexHull3D::GetQuantity () const
+inline int ConvexHull3D::GetQuantity() const
 {
     return m_iHQuantity;
 }
 //----------------------------------------------------------------------------
-inline const int* ConvexHull3D::GetIndices () const
+inline const int *ConvexHull3D::GetIndices() const
 {
     return m_aiHIndex;
 }
 //----------------------------------------------------------------------------
-inline Real& ConvexHull3D::VertexEqualityEpsilon ()
+inline Real &ConvexHull3D::VertexEqualityEpsilon()
 {
     return ms_fVertexEqualityEpsilon;
 }
 //----------------------------------------------------------------------------
-inline Real& ConvexHull3D::CollinearEpsilon ()
+inline Real &ConvexHull3D::CollinearEpsilon()
 {
     return ms_fCollinearEpsilon;
 }
 //----------------------------------------------------------------------------
-inline Real& ConvexHull3D::CoplanarEpsilon ()
+inline Real &ConvexHull3D::CoplanarEpsilon()
 {
     return ms_fCoplanarEpsilon;
 }

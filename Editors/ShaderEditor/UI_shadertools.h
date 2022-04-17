@@ -8,93 +8,114 @@ class CEditableObject;
 class CLibObject;
 class IBlender;
 
-class CShaderTool: public CToolCustom
+class CShaderTool : public CToolCustom
 {
-	typedef CToolCustom inherited;
+    typedef CToolCustom inherited;
 
-    void				RegisterTools		();
-    void				UnregisterTools		();
-    void				RealUpdateProperties();
-    void				RealUpdateList		();
+    void RegisterTools();
+    void UnregisterTools();
+    void RealUpdateProperties();
+    void RealUpdateList();
 
-    enum{
-    	flRefreshProps 	= (1ul<<0ul),
-    	flRefreshList 	= (1ul<<1ul),
+    enum
+    {
+        flRefreshProps = (1ul << 0ul),
+        flRefreshList = (1ul << 1ul),
     };
-    Flags32				m_Flags;
+    Flags32 m_Flags;
 
-    void 				PrepareLighting		();
+    void PrepareLighting();
+
 public:
-	UIItemListForm*			m_Items;
-    UIPropertiesForm*		m_ItemProps;
-    UIPropertiesForm*		m_PreviewProps;
+    UIItemListForm *m_Items;
+    UIPropertiesForm *m_ItemProps;
+    UIPropertiesForm *m_PreviewProps;
 
-    DEFINE_MAP			(EToolsID,ISHTools*,ToolsMap,ToolsPairIt);
-    ToolsMap			m_Tools;
-    ISHTools*			m_Current;
-    ISHTools*			Current				(){return m_Current;}
+    DEFINE_MAP(EToolsID, ISHTools *, ToolsMap, ToolsPairIt);
+    ToolsMap m_Tools;
+    ISHTools *m_Current;
+    ISHTools *Current() { return m_Current; }
 
-    void 	 	OnItemFocused		(ListItem* items);
+    void OnItemFocused(ListItem *items);
+
 public:
-						CShaderTool			();
-    virtual 			~CShaderTool		();
+    CShaderTool();
+    virtual ~CShaderTool();
 
-    virtual void		Render				();
-	virtual void		RenderEnvironment	() ;
-    virtual void		OnFrame				();
+    virtual void Render();
+    virtual void RenderEnvironment();
+    virtual void OnFrame();
 
-    virtual bool		OnCreate			();
-    virtual void		OnDestroy			();
+    virtual bool OnCreate();
+    virtual void OnDestroy();
 
-    virtual bool		IfModified			();
-    virtual bool		IsModified			();
-    virtual void		Modified			(); 
+    virtual bool IfModified();
+    virtual bool IsModified();
+    virtual void Modified();
 
-    virtual LPCSTR		GetInfo				();
-    
-    virtual void		ZoomObject			(BOOL bSelOnly);
+    virtual LPCSTR GetInfo();
 
-    virtual bool		Load				(LPCSTR name);
-    virtual bool		Save				(LPCSTR name, bool bInternal=false);
-    virtual void		Reload				();
-    
-    virtual void		OnDeviceCreate		();
-    virtual void		OnDeviceDestroy		();
+    virtual void ZoomObject(BOOL bSelOnly);
 
-    virtual void		Clear				(){inherited::Clear();}
+    virtual bool Load(LPCSTR name);
+    virtual bool Save(LPCSTR name, bool bInternal = false);
+    virtual void Reload();
 
-    virtual void		OnShowHint			(AStringVec& SS);
+    virtual void OnDeviceCreate();
+    virtual void OnDeviceDestroy();
 
-    virtual bool  	MouseStart  		(TShiftState Shift){return inherited::MouseStart(Shift);return false;}
-    virtual bool  	MouseEnd    		(TShiftState Shift){inherited::MouseEnd(Shift); return false;}
-    virtual void  	MouseMove   		(TShiftState Shift){inherited::MouseMove(Shift);}
+    virtual void Clear() { inherited::Clear(); }
 
-    virtual bool		Pick				(TShiftState Shift){return false;}
-	virtual bool 		RayPick				(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n);
+    virtual void OnShowHint(AStringVec &SS);
 
-    virtual void		ShowProperties		(LPCSTR focused_item);
-    virtual void		UpdateProperties	(BOOL bForced=false){m_Flags.set(flRefreshProps,TRUE); if (bForced) RealUpdateProperties();}
-    virtual void		RefreshProperties	(){;}
-    virtual void		UpdateList			(bool bForced=false){m_Flags.set(flRefreshList,TRUE); if (bForced) RealUpdateList();}
-    virtual bool		GetSelectionPosition	(Fmatrix& result);
+    virtual bool MouseStart(TShiftState Shift)
+    {
+        return inherited::MouseStart(Shift);
+        return false;
+    }
+    virtual bool MouseEnd(TShiftState Shift)
+    {
+        inherited::MouseEnd(Shift);
+        return false;
+    }
+    virtual void MouseMove(TShiftState Shift) { inherited::MouseMove(Shift); }
 
-    LPCSTR				CurrentToolsName	();
+    virtual bool Pick(TShiftState Shift) { return false; }
+    virtual bool RayPick(const Fvector &start, const Fvector &dir, float &dist, Fvector *pt, Fvector *n);
 
-    void				OnChangeEditor		(ISHTools* tools);
+    virtual void ShowProperties(LPCSTR focused_item);
+    virtual void UpdateProperties(BOOL bForced = false)
+    {
+        m_Flags.set(flRefreshProps, TRUE);
+        if (bForced)
+            RealUpdateProperties();
+    }
+    virtual void RefreshProperties() { ; }
+    virtual void UpdateList(bool bForced = false)
+    {
+        m_Flags.set(flRefreshList, TRUE);
+        if (bForced)
+            RealUpdateList();
+    }
+    virtual bool GetSelectionPosition(Fmatrix &result);
 
-    void				ApplyChanges		();
+    LPCSTR CurrentToolsName();
 
-    ISHTools*			FindTools			(EToolsID id);
-  //  ISHTools*			FindTools			(TElTabSheet* sheet);
+    void OnChangeEditor(ISHTools *tools);
+
+    void ApplyChanges();
+
+    ISHTools *FindTools(EToolsID id);
+    //  ISHTools*			FindTools			(TElTabSheet* sheet);
 
     // commands
-    CCommandVar 		CommandSave			(CCommandVar p1, CCommandVar p2);
-    CCommandVar 		CommandSaveBackup	(CCommandVar p1, CCommandVar p2);
-    CCommandVar 		CommandReload		(CCommandVar p1, CCommandVar p2);
-    CCommandVar 		CommandClear		(CCommandVar p1, CCommandVar p2);
+    CCommandVar CommandSave(CCommandVar p1, CCommandVar p2);
+    CCommandVar CommandSaveBackup(CCommandVar p1, CCommandVar p2);
+    CCommandVar CommandReload(CCommandVar p1, CCommandVar p2);
+    CCommandVar CommandClear(CCommandVar p1, CCommandVar p2);
 
-    CCommandVar 		CommandUpdateList	(CCommandVar p1, CCommandVar p2);
+    CCommandVar CommandUpdateList(CCommandVar p1, CCommandVar p2);
 };
-extern CShaderTool*	STools;
+extern CShaderTool *STools;
 //---------------------------------------------------------------------------
 #endif

@@ -26,35 +26,33 @@
 //#include <lua/library_linkage.h>
 //#include <luabind/library_linkage.h>
 
-#pragma comment(lib,"xrCore.lib")
+#pragma comment(lib, "xrCore.lib")
 
-extern CSE_Abstract *F_entity_Create	(LPCSTR section);
+extern CSE_Abstract *F_entity_Create(LPCSTR section);
 
-extern CScriptPropertiesListHelper	*g_property_list_helper;
+extern CScriptPropertiesListHelper *g_property_list_helper;
 
 #ifdef NDEBUG
-
-
 
 #endif // #ifdef NDEBUG
 
 void setup_luabind_allocator();
 namespace XrSE_Factory
 {
-	FACTORY_API	ISE_Abstract* create_entity(LPCSTR section)
+	FACTORY_API ISE_Abstract *create_entity(LPCSTR section)
 	{
-		return					(F_entity_Create(section));
+		return (F_entity_Create(section));
 	}
 
-	FACTORY_API	void		 destroy_entity(ISE_Abstract*& abstract)
+	FACTORY_API void destroy_entity(ISE_Abstract *&abstract)
 	{
-		CSE_Abstract* object = smart_cast<CSE_Abstract*>(abstract);
+		CSE_Abstract *object = smart_cast<CSE_Abstract *>(abstract);
 		F_entity_Destroy(object);
 		abstract = 0;
 	}
-	FACTORY_API	void			initialize()
+	FACTORY_API void initialize()
 	{
-		string_path					SYSTEM_LTX;
+		string_path SYSTEM_LTX;
 		FS.update_path(SYSTEM_LTX, "$game_config$", "system.ltx");
 		pSettings = xr_new<CInifile>(SYSTEM_LTX);
 
@@ -63,41 +61,38 @@ namespace XrSE_Factory
 		CCharacterInfo::InitInternal();
 		CSpecificCharacter::InitInternal();
 	}
-	FACTORY_API	void			destroy()
+	FACTORY_API void destroy()
 	{
 		CCharacterInfo::DeleteSharedData();
 		CCharacterInfo::DeleteIdToIndexData();
 		CSpecificCharacter::DeleteSharedData();
 		CSpecificCharacter::DeleteIdToIndexData();
 
-
 		xr_delete(g_object_factory);
-		CInifile** s = (CInifile**)(&pSettings);
+		CInifile **s = (CInifile **)(&pSettings);
 		xr_delete(*s);
 		xr_delete(g_property_list_helper);
 		xr_delete(g_ai_space);
 		xr_delete(g_object_factory);
 	}
 }
-//typedef void DUMMY_STUFF (const void*,const u32&,void*);
-//XRCORE_API DUMMY_STUFF	*g_temporary_stuff;
-
+// typedef void DUMMY_STUFF (const void*,const u32&,void*);
+// XRCORE_API DUMMY_STUFF	*g_temporary_stuff;
 
 //#define TRIVIAL_ENCRYPTOR_DECODER
 //#include UP(xrEngine/trivial_encryptor.h)
 
-
-void _destroy_item_data_vector_cont(T_VECTOR* vec)
+void _destroy_item_data_vector_cont(T_VECTOR *vec)
 {
-	T_VECTOR::iterator it		= vec->begin();
-	T_VECTOR::iterator it_e		= vec->end();
+	T_VECTOR::iterator it = vec->begin();
+	T_VECTOR::iterator it_e = vec->end();
 
-	xr_vector<CUIXml*>			_tmp;	
-	for(;it!=it_e;++it)
+	xr_vector<CUIXml *> _tmp;
+	for (; it != it_e; ++it)
 	{
-		xr_vector<CUIXml*>::iterator it_f = std::find(_tmp.begin(), _tmp.end(), (*it)._xml);
-		if(it_f==_tmp.end())
-			_tmp.push_back	((*it)._xml);
+		xr_vector<CUIXml *>::iterator it_f = std::find(_tmp.begin(), _tmp.end(), (*it)._xml);
+		if (it_f == _tmp.end())
+			_tmp.push_back((*it)._xml);
 	}
-	delete_data	(_tmp);
+	delete_data(_tmp);
 }

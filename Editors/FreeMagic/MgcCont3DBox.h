@@ -15,31 +15,28 @@
 
 #include "MgcBox3.h"
 
-namespace Mgc {
+namespace Mgc
+{
 
-MAGICFM void ContAlignedBox (int iQuantity, const Vector3* akPoint,
-    Vector3& rkMin, Vector3& rkMax);
+    MAGICFM void ContAlignedBox(int iQuantity, const Vector3 *akPoint,
+                                Vector3 &rkMin, Vector3 &rkMax);
 
-MAGICFM Box3 ContOrientedBox (int iQuantity, const Vector3* akPoint);
+    MAGICFM Box3 ContOrientedBox(int iQuantity, const Vector3 *akPoint);
 
+    // This function allows for selection of vertices from a pool.  The return
+    //  value is 'true' if and only if at least one vertex is valid.
+    MAGICFM bool ContOrientedBox(int iQuantity, const Vector3 *akPoint,
+                                 const bool *abValid, Box3 &rkBox);
 
-// This function allows for selection of vertices from a pool.  The return
-//  value is 'true' if and only if at least one vertex is valid.
-MAGICFM bool ContOrientedBox (int iQuantity, const Vector3* akPoint,
-    const bool* abValid, Box3& rkBox);
+    // Test for containment.  Let X = C + y0*U0 + y1*U1 + y2*U2 where C is the
+    // box center and U0, U1, U2 are the orthonormal axes of the box.  X is in
+    // the box if |y_i| <= E_i for all i where E_i are the extents of the box.
+    // If an epsilon e is supplied, the tests are |y_i| <= E_i + e.
+    MAGICFM bool InBox(const Vector3 &rkPoint, const Box3 &rkBox,
+                       Real fEpsilon = 0.0f);
 
-
-// Test for containment.  Let X = C + y0*U0 + y1*U1 + y2*U2 where C is the
-// box center and U0, U1, U2 are the orthonormal axes of the box.  X is in
-// the box if |y_i| <= E_i for all i where E_i are the extents of the box.
-// If an epsilon e is supplied, the tests are |y_i| <= E_i + e.
-MAGICFM bool InBox (const Vector3& rkPoint, const Box3& rkBox,
-    Real fEpsilon = 0.0f);
-
-MAGICFM Box3 MergeBoxes (const Box3& rkBox0, const Box3& rkBox1);
+    MAGICFM Box3 MergeBoxes(const Box3 &rkBox0, const Box3 &rkBox1);
 
 } // namespace Mgc
 
 #endif
-
-

@@ -14,8 +14,8 @@ public:
 	virtual void OnRender(CGameFont &owner);
 
 private:
-	ref_shader				pShader;
-	ref_geom				pGeom;
+	ref_shader pShader;
+	ref_geom pGeom;
 };
 
-#endif	//	FontRender_included
+#endif //	FontRender_included

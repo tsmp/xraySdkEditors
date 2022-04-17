@@ -12,20 +12,21 @@
 
 CAI_Space *g_ai_space = 0;
 
-CAI_Space::CAI_Space				()
+CAI_Space::CAI_Space()
 {
-	m_script_engine			= 0;
+	m_script_engine = 0;
 }
 
-void CAI_Space::init				()
+void CAI_Space::init()
 {
-	VERIFY					(!m_script_engine);
-	static auto a = xr_new<CScriptEngine>();;
-	m_script_engine			= a;
-	m_script_engine->init	();
+	VERIFY(!m_script_engine);
+	static auto a = xr_new<CScriptEngine>();
+	;
+	m_script_engine = a;
+	m_script_engine->init();
 }
 
-CAI_Space::~CAI_Space				()
+CAI_Space::~CAI_Space()
 {
-	xr_delete				(m_script_engine);
+	xr_delete(m_script_engine);
 }

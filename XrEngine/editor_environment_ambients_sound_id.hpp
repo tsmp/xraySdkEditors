@@ -14,43 +14,47 @@
 #include <boost/noncopyable.hpp>
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
-class property_holder_collection;
+	class property_holder_collection;
 
-namespace environment {
-	namespace sound_channels {
-		class manager;
-	} // namespace sound_channels
+	namespace environment
+	{
+		namespace sound_channels
+		{
+			class manager;
+		} // namespace sound_channels
 
-namespace ambients {
+		namespace ambients
+		{
 
-class sound_id :
-	public XrWeatherEditor::property_holder_holder,
-	private boost::noncopyable {
-public:
-							sound_id		(sound_channels::manager const& manager, shared_str const& sound);
-	virtual					~sound_id		();
-			void			fill			(XrWeatherEditor::property_holder_collection* collection);
-	inline	shared_str const& id			() const { return m_id; }
+			class sound_id : public XrWeatherEditor::property_holder_holder,
+							 private boost::noncopyable
+			{
+			public:
+				sound_id(sound_channels::manager const &manager, shared_str const &sound);
+				virtual ~sound_id();
+				void fill(XrWeatherEditor::property_holder_collection *collection);
+				inline shared_str const &id() const { return m_id; }
 
-private:
-	typedef XrWeatherEditor::property_holder			property_holder_type;
+			private:
+				typedef XrWeatherEditor::property_holder property_holder_type;
 
-public:
-	virtual	property_holder_type* object	();
+			public:
+				virtual property_holder_type *object();
 
-private:
-	LPCSTR const* xr_stdcall collection		();
-	u32  xr_stdcall			collection_size	();
+			private:
+				LPCSTR const *xr_stdcall collection();
+				u32 xr_stdcall collection_size();
 
-private:
-	property_holder_type*					m_property_holder;
-	sound_channels::manager const&			m_manager;
-	shared_str								m_id;
-}; // class sound_id
-} // namespace ambients
-} // namespace environment
+			private:
+				property_holder_type *m_property_holder;
+				sound_channels::manager const &m_manager;
+				shared_str m_id;
+			}; // class sound_id
+		}	   // namespace ambients
+	}		   // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

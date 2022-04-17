@@ -1,11 +1,11 @@
 #include "stdafx.h"
 
 #include "../XrECore/Editor/EditorChooseEvents.h"
-UIMainForm* MainForm = nullptr;
+UIMainForm *MainForm = nullptr;
 UIMainForm::UIMainForm()
 {
     EnableReceiveCommands();
-    if (!ExecCommand(COMMAND_INITIALIZE, (u32)0, (u32)0)) 
+    if (!ExecCommand(COMMAND_INITIALIZE, (u32)0, (u32)0))
     {
         FlushLog();
         exit(-1);
@@ -37,12 +37,13 @@ void UIMainForm::Draw()
     m_TopBar->Draw();
     m_LeftBar->Draw();
     m_KeyForm->Draw();
-   // ImGui::ShowDemoWindow(&bOpen);
+    // ImGui::ShowDemoWindow(&bOpen);
     m_Render->Draw();
 }
 
 bool UIMainForm::Frame()
 {
-    if(UI)  return UI->Idle();
+    if (UI)
+        return UI->Idle();
     return false;
 }

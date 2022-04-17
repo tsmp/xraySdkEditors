@@ -16,89 +16,92 @@
 #include "property_collection_forward.hpp"
 #include "environment.h"
 
-namespace XrWeatherEditor {
-namespace environment {
-
-	namespace effects {
-		class manager;
-	} // namespace effects
-
-	namespace sound_channels {
-		class manager;
-	} // namespace sound_channels
-
-namespace ambients {
-
-class manager;
-class effect_id;
-class sound_id;
-
-class ambient :
-	public CEnvAmbient,
-	public XrWeatherEditor::property_holder_holder,
-	private boost::noncopyable
+namespace XrWeatherEditor
 {
-private:
-	typedef CEnvAmbient		inherited;
+	namespace environment
+	{
 
-public:
-							ambient				(manager const& manager, shared_str const& id);
-	virtual					~ambient			();
-	virtual	void			load				(
-								CInifile& ambients_config,
-								CInifile& sound_channels_config,
-								CInifile& effects_config,
-								const shared_str& section
-							);
-			void			save				(CInifile& config);
-			void			fill				(XrWeatherEditor::property_holder_collection* collection);
-	inline	shared_str const& id				() const { return m_load_section; }
-	virtual	SEffect*		create_effect		(CInifile& config, LPCSTR id);
-	virtual	SSndChannel*	create_sound_channel(CInifile& config, LPCSTR id);
-	virtual	EffectVec&		effects				();
-	virtual	SSndChannelVec&	get_snd_channels	();
+		namespace effects
+		{
+			class manager;
+		} // namespace effects
 
-private:
-			LPCSTR xr_stdcall id_getter	() const;
-			void xr_stdcall id_setter	(LPCSTR value);
+		namespace sound_channels
+		{
+			class manager;
+		} // namespace sound_channels
 
-public:
-	effects::manager const&			effects_manager	() const;
-	sound_channels::manager const&	sounds_manager	() const;
+		namespace ambients
+		{
 
-public:
-	typedef xr_vector<effect_id*>		effect_container_type;
-	typedef property_collection<
-				effect_container_type,
-				ambient
-			>							effect_collection_type;
+			class manager;
+			class effect_id;
+			class sound_id;
 
-public:
-	typedef xr_vector<sound_id*>		sound_container_type;
-	typedef property_collection<
-				sound_container_type,
-				ambient
-			>							sound_collection_type;
+			class ambient : public CEnvAmbient,
+							public XrWeatherEditor::property_holder_holder,
+							private boost::noncopyable
+			{
+			private:
+				typedef CEnvAmbient inherited;
 
-private:
-	typedef XrWeatherEditor::property_holder		property_holder_type;
+			public:
+				ambient(manager const &manager, shared_str const &id);
+				virtual ~ambient();
+				virtual void load(
+					CInifile &ambients_config,
+					CInifile &sound_channels_config,
+					CInifile &effects_config,
+					const shared_str &section);
+				void save(CInifile &config);
+				void fill(XrWeatherEditor::property_holder_collection *collection);
+				inline shared_str const &id() const { return m_load_section; }
+				virtual SEffect *create_effect(CInifile &config, LPCSTR id);
+				virtual SSndChannel *create_sound_channel(CInifile &config, LPCSTR id);
+				virtual EffectVec &effects();
+				virtual SSndChannelVec &get_snd_channels();
 
-public:
-	virtual	property_holder_type* object();
+			private:
+				LPCSTR xr_stdcall id_getter() const;
+				void xr_stdcall id_setter(LPCSTR value);
 
-private:
-	CInifile*							m_config;
-	property_holder_type*				m_property_holder;
-	manager const&						m_manager;
+			public:
+				effects::manager const &effects_manager() const;
+				sound_channels::manager const &sounds_manager() const;
 
-	effect_collection_type*				m_effects_collection;
-	effect_container_type				m_effects_ids;
+			public:
+				typedef xr_vector<effect_id *> effect_container_type;
+				typedef property_collection<
+					effect_container_type,
+					ambient>
+					effect_collection_type;
 
-	sound_collection_type*				m_sounds_collection;
-	sound_container_type				m_sound_channels_ids;
-}; // class ambient
-} // namespace ambients
-} // namespace environment
+			public:
+				typedef xr_vector<sound_id *> sound_container_type;
+				typedef property_collection<
+					sound_container_type,
+					ambient>
+					sound_collection_type;
+
+			private:
+				typedef XrWeatherEditor::property_holder property_holder_type;
+
+			public:
+				virtual property_holder_type *object();
+
+			private:
+				CInifile *m_config;
+				property_holder_type *m_property_holder;
+				manager const &m_manager;
+
+				effect_collection_type *m_effects_collection;
+				effect_container_type m_effects_ids;
+
+				sound_collection_type *m_sounds_collection;
+				sound_container_type m_sound_channels_ids;
+			}; // class ambient
+		}	   // namespace ambients
+	}		   // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

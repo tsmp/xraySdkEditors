@@ -28,6 +28,5 @@ void UIRightBarForm::Draw()
 		ImGui::TreePop();
 	}
 
-
 	ImGui::End();
 }

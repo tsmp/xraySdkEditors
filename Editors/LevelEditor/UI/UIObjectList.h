@@ -1,6 +1,6 @@
 #pragma once
 class CCustomObject;
-class UIObjectList:public XrUI
+class UIObjectList : public XrUI
 {
 public:
 	UIObjectList();
@@ -9,12 +9,15 @@ public:
 	static void Update();
 	static void Show();
 	static void Close();
-	static IC bool IsOpen()  { return Form; }
+	static IC bool IsOpen() { return Form; }
+
 private:
-	static UIObjectList* Form;
+	static UIObjectList *Form;
+
 private:
 	void DrawObjects();
-	void DrawObject(CCustomObject* obj,const char*name);
+	void DrawObject(CCustomObject *obj, const char *name);
+
 private:
 	ObjClassID m_cur_cls;
 	enum EMode
@@ -24,6 +27,6 @@ private:
 		M_Inbvisible
 	};
 	EMode m_Mode;
-	CCustomObject* m_SelectedObject;
+	CCustomObject *m_SelectedObject;
 	string_path m_Filter;
 };

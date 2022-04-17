@@ -21,41 +21,41 @@ const Real Mgc::Math::MAX_REAL = DBL_MAX;
 const Real Mgc::Math::MAX_REAL = FLT_MAX;
 #endif
 
-const Real Mgc::Math::_PI = 4.0f*Mgc::Math::ATan(1.0f);
-const Real Mgc::Math::TWO_PI = 2.0f*_PI;
-const Real Mgc::Math::HALF_PI = 0.5f*_PI;
-const Real Mgc::Math::INV_TWO_PI = 1.0f/TWO_PI;
-const Real Mgc::Math::DEG_TO_RAD = Mgc::Math::_PI/180.0f;
-const Real Mgc::Math::RAD_TO_DEG = 1.0f/Mgc::Math::DEG_TO_RAD;
+const Real Mgc::Math::_PI = 4.0f * Mgc::Math::ATan(1.0f);
+const Real Mgc::Math::TWO_PI = 2.0f * _PI;
+const Real Mgc::Math::HALF_PI = 0.5f * _PI;
+const Real Mgc::Math::INV_TWO_PI = 1.0f / TWO_PI;
+const Real Mgc::Math::DEG_TO_RAD = Mgc::Math::_PI / 180.0f;
+const Real Mgc::Math::RAD_TO_DEG = 1.0f / Mgc::Math::DEG_TO_RAD;
 
 //----------------------------------------------------------------------------
-Real Mgc::Math::UnitRandom (Real fSeed)
+Real Mgc::Math::UnitRandom(Real fSeed)
 {
-    if ( fSeed > 0.0f )
+    if (fSeed > 0.0f)
         srand((unsigned int)fSeed);
 
-     return Real(rand())/Real(RAND_MAX);
+    return Real(rand()) / Real(RAND_MAX);
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::SymmetricRandom (Real fSeed)
+Real Mgc::Math::SymmetricRandom(Real fSeed)
 {
-    if ( fSeed > 0.0f )
+    if (fSeed > 0.0f)
         srand((unsigned int)fSeed);
 
-    return 2.0f*Real(rand())/Real(RAND_MAX) - 1.0f;
+    return 2.0f * Real(rand()) / Real(RAND_MAX) - 1.0f;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::IntervalRandom (Real fMin, Real fMax, Real fSeed)
+Real Mgc::Math::IntervalRandom(Real fMin, Real fMax, Real fSeed)
 {
-    if ( fSeed > 0.0f )
+    if (fSeed > 0.0f)
         srand((unsigned int)fSeed);
 
-    return fMin + (fMax-fMin)*Real(rand())/Real(RAND_MAX);
+    return fMin + (fMax - fMin) * Real(rand()) / Real(RAND_MAX);
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastSin0 (Real fAngle)
+Real Mgc::Math::FastSin0(Real fAngle)
 {
-    Real fASqr = fAngle*fAngle;
+    Real fASqr = fAngle * fAngle;
     Real fResult = 7.61e-03f;
     fResult *= fASqr;
     fResult -= 1.6605e-01f;
@@ -65,9 +65,9 @@ Real Mgc::Math::FastSin0 (Real fAngle)
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastSin1 (Real fAngle)
+Real Mgc::Math::FastSin1(Real fAngle)
 {
-    Real fASqr = fAngle*fAngle;
+    Real fASqr = fAngle * fAngle;
     Real fResult = -2.39e-08f;
     fResult *= fASqr;
     fResult += 2.7526e-06f;
@@ -83,9 +83,9 @@ Real Mgc::Math::FastSin1 (Real fAngle)
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastCos0 (Real fAngle)
+Real Mgc::Math::FastCos0(Real fAngle)
 {
-    Real fASqr = fAngle*fAngle;
+    Real fASqr = fAngle * fAngle;
     Real fResult = 3.705e-02f;
     fResult *= fASqr;
     fResult -= 4.967e-01f;
@@ -94,9 +94,9 @@ Real Mgc::Math::FastCos0 (Real fAngle)
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastCos1 (Real fAngle)
+Real Mgc::Math::FastCos1(Real fAngle)
 {
-    Real fASqr = fAngle*fAngle;
+    Real fASqr = fAngle * fAngle;
     Real fResult = -2.605e-07f;
     fResult *= fASqr;
     fResult += 2.47609e-05f;
@@ -111,9 +111,9 @@ Real Mgc::Math::FastCos1 (Real fAngle)
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastTan0 (Real fAngle)
+Real Mgc::Math::FastTan0(Real fAngle)
 {
-    Real fASqr = fAngle*fAngle;
+    Real fASqr = fAngle * fAngle;
     Real fResult = 2.033e-01f;
     fResult *= fASqr;
     fResult += 3.1755e-01f;
@@ -123,9 +123,9 @@ Real Mgc::Math::FastTan0 (Real fAngle)
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastTan1 (Real fAngle)
+Real Mgc::Math::FastTan1(Real fAngle)
 {
-    Real fASqr = fAngle*fAngle;
+    Real fASqr = fAngle * fAngle;
     Real fResult = 9.5168091e-03f;
     fResult *= fASqr;
     fResult += 2.900525e-03f;
@@ -143,9 +143,9 @@ Real Mgc::Math::FastTan1 (Real fAngle)
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastInvSin (Real fValue)
+Real Mgc::Math::FastInvSin(Real fValue)
 {
-    Real fRoot = Mgc::Math::Sqrt(1.0f-fValue);
+    Real fRoot = Mgc::Math::Sqrt(1.0f - fValue);
     Real fResult = -0.0187293f;
     fResult *= fValue;
     fResult += 0.0742610f;
@@ -153,13 +153,13 @@ Real Mgc::Math::FastInvSin (Real fValue)
     fResult -= 0.2121144f;
     fResult *= fValue;
     fResult += 1.5707288f;
-    fResult = HALF_PI - fRoot*fResult;
+    fResult = HALF_PI - fRoot * fResult;
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastInvCos (Real fValue)
+Real Mgc::Math::FastInvCos(Real fValue)
 {
-    Real fRoot = Mgc::Math::Sqrt(1.0f-fValue);
+    Real fRoot = Mgc::Math::Sqrt(1.0f - fValue);
     Real fResult = -0.0187293f;
     fResult *= fValue;
     fResult += 0.0742610f;
@@ -171,9 +171,9 @@ Real Mgc::Math::FastInvCos (Real fValue)
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastInvTan0 (Real fValue)
+Real Mgc::Math::FastInvTan0(Real fValue)
 {
-    Real fVSqr = fValue*fValue;
+    Real fVSqr = fValue * fValue;
     Real fResult = 0.0208351f;
     fResult *= fVSqr;
     fResult -= 0.085133f;
@@ -187,9 +187,9 @@ Real Mgc::Math::FastInvTan0 (Real fValue)
     return fResult;
 }
 //----------------------------------------------------------------------------
-Real Mgc::Math::FastInvTan1 (Real fValue)
+Real Mgc::Math::FastInvTan1(Real fValue)
 {
-    Real fVSqr = fValue*fValue;
+    Real fVSqr = fValue * fValue;
     Real fResult = 0.0028662257f;
     fResult *= fVSqr;
     fResult -= 0.0161657367f;
@@ -211,5 +211,3 @@ Real Mgc::Math::FastInvTan1 (Real fValue)
     return fResult;
 }
 //----------------------------------------------------------------------------
-
-

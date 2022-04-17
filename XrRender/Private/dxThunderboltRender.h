@@ -13,9 +13,10 @@ public:
 	virtual void Copy(IThunderboltRender &_in);
 
 	virtual void Render(CEffect_Thunderbolt &owner);
+
 private:
-	ref_geom			  		hGeom_model;
-	ref_geom			  		hGeom_gradient;
+	ref_geom hGeom_model;
+	ref_geom hGeom_gradient;
 };
 
-#endif	//	ThunderboltRender_included
+#endif //	ThunderboltRender_included

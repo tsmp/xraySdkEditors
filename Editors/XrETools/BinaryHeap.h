@@ -1,31 +1,30 @@
 #ifndef BinaryHeapH
 #define BinaryHeapH
 // A binary heap. Actually stores pointers to type THING, not the THINGs themselves.
-template <class THING, class SORT> class BinaryHeap
+template <class THING, class SORT>
+class BinaryHeap
 {
 
 private:
 	struct Blob
 	{
-		THING				*pThing;
-		SORT				Sort;
+		THING *pThing;
+		SORT Sort;
 	};
 
-	Blob					*pBlobArray;
-	int						iCurrentSize;
-	int						iAllocatedSize;
+	Blob *pBlobArray;
+	int iCurrentSize;
+	int iAllocatedSize;
 
-	int						iCurrentPos;
+	int iCurrentPos;
 
 #ifdef DEBUG
 	// A flag that says using FindNext, RemoveNext and RemoveCurrent are OK to call.
-	bool					bFindNextValid;
+	bool bFindNextValid;
 #endif
 
-
 public:
-
-	BinaryHeap ( void )
+	BinaryHeap(void)
 	{
 		pBlobArray = NULL;
 		iCurrentSize = 0;
@@ -36,9 +35,9 @@ public:
 		iCurrentPos = 0;
 	}
 
-	~BinaryHeap ( void )
+	~BinaryHeap(void)
 	{
-		if ( pBlobArray != NULL )
+		if (pBlobArray != NULL)
 		{
 			delete[] pBlobArray;
 			pBlobArray = NULL;
@@ -47,21 +46,20 @@ public:
 		iAllocatedSize = 0;
 	}
 
-
-	void Check ( void )
+	void Check(void)
 	{
 #if CHECK_HEAP
 #ifdef DEBUG
-		for ( int iCurPos = iCurrentSize-1; iCurPos >= 2; iCurPos-- )
+		for (int iCurPos = iCurrentSize - 1; iCurPos >= 2; iCurPos--)
 		{
-			VERIFY ( pBlobArray[iCurPos].Sort <= pBlobArray[iCurPos>>1].Sort );
-			VERIFY ( pBlobArray[iCurPos].pThing != NULL );
+			VERIFY(pBlobArray[iCurPos].Sort <= pBlobArray[iCurPos >> 1].Sort);
+			VERIFY(pBlobArray[iCurPos].pThing != NULL);
 		}
 #endif
 #endif
 	}
 
-	void Add ( THING *pThisThing, SORT ThisSort )
+	void Add(THING *pThisThing, SORT ThisSort)
 	{
 		Check();
 
@@ -70,27 +68,27 @@ public:
 #endif
 		iCurrentPos = 0;
 
-		if ( iCurrentSize <= 1 )
+		if (iCurrentSize <= 1)
 		{
 			iCurrentSize = 1;
 		}
 
 		// Make sure it's big enough.
-		if ( iAllocatedSize <= iCurrentSize )
+		if (iAllocatedSize <= iCurrentSize)
 		{
 			// Add 50% to the allocated size.
-			iAllocatedSize = ( iAllocatedSize >> 1 ) + iAllocatedSize;
+			iAllocatedSize = (iAllocatedSize >> 1) + iAllocatedSize;
 			// And then a bit more.
 			iAllocatedSize += 32;
 			// And round up to 1k array size.
-			iAllocatedSize = ( iAllocatedSize + 1023 ) & ~1023;
+			iAllocatedSize = (iAllocatedSize + 1023) & ~1023;
 
 			Blob *pOldBlobArray = pBlobArray;
 			pBlobArray = new Blob[iAllocatedSize];
-			VERIFY ( pBlobArray != NULL );
-			if ( pOldBlobArray != NULL )
+			VERIFY(pBlobArray != NULL);
+			if (pOldBlobArray != NULL)
 			{
-				memcpy ( pBlobArray, pOldBlobArray, ( iCurrentSize + 1 ) * sizeof ( Blob ) );
+				memcpy(pBlobArray, pOldBlobArray, (iCurrentSize + 1) * sizeof(Blob));
 				delete[] pOldBlobArray;
 			}
 			Check();
@@ -98,7 +96,7 @@ public:
 
 		// And add the item.
 		iCurrentPos = iCurrentSize;
-		while ( ( iCurrentPos > 1 ) && ( pBlobArray[iCurrentPos >> 1].Sort < ThisSort ) )
+		while ((iCurrentPos > 1) && (pBlobArray[iCurrentPos >> 1].Sort < ThisSort))
 		{
 			pBlobArray[iCurrentPos] = pBlobArray[iCurrentPos >> 1];
 			iCurrentPos >>= 1;
@@ -111,12 +109,11 @@ public:
 		Check();
 	}
 
-
-	THING *FindFirst ( void )
+	THING *FindFirst(void)
 	{
-		if ( iCurrentSize > 1 )
+		if (iCurrentSize > 1)
 		{
-			VERIFY ( pBlobArray != NULL );
+			VERIFY(pBlobArray != NULL);
 #ifdef DEBUG
 			bFindNextValid = TRUE;
 #endif
@@ -135,12 +132,12 @@ public:
 
 	// Must have called FindFirst first.
 	// THIS DOES NOT TRAVERSE IN SORTED ORDER!
-	THING *FindNextUnsorted ( void )
+	THING *FindNextUnsorted(void)
 	{
 #ifdef DEBUG
-		VERIFY ( bFindNextValid );
+		VERIFY(bFindNextValid);
 #endif
-		if ( iCurrentPos >= iCurrentSize - 1 )
+		if (iCurrentPos >= iCurrentSize - 1)
 		{
 			// Reached the end.
 			return NULL;
@@ -154,52 +151,49 @@ public:
 	}
 
 	// Must have called FindFirst/FindNext first.
-	SORT GetCurrentSort ( void )
+	SORT GetCurrentSort(void)
 	{
 #ifdef DEBUG
-		VERIFY ( bFindNextValid );
+		VERIFY(bFindNextValid);
 #endif
-		VERIFY ( iCurrentPos < iCurrentSize );
-		VERIFY ( pBlobArray != NULL );
+		VERIFY(iCurrentPos < iCurrentSize);
+		VERIFY(pBlobArray != NULL);
 		return pBlobArray[iCurrentPos].Sort;
 	}
 
 	// Must have called FindFirst/FindNext first.
-	THING *RemoveCurrent ( void )
+	THING *RemoveCurrent(void)
 	{
 #ifdef DEBUG
-		VERIFY ( bFindNextValid );
+		VERIFY(bFindNextValid);
 		bFindNextValid = FALSE;
 #endif
-		if ( iCurrentPos < ( iCurrentSize - 1 ) )
+		if (iCurrentPos < (iCurrentSize - 1))
 		{
-			VERIFY ( pBlobArray != NULL );
+			VERIFY(pBlobArray != NULL);
 			THING *pThing = pBlobArray[iCurrentPos].pThing;
 
-			SORT MovedSort = pBlobArray[iCurrentSize-1].Sort;
-
+			SORT MovedSort = pBlobArray[iCurrentSize - 1].Sort;
 
 			// First bubble this item up the list until
 			// the parent is greater or equal to the last item in the heap.
-			while ( ( iCurrentPos > 1 ) &&
-				( pBlobArray[iCurrentPos>>1].Sort < MovedSort ) )
+			while ((iCurrentPos > 1) &&
+				   (pBlobArray[iCurrentPos >> 1].Sort < MovedSort))
 			{
-				pBlobArray[iCurrentPos] = pBlobArray[iCurrentPos>>1];
+				pBlobArray[iCurrentPos] = pBlobArray[iCurrentPos >> 1];
 				iCurrentPos = iCurrentPos >> 1;
 			}
-
-
 
 			// Then delete it, and replace it by the last in the heap,
 			// then bubble that item down the heap again.
 			iCurrentSize--;
 
 			// And bubble the last item back down the tree.
-			while ( (iCurrentPos<<1) < iCurrentSize )
+			while ((iCurrentPos << 1) < iCurrentSize)
 			{
-				if ( ( MovedSort >= pBlobArray[(iCurrentPos<<1)+0].Sort ) &&
-					( ( ((iCurrentPos<<1)+1) >= iCurrentSize ) ||
-					( MovedSort >= pBlobArray[(iCurrentPos<<1)+1].Sort ) ) )
+				if ((MovedSort >= pBlobArray[(iCurrentPos << 1) + 0].Sort) &&
+					((((iCurrentPos << 1) + 1) >= iCurrentSize) ||
+					 (MovedSort >= pBlobArray[(iCurrentPos << 1) + 1].Sort)))
 				{
 					// Yep - fits here.
 					break;
@@ -207,16 +201,16 @@ public:
 				else
 				{
 					// Find the bigger of the two, and move it up.
-					if ( ( ((iCurrentPos<<1)+1) < iCurrentSize ) &&
-						( pBlobArray[(iCurrentPos<<1)+0].Sort < pBlobArray[(iCurrentPos<<1)+1].Sort ) )
+					if ((((iCurrentPos << 1) + 1) < iCurrentSize) &&
+						(pBlobArray[(iCurrentPos << 1) + 0].Sort < pBlobArray[(iCurrentPos << 1) + 1].Sort))
 					{
-						pBlobArray[iCurrentPos] = pBlobArray[(iCurrentPos<<1)+1];
-						iCurrentPos = (iCurrentPos<<1)+1;
+						pBlobArray[iCurrentPos] = pBlobArray[(iCurrentPos << 1) + 1];
+						iCurrentPos = (iCurrentPos << 1) + 1;
 					}
 					else
 					{
-						pBlobArray[iCurrentPos] = pBlobArray[(iCurrentPos<<1)+0];
-						iCurrentPos = (iCurrentPos<<1)+0;
+						pBlobArray[iCurrentPos] = pBlobArray[(iCurrentPos << 1) + 0];
+						iCurrentPos = (iCurrentPos << 1) + 0;
 					}
 				}
 			}
@@ -229,7 +223,7 @@ public:
 
 			return pThing;
 		}
-		else if ( iCurrentPos == iCurrentSize - 1 )
+		else if (iCurrentPos == iCurrentSize - 1)
 		{
 			// This is already the last item - that was easy!
 			iCurrentSize--;
@@ -243,16 +237,16 @@ public:
 	}
 
 	// Must have called FindFirst first.
-	THING *RemoveNext ( void )
+	THING *RemoveNext(void)
 	{
 #ifdef DEBUG
-		VERIFY ( bFindNextValid );
+		VERIFY(bFindNextValid);
 #endif
 		iCurrentPos++;
 		return RemoveCurrent();
 	}
 
-	THING *RemoveFirst ( void )
+	THING *RemoveFirst(void)
 	{
 #ifdef DEBUG
 		// Keep the assert happy.
@@ -263,11 +257,10 @@ public:
 	}
 
 	// Number of items in the heap.
-	int SizeOfHeap ( void )
+	int SizeOfHeap(void)
 	{
-		return ( iCurrentSize - 1 );
+		return (iCurrentSize - 1);
 	}
-
 };
 
 #endif

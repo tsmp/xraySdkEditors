@@ -16,19 +16,19 @@
 using namespace Mgc;
 
 //----------------------------------------------------------------------------
-Cylinder Mgc::ContCylinder (int iQuantity, const Vector3* akPoint)
+Cylinder Mgc::ContCylinder(int iQuantity, const Vector3 *akPoint)
 {
     Cylinder kCylinder;
 
     Line3 kLine;
-    OrthogonalLineFit(iQuantity,akPoint,kLine.Origin(),kLine.Direction());
+    OrthogonalLineFit(iQuantity, akPoint, kLine.Origin(), kLine.Direction());
 
     Real fMaxRadiusSqr = 0.0f;
     int i;
     for (i = 0; i < iQuantity; i++)
     {
-        Real fRadiusSqr = SqrDistance(akPoint[i],kLine);
-        if ( fRadiusSqr > fMaxRadiusSqr )
+        Real fRadiusSqr = SqrDistance(akPoint[i], kLine);
+        if (fRadiusSqr > fMaxRadiusSqr)
             fMaxRadiusSqr = fRadiusSqr;
     }
 
@@ -38,14 +38,14 @@ Cylinder Mgc::ContCylinder (int iQuantity, const Vector3* akPoint)
     {
         kDiff = akPoint[i] - kLine.Origin();
         Real fW = kLine.Direction().Dot(kDiff);
-        if ( fW < fWMin )
+        if (fW < fWMin)
             fWMin = fW;
-        else if ( fW > fWMax )
+        else if (fW > fWMax)
             fWMax = fW;
     }
 
     kCylinder.Center() = kLine.Origin() +
-        (0.5f*(fWMax+fWMin))*kLine.Direction();
+                         (0.5f * (fWMax + fWMin)) * kLine.Direction();
     kCylinder.Direction() = kLine.Direction();
     kCylinder.Radius() = Math::Sqrt(fMaxRadiusSqr);
     kCylinder.Height() = fWMax - fWMin;
@@ -53,5 +53,3 @@ Cylinder Mgc::ContCylinder (int iQuantity, const Vector3* akPoint)
     return kCylinder;
 }
 //----------------------------------------------------------------------------
-
-

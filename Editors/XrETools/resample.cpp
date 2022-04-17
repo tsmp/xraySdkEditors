@@ -10,15 +10,15 @@
 
 #include "resample.h"
 
-#pragma warning(disable:4995)
-#pragma warning(disable:4244)
-#pragma warning(disable:4130)
-#pragma warning(disable:4018)
-#pragma warning(disable:4267)
+#pragma warning(disable : 4995)
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4130)
+#pragma warning(disable : 4018)
+#pragma warning(disable : 4267)
 
 /* Some systems don't define this */
 #ifndef M_PI
-#define M_PI       3.14159265358979323846 
+#define M_PI 3.14159265358979323846
 #endif
 
 static int hcf(int arg1, int arg2)
@@ -44,15 +44,14 @@ static int hcf(int arg1, int arg2)
 	return arg2 * mult;
 }
 
-
 static void filt_sinc(float *dest, int N, int step, double fc, double gain, int width)
 {
 	double s = fc / step;
 	int mid, x;
 	float *endpoint = dest + N,
-		*base = dest,
-		*origdest = dest;
-	
+		  *base = dest,
+		  *origdest = dest;
+
 	assert(width <= N);
 
 	if ((N & 1) == 0)
@@ -78,13 +77,12 @@ static void filt_sinc(float *dest, int N, int step, double fc, double gain, int 
 	assert(dest == origdest + width);
 }
 
-
 static double I_zero(double x)
 {
 	int n = 0;
 	double u = 1.0,
-		s = 1.0,
-		t;
+		   s = 1.0,
+		   t;
 
 	do
 	{
@@ -97,14 +95,13 @@ static double I_zero(double x)
 	return s;
 }
 
-
 static void win_kaiser(float *dest, int N, double alpha, int width)
 {
 	double I_alpha, midsq;
 	int x;
 	float *endpoint = dest + N,
-		*base = dest,
-		*origdest = dest;
+		  *base = dest,
+		  *origdest = dest;
 
 	assert(width <= N);
 
@@ -132,12 +129,11 @@ static void win_kaiser(float *dest, int N, double alpha, int width)
 	assert(dest == origdest + width);
 }
 
-
 int res_init(res_state *state, int channels, int outfreq, int infreq, res_parameter op1, ...)
 {
 	double beta = 16.0,
-		cutoff = 0.80,
-		gain = 1.0;
+		   cutoff = 0.80,
+		   gain = 1.0;
 	int taps = 45;
 
 	int factor;
@@ -172,7 +168,7 @@ int res_init(res_state *state, int channels, int outfreq, int infreq, res_parame
 				taps = va_arg(argp, int);
 				assert(taps > 2 && taps < 1000);
 				break;
-				
+
 			case RES_BETA:
 				beta = va_arg(argp, double);
 				assert(beta > 2.0);
@@ -194,18 +190,18 @@ int res_init(res_state *state, int channels, int outfreq, int infreq, res_parame
 	if (outfreq < infreq)
 	{
 		/* push the cutoff frequency down to the output frequency */
-		cutoff = cutoff * outfreq / infreq; 
+		cutoff = cutoff * outfreq / infreq;
 
-        /* compensate for the sharper roll-off requirement
-         * by using a bigger hammer */
-        taps = taps * infreq/outfreq;
+		/* compensate for the sharper roll-off requirement
+		 * by using a bigger hammer */
+		taps = taps * infreq / outfreq;
 	}
 
 	assert(taps >= (infreq + outfreq - 1) / outfreq);
 
-	if ((state->table = (float*)calloc(outfreq * taps, sizeof(float))) == NULL)
+	if ((state->table = (float *)calloc(outfreq * taps, sizeof(float))) == NULL)
 		return -1;
-	if ((state->pool = (SAMPLE*)calloc(channels * taps, sizeof(SAMPLE))) == NULL)
+	if ((state->pool = (SAMPLE *)calloc(channels * taps, sizeof(SAMPLE))) == NULL)
 	{
 		free(state->table);
 		state->table = NULL;
@@ -225,7 +221,6 @@ int res_init(res_state *state, int channels, int outfreq, int infreq, res_parame
 	return 0;
 }
 
-
 static SAMPLE sum(float const *scale, int count, SAMPLE const *source, SAMPLE const *trigger, SAMPLE const *reset, int srcstep)
 {
 	float total = 0.0;
@@ -243,16 +238,14 @@ static SAMPLE sum(float const *scale, int count, SAMPLE const *source, SAMPLE co
 	return total;
 }
 
-
-static int push(res_state const * const state, SAMPLE *pool, int * const poolfill, int * const offset, SAMPLE *dest, int dststep, SAMPLE const *source, int srcstep, size_t srclen)
+static int push(res_state const *const state, SAMPLE *pool, int *const poolfill, int *const offset, SAMPLE *dest, int dststep, SAMPLE const *source, int srcstep, size_t srclen)
 {
-	SAMPLE	* const destbase = dest,
-		*poolhead = pool + *poolfill,
-		*poolend = pool + state->taps,
-		*newpool = pool;
+	SAMPLE *const destbase = dest,
+				  *poolhead = pool + *poolfill,
+				  *poolend = pool + state->taps,
+				  *newpool = pool;
 	SAMPLE const *refill, *base, *endpoint;
-	int	lencheck;
-
+	int lencheck;
 
 	assert(state);
 	assert(pool);
@@ -261,7 +254,7 @@ static int push(res_state const * const state, SAMPLE *pool, int * const poolfil
 	assert(source);
 
 	assert(state->poolfill != -1);
-	
+
 	lencheck = res_push_check(state, srclen);
 
 	/* fill the pool before diving in */
@@ -322,21 +315,18 @@ static int push(res_state const * const state, SAMPLE *pool, int * const poolfil
 	return (dest - destbase) / dststep;
 }
 
-
-int res_push_max_input(res_state const * const state, size_t maxoutput)
+int res_push_max_input(res_state const *const state, size_t maxoutput)
 {
 	return maxoutput * state->infreq / state->outfreq;
 }
 
-
-int res_push_check(res_state const * const state, size_t srclen)
+int res_push_check(res_state const *const state, size_t srclen)
 {
 	if (state->poolfill < state->taps)
 		srclen -= state->taps - state->poolfill;
 
 	return (srclen * state->outfreq - state->offset + state->infreq - 1) / state->infreq;
 }
-
 
 int res_push(res_state *state, SAMPLE **dstlist, SAMPLE const **srclist, size_t srclen)
 {
@@ -359,11 +349,10 @@ int res_push(res_state *state, SAMPLE **dstlist, SAMPLE const **srclist, size_t 
 	return result;
 }
 
-
 int res_push_interleaved(res_state *state, SAMPLE *dest, SAMPLE const *source, size_t srclen)
 {
 	int result = -1, poolfill = -1, offset = -1, i;
-	
+
 	assert(state);
 	assert(dest);
 	assert(source);
@@ -381,7 +370,6 @@ int res_push_interleaved(res_state *state, SAMPLE *dest, SAMPLE const *source, s
 	return result;
 }
 
-
 int res_drain(res_state *state, SAMPLE **dstlist)
 {
 	SAMPLE *tail;
@@ -391,7 +379,7 @@ int res_drain(res_state *state, SAMPLE **dstlist)
 	assert(dstlist);
 	assert(state->poolfill >= 0);
 
-	if ((tail = (SAMPLE*)calloc(state->taps, sizeof(SAMPLE))) == NULL)
+	if ((tail = (SAMPLE *)calloc(state->taps, sizeof(SAMPLE))) == NULL)
 		return -1;
 
 	for (i = 0; i < state->channels; i++)
@@ -400,14 +388,13 @@ int res_drain(res_state *state, SAMPLE **dstlist)
 		offset = state->offset;
 		result = push(state, state->pool + i * state->taps, &poolfill, &offset, dstlist[i], 1, tail, 1, state->taps / 2 - 1);
 	}
-		
+
 	free(tail);
 
 	state->poolfill = -1;
 
 	return result;
 }
-
 
 int res_drain_interleaved(res_state *state, SAMPLE *dest)
 {
@@ -418,7 +405,7 @@ int res_drain_interleaved(res_state *state, SAMPLE *dest)
 	assert(dest);
 	assert(state->poolfill >= 0);
 
-	if ((tail = (SAMPLE*)calloc(state->taps, sizeof(SAMPLE))) == NULL)
+	if ((tail = (SAMPLE *)calloc(state->taps, sizeof(SAMPLE))) == NULL)
 		return -1;
 
 	for (i = 0; i < state->channels; i++)
@@ -427,14 +414,13 @@ int res_drain_interleaved(res_state *state, SAMPLE *dest)
 		offset = state->offset;
 		result = push(state, state->pool + i * state->taps, &poolfill, &offset, dest + i, state->channels, tail, 1, state->taps / 2 - 1);
 	}
-		
+
 	free(tail);
 
 	state->poolfill = -1;
 
 	return result;
 }
-
 
 void res_clear(res_state *state)
 {
@@ -446,4 +432,3 @@ void res_clear(res_state *state)
 	free(state->pool);
 	memset(state, 0, sizeof(*state));
 }
-

@@ -6,9 +6,9 @@ dxUISequenceVideoItem::dxUISequenceVideoItem()
 	m_texture = 0;
 }
 
-void dxUISequenceVideoItem::Copy(IUISequenceVideoItem&_in)
+void dxUISequenceVideoItem::Copy(IUISequenceVideoItem &_in)
 {
-	*this = *((dxUISequenceVideoItem*)&_in);
+	*this = *((dxUISequenceVideoItem *)&_in);
 }
 
 void dxUISequenceVideoItem::CaptureTexture()

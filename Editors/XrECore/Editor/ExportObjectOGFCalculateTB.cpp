@@ -46,7 +46,7 @@ IC const WORD &face_vertex( const SOGFFace &F, u32 vertex_index )
 //--------------------------------------------------------------------------------------------
 void CObjectOGFCollectorPacked::CalculateTB()
 {
-    /*
+	/*
 	u32 v_count_reserve			= 3*iFloor(float(m_Verts.size())*1.33f);
 	u32 i_count_reserve			= 3*m_Faces.size();
 
@@ -73,25 +73,25 @@ void CObjectOGFCollectorPacked::CalculateTB()
 
 	output[0].Name_= "position";
 	output[1].Name_= "normal";
-	output[2].Name_= "tangent";	
+	output[2].Name_= "tangent";
 	output[3].Name_= "binormal";
-	output[4].Name_= "tex0";	
-	output[5].Name_= "indices";	
+	output[4].Name_= "tex0";
+	output[5].Name_= "indices";
 
-    // fill inputs (verts&indices)
-    for (OGFVertIt vert_it=m_Verts.begin(); vert_it!=m_Verts.end(); vert_it++){
-        SOGFVert	&iV = *vert_it;
-        i_position.push_back(iV.P.x);	i_position.push_back(iV.P.y);	i_position.push_back(iV.P.z);
-        i_normal.push_back	(iV.N.x);  	i_normal.push_back	(iV.N.y);	i_normal.push_back	(iV.N.z);
-        i_tc.push_back		(iV.UV.x);	i_tc.push_back		(iV.UV.y);	i_tc.push_back		(0);
-    }
-    for (OGFFaceIt face_it=m_Faces.begin(); face_it!=m_Faces.end(); face_it++){
-        SOGFFace	&iF = *face_it;
+	// fill inputs (verts&indices)
+	for (OGFVertIt vert_it=m_Verts.begin(); vert_it!=m_Verts.end(); vert_it++){
+		SOGFVert	&iV = *vert_it;
+		i_position.push_back(iV.P.x);	i_position.push_back(iV.P.y);	i_position.push_back(iV.P.z);
+		i_normal.push_back	(iV.N.x);  	i_normal.push_back	(iV.N.y);	i_normal.push_back	(iV.N.z);
+		i_tc.push_back		(iV.UV.x);	i_tc.push_back		(iV.UV.y);	i_tc.push_back		(0);
+	}
+	for (OGFFaceIt face_it=m_Faces.begin(); face_it!=m_Faces.end(); face_it++){
+		SOGFFace	&iF = *face_it;
 		i_indices.push_back	(iF.v[0]);
 		i_indices.push_back	(iF.v[1]);
 		i_indices.push_back	(iF.v[2]);
-    }
-    
+	}
+
 	// Perform munge
 	NVMeshMender mender;
 	if (!mender.Munge(
@@ -111,10 +111,10 @@ void CObjectOGFCollectorPacked::CalculateTB()
 	// bind
 	output[0].Name_= "position";
 	output[1].Name_= "normal";
-	output[2].Name_= "tangent";	
+	output[2].Name_= "tangent";
 	output[3].Name_= "binormal";
-	output[4].Name_= "tex0";	
-	output[5].Name_= "indices";	
+	output[4].Name_= "tex0";
+	output[5].Name_= "indices";
 
 	xr_vector<float>&	o_position	= output[0].floatVector_;	R_ASSERT(output[0].Name_=="position");
 	xr_vector<float>&	o_normal	= output[1].floatVector_;	R_ASSERT(output[1].Name_=="normal");
@@ -125,35 +125,35 @@ void CObjectOGFCollectorPacked::CalculateTB()
 
 	// verify
 	R_ASSERT		(3*m_Faces.size()	== o_indices.size());
-    u32 v_cnt		= o_position.size();
-    R_ASSERT		(0==v_cnt%3);
-    R_ASSERT		(v_cnt == o_normal.size());
-    R_ASSERT		(v_cnt == o_tangent.size());
-    R_ASSERT		(v_cnt == o_binormal.size());
-    R_ASSERT		(v_cnt == o_tc.size());
-    v_cnt			/= 3;
+	u32 v_cnt		= o_position.size();
+	R_ASSERT		(0==v_cnt%3);
+	R_ASSERT		(v_cnt == o_normal.size());
+	R_ASSERT		(v_cnt == o_tangent.size());
+	R_ASSERT		(v_cnt == o_binormal.size());
+	R_ASSERT		(v_cnt == o_tc.size());
+	v_cnt			/= 3;
 
-    // retriving data
-    u32 o_idx		= 0;
-    for (face_it=m_Faces.begin(); face_it!=m_Faces.end(); face_it++){
-        SOGFFace	&iF = *face_it;
-        iF.v[0]		= (u16)o_indices[o_idx++];
-        iF.v[1]		= (u16)o_indices[o_idx++];
-        iF.v[2]		= (u16)o_indices[o_idx++];
-    }
-    m_Verts.clear	(); m_Verts.resize(v_cnt);
-    for (u32 v_idx=0; v_idx!=v_cnt; v_idx++){
-        SOGFVert	&iV = m_Verts[v_idx];
-        iV.P.set	(o_position[v_idx*3+0],	o_position[v_idx*3+1],	o_position[v_idx*3+2]);
-        iV.N.set	(o_normal[v_idx*3+0],	o_normal[v_idx*3+1],	o_normal[v_idx*3+2]);
-        iV.T.set	(o_tangent[v_idx*3+0],	o_tangent[v_idx*3+1],	o_tangent[v_idx*3+2]);
-        iV.B.set	(o_binormal[v_idx*3+0],	o_binormal[v_idx*3+1],	o_binormal[v_idx*3+2]);
-        iV.UV.set	(o_tc[v_idx*3+0],		o_tc[v_idx*3+1]);
-    }
-  
+	// retriving data
+	u32 o_idx		= 0;
+	for (face_it=m_Faces.begin(); face_it!=m_Faces.end(); face_it++){
+		SOGFFace	&iF = *face_it;
+		iF.v[0]		= (u16)o_indices[o_idx++];
+		iF.v[1]		= (u16)o_indices[o_idx++];
+		iF.v[2]		= (u16)o_indices[o_idx++];
+	}
+	m_Verts.clear	(); m_Verts.resize(v_cnt);
+	for (u32 v_idx=0; v_idx!=v_cnt; v_idx++){
+		SOGFVert	&iV = m_Verts[v_idx];
+		iV.P.set	(o_position[v_idx*3+0],	o_position[v_idx*3+1],	o_position[v_idx*3+2]);
+		iV.N.set	(o_normal[v_idx*3+0],	o_normal[v_idx*3+1],	o_normal[v_idx*3+2]);
+		iV.T.set	(o_tangent[v_idx*3+0],	o_tangent[v_idx*3+1],	o_tangent[v_idx*3+2]);
+		iV.B.set	(o_binormal[v_idx*3+0],	o_binormal[v_idx*3+1],	o_binormal[v_idx*3+2]);
+		iV.UV.set	(o_tc[v_idx*3+0],		o_tc[v_idx*3+1]);
+	}
 
 
-  	xr_vector<MeshMender::Vertex>	mender_in_out_verts;
+
+	xr_vector<MeshMender::Vertex>	mender_in_out_verts;
 	xr_vector< unsigned int >		mender_in_out_indices;
 	xr_vector< unsigned int >		mender_mapping_out_to_in_vert;
 
@@ -161,8 +161,8 @@ void CObjectOGFCollectorPacked::CalculateTB()
 
 	MeshMender	mender	;
 	if
-	( 
-		!mender.Mend		
+	(
+		!mender.Mend
 		(
 		  mender_in_out_verts,
 		  mender_in_out_indices,
@@ -180,7 +180,7 @@ void CObjectOGFCollectorPacked::CalculateTB()
 		Debug.fatal	( DEBUG_INFO, "NVMeshMender failed " );
 		//Debug.fatal	(DEBUG_INFO,"NVMeshMender failed (%s)",mender.GetLastError().c_str());
 	}
-	
+
 	retrive_data_from_mender_otput( m_Verts, m_Faces, mender_in_out_verts, mender_in_out_indices, mender_mapping_out_to_in_vert  );
 	t_remove_isolated_verts( m_Verts, m_Faces );
 
@@ -188,8 +188,7 @@ void CObjectOGFCollectorPacked::CalculateTB()
 	mender_in_out_indices			.clear( );
 	mender_mapping_out_to_in_vert	.clear( );
 
-    OptimizeTextureCoordinates();
+	OptimizeTextureCoordinates();
 
 	*/
-
 }

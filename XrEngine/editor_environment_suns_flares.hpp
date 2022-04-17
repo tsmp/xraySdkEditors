@@ -14,40 +14,45 @@
 #include <boost/noncopyable.hpp>
 #include "property_collection_forward.hpp"
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
-class property_holder;
-class property_holder_collection;
+	class property_holder;
+	class property_holder_collection;
 
-namespace environment {
-namespace suns {
+	namespace environment
+	{
+		namespace suns
+		{
 
-class manager;
-class flare;
+			class manager;
+			class flare;
 
-class flares : private boost::noncopyable {
-public:
-					flares	();
-	virtual			~flares	();
-			void	load	(CInifile& config, shared_str const& section);
-			void	save	(CInifile& config, shared_str const& section);
-			void	fill	(manager const& manager, XrWeatherEditor::property_holder* holder, XrWeatherEditor::property_holder_collection* collection);
-private:
-	typedef xr_vector<flare*>							flares_type;
-	typedef XrWeatherEditor::property_holder_collection			property_holder_collection;
+			class flares : private boost::noncopyable
+			{
+			public:
+				flares();
+				virtual ~flares();
+				void load(CInifile &config, shared_str const &section);
+				void save(CInifile &config, shared_str const &section);
+				void fill(manager const &manager, XrWeatherEditor::property_holder *holder, XrWeatherEditor::property_holder_collection *collection);
 
-public:
-	typedef property_collection<flares_type, flares>	collection_type;
+			private:
+				typedef xr_vector<flare *> flares_type;
+				typedef XrWeatherEditor::property_holder_collection property_holder_collection;
 
-private:
-	flares_type				m_flares;
-    shared_str				m_shader;
-	collection_type*		m_collection;
-    bool					m_use;
-}; // class flares
+			public:
+				typedef property_collection<flares_type, flares> collection_type;
 
-} // namespace suns
-} // namespace environment
+			private:
+				flares_type m_flares;
+				shared_str m_shader;
+				collection_type *m_collection;
+				bool m_use;
+			}; // class flares
+
+		} // namespace suns
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

@@ -3,10 +3,10 @@
 
 #include "../../xrServerEntities/PropertiesListTypes.h"
 //------------------------------------------------------------------------------
-            
-xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent )
+
+xr_string ShortcutValue::GetDrawText(TOnDrawTextEvent)
 {
-	xr_string 	txt;// = ToStr(MxShortCutToText(value->hotkey)).c_str();
+	xr_string txt; // = ToStr(MxShortCutToText(value->hotkey)).c_str();
 	if (value->key == 0)
 	{
 		txt.append("none");
@@ -16,7 +16,7 @@ xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent )
 	{
 		txt.append("Ctrl+");
 	}
-	if(value->ext.test(xr_shortcut::flShift))
+	if (value->ext.test(xr_shortcut::flShift))
 	{
 		txt.append("Shift+");
 	}
@@ -24,9 +24,9 @@ xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent )
 	{
 		txt.append("Alt+");
 	}
-	if (value->key>='A'&& value->key <= 'Z')
+	if (value->key >= 'A' && value->key <= 'Z')
 	{
-		txt.append(1,(char)value->key);
+		txt.append(1, (char)value->key);
 	}
 	else if (value->key >= '0' && value->key <= '9')
 	{
@@ -169,23 +169,23 @@ xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent )
 		case VK_DELETE:
 			txt.append("Delete");
 			break;
-	
+
 		default:
 			VERIFY(0);
 			break;
 		}
 	}
-	return 			txt;
+	return txt;
 }
 
 xr_string GameTypeValue::GetDrawText(TOnDrawTextEvent)
 {
 	string512 str;
-    xr_sprintf(str,sizeof(str),"%s%s%s%s%s",
-	GetValue().MatchType(eGameIDSingle)?"Single ":"",
-	GetValue().MatchType(eGameIDDeathmatch)?"DM ":"",
-	GetValue().MatchType(eGameIDTeamDeathmatch)?"TDM ":"",
-	GetValue().MatchType(eGameIDArtefactHunt)?"AH ":"",
-	GetValue().MatchType(eGameIDCaptureTheArtefact)?"CTA":""    );
+	xr_sprintf(str, sizeof(str), "%s%s%s%s%s",
+			   GetValue().MatchType(eGameIDSingle) ? "Single " : "",
+			   GetValue().MatchType(eGameIDDeathmatch) ? "DM " : "",
+			   GetValue().MatchType(eGameIDTeamDeathmatch) ? "TDM " : "",
+			   GetValue().MatchType(eGameIDArtefactHunt) ? "AH " : "",
+			   GetValue().MatchType(eGameIDCaptureTheArtefact) ? "CTA" : "");
 	return xr_string(str);
 }

@@ -8,7 +8,7 @@ enum class EGame
 };
 enum class EGamePath
 {
-	NONE=-1,
+	NONE = -1,
 	COP_1602,
 	CS_1510,
 	SHOC_10006,
@@ -21,4 +21,3 @@ public:
 	static EGame GetGame();
 	static EGamePath GetPath();
 };
-

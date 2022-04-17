@@ -10,8 +10,8 @@ UILeftBarForm::~UILeftBarForm()
 
 void UILeftBarForm::Draw()
 {
-	ImGui::Begin("LeftBar",0); 
-	
+	ImGui::Begin("LeftBar", 0);
+
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::TreeNode("Items"))
 	{
@@ -25,8 +25,6 @@ void UILeftBarForm::Draw()
 		PTools->DrawReferenceList();
 		ImGui::TreePop();
 	}
-	
-	
 
 	ImGui::End();
 }

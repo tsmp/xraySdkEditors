@@ -3,12 +3,14 @@
 #include "script_CallStack.h"
 #include "script_debugger.h"
 
-CScriptCallStack::CScriptCallStack(CScriptDebugger*d)
-:m_debugger(d)
-{}
+CScriptCallStack::CScriptCallStack(CScriptDebugger *d)
+	: m_debugger(d)
+{
+}
 
 CScriptCallStack::~CScriptCallStack()
-{}
+{
+}
 
 /*
 int CCallStack::OnSci(CScintillaView* pView, SCNotification* pNotify)
@@ -43,30 +45,27 @@ void CScriptCallStack::Add(const char *szDesc, const char *szFile, int nLine)
 {
 	m_lines.push_back(nLine);
 
-	SPath	sp;
+	SPath sp;
 	sp.path[0] = 0;
 	m_files.push_back(sp);
-	xr_strcat(m_files.back().path, szFile );
+	xr_strcat(m_files.back().path, szFile);
 }
 
 void CScriptCallStack::SetStackTraceLevel(int nLevel)
 {
 	m_nCurrentLevel = nLevel;
-	VERIFY( nLevel>=0 || (u32)nLevel < m_files.size() );
+	VERIFY(nLevel >= 0 || (u32)nLevel < m_files.size());
 }
 
 void CScriptCallStack::GotoStackTraceLevel(int nLevel)
 {
-	if ( nLevel<0 || (u32)nLevel >= m_files.size() )
+	if (nLevel < 0 || (u32)nLevel >= m_files.size())
 		return;
 
 	m_nCurrentLevel = nLevel;
 
-	char * ppath = m_files[nLevel].path;
-	m_debugger->_SendMessage(	DMSG_GOTO_FILELINE,
-									(WPARAM)ppath,
-									(LPARAM)m_lines[nLevel]);
-
+	char *ppath = m_files[nLevel].path;
+	m_debugger->_SendMessage(DMSG_GOTO_FILELINE,
+							 (WPARAM)ppath,
+							 (LPARAM)m_lines[nLevel]);
 }
-
-

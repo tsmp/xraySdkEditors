@@ -17,33 +17,31 @@
 #include "MgcRay3.h"
 #include "MgcSegment3.h"
 
-namespace Mgc {
+namespace Mgc
+{
 
-// squared distance measurements
+    // squared distance measurements
 
-MAGICFM Real SqrDistance (const Vector3& rkPoint, const Line3& rkLine,
-    Real* pfParam = NULL);
+    MAGICFM Real SqrDistance(const Vector3 &rkPoint, const Line3 &rkLine,
+                             Real *pfParam = NULL);
 
-MAGICFM Real SqrDistance (const Vector3& rkPoint, const Ray3& rkRay,
-    Real* pfParam = NULL);
+    MAGICFM Real SqrDistance(const Vector3 &rkPoint, const Ray3 &rkRay,
+                             Real *pfParam = NULL);
 
-MAGICFM Real SqrDistance (const Vector3& rkPoint, const Segment3& rkSegment,
-    Real* pfParam = NULL);
+    MAGICFM Real SqrDistance(const Vector3 &rkPoint, const Segment3 &rkSegment,
+                             Real *pfParam = NULL);
 
+    // distance measurements
 
-// distance measurements
+    MAGICFM Real Distance(const Vector3 &rkPoint, const Line3 &rkLine,
+                          Real *pfParam = NULL);
 
-MAGICFM Real Distance (const Vector3& rkPoint, const Line3& rkLine,
-    Real* pfParam = NULL);
+    MAGICFM Real Distance(const Vector3 &rkPoint, const Ray3 &rkRay,
+                          Real *pfParam = NULL);
 
-MAGICFM Real Distance (const Vector3& rkPoint, const Ray3& rkRay,
-    Real* pfParam = NULL);
-
-MAGICFM Real Distance (const Vector3& rkPoint, const Segment3& rkSegment,
-    Real* pfParam = NULL);
+    MAGICFM Real Distance(const Vector3 &rkPoint, const Segment3 &rkSegment,
+                          Real *pfParam = NULL);
 
 } // namespace Mgc
 
 #endif
-
-

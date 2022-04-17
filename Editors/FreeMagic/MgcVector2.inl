@@ -11,26 +11,24 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline Vector2::Vector2 ()
+inline Vector2::Vector2()
 {
     // For efficiency in construction of large arrays of vectors, the
     // default constructor does not initialize the vector.
 }
 //----------------------------------------------------------------------------
-inline Real& Vector2::operator[] (int i) const
+inline Real &Vector2::operator[](int i) const
 {
-    return ((Real*)this)[i];
+    return ((Real *)this)[i];
 }
 //----------------------------------------------------------------------------
-inline Vector2::operator Real* ()
+inline Vector2::operator Real *()
 {
-    return (Real*)this;
+    return (Real *)this;
 }
 //----------------------------------------------------------------------------
-inline Real Vector2::SquaredLength () const
+inline Real Vector2::SquaredLength() const
 {
-    return x*x + y*y;
+    return x * x + y * y;
 }
 //----------------------------------------------------------------------------
-
-

@@ -4,7 +4,7 @@
 #else
 #define MAX_BONE 223
 #endif
-#define BONE_COUNT_VISMASK (MAX_BONE/64) +1
+#define BONE_COUNT_VISMASK (MAX_BONE / 64) + 1
 
 struct BonesVisible
 {
@@ -16,11 +16,11 @@ struct BonesVisible
 			visimask[i].assign(as);
 		}
 	}
-	inline void and(const BonesVisible&Right)
+	inline void and (const BonesVisible &Right)
 	{
 		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
 		{
-			visimask[i].and(Right.visimask[i].flags);
+			visimask[i].and (Right.visimask[i].flags);
 		}
 	}
 	inline void zero()
@@ -46,7 +46,7 @@ struct BonesVisible
 		}
 		return test != 0;
 	}
-	inline bool operator==(const BonesVisible& Right)
+	inline bool operator==(const BonesVisible &Right)
 	{
 		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
 		{
@@ -55,7 +55,7 @@ struct BonesVisible
 		}
 		return true;
 	}
-	inline bool operator!=(const BonesVisible& Right)
+	inline bool operator!=(const BonesVisible &Right)
 	{
 		return !((*this) == Right);
 	}
@@ -64,7 +64,7 @@ struct BonesVisible
 		VERIFY(bone_id < MAX_BONE);
 		return visimask[bone_id / 64].is(u64(1) << ((u64)(bone_id % 64)));
 	}
-	inline void set(int bone_id,bool value)
+	inline void set(int bone_id, bool value)
 	{
 		VERIFY(bone_id < MAX_BONE);
 		visimask[bone_id / 64].set(u64(1) << ((u64)(bone_id % 64)), value);

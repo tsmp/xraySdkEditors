@@ -7,13 +7,13 @@ struct subnet_item
 	{
 		struct
 		{
-			u8	a1;
-			u8	a2;
-			u8	a3;
-			u8	a4;
+			u8 a1;
+			u8 a2;
+			u8 a3;
+			u8 a4;
 		};
-		u32		data;
-	} subnet_ip;			//IN NBO !!!
+		u32 data;
+	} subnet_ip; // IN NBO !!!
 	u32 subnet_mask;
 	subnet_item()
 	{
@@ -22,18 +22,18 @@ struct subnet_item
 	}
 };
 
-
 class ip_filter
 {
-	typedef xr_vector<subnet_item*> subnets_coll_t;
+	typedef xr_vector<subnet_item *> subnets_coll_t;
 	subnets_coll_t m_all_subnets;
-public:
-	ip_filter		();
-	~ip_filter		();
 
-	u32		load			();
-	void	unload			();
-	bool	is_ip_present	(u32 ip_address);
+public:
+	ip_filter();
+	~ip_filter();
+
+	u32 load();
+	void unload();
+	bool is_ip_present(u32 ip_address);
 };
 
 #endif //#ifndef NET_SERVER_IP_FILTER

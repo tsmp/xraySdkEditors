@@ -15,39 +15,37 @@
 
 #include "MgcVector3.h"
 
-namespace Mgc {
-
-
-class MAGICFM Box3
+namespace Mgc
 {
-public:
-    Box3 ();
 
-    Vector3& Center ();
-    const Vector3& Center () const;
+    class MAGICFM Box3
+    {
+    public:
+        Box3();
 
-    Vector3& Axis (int i);
-    const Vector3& Axis (int i) const;
-    Vector3* Axes ();
-    const Vector3* Axes () const;
+        Vector3 &Center();
+        const Vector3 &Center() const;
 
-    Real& Extent (int i);
-    const Real& Extent (int i) const;
-    Real* Extents ();
-    const Real* Extents () const;
+        Vector3 &Axis(int i);
+        const Vector3 &Axis(int i) const;
+        Vector3 *Axes();
+        const Vector3 *Axes() const;
 
-    void ComputeVertices (Vector3 akVertex[8]) const;
+        Real &Extent(int i);
+        const Real &Extent(int i) const;
+        Real *Extents();
+        const Real *Extents() const;
 
-protected:
-    Vector3 m_kCenter;
-    Vector3 m_akAxis[3];
-    Real m_afExtent[3];
-};
+        void ComputeVertices(Vector3 akVertex[8]) const;
+
+    protected:
+        Vector3 m_kCenter;
+        Vector3 m_akAxis[3];
+        Real m_afExtent[3];
+    };
 
 #include "MgcBox3.inl"
 
 } // namespace Mgc
 
 #endif
-
-

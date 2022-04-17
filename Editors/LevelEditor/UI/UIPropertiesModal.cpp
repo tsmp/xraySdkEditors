@@ -1,5 +1,5 @@
 #include "stdafx.h"
-UIPropertiesModal* UIPropertiesModal::Form = nullptr;
+UIPropertiesModal *UIPropertiesModal::Form = nullptr;
 UIPropertiesModal::UIPropertiesModal()
 {
 	m_Props = xr_new<UIPropertiesForm>();
@@ -18,7 +18,8 @@ void UIPropertiesModal::Draw()
 	{
 		m_Result = R_Ok;
 		bOpen = false;
-	}ImGui::SameLine();
+	}
+	ImGui::SameLine();
 	if (ImGui::Button("Cancel"))
 	{
 		bOpen = false;
@@ -30,7 +31,7 @@ void UIPropertiesModal::Update()
 	if (Form && !Form->IsClosed())
 	{
 		ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
-		if (ImGui::BeginPopupModal("Properties Modal",&Form->bOpen,0, true))
+		if (ImGui::BeginPopupModal("Properties Modal", &Form->bOpen, 0, true))
 		{
 			Form->Draw();
 			ImGui::EndPopup();
@@ -38,7 +39,7 @@ void UIPropertiesModal::Update()
 	}
 }
 
-bool UIPropertiesModal::GetResult(bool& ok)
+bool UIPropertiesModal::GetResult(bool &ok)
 {
 	if (!Form->bOpen)
 	{
@@ -49,7 +50,7 @@ bool UIPropertiesModal::GetResult(bool& ok)
 	return false;
 }
 
-void UIPropertiesModal::Show(PropItemVec& items)
+void UIPropertiesModal::Show(PropItemVec &items)
 {
 	VERIFY(!Form);
 	Form = xr_new<UIPropertiesModal>();

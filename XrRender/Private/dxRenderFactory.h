@@ -4,27 +4,27 @@
 
 #include "RenderFactory.h"
 
-#define RENDER_FACTORY_DECLARE(Class) \
-	virtual I##Class* Create##Class(); \
+#define RENDER_FACTORY_DECLARE(Class)  \
+	virtual I##Class *Create##Class(); \
 	virtual void Destroy##Class(I##Class *pObject);
 
 class dxRenderFactory : public IRenderFactory
 {
-#ifndef _EDITOR	
+#ifndef _EDITOR
 	RENDER_FACTORY_DECLARE(UISequenceVideoItem)
 	RENDER_FACTORY_DECLARE(UIShader)
 	RENDER_FACTORY_DECLARE(StatGraphRender)
 	RENDER_FACTORY_DECLARE(ConsoleRender)
 	RENDER_FACTORY_DECLARE(RenderDeviceRender)
-#	ifdef DEBUG
-		RENDER_FACTORY_DECLARE(ObjectSpaceRender)
-#	endif // DEBUG
+#ifdef DEBUG
+	RENDER_FACTORY_DECLARE(ObjectSpaceRender)
+#endif // DEBUG
 	RENDER_FACTORY_DECLARE(ApplicationRender)
 	RENDER_FACTORY_DECLARE(WallMarkArray)
 	RENDER_FACTORY_DECLARE(StatsRender)
 #endif // _EDITOR
 
-#ifndef _EDITOR	
+#ifndef _EDITOR
 	RENDER_FACTORY_DECLARE(FlareRender)
 	RENDER_FACTORY_DECLARE(ThunderboltRender)
 	RENDER_FACTORY_DECLARE(ThunderboltDescRender)
@@ -37,6 +37,6 @@ class dxRenderFactory : public IRenderFactory
 	RENDER_FACTORY_DECLARE(FontRender)
 };
 
-extern	dxRenderFactory RenderFactoryImpl;
+extern dxRenderFactory RenderFactoryImpl;
 
-#endif	//	RenderFactory_included
+#endif //	RenderFactory_included

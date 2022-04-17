@@ -11,9 +11,8 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline Real& LinearSystem::Tolerance ()
+inline Real &LinearSystem::Tolerance()
 {
     return ms_fTolerance;
 }
 //----------------------------------------------------------------------------
-

@@ -6,9 +6,10 @@
 
 #include <stdio.h>
 
-struct thread_st {
+struct thread_st
+{
 	char *sp;							/* stack pointer, can be 0 */
-	void (*func)(struct thread_st* st);	/* must be set by user */
+	void (*func)(struct thread_st *st); /* must be set by user */
 	int id;
 	int flags;
 	struct user_data u;
@@ -33,11 +34,11 @@ thread_create(struct thread_st *st)
 /* Wait for one of several subthreads to finish. */
 static void
 wait_for_thread(struct thread_st st[], int n_thr,
-				int (*end_thr)(struct thread_st*))
+				int (*end_thr)(struct thread_st *))
 {
 	int i;
-	for(i=0; i<n_thr; i++)
-		if(end_thr)
+	for (i = 0; i < n_thr; i++)
+		if (end_thr)
 			end_thr(&st[i]);
 }
 

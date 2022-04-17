@@ -35,40 +35,39 @@
 
 #include "MgcRTLib.h"
 
-namespace Mgc {
-
-template <class T>
-class SmallSet
+namespace Mgc
 {
-public:
-    SmallSet ();
-    SmallSet (int iCapacity, int iGrowBy);
-    SmallSet (const SmallSet& rkSet);
-    ~SmallSet ();
 
-    SmallSet& operator= (const SmallSet& rkSet);
+    template <class T>
+    class SmallSet
+    {
+    public:
+        SmallSet();
+        SmallSet(int iCapacity, int iGrowBy);
+        SmallSet(const SmallSet &rkSet);
+        ~SmallSet();
 
-    int GetCapacity () const;
-    int GetGrowBy () const;
-    int GetSize () const;
-    const T* GetElements () const;
-    const T& operator[] (int i) const;
+        SmallSet &operator=(const SmallSet &rkSet);
 
-    bool Insert (const T& rkElement);
-    void InsertNoCheck (const T& rkElement);
-    bool Remove (const T& rkElement);
-    bool Exists (const T& rkElement);
-    void Clear (int iCapacity, int iGrowBy);
+        int GetCapacity() const;
+        int GetGrowBy() const;
+        int GetSize() const;
+        const T *GetElements() const;
+        const T &operator[](int i) const;
 
-protected:
-    int m_iCapacity, m_iGrowBy, m_iSize;
-    T* m_atElement;
-};
+        bool Insert(const T &rkElement);
+        void InsertNoCheck(const T &rkElement);
+        bool Remove(const T &rkElement);
+        bool Exists(const T &rkElement);
+        void Clear(int iCapacity, int iGrowBy);
+
+    protected:
+        int m_iCapacity, m_iGrowBy, m_iSize;
+        T *m_atElement;
+    };
 
 #include "MgcSmallSet.inl"
 
 } // namespace Mgc
 
 #endif
-
-

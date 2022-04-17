@@ -11,19 +11,18 @@
 // http://www.magic-software.com/License/free.pdf
 
 //----------------------------------------------------------------------------
-inline int& MinimizeND::MaxLevel ()
+inline int &MinimizeND::MaxLevel()
 {
     return m_kMinimizer.MaxLevel();
 }
 //----------------------------------------------------------------------------
-inline int& MinimizeND::MaxBracket ()
+inline int &MinimizeND::MaxBracket()
 {
     return m_kMinimizer.MaxBracket();
 }
 //----------------------------------------------------------------------------
-inline void*& MinimizeND::UserData ()
+inline void *&MinimizeND::UserData()
 {
     return m_pvUserData;
 }
 //----------------------------------------------------------------------------
-

@@ -8,23 +8,24 @@ ip_filter::ip_filter()
 ip_filter::~ip_filter()
 {
 	for (subnets_coll_t::iterator i = m_all_subnets.begin(),
-		ie = m_all_subnets.end(); i != ie; ++i)
+								  ie = m_all_subnets.end();
+		 i != ie; ++i)
 	{
 		xr_delete(*i);
 	}
 }
 
-struct subnet_comparator : public std::binary_function<subnet_item*, subnet_item*, bool>
+struct subnet_comparator : public std::binary_function<subnet_item *, subnet_item *, bool>
 {
-	bool operator()(subnet_item const * left, subnet_item const * right) const
+	bool operator()(subnet_item const *left, subnet_item const *right) const
 	{
 		return ((left->subnet_ip.data & left->subnet_mask) < (right->subnet_ip.data & right->subnet_mask));
 	}
 };
 
-struct ip_searcher : public std::binary_function<subnet_item*, subnet_item*, bool>
+struct ip_searcher : public std::binary_function<subnet_item *, subnet_item *, bool>
 {
-	bool operator()(subnet_item const * left, subnet_item const * right) const
+	bool operator()(subnet_item const *left, subnet_item const *right) const
 	{
 		if (left->subnet_mask)
 		{
@@ -34,7 +35,7 @@ struct ip_searcher : public std::binary_function<subnet_item*, subnet_item*, boo
 	}
 };
 
-static void hton_bo(u32 const source_ip, subnet_item & dest)
+static void hton_bo(u32 const source_ip, subnet_item &dest)
 {
 	subnet_item source;
 	source.subnet_ip.data = source_ip;
@@ -47,32 +48,31 @@ static void hton_bo(u32 const source_ip, subnet_item & dest)
 #define SUBNET_LIST_SECT_NAME "subnet_list"
 u32 ip_filter::load()
 {
-	string_path			temp;
-	FS.update_path		(temp,"$app_data_root$", "ip_filter.ltx");
-	CInifile			ini(temp);
-	
+	string_path temp;
+	FS.update_path(temp, "$app_data_root$", "ip_filter.ltx");
+	CInifile ini(temp);
+
 	if (!ini.section_exist(SUBNET_LIST_SECT_NAME))
 		return 0;
 
 	for (u32 i = 0, line_count = ini.line_count(SUBNET_LIST_SECT_NAME);
-		i != line_count; ++i)
+		 i != line_count; ++i)
 	{
 		LPCSTR address;
 		LPCSTR line;
 		ini.r_line(SUBNET_LIST_SECT_NAME, i, &address, &line);
 		if (!xr_strlen(address))
 			continue;
-		
-		subnet_item* tmp_item = xr_new<subnet_item>();
+
+		subnet_item *tmp_item = xr_new<subnet_item>();
 		unsigned int parse_data[5];
 		unsigned int parsed_params = sscanf_s(
-				address, "%u.%u.%u.%u/%u",
-				&parse_data[0],
-				&parse_data[1],
-				&parse_data[2],
-				&parse_data[3],
-				&parse_data[4]
-		);
+			address, "%u.%u.%u.%u/%u",
+			&parse_data[0],
+			&parse_data[1],
+			&parse_data[2],
+			&parse_data[3],
+			&parse_data[4]);
 		if ((parsed_params != 5) ||
 			(parse_data[0] > 255) ||
 			(parse_data[1] > 255) ||
@@ -106,11 +106,11 @@ bool ip_filter::is_ip_present(u32 ip_address)
 
 void ip_filter::unload()
 {
-	for (subnets_coll_t::iterator i = m_all_subnets.begin(), //delete_data(m_all_subnets);
-		ie = m_all_subnets.end(); i != ie; ++i)
+	for (subnets_coll_t::iterator i = m_all_subnets.begin(), // delete_data(m_all_subnets);
+		 ie = m_all_subnets.end();
+		 i != ie; ++i)
 	{
 		xr_delete(*i);
 	}
 	m_all_subnets.clear();
 }
-

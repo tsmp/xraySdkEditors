@@ -1,9 +1,9 @@
 #ifndef UI_ParticleMainH
 #define UI_ParticleMainH
 
-
-enum {
-	COMMAND_EXTFIRST_EXT = COMMAND_MAIN_LAST-1,
+enum
+{
+    COMMAND_EXTFIRST_EXT = COMMAND_MAIN_LAST - 1,
 
     COMMAND_VALIDATE,
 
@@ -20,38 +20,37 @@ enum {
 };
 //------------------------------------------------------------------------------
 
-class CParticleMain: public TUI{
-	typedef TUI inherited;
-    
-    virtual void 	RealUpdateScene			();
-    virtual void 	RealQuit				();
+class CParticleMain : public TUI
+{
+    typedef TUI inherited;
+
+    virtual void RealUpdateScene();
+    virtual void RealQuit();
+
 public:
-    				CParticleMain 			();
-    virtual 		~CParticleMain			();
+    CParticleMain();
+    virtual ~CParticleMain();
 
-    virtual LPSTR	GetCaption				();
+    virtual LPSTR GetCaption();
 
-    virtual void 	ResetStatus				();
-    virtual void 	SetStatus				(LPCSTR s, bool bOutLog);
-    virtual void	ProgressDraw			();
-    virtual void 	OutCameraPos			();
-    virtual void 	OutUICursorPos			();
-    virtual void 	OutGridSize				();
-    virtual void 	OutInfo					();
+    virtual void ResetStatus();
+    virtual void SetStatus(LPCSTR s, bool bOutLog);
+    virtual void ProgressDraw();
+    virtual void OutCameraPos();
+    virtual void OutUICursorPos();
+    virtual void OutGridSize();
+    virtual void OutInfo();
 
-    virtual LPCSTR	EditorName				(){return "particle";}
-    virtual LPCSTR	EditorDesc				(){return "Particle Editor";}
+    virtual LPCSTR EditorName() { return "particle"; }
+    virtual LPCSTR EditorDesc() { return "Particle Editor"; }
 
-    virtual bool 	ApplyShortCut			(DWORD Key, TShiftState Shift);
-    virtual bool 	ApplyGlobalShortCut		(DWORD Key, TShiftState Shift);
+    virtual bool ApplyShortCut(DWORD Key, TShiftState Shift);
+    virtual bool ApplyGlobalShortCut(DWORD Key, TShiftState Shift);
 
     // commands
-	virtual	void	RegisterCommands		(); 
+    virtual void RegisterCommands();
     virtual void OnDrawUI();
-};    
-extern CParticleMain*	PUI;
+};
+extern CParticleMain *PUI;
 //---------------------------------------------------------------------------
-#endif //UI_MainCommandH
-
-
-
+#endif // UI_MainCommandH

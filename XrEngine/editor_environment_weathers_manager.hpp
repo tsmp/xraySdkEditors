@@ -14,68 +14,72 @@
 #include <boost/noncopyable.hpp>
 #include "property_collection_forward.hpp"
 
-namespace XrWeatherEditor {
+namespace XrWeatherEditor
+{
 
-class property_holder;
+	class property_holder;
 
-namespace environment {
+	namespace environment
+	{
 
-	class manager;
+		class manager;
 
-namespace weathers {
+		namespace weathers
+		{
 
-class weather;
+			class weather;
 
-class manager : private boost::noncopyable {
-public:
-							manager				(environment::manager* manager);
-							~manager			();
-			void			load				();
-			void			save				();
-			void			fill				(::XrWeatherEditor::property_holder* property_holder);
-			shared_str		unique_id			(shared_str const& id) const;
-			bool	save_current_blend			(char* buffer, u32 const& buffer_size);
-			bool	paste_current_time_frame	(char const* buffer, u32 const& buffer_size);
-			bool	paste_target_time_frame		(char const* buffer, u32 const& buffer_size);
-			void	reload_current_time_frame	();
-			void	reload_target_time_frame	();
-			void	reload_current_weather		();
-			void	reload						();
-			bool	add_time_frame				(char const* buffer, u32 const& buffer_size);
+			class manager : private boost::noncopyable
+			{
+			public:
+				manager(environment::manager *manager);
+				~manager();
+				void load();
+				void save();
+				void fill(::XrWeatherEditor::property_holder *property_holder);
+				shared_str unique_id(shared_str const &id) const;
+				bool save_current_blend(char *buffer, u32 const &buffer_size);
+				bool paste_current_time_frame(char const *buffer, u32 const &buffer_size);
+				bool paste_target_time_frame(char const *buffer, u32 const &buffer_size);
+				void reload_current_time_frame();
+				void reload_target_time_frame();
+				void reload_current_weather();
+				void reload();
+				bool add_time_frame(char const *buffer, u32 const &buffer_size);
 
-public:
-	typedef xr_vector<LPCSTR>					weather_ids_type;
-	typedef xr_vector<LPCSTR>					times_ids_type;
-	typedef xr_vector<weather*>					weather_container_type;
+			public:
+				typedef xr_vector<LPCSTR> weather_ids_type;
+				typedef xr_vector<LPCSTR> times_ids_type;
+				typedef xr_vector<weather *> weather_container_type;
 
-public:
-	weather_ids_type const& weather_ids			() const;
+			public:
+				weather_ids_type const &weather_ids() const;
 
-private:
-	typedef XrWeatherEditor::property_holder				property_holder_type;
-	typedef property_collection<
-				weather_container_type,
-				manager
-			>									collection_type;
+			private:
+				typedef XrWeatherEditor::property_holder property_holder_type;
+				typedef property_collection<
+					weather_container_type,
+					manager>
+					collection_type;
 
-private:
-	LPCSTR const* xr_stdcall weathers_getter	() const;
-	u32 xr_stdcall weathers_size_getter			() const;
-	LPCSTR const* xr_stdcall frames_getter		(LPCSTR weather_id) const;
-	u32 xr_stdcall frames_size_getter			(LPCSTR weather_id) const;
+			private:
+				LPCSTR const *xr_stdcall weathers_getter() const;
+				u32 xr_stdcall weathers_size_getter() const;
+				LPCSTR const *xr_stdcall frames_getter(LPCSTR weather_id) const;
+				u32 xr_stdcall frames_size_getter(LPCSTR weather_id) const;
 
-private:
-	weather_container_type						m_weathers;
-	mutable weather_ids_type					m_weather_ids;
-	collection_type*							m_collection;
-	mutable times_ids_type						m_times_ids;
+			private:
+				weather_container_type m_weathers;
+				mutable weather_ids_type m_weather_ids;
+				collection_type *m_collection;
+				mutable times_ids_type m_times_ids;
 
-public:
-	environment::manager&						m_manager;
-	mutable bool								m_changed;
-}; // class manager
-} // namespace weathers
-} // namespace environment
+			public:
+				environment::manager &m_manager;
+				mutable bool m_changed;
+			}; // class manager
+		}	   // namespace weathers
+	}		   // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR

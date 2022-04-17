@@ -15,57 +15,57 @@
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 #include "environment.h"
 
-namespace XrWeatherEditor {
-namespace environment {
-
-class manager;
-
-namespace effects {
-
-class manager;
-
-class effect :
-	public CEnvAmbient::SEffect,
-	public XrWeatherEditor::property_holder_holder,
-	private boost::noncopyable
+namespace XrWeatherEditor
 {
-public:
-							effect		(manager const& manager, shared_str const& id);
-	virtual					~effect		();
-			void			load		(CInifile& config);
-			void			save		(CInifile& config);
-			void			fill		(XrWeatherEditor::property_holder_collection* collection);
-	inline	LPCSTR			id			() const { return m_id.c_str(); }
+	namespace environment
+	{
 
+		class manager;
 
-private:
-	LPCSTR xr_stdcall		id_getter	() const;
-	void   xr_stdcall		id_setter	(LPCSTR value);
+		namespace effects
+		{
 
-	float xr_stdcall		wind_blast_longitude_getter	() const;
-	void  xr_stdcall		wind_blast_longitude_setter	(float value);
+			class manager;
 
+			class effect : public CEnvAmbient::SEffect,
+						   public XrWeatherEditor::property_holder_holder,
+						   private boost::noncopyable
+			{
+			public:
+				effect(manager const &manager, shared_str const &id);
+				virtual ~effect();
+				void load(CInifile &config);
+				void save(CInifile &config);
+				void fill(XrWeatherEditor::property_holder_collection *collection);
+				inline LPCSTR id() const { return m_id.c_str(); }
 
-	LPCSTR xr_stdcall sound_getter		();
-	void xr_stdcall	  sound_setter		(LPCSTR value);
+			private:
+				LPCSTR xr_stdcall id_getter() const;
+				void xr_stdcall id_setter(LPCSTR value);
 
-private:
-	typedef XrWeatherEditor::property_holder	property_holder_type;
+				float xr_stdcall wind_blast_longitude_getter() const;
+				void xr_stdcall wind_blast_longitude_setter(float value);
 
-public:
-	virtual	property_holder_type*object	();
+				LPCSTR xr_stdcall sound_getter();
+				void xr_stdcall sound_setter(LPCSTR value);
 
-private:
-	shared_str				m_id;
-	property_holder_type*	m_property_holder;
-	shared_str				m_sound;
+			private:
+				typedef XrWeatherEditor::property_holder property_holder_type;
 
-public:
-	manager const&			m_manager;
-}; // class effect
+			public:
+				virtual property_holder_type *object();
 
-} // namespace effects
-} // namespace environment
+			private:
+				shared_str m_id;
+				property_holder_type *m_property_holder;
+				shared_str m_sound;
+
+			public:
+				manager const &m_manager;
+			}; // class effect
+
+		} // namespace effects
+	}	  // namespace environment
 } // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
