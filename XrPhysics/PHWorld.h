@@ -3,7 +3,6 @@
 #include "Physics.h"
 #include "phupdateobject.h"
 #include "IPHWorld.h"
-#include "..\External\boost\noncopyable.hpp"
 #include "physics_scripted.h"
 #include "../xrEngine/pure.h"
 // refs
@@ -32,8 +31,7 @@ class CObjectSpace;
 class CObjectList;
 class CPHWorld : public pureFrame,
 				 public IPHWorld,
-				 public cphysics_scripted,
-				 private boost::noncopyable
+				 public cphysics_scripted
 #ifdef DEBUG
 	,
 				 public pureRender
@@ -89,6 +87,8 @@ private:
 
 public:
 	CPHWorld();
+	CPHWorld(const CPHWorld&) = delete;
+	const CPHWorld& operator=(const CPHWorld&) = delete;
 	virtual ~CPHWorld(){};
 
 	// IC	dSpaceID					GetSpace						()			{return Space;}	;

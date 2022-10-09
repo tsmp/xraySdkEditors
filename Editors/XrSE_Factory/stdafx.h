@@ -27,10 +27,6 @@ namespace std
 {
 	class exception;
 }
-namespace boost
-{
-	void throw_exception(std::exception const &A);
-}
 
 #include "smart_cast.h"
 
