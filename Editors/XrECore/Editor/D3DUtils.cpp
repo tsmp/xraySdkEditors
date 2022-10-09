@@ -16,7 +16,7 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4995)
-#include "..\Components\DirectX\include\d3dx9.h"
+#include "d3dx9.h"
 #pragma warning(pop)
 
 CDrawUtilities DU_impl;

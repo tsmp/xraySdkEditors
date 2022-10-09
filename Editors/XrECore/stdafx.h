@@ -54,7 +54,7 @@ DEFINE_VECTOR(ListItem *, ListItemsVec, ListItemsIt);
 
 // DirectX headers
 #include <d3d9.h>
-#include "..\Components\DirectX\include\d3dx9.h"
+#include "d3dx9.h"
 #include "..\..\XrRender\Private\xrD3dDefs.h"
 
 #include <dinput.h>

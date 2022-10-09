@@ -116,7 +116,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>D:\Projects\tsmp_project3\Components\DX9SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -452,9 +451,6 @@
     <ClInclude Include="_vector4.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BearBundle\BearCore\Platform\Desktop\BearCore.vcxproj">
-      <Project>{86b65138-c85e-4c26-967b-9a21eb954216}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\External\BugTrap\BugTrap.vcxproj">
       <Project>{e8cf1ada-264a-4127-86c2-fd7057d3792c}</Project>
     </ProjectReference>

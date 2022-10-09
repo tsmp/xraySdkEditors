@@ -10,7 +10,7 @@
 //#include "..\BearBundle\External\Public\StbImage\stb_image.h"
 #include "../XrETools/ETools.h"
 
-#include "..\Components\FreeImage\FreeImage.h"
+#include "FreeImage.h"
 #pragma comment(lib, "FreeImage.lib")
 
 CImageManager ImageLib;

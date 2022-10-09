@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "dds/ddsTypes.h"
 #include "dds.h"
-#include "..\..\Components\nvtt\nvtt.h"
+#include "nvtt.h"
 
 #pragma comment(lib, "nvtt.lib")
 
