@@ -159,7 +159,7 @@ void xrDebug::backend(const char *expression, const char *description, const cha
 {
 	if (IsDebuggerPresent())
 	{
-		DebugBreak();
+		DEBUG_INVOKE;
 		return;
 	}
 	static xrCriticalSection CS
