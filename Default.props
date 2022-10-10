@@ -15,7 +15,7 @@
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PreprocessorDefinitions>_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;_WINDLL;_SECURE_SCL=0;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)XrRender\Public;$(SolutionDir)External\Public;$(SolutionDir)External\DirectX\include;$(SolutionDir)External\nvtt;$(SolutionDir)External\FreeImage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)XrRender\Public;$(SolutionDir)External\include;$(SolutionDir)External\DirectX\include;$(SolutionDir)External\nvtt;$(SolutionDir)External\FreeImage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
