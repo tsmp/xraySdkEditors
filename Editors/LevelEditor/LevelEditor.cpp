@@ -11,7 +11,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 {
     if (!IsDebuggerPresent())
         Debug._initialize(false);
-    Core._initialize("Actor", ELogCallback, 1, "fs.ltx", true);
+
+    Core._initialize("Level", ELogCallback, 1, "fs.ltx", true);
     XrSE_Factory::initialize();
     Tools = xr_new<CLevelTool>();
     LTools = (CLevelTool *)Tools;
