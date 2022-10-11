@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#pragma comment(lib,"xrCore.lib")
+
 XrUI::~XrUI()
 {
 }

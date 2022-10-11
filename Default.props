@@ -9,13 +9,13 @@
   <ItemDefinitionGroup>
     <Link>
       <ImportLibrary>$(SolutionDir)\output\libraries_$(platform)_$(Configuration)\$(TargetName).lib</ImportLibrary>
-      <AdditionalLibraryDirectories>$(SolutionDir)\output\libraries_$(platform)_$(Configuration);$(SolutionDir)External\DirectX\lib64;$(SolutionDir)External\nvtt\x64;$(SolutionDir)External\FreeImage\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\output\libraries_$(platform)_$(Configuration);$(SolutionDir)External\DirectX\lib_$(platform);$(SolutionDir)External\nvtt\$(platform);$(SolutionDir)External\FreeImage\$(platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PreprocessorDefinitions>_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;_WINDLL;_SECURE_SCL=0;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)XrRender\Public;$(SolutionDir)External\include;$(SolutionDir)External\DirectX\include;$(SolutionDir)External\nvtt;$(SolutionDir)External\FreeImage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)XrRender\Public;$(SolutionDir)External\include;$(SolutionDir)External\LuaJIT\src;$(SolutionDir)External\DirectX\include;$(SolutionDir)External\Luabind;$(SolutionDir)External\nvtt;$(SolutionDir)External\FreeImage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>

@@ -9,6 +9,11 @@
 #include "xrCore.h"
 
 #pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dxerr.lib")
+
+#ifndef _WIN64
+#pragma comment(lib, "legacy_stdio_definitions.lib")
+#endif
 
 #ifdef DEBUG
 #include <malloc.h>

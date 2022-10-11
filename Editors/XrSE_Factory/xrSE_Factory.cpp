@@ -27,6 +27,8 @@
 //#include <luabind/library_linkage.h>
 
 #pragma comment(lib, "xrCore.lib")
+#pragma comment(lib, "luajit.lib")
+#pragma comment(lib, "luabind.lib")
 
 extern CSE_Abstract *F_entity_Create(LPCSTR section);
 
