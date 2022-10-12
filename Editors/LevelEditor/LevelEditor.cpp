@@ -11,15 +11,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     if (!IsDebuggerPresent())
         Debug._initialize(false);
 
-    Core._initialize("Level", ELogCallback, 1, "fs.ltx", true);
+    Core._initialize("level", ELogCallback, 1, "fs.ltx", true);
     XrSE_Factory::initialize();
-    Tools = xr_new<CLevelTool>();
-    LTools = (CLevelTool *)Tools;
-
-    UI = xr_new<CLevelMain>();
+    
+    LTools = xr_new<CLevelTool>();
+    Tools = LTools;
+    
+    LUI = xr_new<CLevelMain>();
+    UI = LUI;
     UI->RegisterCommands();
-    LUI = (CLevelMain *)UI;
-
+    
     Scene = xr_new<EScene>();
     UIMainForm *MainForm = xr_new<UIMainForm>();
 

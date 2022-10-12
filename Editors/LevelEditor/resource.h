@@ -3,7 +3,7 @@
 // ������������ LevelEditor.rc
 //
 #define IDI_ICON2 102
-#define IDI_ICON_LE 102
+#define MAINICON 102
 
 // Next default values for new objects
 //

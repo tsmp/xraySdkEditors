@@ -1421,4 +1421,9 @@ void CLevelMain::OnDrawUI()
     }
 }
 
-//---------------------------------------------------------------------------
+#include "resource.h"
+
+HICON CLevelMain::EditorIcon()
+{
+    return LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(MAINICON));
+}

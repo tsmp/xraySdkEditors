@@ -100,6 +100,7 @@ public:
 
     virtual LPCSTR EditorName() { return "level"; }
     virtual LPCSTR EditorDesc() { return "Level Editor"; }
+    virtual HICON EditorIcon() override;
 
     void ShowContextMenu(int cls);
     bool PickGround(Fvector &hitpoint, const Fvector &start, const Fvector &direction, int bSnap = 1, Fvector *hitnormal = 0);

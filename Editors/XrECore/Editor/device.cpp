@@ -453,9 +453,9 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 void CEditorRenderDevice::CreateWindow()
 {
-	m_WC = {sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, TEXT("XRay Editor"), NULL};
+	m_WC = {sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), UI->EditorIcon() , NULL, NULL, NULL, TEXT("X-Ray editor") , NULL};
 	::RegisterClassEx(&m_WC);
-	m_hWnd = ::CreateWindowA(m_WC.lpszClassName, TEXT("XRay Editor"), WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, m_WC.hInstance, NULL);
+	m_hWnd = ::CreateWindowA(m_WC.lpszClassName, UI->EditorDesc(), WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, m_WC.hInstance, NULL);
 
 	::UpdateWindow(m_hWnd);
 }

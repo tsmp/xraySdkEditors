@@ -255,6 +255,7 @@ public:
 
     virtual LPCSTR EditorName() = 0;
     virtual LPCSTR EditorDesc() = 0;
+    virtual HICON EditorIcon() { return nullptr; }
 
     // commands
     virtual void RegisterCommands() = 0;
