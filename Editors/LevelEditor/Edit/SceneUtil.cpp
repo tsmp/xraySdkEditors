@@ -77,7 +77,6 @@ bool EScene::FindDuplicateName()
 
 void EScene::GenObjectName(ObjClassID cls_id, char *buffer, const char *pref)
 {
-
     for (int i = 0; true; i++)
     {
         bool result;
@@ -86,19 +85,23 @@ void EScene::GenObjectName(ObjClassID cls_id, char *buffer, const char *pref)
         {
             if (i == 0)
             {
-                temp = pref;
+                if (*pref == '\0')
+                {
+                    ESceneCustomOTool* ot = GetOTool(cls_id);
+                    VERIFY(ot);
+                    pref = ot->ClassName();
+                }
+                                             
+                temp = pref;                     
             }
-            else
-            {
-                temp.sprintf("%s_%02d", pref, i - 1);
-            }
+            else            
+                temp.sprintf("%s_%02d", pref, i - 1);            
         }
-        else
-        {
-            temp.sprintf("%02d", i);
-        }
+        else        
+            temp.sprintf("%02d", i);        
 
         FindObjectByNameCB(temp.c_str(), result);
+
         if (!result)
         {
             xr_strcpy(buffer, 256, temp.c_str());
@@ -109,4 +112,3 @@ void EScene::GenObjectName(ObjClassID cls_id, char *buffer, const char *pref)
     xr_string result	= FHelper.GenerateName(pref&&pref[0]?pref:ot->ClassName(),4,fastdelegate::bind<TFindObjectByName>(this,&EScene::FindObjectByNameCB),true,true);
     strcpy				(buffer,result.c_str());*/
 }
-//------------------------------------------------------------------------------
