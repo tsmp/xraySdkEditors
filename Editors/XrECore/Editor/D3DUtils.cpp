@@ -1484,6 +1484,9 @@ void CDrawUtilities::DrawPrimitiveLIT(D3DPRIMITIVETYPE pt, u32 pc, FVF::LIT *ver
 
 void CDrawUtilities::DrawLink(const Fvector &p0, const Fvector &p1, float sz, u32 clr)
 {
+    if (p0.similar(p1))
+        return;   
+
     DrawLine(p1, p0, clr);
     Fvector pp[2], D, R, N = {0, 1, 0};
     D.sub(p1, p0);

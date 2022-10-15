@@ -95,7 +95,6 @@ void UIPropertiesForm::Draw()
 		ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 5);
 		ImGui::Columns(2);
 		ImGui::Separator();
-		//ImGui::SetNextItemOpen(true);
 		DrawNode(&m_GeneralNode);
 		ImGui::Columns(1);
 		ImGui::Separator();
