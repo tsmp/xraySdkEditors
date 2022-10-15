@@ -2,7 +2,7 @@
 class XREPROPS_API UIChooseForm : public XrUI, private FolderHelper<SChooseItem>
 {
     virtual void DrawItem(Node *Node);
-    virtual bool IsDrawFloder(Node *Node);
+    virtual bool IsDrawFolder(Node *Node);
     void AppendItem(SChooseItem &item);
     void UpdateTexture();
     Node m_GeneralNode;

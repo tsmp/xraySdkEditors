@@ -95,6 +95,7 @@ void UIPropertiesForm::Draw()
 		ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 5);
 		ImGui::Columns(2);
 		ImGui::Separator();
+		//ImGui::SetNextItemOpen(true);
 		DrawNode(&m_GeneralNode);
 		ImGui::Columns(1);
 		ImGui::Separator();
@@ -299,12 +300,12 @@ void UIPropertiesForm::DrawItem(Node *node)
 	}
 }
 
-bool UIPropertiesForm::IsDrawFloder(Node *Node)
+bool UIPropertiesForm::IsDrawFolder(Node *Node)
 {
 	return true;
 }
 
-void UIPropertiesForm::DrawAfterFloderNode(bool is_open, Node *node)
+void UIPropertiesForm::DrawAfterFolderNode(bool is_open, Node *node)
 {
 	if (!node->Object)
 	{

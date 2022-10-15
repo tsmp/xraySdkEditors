@@ -58,14 +58,14 @@ void UIChooseForm::DrawItem(Node *Node)
         }
     }
 }
-bool UIChooseForm::IsDrawFloder(Node *node)
+bool UIChooseForm::IsDrawFolder(Node *node)
 {
     bool result = false;
     for (Node &N : node->Nodes)
     {
-        if (N.IsFloder())
+        if (N.IsFolder())
         {
-            result = result | IsDrawFloder(&N);
+            result = result | IsDrawFolder(&N);
         }
         else if (N.IsObject())
         {

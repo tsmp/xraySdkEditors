@@ -18,7 +18,7 @@ public:
 	void RemoveSelectItem();
 	void ClearSelected();
 	void SelectItem(const char *name);
-	void AssignItems(ListItemsVec &items, const char *name_selection = nullptr, bool clear_floder = true, bool save_selected = false);
+	void AssignItems(ListItemsVec &items, const char *name_selection = nullptr, bool clear_Folder = true, bool save_selected = false);
 	IC const ListItemsVec &GetItems() const { return m_Items; }
 	bool GetSelected(RStringVec &items) const;
 	int GetSelected(LPCSTR pref, ListItemsVec &items, bool bOnlyObject);
@@ -46,12 +46,12 @@ public:
 	IC void SetOnItemCloneEvent(TOnItemClone e) { OnItemCloneEvent = e; }
 
 private:
-	virtual void DrawAfterFloderNode(bool is_open, Node *Node = 0);
+	virtual void DrawAfterFolderNode(bool is_open, Node *Node = 0);
 	virtual void DrawItem(Node *Node);
-	virtual bool IsDrawFloder(Node *Node);
+	virtual bool IsDrawFolder(Node *Node);
 	virtual void IsItemClicked(Node *Node);
-	virtual bool IsFloderBullet(Node *Node);
-	virtual bool IsFloderSelected(Node *Node);
+	virtual bool IsFolderBullet(Node *Node);
+	virtual bool IsFolderSelected(Node *Node);
 
 private:
 	virtual void EventRenameNode(Node *Node, const char *old_path, const char *new_path);

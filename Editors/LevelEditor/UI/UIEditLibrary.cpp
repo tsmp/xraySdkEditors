@@ -141,7 +141,7 @@ void UIEditLibrary::DrawObjects()
 			continue;
 		ObjectList& lst = ot->GetObjects();
 		ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
-		if (ImGui::TreeNode("floder", ("%ss", it->second->ClassDesc())))
+		if (ImGui::TreeNode("folder", ("%ss", it->second->ClassDesc())))
 		{
 			if (OBJCLASS_GROUP == it->first)
 			{
@@ -220,7 +220,7 @@ void UIEditLibrary::DrawObjects()
 	//			continue;
 	//		ObjectList& lst = ot->GetObjects();
 	//		ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
-	//		if (ImGui::TreeNode("floder", ("%ss", it->second->ClassDesc())))
+	//		if (ImGui::TreeNode("folder", ("%ss", it->second->ClassDesc())))
 	//		{
 	//			if (OBJCLASS_GROUP == it->first)
 	//			{

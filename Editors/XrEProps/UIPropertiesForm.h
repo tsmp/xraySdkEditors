@@ -24,8 +24,8 @@ public:
 private:
 	virtual void DrawItem(Node *Node);
 	virtual void DrawItem(const char *name, PropItem *Node);
-	virtual bool IsDrawFloder(Node *Node);
-	virtual void DrawAfterFloderNode(bool is_open, Node *Node = 0);
+	virtual bool IsDrawFolder(Node *Node);
+	virtual void DrawAfterFolderNode(bool is_open, Node *Node = 0);
 
 private:
 	PropItemVec m_Items;

@@ -1,12 +1,12 @@
 #pragma once
-template <class C, bool FloderAsItem = false>
+template <class C, bool FolderAsItem = false>
 class FolderHelper
 {
 public:
-	enum EFloderNodeType
+	enum EFolderNodeType
 	{
 		FNT_Root,
-		FNT_Floder,
+		FNT_Folder,
 		FNT_Object
 	};
 	struct Node
@@ -14,33 +14,33 @@ public:
 		Node() : Object(nullptr), Type(FNT_Root), Selected(false) {}
 		~Node() {}
 		bool Selected;
-		EFloderNodeType Type;
+		EFolderNodeType Type;
 		shared_str Name;
 		shared_str Path;
 		xr_vector<Node> Nodes;
 		mutable C *Object;
 		IC bool IsObject() { return Type == FNT_Object; }
-		IC bool IsFloder() { return Type == FNT_Floder || Type == FNT_Root; }
+		IC bool IsFolder() { return Type == FNT_Folder || Type == FNT_Root; }
 	};
 	FolderHelper() {}
 	inline ~FolderHelper() {}
 	inline Node *SelectObject(Node *N, const char *path)
 	{
 		VERIFY(N);
-		VERIFY(N->IsFloder());
+		VERIFY(N->IsFolder());
 		if (strchr(path, '\\'))
 		{
 			string_path name;
 			xr_strcpy(name, path);
 			strchr(name, '\\')[0] = 0;
-			N = FindFloder(N, name);
+			N = FindFolder(N, name);
 			VERIFY(N);
 			N->Selected = true;
 			return SelectObject(N, strchr(path, '\\') + 1);
 		}
 		for (Node &node : N->Nodes)
 		{
-			if (FloderAsItem)
+			if (FolderAsItem)
 			{
 				if (node.Name == path && node.Object)
 				{
@@ -64,7 +64,7 @@ public:
 	{
 		if (N == nullptr)
 			return nullptr;
-		if (!N->IsFloder())
+		if (!N->IsFolder())
 			return nullptr;
 		if (strchr(path, '\\'))
 		{
@@ -72,7 +72,7 @@ public:
 			xr_strcpy(name, path);
 			strrchr(name, '\\')[0] = 0;
 			path = strrchr(path, '\\') + 1;
-			N = FindFloder(N, name);
+			N = FindFolder(N, name);
 			if (N == nullptr)
 				return nullptr;
 		}
@@ -89,7 +89,7 @@ public:
 		if (N == nullptr)
 			return nullptr;
 
-		if (!N->IsFloder())
+		if (!N->IsFolder())
 			return nullptr;
 
 		if (strchr(path, '\\'))
@@ -98,7 +98,7 @@ public:
 			xr_strcpy(name, path);
 			strrchr(name, '\\')[0] = 0;
 			path = strrchr(path, '\\') + 1;
-			N = FindFloder(N, name);
+			N = FindFolder(N, name);
 
 			if (!N)
 				return nullptr;
@@ -113,12 +113,12 @@ public:
 		return nullptr;
 	}
 
-	inline Node *FindFloder(Node *N, const char *path)
+	inline Node *FindFolder(Node *N, const char *path)
 	{
 		if (!N)
 			return nullptr;
 
-		if (!N->IsFloder())
+		if (!N->IsFolder())
 			return nullptr;
 
 		if (strchr(path, '\\'))
@@ -126,19 +126,19 @@ public:
 			string_path name;
 			xr_strcpy(name, path);
 			strchr(name, '\\')[0] = 0;
-			return FindFloder(FindFloder(N, name), strchr(path, '\\') + 1);
+			return FindFolder(FindFolder(N, name), strchr(path, '\\') + 1);
 		}
 
 		for (Node &node : N->Nodes)
 		{
-			if (node.Name == path && node.IsFloder())
+			if (node.Name == path && node.IsFolder())
 				return &node;
 		}
 
 		return nullptr;
 	}
 
-	inline Node *AppendFloder(Node *N, const char *path)
+	inline Node *AppendFolder(Node *N, const char *path)
 	{
 		if (!N)
 			return nullptr;
@@ -149,32 +149,32 @@ public:
 			xr_strcpy(name, path);
 			strchr(name, '\\')[0] = 0;
 
-			Node *NextNode = FindFloder(N, name);
+			Node *NextNode = FindFolder(N, name);
 			if (NextNode)
-				return AppendFloder(NextNode, strchr(path, '\\') + 1);
+				return AppendFolder(NextNode, strchr(path, '\\') + 1);
 
-			return AppendFloder(AppendFloder(N, name), strchr(path, '\\') + 1);
+			return AppendFolder(AppendFolder(N, name), strchr(path, '\\') + 1);
 		}
 
 		for (Node &node : N->Nodes)
 		{
 			if (node.Name == path)
 			{
-				if constexpr (FloderAsItem)
+				if constexpr (FolderAsItem)
 				{
-					node.Type = FNT_Floder;
+					node.Type = FNT_Folder;
 					return &node;
 				}
 				else
 				{
-					if (node.IsFloder())
+					if (node.IsFolder())
 						return &node;
 					// return nullptr;
 				}
 			}
 		}
 		Node NewNode;
-		NewNode.Type = FNT_Floder;
+		NewNode.Type = FNT_Folder;
 		NewNode.Name = path;
 		if (N->Path.size() == 0)
 		{
@@ -203,18 +203,18 @@ public:
 			char *slash = strchr(name, '\\');
 			*slash = '\0';
 
-			Node *NextNode = FindFloder(N, name);
+			Node *NextNode = FindFolder(N, name);
 			if (NextNode)
 				return AppendObject(NextNode, strchr(path, '\\') + 1);
 
-			return AppendObject(AppendFloder(N, name), strchr(path, '\\') + 1);
+			return AppendObject(AppendFolder(N, name), strchr(path, '\\') + 1);
 		}
 
 		for (Node &node : N->Nodes)
 		{
 			if (node.Name == path)
 			{
-				if constexpr (FloderAsItem)
+				if constexpr (FolderAsItem)
 				{
 					if (node.IsObject())
 						return &node;
@@ -245,7 +245,7 @@ public:
 
 	inline void Remove(Node *N, Node *Object, bool use_event = false)
 	{
-		Node *F = Object->Path.size() == 0 ? N : FindFloder(N, Object->Path.c_str());
+		Node *F = Object->Path.size() == 0 ? N : FindFolder(N, Object->Path.c_str());
 		R_ASSERT(F);
 		string_path path;
 		if (use_event)
@@ -260,24 +260,24 @@ public:
 	{
 		{
 			Node *ObjectNew = nullptr;
-			bool IsFloder = false;
+			bool IsFolder = false;
 
 			string_path old_path;
 			GetFullPath(Object, old_path);
 
-			if (Object->IsFloder())
+			if (Object->IsFolder())
 			{
-				IsFloder = true;
-				ObjectNew = AppendFloder(N, new_path);
+				IsFolder = true;
+				ObjectNew = AppendFolder(N, new_path);
 			}
 			else
 
 			{
 				ObjectNew = AppendObject(N, new_path);
 			}
-			if (IsFloder)
+			if (IsFolder)
 			{
-				Object = FindFloder(N, old_path);
+				Object = FindFolder(N, old_path);
 			}
 			else
 
@@ -291,9 +291,9 @@ public:
 
 			SwapData(ObjectNew, Object);
 			Remove(N, Object);
-			if (IsFloder)
+			if (IsFolder)
 			{
-				ObjectNew = FindFloder(N, new_path);
+				ObjectNew = FindFolder(N, new_path);
 			}
 			else
 			{
@@ -312,44 +312,44 @@ public:
 		{
 			for (Node &node : N->Nodes)
 			{
-				if (node.IsFloder() && IsDrawFloder(&node))
+				if (node.IsFolder() && IsDrawFolder(&node))
 				{
 					DrawNode(&node);
 				}
 			}
 			for (Node &node : N->Nodes)
 			{
-				if (!node.IsFloder())
+				if (!node.IsFolder())
 				{
 					DrawNode(&node);
 				}
 			}
 		}
-		else if (N->IsFloder())
+		else if (N->IsFolder())
 		{
 			if (N->Selected)
 				ImGui::SetNextTreeNodeOpen(true);
 			ImGui::AlignTextToFramePadding();
-			ImGuiTreeNodeFlags FloderFlags = ImGuiTreeNodeFlags_OpenOnArrow;
-			if (IsFloderBullet(N))
-				FloderFlags |= ImGuiTreeNodeFlags_Bullet;
-			if (IsFloderSelected(N))
-				FloderFlags |= ImGuiTreeNodeFlags_Selected;
-			if (ImGui::TreeNodeEx(N->Name.c_str(), FloderFlags))
+			ImGuiTreeNodeFlags FolderFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+			if (IsFolderBullet(N))
+				FolderFlags |= ImGuiTreeNodeFlags_Bullet;
+			if (IsFolderSelected(N))
+				FolderFlags |= ImGuiTreeNodeFlags_Selected;
+			if (ImGui::TreeNodeEx(N->Name.c_str(), FolderFlags))
 			{
-				DrawAfterFloderNode(true, N);
+				DrawAfterFolderNode(true, N);
 				if (ImGui::IsItemClicked() && N->Object)
 					IsItemClicked(N);
 				for (Node &node : N->Nodes)
 				{
-					if (node.IsFloder() && IsDrawFloder(&node))
+					if (node.IsFolder() && IsDrawFolder(&node))
 					{
 						DrawNode(&node);
 					}
 				}
 				for (Node &node : N->Nodes)
 				{
-					if (!node.IsFloder())
+					if (!node.IsFolder())
 					{
 						DrawNode(&node);
 					}
@@ -358,7 +358,7 @@ public:
 			}
 			else
 			{
-				DrawAfterFloderNode(false, N);
+				DrawAfterFolderNode(false, N);
 				if (ImGui::IsItemClicked() && N->Object)
 					IsItemClicked(N);
 			}
@@ -372,9 +372,9 @@ public:
 				N->Selected = false;
 		}
 	}
-	virtual void DrawAfterFloderNode(bool is_open = false, Node *Node = 0) {}
-	virtual bool IsFloderBullet(Node *Node) { return false; }
-	virtual bool IsFloderSelected(Node *Node) { return false; }
+	virtual void DrawAfterFolderNode(bool is_open = false, Node *Node = 0) {}
+	virtual bool IsFolderBullet(Node *Node) { return false; }
+	virtual bool IsFolderSelected(Node *Node) { return false; }
 	virtual void EventRenameNode(Node *Node, const char *old_path, const char *new_path) {}
 	virtual void EventRemoveNode(Node *Node, const char *path) {}
 	inline void GetFullPath(Node *Object, string_path &full_path)
@@ -389,7 +389,7 @@ public:
 		xr_strcat(full_path, Object->Name.c_str());
 	}
 	virtual void IsItemClicked(Node *Node) {}
-	virtual bool IsDrawFloder(Node *Node) = 0;
+	virtual bool IsDrawFolder(Node *Node) = 0;
 	virtual void DrawItem(Node *Node) = 0;
 
 private:
