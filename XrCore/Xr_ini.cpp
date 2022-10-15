@@ -345,28 +345,34 @@ void CInifile::Load(IReader *F, LPCSTR path
 				{
 					*t = 0;
 					_Trim(name);
-					++t;
-					xr_strcpy(value_raw, sizeof(value_raw), t);
-					bInsideSTR = _parse(str2, value_raw);
-					if (bInsideSTR) // multiline str value
+
+					if (Core.SocSdk)					
+						_parse(str2, ++t);					
+					else
 					{
-						while (bInsideSTR)
+						++t;
+						xr_strcpy(value_raw, sizeof(value_raw), t);
+						bInsideSTR = _parse(str2, value_raw);
+						if (bInsideSTR) // multiline str value
 						{
-							xr_strcat(value_raw, sizeof(value_raw), "\r\n");
-							string4096 str_add_raw;
-							F->r_string(str_add_raw, sizeof(str_add_raw));
-							R_ASSERT2(
-								xr_strlen(value_raw) + xr_strlen(str_add_raw) < sizeof(value_raw),
-								make_string(
-									"Incorrect inifile format: section[%s], variable[%s]. Odd number of quotes (\") found, but should be even.",
-									Current->Name.c_str(),
-									name));
-							xr_strcat(value_raw, sizeof(value_raw), str_add_raw);
-							bInsideSTR = _parse(str2, value_raw);
-							if (bInsideSTR)
+							while (bInsideSTR)
 							{
-								if (is_empty_line_now(F))
-									xr_strcat(value_raw, sizeof(value_raw), "\r\n");
+								xr_strcat(value_raw, sizeof(value_raw), "\r\n");
+								string4096 str_add_raw;
+								F->r_string(str_add_raw, sizeof(str_add_raw));
+								R_ASSERT2(
+									xr_strlen(value_raw) + xr_strlen(str_add_raw) < sizeof(value_raw),
+									make_string(
+										"Incorrect inifile format: section[%s], variable[%s]. Odd number of quotes (\") found, but should be even.",
+										Current->Name.c_str(),
+										name));
+								xr_strcat(value_raw, sizeof(value_raw), str_add_raw);
+								bInsideSTR = _parse(str2, value_raw);
+								if (bInsideSTR)
+								{
+									if (is_empty_line_now(F))
+										xr_strcat(value_raw, sizeof(value_raw), "\r\n");
+								}
 							}
 						}
 					}
@@ -396,7 +402,7 @@ void CInifile::Load(IReader *F, LPCSTR path
 						//#ifdef DEBUG
 						//							|| *I.comment
 						//#endif
-					)
+						)
 						insert_item(Current, I);
 				}
 			}
