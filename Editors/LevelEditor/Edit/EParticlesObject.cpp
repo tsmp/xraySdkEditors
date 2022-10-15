@@ -83,7 +83,7 @@ void EParticlesObject::Render(int priority, bool strictB2F)
     if (::Render->occ_visible(bb))
     {
         RCache.set_xform_world(Fidentity);
-        if (1 == priority)
+        if (2 == priority)
         {
             if (false == strictB2F)
             {
