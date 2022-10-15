@@ -42,8 +42,10 @@ struct SExportStreams
 
 class CCustomObject : private pureDrawUI
 {
-
+protected:
     shared_str EName;
+
+private:
     // orientation
     Fvector EPosition;
     Fvector EScale;
