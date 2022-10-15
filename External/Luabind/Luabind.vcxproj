@@ -134,10 +134,10 @@
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <PreprocessorDefinitions>_SECURE_SCL=0;_HAS_ITERATOR_DEBUGGING=0;LUABIND_BUILDING;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_SECURE_SCL=0;_HAS_ITERATOR_DEBUGGING=0;LUABIND_BUILDING;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);..\LuaJIT\src;..\xrCore;</AdditionalIncludeDirectories>
       <StringPooling>false</StringPooling>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <WarningLevel>Level3</WarningLevel>
