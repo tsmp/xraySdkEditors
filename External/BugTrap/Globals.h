@@ -100,8 +100,6 @@ extern BT_ErrHandler g_pfnPostErrHandler;
 extern INT_PTR g_nPostErrHandlerParam;
 /// Pointer to the exception information.
 extern PEXCEPTION_POINTERS g_pExceptionPointers;
-/// True if application runs on Windows NT platform.
-extern BOOL g_bWinNT;
 /// Custom resources manager.
 extern CResManager* g_pResManager;
 /// Pointer to Simple MAPI session object.
@@ -118,3 +116,8 @@ extern CStrHolder g_strUserMessage;
 extern CStrHolder g_strFirstIntroMesage;
 /// 2nd introduction message displayed on the dialog.
 extern CStrHolder g_strSecondIntroMesage;
+
+/// Address of custom activity handler called at processing BugTrap action.
+extern BT_CustomActivityHandler g_pfnCustomActivityHandler;
+/// User-defined parameter of custom activity handler.
+extern INT_PTR g_nCustomActivityHandlerParam;

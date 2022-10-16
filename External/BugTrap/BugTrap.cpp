@@ -61,8 +61,6 @@ static _CrtMemState g_MemState;
  */
 static BOOL RequestMorePrivileges(void)
 {
-	if (! g_bWinNT)
-		return TRUE; // simulation for Win9x
 	BOOL bResult = FALSE;
 	HANDLE hCurrentProcess = GetCurrentProcess();
 	HANDLE hToken;
@@ -468,7 +466,7 @@ static void SetDefaultReportPath(void)
 		if (GetCanonicalAppName(szAppName, countof(szAppName), TRUE))
 		{
 			PathCombine(g_szReportFilePath, szAppDataPath, szAppName);
-			PathAppend(g_szReportFilePath, _T("reports"));
+			PathAppend(g_szReportFilePath, _T("reports\\tsmp3"));
 		}
 	}
 }
@@ -936,6 +934,24 @@ extern "C" BUGTRAP_API void APIENTRY BT_SetPreErrHandler(BT_ErrHandler pfnPreErr
 extern "C" BUGTRAP_API BT_ErrHandler APIENTRY BT_GetPostErrHandler(void)
 {
 	return g_pfnPostErrHandler;
+}
+
+/**
+* @return address of custom activity handler called at processing BugTrap action.
+*/
+extern "C" BUGTRAP_API BT_CustomActivityHandler APIENTRY BT_GetCustomActivityHandler(void)
+{
+	return g_pfnCustomActivityHandler;
+}
+
+/**
+* @param pfnCustomActivityHandler - address of custom activity handler called at processing BugTrap action.
+* @param nCustomActivityHandlerParam - user-defined parameter of custom activity handler called at processing BugTrap action.
+*/
+extern "C" BUGTRAP_API void APIENTRY BT_SetCustomActivityHandler(BT_CustomActivityHandler pfnCustomActivityHandler, INT_PTR nCustomActivityHandlerParam)
+{
+	g_pfnCustomActivityHandler = pfnCustomActivityHandler;
+	g_nCustomActivityHandlerParam = nCustomActivityHandlerParam;
 }
 
 /**

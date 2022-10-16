@@ -26,6 +26,11 @@
 #include "Globals.h"
 #include "Encoding.h"
 #include "MemStream.h"
+#include "VersionInfoString.h"
+
+#ifdef _MANAGED
+#include "NetThunks.h"
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -1353,9 +1358,18 @@ static void ExecuteHandlerAction(void)
 			{
 				if (g_dwFlags & BTF_SHOWADVANCEDUI)
 					DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_MAIN_DLG), NULL, MainDlgProc);
-				else if (DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_SIMPLE_DLG), NULL, SimpleDlgProc) == TRUE)
+				else if (DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_SIMPLE_DLG), GetForegroundWindow(), SimpleDlgProc) == TRUE)
 					DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_MAIN_DLG), NULL, MainDlgProc);
 			}
+			break;
+		case BTA_CUSTOM:
+#ifdef _MANAGED
+            NetThunks::FireCustomActivityEvent(g_szInternalReportFilePath);
+#else
+            if (g_pfnCustomActivityHandler != NULL)
+                (*g_pfnCustomActivityHandler)(g_szInternalReportFilePath, g_nCustomActivityHandlerParam);
+#endif // _MANAGED
+
 			break;
 		}
 	}
@@ -1486,7 +1500,7 @@ LONG InternalFilter(PEXCEPTION_POINTERS pExceptionPointers)
 			{
 				TCHAR szDumpFileName[MAX_PATH];
 				GetTempPath(countof(szDumpFileName), szDumpFileName);
-				PathAppend(szDumpFileName, _T("BugTrap-") _T(FILE_LONG_VERSION) _T(".dmp"));
+				PathAppend(szDumpFileName, _T("BugTrap-") VER_FILE_VERSION_STR _T(".dmp"));
 				HANDLE hFile = CreateFile(szDumpFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 				if (hFile != INVALID_HANDLE_VALUE)
 				{
