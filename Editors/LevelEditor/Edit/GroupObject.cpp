@@ -6,6 +6,7 @@
 #include "ESceneCustomMTools.h"
 //----------------------------------------------------
 //----------------------------------------------------
+#define GROUPOBJ_CURRENT_VERSION_SOC 0x0011
 #define GROUPOBJ_CURRENT_VERSION 0x0012
 //----------------------------------------------------
 #define GROUPOBJ_CHUNK_VERSION 0x0000
@@ -214,20 +215,11 @@ bool CGroupObject::LoadStream(IReader &F)
         F.r_chunk(GROUPOBJ_CHUNK_FLAGS, &tmp_flags);
 
     // objects
-    if (tmp_flags.test(1 << 0))
-    { // old format, opened group
-        ELog.DlgMsg(mtError, "old format, opened group");
+    if (tmp_flags.test(1 << 0)) // opened flag, old group format
+    { 
+        ELog.DlgMsg(mtError, "Warning! Group has old format. Objects from group will be loaded ungrouped.");
         return false;
-        /*
-                R_ASSERT(F.find_chunk(GROUPOBJ_CHUNK_OPEN_OBJECT_LIST));
-                u32 cnt 	= F.r_u32();
-                for (u32 k=0; k<cnt; ++k)
-                {
-                    m_ObjectsInGroup.resize	(m_ObjectsInGroup.size()+1);
-                    F.r_stringZ				(m_ObjectsInGroup.back().ObjectName);
-                }
-        */
-    }
+	}
     else
     {
         Scene->ReadObjectsStream(F, GROUPOBJ_CHUNK_OBJECT_LIST, EScene::TAppendObject(this, &CGroupObject::AppendObjectLoadCB), 0);
@@ -259,8 +251,21 @@ void CGroupObject::SaveStream(IWriter &F)
     CCustomObject::SaveStream(F);
 
     F.open_chunk(GROUPOBJ_CHUNK_VERSION);
-    F.w_u16(GROUPOBJ_CURRENT_VERSION);
-    F.close_chunk();
+
+    if (Core.SocSdk)
+    {
+        F.w_u16(GROUPOBJ_CURRENT_VERSION_SOC);
+        F.close_chunk();
+
+        Flags32 flags;
+        flags.zero();
+        F.w_chunk(GROUPOBJ_CHUNK_FLAGS, &flags, sizeof(flags));
+    }
+    else
+    {
+        F.w_u16(GROUPOBJ_CURRENT_VERSION);
+        F.close_chunk();
+    }    
 
     {
         ObjectList grp_lst;
