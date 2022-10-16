@@ -1,10 +1,8 @@
 #include "stdafx.h"
-//#include "..\BearBundle\BearCore\BearCore.hpp"
 #pragma hdrstop
 
 #include "xrdebug.h"
 #include "os_clipboard.h"
-
 #include <sal.h>
 #include "DxErr.h"
 
@@ -15,6 +13,8 @@
 #pragma warning(pop)
 
 extern bool shared_str_initialized;
+
+//#define SEND_ERROR_REPORTS
 
 #ifdef __BORLANDC__
 #include "d3d9.h"
@@ -374,6 +374,13 @@ void CALLBACK PreErrorHandler(INT_PTR)
 void SetupExceptionHandler(const bool &dedicated)
 {
 	BT_InstallSehFilter();
+
+#ifdef SEND_ERROR_REPORTS
+	BT_SetSupportServer("192.162.247.202", 9999);
+	// Force BugTrap to submit reports to support server without gui
+	BT_SetActivityType(BTA_SENDREPORT);
+#else // SEND_ERROR_REPORTS
+
 #if 1 // ndef USE_OWN_ERROR_MESSAGE_WINDOW
 	if (!dedicated && !strstr(GetCommandLine(), "-silent_error_mode"))
 		BT_SetActivityType(BTA_SHOWUI);
@@ -382,6 +389,8 @@ void SetupExceptionHandler(const bool &dedicated)
 #else  // USE_OWN_ERROR_MESSAGE_WINDOW
 	BT_SetActivityType(BTA_SAVEREPORT);
 #endif // USE_OWN_ERROR_MESSAGE_WINDOW
+
+#endif // SEND_ERROR_REPORTS
 
 	BT_SetDialogMessage(
 		BTDM_INTRO2,
@@ -392,7 +401,7 @@ please Submit Bug or save report and email it manually (button More...).\
 \r\nMany thanks in advance and sorry for the inconvenience.");
 
 	BT_SetPreErrHandler(PreErrorHandler, 0);
-	BT_SetAppName("XRay Engine");
+	BT_SetAppName("XRay Engine SDK");
 	BT_SetReportFormat(BTRF_TEXT);
 	BT_SetFlags(/**/ BTF_DETAILEDMODE | /**BTF_EDIETMAIL | /**/ BTF_ATTACHREPORT /**| BTF_LISTPROCESSES /**| BTF_SHOWADVANCEDUI /**| BTF_SCREENCAPTURE/**/);
 
