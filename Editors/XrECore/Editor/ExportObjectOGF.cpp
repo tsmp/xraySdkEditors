@@ -13,6 +13,8 @@
 #include "ui_main.h"
 #endif
 
+//#define OPTIMIZE_OGF 1
+
 CObjectOGFCollectorPacked::CObjectOGFCollectorPacked(const Fbox &bb, int apx_vertices, int apx_faces)
 {
     // Params
@@ -27,18 +29,21 @@ CObjectOGFCollectorPacked::CObjectOGFCollectorPacked(const Fbox &bb, int apx_ver
     m_Verts.reserve(apx_vertices);
     m_Faces.reserve(apx_faces);
 
+#ifdef OPTIMIZE_OGF
     int _size = (clpOGFMX + 1) * (clpOGFMY + 1) * (clpOGFMZ + 1);
     int _average = (apx_vertices / _size) / 2;
     for (int ix = 0; ix < clpOGFMX + 1; ++ix)
         for (int iy = 0; iy < clpOGFMY + 1; ++iy)
             for (int iz = 0; iz < clpOGFMZ + 1; ++iz)
                 m_VM[ix][iy][iz].reserve(_average);
+#endif
 }
 
 u16 CObjectOGFCollectorPacked::VPack(SOGFVert &V)
 {
     u32 P = 0xffffffff;
 
+#ifdef OPTIMIZE_OGF
     u32 ix, iy, iz;
     ix = iFloor(float(V.P.x - m_VMmin.x) / m_VMscale.x * clpOGFMX);
     iy = iFloor(float(V.P.y - m_VMmin.y) / m_VMscale.y * clpOGFMY);
@@ -95,6 +100,14 @@ u16 CObjectOGFCollectorPacked::VPack(SOGFVert &V)
         if ((ixE != ix) && (iyE != iy) && (izE != iz))
             m_VM[ixE][iyE][izE].push_back(P);
     }
+#else
+    P = m_Verts.size();
+    if (P >= 0xFFFF)
+        return 0xffff;
+
+    m_Verts.push_back(V);
+#endif
+
     VERIFY(P < u16(-1));
     return (u16)P;
 }
@@ -194,6 +207,10 @@ void CExportObjectOGF::SSplit::Save(IWriter &F, int &chunk_id)
     }
 }
 
+#ifndef OPTIMIZE_OGF
+void CObjectOGFCollectorPacked::MakeProgressive() {}
+#else
+
 void CObjectOGFCollectorPacked::MakeProgressive()
 {
     VIPM_Init();
@@ -236,6 +253,7 @@ void CObjectOGFCollectorPacked::MakeProgressive()
     // cleanup
     VIPM_Destroy();
 }
+#endif
 
 void CObjectOGFCollectorPacked::OptimizeTextureCoordinates()
 {
