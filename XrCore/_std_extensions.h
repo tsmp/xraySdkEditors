@@ -184,7 +184,13 @@ IC u32 xr_strlen(const char *S);
 // return pointer to ".ext"
 IC char *strext(const char *S)
 {
-	return (char *)strrchr(S, '.');
+	char *ptr = (char*)strrchr(S, '.');
+
+	// TSMP: handle case when folder name contains dot (example: C:\sdk 0.8\gamedata\textures\det\det_krapiva)
+	if (ptr && strchr(ptr, '\\'))
+		return nullptr;
+
+	return ptr;
 }
 
 IC u32 xr_strlen(const char *S)
