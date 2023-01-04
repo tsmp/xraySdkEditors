@@ -592,10 +592,11 @@ void UIPropertiesForm::DrawItem(const char *name, PropItem *node)
 		GameTypeValue *V = dynamic_cast<GameTypeValue *>(node->GetFrontValue());
 		R_ASSERT(V);
 		ImGui::Text(node->GetDrawText().c_str());
-		m_EditGameTypeChooser = V->GetValue();
-		node->BeforeEdit<GameTypeValue, GameTypeChooser>(m_EditGameTypeChooser);
+
 		if (ImGui::OpenPopupOnItemClick("EditGameType", 0))
 		{
+			m_EditGameTypeChooser = V->GetValue();
+			node->BeforeEdit<GameTypeValue, GameTypeChooser>(m_EditGameTypeChooser);
 			m_EditGameTypeValue = node;
 		}
 		DrawEditGameType();
