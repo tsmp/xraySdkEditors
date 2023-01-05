@@ -1,8 +1,5 @@
-//---------------------------------------------------------------------------
-#ifndef ESceneSpawnToolsH
-#define ESceneSpawnToolsH
+#pragma once
 
-#include "ESceneCustomOTools.h"
 class CEditableObject;
 
 class ESceneSpawnTool : public ESceneCustomOTool
@@ -49,6 +46,7 @@ public:
         inherited::Clear(bSpecific);
         m_Flags.zero();
     }
+
     // IO
     virtual bool IsNeedSave() { return true; }
     virtual bool LoadStream(IReader &);
@@ -60,17 +58,12 @@ public:
     virtual void SaveSelection(IWriter &);
 
     virtual int MultiRenameObjects();
-    /*
-        virtual void		GetStaticDesc			(int& v_cnt, int& f_cnt, bool b_selected_only);
-        virtual bool		ExportStatic			(SceneBuilder* B, bool b_selected_only);
-    */
+
     virtual CCustomObject *CreateObject(LPVOID data, LPCSTR name);
     CEditableObject *get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, const GameTypeChooser &_GameType);
 };
-//---------------------------------------------------------------------------
+
 // refs
 class ISE_Abstract;
 
 #include "..\..\XrSE_Factory\xrSE_Factory_import_export.h"
-//---------------------------------------------------------------------------
-#endif

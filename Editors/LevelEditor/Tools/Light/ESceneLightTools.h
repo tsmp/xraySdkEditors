@@ -1,8 +1,4 @@
-#ifndef ESceneLightToolsH
-#define ESceneLightToolsH
-
-#include "ESceneCustomOTools.H"
-#include "xr_efflensflare.h"
+#pragma once
 
 class CEditFlare : public CLensFlare
 {
@@ -96,4 +92,3 @@ public:
 private:
     virtual void OnDrawUI();
 };
-#endif // ESceneCustomOToolsH

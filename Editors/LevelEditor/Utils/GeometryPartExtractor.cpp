@@ -1,18 +1,11 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "GeometryPartExtractor.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Editor/UI_Main.h"
-#include "UI_LevelTools.h"
-
-//------------------------------------------------------------------------------
 // Parts
-//------------------------------------------------------------------------------
 void SBPart::append_face(SBFace *F)
 {
     m_Faces.push_back(F);
 }
+
 void SBPart::use_face(SBFace *F, u32 &cnt, u32 bone_id, float &area)
 {
     VERIFY(F->bone_id == -1);
@@ -21,6 +14,7 @@ void SBPart::use_face(SBFace *F, u32 &cnt, u32 bone_id, float &area)
     area += F->CalcArea();
     cnt++;
 }
+
 void SBPart::recurse_fragment(SBFace *F, u32 &cnt, u32 bone_id, u32 max_faces, float &area)
 {
     if (F)
@@ -49,6 +43,7 @@ void SBPart::recurse_fragment(SBFace *F, u32 &cnt, u32 bone_id, u32 max_faces, f
         }
     }
 }
+
 bool SBPart::prepare(SBAdjVec &adjs, u32 bone_face_min)
 {
     m_bValid = true;
@@ -95,7 +90,7 @@ bool SBPart::prepare(SBAdjVec &adjs, u32 bone_face_min)
     Fmatrix M;
     M.set(m_OBB.m_rotate.i, m_OBB.m_rotate.j, m_OBB.m_rotate.k, m_OBB.m_translate);
     m_RefOffset.set(m_OBB.m_translate);
-    M.getXYZ(m_RefRotate); // �� i ������ ��� � ������ ���
+    M.getXYZ(m_RefRotate); // не i потому что в движке так
     M.invert();
 
     // transform vertices & calculate bounding box
@@ -174,8 +169,8 @@ bool SBPart::prepare(SBAdjVec &adjs, u32 bone_face_min)
             }
             else
             {
-                // ���� ������ �������� ��������������� (�.�. �� ������ �������� ���� ���� ����) - ���������
-                //  ��� ��������������� ����� � 0-����� (����� ������������� (mike - L03_agroprom))
+                // если проход оказался безрезультатным (т.е. не смогли добавить хоть один фейс) - добавляем 
+                // все неприаттаченные фейсы к 0-кости (иначе зацикливается (mike - L03_agroprom))
                 for (SBFaceVecIt f_it = m_Faces.begin(); f_it != m_Faces.end(); f_it++)
                 {
                     SBFace *F = *f_it;
@@ -242,6 +237,7 @@ bool SBPart::prepare(SBAdjVec &adjs, u32 bone_face_min)
     }
     return m_bValid;
 }
+
 bool SBPart::Export(IWriter &F, u8 infl)
 {
     VERIFY(!m_Bones.empty());
@@ -388,7 +384,7 @@ bool SBPart::Export(IWriter &F, u8 infl)
         Fvector rot = {0, 0, 0};
         F.w_fvector3(rot);
         F.w_fvector3(bone.offset);
-        F.w_float(bone.area);                // mass (��� ����� �������� �������)
+        F.w_float(bone.area); // mass (для Кости посчитал площадь)
         F.w_fvector3(shape.box.m_translate); // center of mass
     }
     F.close_chunk();
@@ -396,9 +392,7 @@ bool SBPart::Export(IWriter &F, u8 infl)
     return bRes;
 }
 
-//------------------------------------------------------------------------------
 // Extractor
-//------------------------------------------------------------------------------
 IC void recurse_tri(SBPart *P, SBFaceVec &faces, SBAdjVec &adjs, SBFace *F)
 {
     if (F->marked)
@@ -415,7 +409,7 @@ IC void recurse_tri(SBPart *P, SBFaceVec &faces, SBAdjVec &adjs, SBFace *F)
             recurse_tri(P, faces, adjs, *pl_it);
     }
 }
-//----------------------------------------------------
+
 void CGeomPartExtractor::AppendFace(CSurface *surf, const Fvector *v, const Fvector *n, const Fvector2 *uvs[3])
 {
     SBFace *F = xr_new<SBFace>(surf, uvs);
@@ -428,10 +422,12 @@ void CGeomPartExtractor::AppendFace(CSurface *surf, const Fvector *v, const Fvec
     }
     m_Faces.push_back(F);
 }
+
 CGeomPartExtractor::CGeomPartExtractor()
 {
     m_Verts = 0;
 }
+
 void CGeomPartExtractor::Initialize(const Fbox &bb, float eps, u32 per_bone_face_count_min)
 {
     VERIFY(0 == m_Verts);
@@ -439,6 +435,7 @@ void CGeomPartExtractor::Initialize(const Fbox &bb, float eps, u32 per_bone_face
     m_PerBoneFaceCountMin = per_bone_face_count_min;
     VERIFY(m_PerBoneFaceCountMin > 0);
 }
+
 void CGeomPartExtractor::Clear()
 {
     xr_delete(m_Verts);
@@ -450,6 +447,7 @@ void CGeomPartExtractor::Clear()
     m_Parts.clear();
     m_Adjs.clear();
 }
+
 BOOL CGeomPartExtractor::Process()
 {
     // make adjacement

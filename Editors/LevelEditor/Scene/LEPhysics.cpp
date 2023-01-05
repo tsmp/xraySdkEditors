@@ -1,18 +1,6 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "lephysics.h"
-#include "scene.h"
-
-#include "../../xrphysics/iphworld.h"
-#include "../../xrcdb/xr_area.h"
-
-//#include "../XrECore/Editor/EditObject.h"
-
-#include "sceneobject.h"
-#include "ui_leveltools.h"
 #include "mesh_data.h"
-#include "spawnpoint.h"
+#include "../../xrphysics/iphworld.h"
 
 CScenePhyscs g_scene_physics;
 

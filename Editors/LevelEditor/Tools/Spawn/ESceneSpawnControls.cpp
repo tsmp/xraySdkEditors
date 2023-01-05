@@ -1,13 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneSpawnControls.h"
-#include "ui_leveltools.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "Scene.h"
-#include "SpawnPoint.h"
-#include "UI/Tools/UISpawnTool.h"
-//---------------------------------------------------------------------------
 TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolBase *parent) : TUI_CustomControl(st, act, parent)
 {
 }

@@ -1,8 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneWayTools.h"
-#include "WayPoint.h"
 
 CCustomObject *ESceneWayTool::CreateObject(LPVOID data, LPCSTR name)
 {
@@ -10,4 +6,3 @@ CCustomObject *ESceneWayTool::CreateObject(LPVOID data, LPCSTR name)
     O->FParentTools = this;
     return O;
 }
-//----------------------------------------------------

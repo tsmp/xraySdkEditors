@@ -1,14 +1,8 @@
-//---------------------------------------------------------------------------
-
-#ifndef ESceneWallmarkControlsH
-#define ESceneWallmarkControlsH
-
-#include "ESceneControlsCustom.h"
+#pragma once
 
 // refs
 class ESceneWallmarkTools;
 
-//---------------------------------------------------------------------------
 class TUI_ControlWallmarkAdd : public TUI_CustomControl
 {
 	u32 wm_cnt;
@@ -19,7 +13,6 @@ public:
 	virtual bool End(TShiftState _Shift);
 	virtual void Move(TShiftState _Shift);
 };
-//---------------------------------------------------------------------------
 
 class TUI_ControlWallmarkMove : public TUI_CustomControl
 {
@@ -31,6 +24,3 @@ public:
 	virtual bool End(TShiftState _Shift);
 	virtual void Move(TShiftState _Shift);
 };
-//---------------------------------------------------------------------------
-
-#endif

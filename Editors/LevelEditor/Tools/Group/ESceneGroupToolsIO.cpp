@@ -1,18 +1,12 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneGroupTools.h"
-#include "GroupObject.h"
-#include "SceneObject.h"
 
 // chunks
 static const u16 GROUP_TOOLS_VERSION = 0x0000;
-//----------------------------------------------------
+
 enum
 {
     CHUNK_VERSION = 0x1001ul,
 };
-//----------------------------------------------------
 
 bool ESceneGroupTool::LoadStream(IReader &F)
 {

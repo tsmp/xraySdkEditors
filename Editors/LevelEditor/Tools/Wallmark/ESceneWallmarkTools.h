@@ -1,9 +1,4 @@
-//---------------------------------------------------------------------------
-
-#ifndef ESceneWallmarkToolsH
-#define ESceneWallmarkToolsH
-
-#include "ESceneCustomMTools.H"
+#pragma once
 
 class ESceneWallmarkTool : public ESceneToolBase
 {
@@ -161,4 +156,3 @@ public:
 	BOOL AddWallmark(const Fvector &start, const Fvector &dir);
 	BOOL MoveSelectedWallmarkTo(const Fvector &start, const Fvector &dir);
 };
-#endif

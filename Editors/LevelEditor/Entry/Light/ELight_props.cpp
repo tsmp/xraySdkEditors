@@ -1,15 +1,5 @@
-//----------------------------------------------------
-// file: ELight.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ELight.h"
-#include "escenelighttools.h"
-#include "LightAnimLibrary.h"
-#include "../XrECore/Editor/ui_main.h"
-
-//----------------------------------------------------
 void CLight::OnAutoClick(ButtonValue *value, bool &bModif, bool &bSafe)
 {
     ButtonValue *B = dynamic_cast<ButtonValue *>(value);

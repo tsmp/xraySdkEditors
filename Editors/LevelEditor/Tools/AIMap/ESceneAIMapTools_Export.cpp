@@ -1,8 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneAIMapTools_Export.h"
-#include "ESceneAIMapTools.h"
 
 void ESceneAIMapTool::UnpackPosition(Fvector &Pdest, const NodePosition &Psrc, Fbox &bb, SAIParams &params)
 {

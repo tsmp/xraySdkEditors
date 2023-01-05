@@ -1,10 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneControlsCustom.h"
-#include "ui_leveltools.h"
-#include "scene.h"
-#include "ui_levelmain.h"
 
 TUI_CustomControl::TUI_CustomControl(int st, int act, ESceneToolBase *parent)
 {

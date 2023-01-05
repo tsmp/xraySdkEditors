@@ -1,16 +1,4 @@
-//------------------------------------------------------------------------------
-// file: BuilderCore.cpp
-//------------------------------------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "Builder.h"
-#include "Scene.h"
-#include "SceneObject.h"
-#include "Sector.h"
-#include "../XrECore/Editor/ui_main.h"
-//------------------------------------------------------------------------------
 
 bool SceneBuilder::PreparePath()
 {

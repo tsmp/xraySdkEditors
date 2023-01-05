@@ -1,31 +1,6 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "Builder.h"
-#include "ELight.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "Communicate.h"
-#include "Scene.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "../XrECore/Engine/Texture.h"
-#include "glow.h"
-#include "sector.h"
-#include "groupobject.h"
-#include "portal.h"
-#include "xrLevel.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_leveltools.h"
-#include "xrHemisphere.h"
-#include "ResourceManager.h"
-#include "../XrECore/Editor/ImageManager.h"
-#include "../XrECore/Engine/Image.h"
-
-#include "ESceneLightTools.h"
-
-//------------------------------------------------------------------------------
-// !!! ������������ prefix ���� ����� ��� !!! (������� � ��������)
-//------------------------------------------------------------------------------
+// !!! использовать prefix если нужно имя !!! (Связано с группами)
 
 #define LEVEL_LODS_TEX_NAME "level_lods"
 #define LEVEL_LODS_NRM_NAME "level_lods_nm"

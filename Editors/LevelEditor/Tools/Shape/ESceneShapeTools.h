@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ESceneShapeToolsH
-#define ESceneShapeToolsH
-
-#include "ESceneCustomOTools.h"
+#pragma once
 
 class ESceneShapeTool : public ESceneCustomOTool
 {
@@ -36,5 +32,3 @@ public:
     virtual void OnActivate();
     virtual void OnDeactivate();
 };
-//---------------------------------------------------------------------------
-#endif

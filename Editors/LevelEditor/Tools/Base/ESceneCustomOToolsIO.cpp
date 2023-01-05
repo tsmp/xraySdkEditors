@@ -1,19 +1,10 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneCustomOTools.h"
-#include "scene.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "builder.h"
-#include "CustomObject.h"
 
 // chunks
-//----------------------------------------------------
 static const u32 CHUNK_VERSION = 0x0001;
 static const u32 CHUNK_OBJECT_COUNT = 0x0002;
 static const u32 CHUNK_OBJECTS = 0x0003;
 static const u32 CHUNK_FLAGS = 0x0004;
-//----------------------------------------------------
 
 bool ESceneCustomOTool::OnLoadSelectionAppendObject(CCustomObject *obj)
 {
@@ -23,14 +14,12 @@ bool ESceneCustomOTool::OnLoadSelectionAppendObject(CCustomObject *obj)
     Scene->AppendObject(obj, false);
     return true;
 }
-//----------------------------------------------------
 
 bool ESceneCustomOTool::OnLoadAppendObject(CCustomObject *O)
 {
     Scene->AppendObject(O, false);
     return true;
 }
-//----------------------------------------------------
 
 bool ESceneCustomOTool::LoadSelection(IReader &F)
 {
@@ -43,12 +32,12 @@ bool ESceneCustomOTool::LoadSelection(IReader &F)
 
     return true;
 }
-//----------------------------------------------------
 
 void ESceneCustomOTool::SaveSelection(IWriter &F)
 {
     F.open_chunk(CHUNK_OBJECTS);
     int count = 0;
+
     for (ObjectIt it = m_Objects.begin(); it != m_Objects.end(); ++it)
     {
         if ((*it)->Selected() && !(*it)->IsDeleted())
@@ -58,17 +47,16 @@ void ESceneCustomOTool::SaveSelection(IWriter &F)
             F.close_chunk();
         }
     }
-    F.close_chunk();
 
+    F.close_chunk();
     F.w_chunk(CHUNK_OBJECT_COUNT, &count, sizeof(count));
 }
-//----------------------------------------------------
+
 bool ESceneCustomOTool::LoadLTX(CInifile &ini)
 {
     inherited::LoadLTX(ini);
 
     u32 count = ini.r_u32("main", "objects_count");
-
     SPBItem *pb = UI->ProgressStart(count, xr_string().sprintf("Loading %s(ltx)...", ClassDesc()).c_str());
 
     u32 i = 0;

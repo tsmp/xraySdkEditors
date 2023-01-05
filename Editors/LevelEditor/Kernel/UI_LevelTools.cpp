@@ -1,18 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "UI_LevelTools.h"
-#include "ESceneControlsCustom.h"
-#include "cursor3d.h"
-#include "Scene.h"
-#include "ui_levelmain.h"
-
-#include "UI/UIEditLibrary.h"
-
-#include "igame_persistent.h"
-#include "Builder.h"
-
-#include "lephysics.h"
 
 #define DETACH_FRAME(a) \
     if (a)              \
@@ -28,7 +14,7 @@
 CLevelTool *LTools = (CLevelTool *)Tools;
 
 TShiftState ssRBOnly;
-//---------------------------------------------------------------------------
+
 CLevelTool::CLevelTool()
 {
     fFogness = 0.9f;
@@ -36,13 +22,11 @@ CLevelTool::CLevelTool()
     m_Flags.zero();
     m_ToolForm = 0;
 }
-//---------------------------------------------------------------------------
+
 CLevelTool::~CLevelTool()
 {
 }
-//---------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------
 bool CLevelTool::OnCreate()
 {
     inherited::OnCreate();
@@ -56,25 +40,9 @@ bool CLevelTool::OnCreate()
     ExecCommand(COMMAND_CHANGE_TARGET, OBJCLASS_SCENEOBJECT);
     m_Props = xr_new<UIPropertiesForm>();
     m_Props->SetModifiedEvent(TOnCloseEvent(this, &CLevelTool::OnPropsModified));
-    /*
-      ssRBOnly << ssRight;
-      paParent 		= fraLeftBar->paFrames;   VERIFY(paParent);
 
-      // scene creating
-
-      // change target to Object
-
-      m_Props 		= TProperties::CreateForm(	"Object Inspector",
-                                                  0,
-                                                  alClient,
-                                                  TOnModifiedEvent(this,&CLevelTool::OnPropsModified),
-                                                  0,
-                                                  TOnCloseEvent(this,&CLevelTool::OnPropsClose),
-                            TProperties::plItemFolders|TProperties::plFolderStore|TProperties::plNoClearStore|TProperties::plFullExpand);
-      pObjectListForm = TfrmObjectList::CreateForm();*/
     return true;
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::OnDestroy()
 {
@@ -87,12 +55,11 @@ void CLevelTool::OnDestroy()
         pCurTool->OnDeactivate();
     Scene->OnDestroy();
 }
-//---------------------------------------------------------------------------
+
 void CLevelTool::Reset()
 {
     RealSetTarget(GetTarget(), estDefault, true);
 }
-//---------------------------------------------------------------------------
 
 bool CLevelTool::MouseStart(TShiftState Shift)
 {
@@ -107,7 +74,7 @@ bool CLevelTool::MouseStart(TShiftState Shift)
     }
     return false;
 }
-//---------------------------------------------------------------------------
+
 void CLevelTool::MouseMove(TShiftState Shift)
 {
     inherited::MouseMove(Shift);
@@ -119,7 +86,7 @@ void CLevelTool::MouseMove(TShiftState Shift)
         pCurTool->pCurControl->Move(Shift);
     }
 }
-//---------------------------------------------------------------------------
+
 bool CLevelTool::MouseEnd(TShiftState Shift)
 {
     inherited::MouseEnd(Shift);
@@ -132,21 +99,21 @@ bool CLevelTool::MouseEnd(TShiftState Shift)
     }
     return false;
 }
-//---------------------------------------------------------------------------
+
 void CLevelTool::OnObjectsUpdate()
 {
     UpdateProperties(false);
     if (pCurTool && pCurTool->pCurControl)
         return pCurTool->OnObjectsUpdate();
 }
-//---------------------------------------------------------------------------
+
 bool CLevelTool::HiddenMode()
 {
     if (pCurTool && pCurTool->pCurControl)
         return pCurTool->pCurControl->HiddenMode();
     return false;
 }
-//---------------------------------------------------------------------------
+
 bool CLevelTool::KeyDown(WORD Key, TShiftState Shift)
 {
     if (pCurTool && pCurTool->pCurControl)
@@ -154,7 +121,7 @@ bool CLevelTool::KeyDown(WORD Key, TShiftState Shift)
 
     return false;
 }
-//---------------------------------------------------------------------------
+
 bool CLevelTool::KeyUp(WORD Key, TShiftState Shift)
 {
     if (pCurTool && pCurTool->pCurControl)
@@ -162,7 +129,7 @@ bool CLevelTool::KeyUp(WORD Key, TShiftState Shift)
 
     return false;
 }
-//---------------------------------------------------------------------------
+
 bool CLevelTool::KeyPress(WORD Key, TShiftState Shift)
 {
     if (pCurTool && pCurTool->pCurControl)
@@ -170,7 +137,6 @@ bool CLevelTool::KeyPress(WORD Key, TShiftState Shift)
 
     return false;
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::RealSetAction(ETAction act)
 {
@@ -193,7 +159,6 @@ void CLevelTool::SetAction(ETAction act)
     else
         RealSetAction(act);
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::RealSetTarget(ObjClassID tgt, int sub_tgt, bool bForced)
 {
@@ -217,19 +182,18 @@ void CLevelTool::RealSetTarget(ObjClassID tgt, int sub_tgt, bool bForced)
         if (pCurTool->IsEditable())
             ATTACH_FRAME(pCurTool->pForm, m_ToolForm);
     }
+
     UI->RedrawScene();
-    // fraLeftBar->ChangeTarget(tgt);
-    // fraLeftBar->UpdateSnapList();
     ExecCommand(COMMAND_UPDATE_TOOLBAR);
     m_Flags.set(flChangeTarget, FALSE);
 }
-//---------------------------------------------------------------------------
+
 void CLevelTool::ResetSubTarget()
 {
     VERIFY(pCurTool);
     pCurTool->ResetSubTarget();
 }
-//---------------------------------------------------------------------------
+
 void CLevelTool::SetTarget(ObjClassID tgt, int sub_tgt)
 {
     // если мышь захвачена - изменим target после того как она освободится
@@ -250,19 +214,16 @@ void CLevelTool::SetTarget(ObjClassID tgt, int sub_tgt)
     else
         RealSetTarget(tgt, sub_tgt, false);
 }
-//---------------------------------------------------------------------------
 
 ObjClassID CLevelTool::CurrentClassID()
 {
     return GetTarget();
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::OnShowHint(AStringVec &ss)
 {
     Scene->OnShowHint(ss);
 }
-//---------------------------------------------------------------------------
 
 bool CLevelTool::Pick(TShiftState Shift)
 {
@@ -272,39 +233,24 @@ bool CLevelTool::Pick(TShiftState Shift)
         UI->m_StartCp = UI->m_CurrentCp;
         EDevice.m_Camera.MouseRayFromPoint(UI->m_CurrentRStart, UI->m_CurrentRDir, UI->m_CurrentCp);
         SRayPickInfo pinf;
-        // TfrmEditLibrary::RayPick(UI->m_CurrentRStart,UI->m_CurrentRDir,&pinf);
         return true;
     }
     return false;
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::RefreshProperties()
 {
-    // m_Props->RefreshForm();
 }
 
 void CLevelTool::ShowProperties(LPCSTR focus_to_item)
 {
     RealUpdateProperties();
+
     if (MainForm)
         MainForm->GetPropertiesFrom()->Open();
 
-    /*
-    if(focus_to_item)
-        m_Props->SelectFolder	(focus_to_item);
-    else
-    {
-        if(pCurTool && pCurTool->ClassID!=OBJCLASS_DUMMY)
-        {
-            LPCSTR cn = pCurTool->ClassDesc();
-            m_Props->SelectFolder	(cn);
-        }
-    }
-    */
     UI->RedrawScene();
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::RealUpdateProperties()
 {
@@ -324,34 +270,21 @@ void CLevelTool::RealUpdateProperties()
     }
     m_Flags.set(flUpdateProperties, FALSE);
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::OnPropsClose()
 {
-    /*if (m_Props->IsModified()) Scene->UndoSave();*/
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::OnPropsModified()
 {
     Scene->Modified();
-    //	Scene->UndoSave();
     UI->RedrawScene();
 }
-//---------------------------------------------------------------------------
 
 bool CLevelTool::IfModified()
 {
-    /*  EEditorState est 		= UI->GetEState();
-      switch(est){
-      case esEditLightAnim: 	return TfrmEditLightAnim::FinalClose();
-      case esEditLibrary: 	return TfrmEditLibrary::FinalClose();
-      case esEditScene:		return Scene->IfModified();
-      default: THROW;
-      }*/
     return false;
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::ZoomObject(BOOL bSelectedOnly)
 {
@@ -367,26 +300,13 @@ void CLevelTool::ZoomObject(BOOL bSelectedOnly)
         }
     }
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::GetCurrentFog(u32 &fog_color, float &s_fog, float &e_fog)
 {
-    /*
-        if (psDeviceFlags.is(rsEnvironment)&&psDeviceFlags.is(rsFog)){
-            s_fog				= g_pGamePersistent->Environment().CurrentEnv->fog_near;
-            e_fog				= g_pGamePersistent->Environment().CurrentEnv->fog_far;
-            Fvector& f_clr		= g_pGamePersistent->Environment().CurrentEnv->fog_color;
-            fog_color 			= color_rgba_f(f_clr.x,f_clr.y,f_clr.z,1.f);
-        }else{
-    */
     s_fog = psDeviceFlags.is(rsFog) ? (1.0f - fFogness) * 0.85f * UI->ZFar() : 0.99f * UI->ZFar();
     e_fog = psDeviceFlags.is(rsFog) ? 0.91f * UI->ZFar() : UI->ZFar();
     fog_color = dwFogColor;
-    /*
-        }
-    */
 }
-//---------------------------------------------------------------------------
 
 LPCSTR CLevelTool::GetInfo()
 {
@@ -394,7 +314,6 @@ LPCSTR CLevelTool::GetInfo()
     int cnt = Scene->SelectionCount(true, CurrentClassID());
     return sel.sprintf(" Sel: %d", cnt).c_str();
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::OnFrame()
 {
@@ -415,10 +334,8 @@ void CLevelTool::OnFrame()
             RealUpdateProperties();
         if (m_Flags.is(flUpdateObjectList))
             RealUpdateObjectList();
-        // TfrmEditLightAnim::OnIdle();
     }
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::RenderEnvironment()
 {
@@ -430,8 +347,6 @@ void CLevelTool::RenderEnvironment()
     case esEditScene:
         if (psDeviceFlags.is(rsEnvironment))
         {
-            //.    		g_pGamePersistent->Environment().RenderSky	();
-            //.    		g_pGamePersistent->Environment().RenderClouds	();
         }
     }
 }
@@ -463,28 +378,21 @@ void CLevelTool::Render()
 
     inherited::Render();
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::ShowObjectList()
 {
-    // if (pObjectListForm) pObjectListForm->ShowObjectList();
 }
-//---------------------------------------------------------------------------
 
 void CLevelTool::RealUpdateObjectList()
 {
-    // if (pObjectListForm) pObjectListForm->UpdateObjectList();
     m_Flags.set(flUpdateObjectList, FALSE);
 }
-//---------------------------------------------------------------------------
 
 bool CLevelTool::IsModified()
 {
     return Scene->IsUnsaved();
 }
-//---------------------------------------------------------------------------
 
-#include "../XrECore/Editor/EditMesh.h"
 bool CLevelTool::RayPick(const Fvector &start, const Fvector &dir, float &dist, Fvector *pt, Fvector *n)
 {
     if (Scene->ObjCount() && (UI->GetEState() == esEditScene))

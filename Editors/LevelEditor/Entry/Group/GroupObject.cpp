@@ -1,14 +1,8 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "GroupObject.h"
-#include "Scene.h"
-#include "ESceneCustomMTools.h"
-//----------------------------------------------------
-//----------------------------------------------------
 #define GROUPOBJ_CURRENT_VERSION_SOC 0x0011
 #define GROUPOBJ_CURRENT_VERSION 0x0012
-//----------------------------------------------------
+
 #define GROUPOBJ_CHUNK_VERSION 0x0000
 #define GROUPOBJ_CHUNK_OBJECT_LIST 0x0001
 #define GROUPOBJ_CHUNK_FLAGS 0x0003
@@ -307,8 +301,6 @@ bool CGroupObject::SetReference(LPCSTR ref_name)
 
     return bres;
 }
-#include "../XrECore/Editor/ui_main.h"
-#include "UI_LevelMain.h"
 
 bool CGroupObject::UpdateReference(bool bForceReload)
 {

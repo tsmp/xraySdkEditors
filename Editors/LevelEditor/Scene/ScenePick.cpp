@@ -1,11 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "Scene.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "SceneObject.h"
-#include "../XrETools/ETools.h"
-//------------------------------------------------------------------------------
 
 int EScene::FrustumPick(const CFrustum &frustum, ObjClassID classfilter, ObjectList &ol)
 {

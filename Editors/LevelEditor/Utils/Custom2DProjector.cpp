@@ -1,16 +1,6 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "Custom2DProjector.h"
-#include "../XrECore/Editor/ImageManager.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Editor/EditMesh.h"
-
-//------------------------------------------------------------------------------
 // SBase
-//------------------------------------------------------------------------------
 #define MAX_BUF_SIZE 0xFFFF
 
 CCustom2DProjector::CCustom2DProjector()

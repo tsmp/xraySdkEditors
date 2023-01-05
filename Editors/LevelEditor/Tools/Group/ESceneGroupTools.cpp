@@ -1,13 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneGroupTools.h"
-#include "ESceneGroupControls.h"
-#include "ui_leveltools.h"
-#include "Scene.h"
-#include "GroupObject.h"
-#include "../XrECore/Editor/EThumbnail.h"
-#include "UI/Tools/UIGroupTool.h"
 
 void ESceneGroupTool::CreateControls()
 {
@@ -17,13 +8,11 @@ void ESceneGroupTool::CreateControls()
     pForm = xr_new<UIGroupTool>();
     ((UIGroupTool *)pForm)->ParentTools = this;
 }
-//----------------------------------------------------
 
 void ESceneGroupTool::RemoveControls()
 {
     inherited::RemoveControls();
 }
-//----------------------------------------------------
 
 void ESceneGroupTool::UngroupObjects(bool bUndo)
 {

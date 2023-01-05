@@ -1,8 +1,5 @@
 #include "stdafx.h"
-#include "UIEditLibrary.h"
-#include "..\..\XrECore\Editor\Library.h"
 #include "../../XrEUI/imgui_internal.h"
-#include "SceneObject.h"
 
 UIEditLibrary *UIEditLibrary::Form = nullptr;
 

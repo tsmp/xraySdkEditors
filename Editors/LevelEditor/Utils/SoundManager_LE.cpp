@@ -1,12 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "SoundManager_LE.h"
-#include "Scene.h"
-#include "ESound_Source.h"
-#include "ESound_Environment.h"
-#include "du_box.h"
-#include "xrLevel.h"
 
 CLevelSoundManager *LSndLib = (CLevelSoundManager *)SndLib;
 

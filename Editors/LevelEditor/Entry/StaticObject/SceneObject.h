@@ -1,10 +1,4 @@
-//----------------------------------------------------
-#ifndef SceneObjectH
-#define SceneObjectH
-
-#include "../XrECore/Editor/EditObject.h"
-#include "customobject.h"
-//----------------------------------------------------
+#pragma once
 
 class CSceneObject : public CCustomObject
 {
@@ -123,5 +117,3 @@ public:
 
 	void ClearSurface();
 };
-//----------------------------------------------------
-#endif /*_INCDEF_EditObject_H_*/

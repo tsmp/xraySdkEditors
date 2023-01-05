@@ -1,17 +1,8 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneAIMapTools.h"
-#include "xrLevel.h"
-#include "Scene.h"
-#include "ui_levelmain.h"
-#include "ui_leveltools.h"
-#include "ESceneAIMapControls.h"
-#include "..\..\XrCore\xrPool.h"
 
 // chunks
 #define AIMAP_VERSION 0x0002
-//----------------------------------------------------
+
 #define AIMAP_CHUNK_VERSION 0x0001
 #define AIMAP_CHUNK_FLAGS 0x0002
 #define AIMAP_CHUNK_BOX 0x0003

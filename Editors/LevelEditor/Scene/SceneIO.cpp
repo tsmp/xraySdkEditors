@@ -1,24 +1,7 @@
-//----------------------------------------------------
-// file: Scene.cpp
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "scene.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_leveltools.h"
-#include "CustomObject.h"
-#include "ESceneObjectTools.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/ExportObjectOGF.h"
-#include "Builder.h"
-#include "SpawnPoint.h"
-// file: SceneChunks.h
 #define CURRENT_FILE_VERSION 0x00000005
-
 #define CURRENT_LEVELOP_VERSION 0x0000000C
-// 0x00000008
 
 #define CURRENT_LEVELOP_BP_VERSION 0x00000009
 #define CURRENT_ENV_VERSION 0x00000007

@@ -1,14 +1,4 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "LevelPreferences.h"
-#include "ESceneCustomMTools.h"
-#include "scene.h"
-#include "ui_levelmain.h"
-#include "ui_leveltools.h"
-#include "UI\UIObjectList.h"
-//---------------------------------------------------------------------------
 
 void CLevelPreferences::Load(CInifile *I)
 {
@@ -21,6 +11,7 @@ void CLevelPreferences::Load(CInifile *I)
     }
     SceneToolsMapPairIt _I = Scene->FirstTool();
     SceneToolsMapPairIt _E = Scene->LastTool();
+
     for (; _I != _E; _I++)
         if (_I->second && (_I->first != OBJCLASS_DUMMY))
             _I->second->m_EditFlags.flags = R_U32_SAFE("targets", _I->second->ClassName(), _I->second->m_EditFlags.flags);

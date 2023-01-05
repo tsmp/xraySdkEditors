@@ -1,23 +1,4 @@
-//----------------------------------------------------
-// file: Scene.h
-//----------------------------------------------------
-#ifndef SceneH
-#define SceneH
-
-#include "SceneGraph.h"
-#include "Communicate.h"
-#include "pure.h"
-
-#include "ESceneCustomMTools.h"
-#include "ESceneCustomOTools.h"
-#include "xrLevel.h"
-#include "../XrECore/Editor/pick_defs.h"
-#include "../XrCore/doug_lea_allocator.h"
-#include "../XrCore/FixedMap.h"
-// refs
-#ifndef _DEBUG
-#define USE_ARENA_ALLOCATOR
-#endif
+#pragma once
 
 #if 1
 extern doug_lea_allocator g_render_lua_allocator;
@@ -89,7 +70,6 @@ typedef doug_lea_allocator_wrapper render_allocator;
 struct FSChunkDef;
 class PropValue;
 struct SPBItem;
-//----------------------------------------------------
 
 #pragma pack(push, 1)
 struct UndoItem
@@ -393,8 +373,4 @@ public:
 	bool GetSubstObjectName(const xr_string &from, xr_string &to) const;
 };
 
-//----------------------------------------------------
 extern EScene *Scene;
-//----------------------------------------------------
-
-#endif /*_INCDEF_Scene_H_*/

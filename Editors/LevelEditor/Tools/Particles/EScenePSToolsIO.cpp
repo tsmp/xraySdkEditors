@@ -1,16 +1,13 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "EScenePSTools.h"
 
 // chunks
 static const u16 PS_TOOLS_VERSION = 0x0000;
-//----------------------------------------------------
+
 enum
 {
     CHUNK_VERSION = 0x1001ul,
 };
-//----------------------------------------------------
+
 bool EScenePSTool::LoadLTX(CInifile &ini)
 {
     u32 version = ini.r_u32("main", "version");
@@ -23,6 +20,7 @@ bool EScenePSTool::LoadLTX(CInifile &ini)
     inherited::LoadLTX(ini);
     return true;
 }
+
 void EScenePSTool::SaveLTX(CInifile &ini, int id)
 {
     inherited::SaveLTX(ini, id);
@@ -44,7 +42,6 @@ bool EScenePSTool::LoadStream(IReader &F)
 
     return true;
 }
-//----------------------------------------------------
 
 void EScenePSTool::SaveStream(IWriter &F)
 {
@@ -52,7 +49,6 @@ void EScenePSTool::SaveStream(IWriter &F)
 
     F.w_chunk(CHUNK_VERSION, (u16 *)&PS_TOOLS_VERSION, sizeof(PS_TOOLS_VERSION));
 }
-//----------------------------------------------------
 
 bool EScenePSTool::LoadSelection(IReader &F)
 {

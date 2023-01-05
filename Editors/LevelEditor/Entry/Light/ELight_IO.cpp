@@ -1,15 +1,7 @@
-//----------------------------------------------------
-// file: ELight.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ELight.h"
-#include "LightAnimLibrary.h"
-#include "escenelighttools.h"
 
 static const u32 LIGHT_VERSION = 0x0011;
-//----------------------------------------------------
+
 enum
 {
     LIGHT_CHUNK_VERSION = 0xB411,
@@ -24,7 +16,6 @@ enum
     LIGHT_CHUNK_LCONTROL = 0xB441,
     LIGHT_CHUNK_PARAMS = 0xB442,
 };
-//----------------------------------------------------
 
 void CLight::SFuzzyData::SaveLTX(CInifile &ini, LPCSTR sect_name)
 {

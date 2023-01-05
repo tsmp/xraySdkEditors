@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ESceneObjectToolsH
-#define ESceneObjectToolsH
-
-#include "ESceneCustomOTools.h"
+#pragma once
 
 class ESceneObjectTool : public ESceneCustomOTool
 {
@@ -25,9 +21,8 @@ protected:
     bool ExportBreakableObjects(SExportStreams *F);
     bool ExportClimableObjects(SExportStreams *F);
 
-    TProperties *m_Props;
     void OnChangeAppendRandomFlags(PropValue *prop);
-    //----------------------------------------------------
+
 public:
     Fvector m_AppendRandomMinScale;
     Fvector m_AppendRandomMaxScale;
@@ -81,5 +76,3 @@ public:
 
     virtual void HighlightTexture(LPCSTR tex_name, bool allow_ratio, u32 t_width, u32 t_height, BOOL mark);
 };
-//---------------------------------------------------------------------------
-#endif

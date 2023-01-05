@@ -1,22 +1,4 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "UI_LevelMain.h"
-
-#include "UI_LevelTools.h"
-#include "../XrECore/Editor/Library.h"
-#include "scene.h"
-#include "sceneobject.h"
-#include "Cursor3D.h"
-#include "../XrCore/xr_trims.h"
-#include "xr_input.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "builder.h"
-#include "SoundManager_LE.h"
-#include "LevelPreferences.h"
-#include "UI\UIObjectList.h"
-#include "UI\UIEditLibrary.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -355,7 +337,7 @@ CCommandVar CommandClearDebugDraw(CCommandVar p1, CCommandVar p2)
     UI->RedrawScene();
     return TRUE;
 }
-#include "SpawnPoint.h"
+
 CCommandVar CommandShowClipEditor(CCommandVar p1, CCommandVar p2)
 {
     /*	if(g_clip_maker==NULL)
@@ -1421,7 +1403,7 @@ void CLevelMain::OnDrawUI()
     }
 }
 
-#include "resource.h"
+#include "..\Resources\resource.h"
 
 HICON CLevelMain::EditorIcon()
 {

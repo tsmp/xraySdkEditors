@@ -1,16 +1,13 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneShapeTools.h"
 
 // chunks
 static const u16 SHAPE_TOOLS_VERSION = 0x0000;
-//----------------------------------------------------
+
 enum
 {
     CHUNK_VERSION = 0x1001ul,
 };
-//----------------------------------------------------
+
 bool ESceneShapeTool::LoadLTX(CInifile &ini)
 {
     u32 version = ini.r_u32("main", "version");
@@ -45,15 +42,12 @@ bool ESceneShapeTool::LoadStream(IReader &F)
 
     return true;
 }
-//----------------------------------------------------
 
 void ESceneShapeTool::SaveStream(IWriter &F)
 {
     inherited::SaveStream(F);
-
     F.w_chunk(CHUNK_VERSION, (u16 *)&SHAPE_TOOLS_VERSION, sizeof(SHAPE_TOOLS_VERSION));
 }
-//----------------------------------------------------
 
 bool ESceneShapeTool::LoadSelection(IReader &F)
 {
@@ -67,7 +61,6 @@ bool ESceneShapeTool::LoadSelection(IReader &F)
 
     return inherited::LoadSelection(F);
 }
-//----------------------------------------------------
 
 void ESceneShapeTool::SaveSelection(IWriter &F)
 {
@@ -75,4 +68,3 @@ void ESceneShapeTool::SaveSelection(IWriter &F)
 
     inherited::SaveSelection(F);
 }
-//----------------------------------------------------

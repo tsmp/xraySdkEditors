@@ -1,17 +1,5 @@
-//----------------------------------------------------
-// file: BuilderRModel.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "Builder.h"
-
-#include "Scene.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "SceneObject.h"
-#include "ESceneAIMapTools.h"
-//----------------------------------------------------
 // some types
 bool SceneBuilder::BuildHOMModel()
 {

@@ -1,12 +1,8 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneObjectTools.h"
-#include "SceneObject.h"
 
 // chunks
 static const u16 OBJECT_TOOLS_VERSION = 0x0000;
-//----------------------------------------------------
+
 enum
 {
     CHUNK_VERSION = 0x1001ul,

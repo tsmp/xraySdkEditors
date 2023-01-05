@@ -1,11 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ESound_EnvironmentH
-#define ESound_EnvironmentH
-//---------------------------------------------------------------------------
-
-#include "CustomObject.h"
-#include "EShape.h"
-//#include "xrServer_Objects_Alife_All.h"
+#pragma once
 
 class ESoundEnvironment : public CEditShape
 {
@@ -37,5 +30,3 @@ public:
 	virtual bool GetSummaryInfo(SSceneSummary *inf);
 	virtual void OnSceneUpdate();
 };
-
-#endif

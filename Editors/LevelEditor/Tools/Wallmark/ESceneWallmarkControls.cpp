@@ -1,18 +1,6 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneWallmarkControls.h"
-
-#include "ESceneWallmarkTools.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "scene.h"
-#include "ui_leveltools.h"
-#include "ui_levelmain.h"
-
-//------------------------------------------------------------------------------
 // Node Add
-//------------------------------------------------------------------------------
 TUI_ControlWallmarkAdd::TUI_ControlWallmarkAdd(int st, int act, ESceneToolBase *parent) : TUI_CustomControl(st, act, parent)
 {
 }

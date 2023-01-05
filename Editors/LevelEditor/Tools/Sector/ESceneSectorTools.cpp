@@ -1,13 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneSectorTools.h"
-#include "ESceneSectorControls.h"
-#include "ui_leveltools.h"
-#include "SceneObject.h"
-#include "GroupObject.h"
-#include "sector.h"
-#include "UI\Tools\UISectorTool.h"
 /* TODO 1 -oAlexMX -cTODO: Create tools as AI Map */
 
 void ESceneSectorTool::CreateControls()
@@ -17,15 +9,13 @@ void ESceneSectorTool::CreateControls()
     AddControl(xr_new<TUI_ControlSectorAdd>(estDefault, etaAdd, this));
     // frame
     pForm = xr_new<UISectorTool>();
-    //  pFrame 			= xr_new<TfraSector>((TComponent*)0);
 }
-//----------------------------------------------------
 
 void ESceneSectorTool::RemoveControls()
 {
     inherited::RemoveControls();
 }
-//----------------------------------------------------
+
 void ESceneSectorTool::_OnObjectRemove(CSceneObject *obj)
 {
     if (obj && !m_Objects.empty())

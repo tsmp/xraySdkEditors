@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef EScenePortalToolsH
-#define EScenePortalToolsH
-
-#include "ESceneCustomOTools.h"
+#pragma once
 
 class EScenePortalTool : public ESceneCustomOTool
 {
@@ -44,5 +40,3 @@ public:
     void RemoveSimilar();
     virtual CCustomObject *CreateObject(LPVOID data, LPCSTR name);
 };
-//---------------------------------------------------------------------------
-#endif

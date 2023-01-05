@@ -1,27 +1,7 @@
-//----------------------------------------------------
-// file: Scene.cpp
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "Scene.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "Sector.h"
-#include "SpawnPoint.h"
-#include "../XrECore/Editor/SoundManager.h"
-#include "EParticlesObject.h"
-#include "ui_leveltools.h"
-#include "../XrECore/Engine/guid_generator.h"
-
-#include "ESceneAIMapTools.h"
-#include "ESceneDOTools.h"
-#include "ESceneLightTools.h"
-#include "lephysics.h"
-//----------------------------------------------------
 EScene *Scene;
-//----------------------------------------------------
+
 st_LevelOptions::st_LevelOptions()
 {
     Reset();
@@ -540,7 +520,6 @@ xr_string EScene::LevelPath()
     return xr_string(path);
 }
 
-#include "ESceneLightTools.h"
 void EScene::SelectLightsForObject(CCustomObject *obj)
 {
     ESceneCustomOTool *t = Scene->GetOTool(OBJCLASS_LIGHT);

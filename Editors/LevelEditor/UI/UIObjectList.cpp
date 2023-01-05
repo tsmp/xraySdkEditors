@@ -1,10 +1,7 @@
 #include "stdafx.h"
-#include "UIObjectList.h"
-#include "Edit\scene.h"
-#include "Edit\ESceneCustomOTools.h"
-#include "Edit\CustomObject.h"
-#include "Edit\GroupObject.h"
+
 UIObjectList *UIObjectList::Form = nullptr;
+
 UIObjectList::UIObjectList()
 {
 	m_Mode = M_Visible;

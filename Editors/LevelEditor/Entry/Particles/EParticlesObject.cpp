@@ -1,30 +1,18 @@
-//----------------------------------------------------
-// file: EParticlesObject.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "EParticlesObject.h"
-#include "..\..\xrRender\Private\PSLibrary.h"
-#include "../XrECore/Editor/ui_main.h"
 
 #define CPSOBJECT_VERSION 0x0013
-//----------------------------------------------------
+
 #define CPSOBJECT_CHUNK_VERSION 0x0001
 #define CPSOBJECT_CHUNK_REFERENCE 0x0002
 #define CPSOBJECT_CHUNK_PARAMS 0x0003
 #define CPSOBJECT_CHUNK_GAMETYPE 0x0004
-//----------------------------------------------------
 
 #define PSOBJECT_SIZE 0.5f
-
-// using namespace PS;
 
 EParticlesObject::EParticlesObject(LPVOID data, LPCSTR name) : CCustomObject(data, name)
 {
     Construct(data);
 }
-//----------------------------------------------------
 
 void EParticlesObject::Construct(LPVOID data)
 {
@@ -32,7 +20,6 @@ void EParticlesObject::Construct(LPVOID data)
     m_Particles = 0;
     m_GameType.SetDefaults();
 }
-//----------------------------------------------------
 
 EParticlesObject::~EParticlesObject()
 {
@@ -40,7 +27,6 @@ EParticlesObject::~EParticlesObject()
     ::Render->model_Delete(model);
     m_Particles = nullptr;
 }
-//----------------------------------------------------
 
 bool EParticlesObject::GetBox(Fbox &box)
 {
@@ -53,7 +39,6 @@ bool EParticlesObject::GetBox(Fbox &box)
     box.max.z += PSOBJECT_SIZE;
     return true;
 }
-//----------------------------------------------------
 
 void EParticlesObject::OnUpdateTransform()
 {

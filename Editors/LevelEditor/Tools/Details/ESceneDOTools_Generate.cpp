@@ -1,20 +1,4 @@
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneDOTools.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Engine/Texture.h"
-#include "Scene.h"
-#include "SceneObject.h"
-#include "../XrECore/Engine/cl_intersect.h"
-#include "../XrECore/Editor/Library.h"
-#include "../XrECore/Editor/ui_main.h"
-
-#include "..\..\xrRender\Private\DetailFormat.h"
-#include "../XrECore/Editor/ImageManager.h"
-#include "../XrETools/ETools.h"
 
 static Fvector down_vec = {0.f, -1.f, 0.f};
 static Fvector left_vec = {-1.f, 0.f, 0.f};
@@ -24,9 +8,6 @@ static Fvector back_vec = {0.f, 0.f, -1.f};
 
 static CRandom DetailRandom(0x26111975);
 
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
 DetailSlot &EDetailManager::GetSlot(u32 sx, u32 sz)
 {
     VERIFY(sx < dtH.size_x);

@@ -1,21 +1,6 @@
-//----------------------------------------------------
-// file: Builder.cpp
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "Builder.h"
-#include "Scene.h"
-#include "PortalUtils.h"
-#include "ESceneDOTools.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "../XrECore/Editor/ui_toolscustom.h"
-#include "xrHemisphere.h"
-//----------------------------------------------------
 
 SceneBuilder Builder;
-//----------------------------------------------------
 
 ICF static void simple_hemi_callback(float x, float y, float z, float E, LPVOID P)
 {
@@ -290,8 +275,7 @@ BOOL SceneBuilder::MakeSOM()
 
     return error_text.empty();
 }
-//------------------------------------------------------------------------------
-#include "../XrECore/Editor/EditObject.h"
+
 void SceneBuilder::OnRender()
 {
     if (object_for_render)

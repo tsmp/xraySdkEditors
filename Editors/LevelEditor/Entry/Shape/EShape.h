@@ -1,11 +1,5 @@
-//---------------------------------------------------------------------------
+#pragma once
 
-#ifndef EShapeH
-#define EShapeH
-
-#include "ShapeData.h"
-#include "CustomObject.h"
-//---------------------------------------------------------------------------
 enum eShapeUsage
 {
 	eShapeCommon = 0,
@@ -82,5 +76,3 @@ public:
 	// events
 	virtual void OnShowHint(AStringVec &dest);
 };
-
-#endif

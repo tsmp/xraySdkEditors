@@ -1,12 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneAIMapTools.h"
-#include "scene.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_leveltools.h"
-#include "ESceneAIMapControls.h"
-#include "ui_levelmain.h"
 
 SAINode *ESceneAIMapTool::PickNode(const Fvector &start, const Fvector &dir, float &dist)
 {

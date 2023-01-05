@@ -1,52 +1,35 @@
-//----------------------------------------------------
-// file: Sector.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneSectorTools.h"
-#include "Sector.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "SceneObject.h"
-#include "Scene.h"
-#include "../XrECore/Engine/Texture.h"
-#include "../../XrECore/Engine/cl_intersect.h"
-#include "../../XrECore/Engine/cl_collector.h"
-#include "portal.h"
-#include "portalutils.h"
-#include "../../FreeMagic/MgcConvexHull3D.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "../XrECore/Editor/D3DUtils.h"
-#include "ESceneGroupTools.h"
 
 #define SECTOR_VERSION 0x0012
-//----------------------------------------------------
+
 #define SECTOR_CHUNK_VERSION 0xF010
 #define SECTOR_CHUNK_COLOR 0xF020
 #define SECTOR_CHUNK_PRIVATE 0xF025
 #define SECTOR_CHUNK_ITEMS 0xF030
 #define SECTOR_CHUNK_ONE_ITEM 0xF031
 #define SECTOR_CHUNK_MAP_IDX 0xF032
-//----------------------------------------------------
+
 CSectorItem::CSectorItem()
 {
     object = NULL;
     mesh = NULL;
 }
+
 CSectorItem::CSectorItem(CSceneObject *o, CEditableMesh *m)
 {
     object = o;
     mesh = m;
 }
+
 void CSectorItem::GetTransform(Fmatrix &parent)
 {
     object->GetFullTransformToWorld(parent);
 }
+
 bool CSectorItem::IsItem(const char *O, const char *M)
 {
     return (0 == stricmp(O, object->GetName())) && (0 == stricmp(M, mesh->Name().c_str()));
 }
-//------------------------------------------------------------------------------
 
 CSector::CSector(LPVOID data, LPCSTR name) : CCustomObject(data, name)
 {

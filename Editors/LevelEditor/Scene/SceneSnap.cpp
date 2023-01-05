@@ -1,11 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "scene.h"
-#include "ui_leveltools.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/UI_Main.h"
-//------------------------------------------------------------------------------
 
 ObjectList *EScene::GetSnapList(bool bIgnoreUse)
 {

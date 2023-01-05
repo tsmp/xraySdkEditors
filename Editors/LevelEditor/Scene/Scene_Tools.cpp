@@ -1,26 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "Scene.h"
-
-#include "ESceneDummyTools.h"
-
-#include "ESceneAIMapTools.h"
-#include "ESceneDOTools.h"
-#include "ESceneSoundSrcTools.h"
-#include "ESceneSoundEnvTools.h"
-#include "ESceneGroupTools.h"
-#include "ESceneLightTools.h"
-#include "ESceneObjectTools.h"
-#include "EScenePortalTools.h"
-#include "ESceneSectorTools.h"
-#include "ESceneGlowTools.h"
-#include "EScenePSTools.h"
-#include "ESceneShapeTools.h"
-#include "ESceneSpawnTools.h"
-#include "ESceneWayTools.h"
-#include "ESceneWallmarkTools.h"
-#include "ESceneFogVolumeTools.h"
 
 void EScene::RegisterSceneTools(ESceneToolBase *mt)
 {

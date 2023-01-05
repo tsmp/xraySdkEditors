@@ -1,9 +1,5 @@
-#ifndef EScenePortalControlsH
-#define EScenePortalControlsH
+#pragma once
 
-#include "ESceneControlsCustom.h"
-
-//---------------------------------------------------------------------------
 class TUI_ControlPortalSelect : public TUI_CustomControl
 {
 public:
@@ -12,4 +8,3 @@ public:
 	virtual bool End(TShiftState _Shift);
 	virtual void Move(TShiftState _Shift);
 };
-#endif // UI_SectorToolsH

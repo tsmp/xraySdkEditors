@@ -1,8 +1,5 @@
-#ifndef ESceneControlsCustomH
-#define ESceneControlsCustomH
+#pragma once
 
-#include "customobject.h"
-//---------------------------------------------------------------------------
 // refs
 class ESceneToolBase;
 
@@ -77,5 +74,3 @@ public:
 
     int Action() { return action; }
 };
-//---------------------------------------------------------------------------
-#endif

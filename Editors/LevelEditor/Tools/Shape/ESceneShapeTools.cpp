@@ -1,11 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneShapeTools.h"
-#include "ESceneShapeControls.h"
-#include "ui_leveltools.h"
-#include "EShape.h"
-#include "UI\Tools\UIShapeTool.h"
 
 void ESceneShapeTool::CreateControls()
 {
@@ -14,13 +7,11 @@ void ESceneShapeTool::CreateControls()
     pForm = xr_new<UIShapeTool>();
     ((UIShapeTool *)pForm)->Tool = this;
 }
-//----------------------------------------------------
 
 void ESceneShapeTool::RemoveControls()
 {
     inherited::RemoveControls();
 }
-//----------------------------------------------------
 
 CCustomObject *ESceneShapeTool::CreateObject(LPVOID data, LPCSTR name)
 {
@@ -28,8 +19,7 @@ CCustomObject *ESceneShapeTool::CreateObject(LPVOID data, LPCSTR name)
     O->FParentTools = this;
     return O;
 }
-//----------------------------------------------------
-#include "scene.h"
+
 void ESceneShapeTool::OnEditLevelBounds(bool recalc)
 {
     ObjectList::iterator it = m_Objects.begin();

@@ -1,25 +1,7 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneObjectTools.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "SceneObject.h"
-#include "scene.h"
-#include "../XrECore/Editor/ExportSkeleton.h"
-//.#include "clsid_game.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_leveltools.h"
-#include "../XrECore/Editor/GeometryCollector.h"
-
-#include "../../xrServerEntities/xrServer_Objects_Abstract.h"
-#include "ESceneSpawnTools.h"
-#include "GeometryPartExtractor.h"
-#include "ResourceManager.h"
 
 static bool s_draw_dbg = false;
 
-//----------------------------------------------------
 IC bool build_mesh(const Fmatrix &parent, CEditableMesh *mesh, CGeomPartExtractor *extractor, u32 game_mtl_mask, BOOL ignore_shader)
 {
     bool bResult = true;

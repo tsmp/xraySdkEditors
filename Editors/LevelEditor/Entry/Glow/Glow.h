@@ -1,12 +1,5 @@
-//----------------------------------------------------
-// file: Glow.h
-//----------------------------------------------------
+#pragma once
 
-#ifndef GlowH
-#define GlowH
-
-#include "../XrECore/Editor/tlsprite.h"
-#include "customobject.h"
 class CFrustum;
 
 class CGlow : public CCustomObject
@@ -79,5 +72,3 @@ public:
 
 	virtual bool GetSummaryInfo(SSceneSummary *inf);
 };
-
-#endif /*_INCDEF_Glow_H_*/

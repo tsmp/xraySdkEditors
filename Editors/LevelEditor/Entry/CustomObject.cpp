@@ -1,11 +1,5 @@
 #include "stdafx.h"
 
-#include "customobject.h"
-#include "UI_LevelMain.h"
-
-#include "motion.h"
-#include "ESceneCustomOTools.h"
-
 #define CUSTOMOBJECT_CHUNK_PARAMS 0xF900
 #define CUSTOMOBJECT_CHUNK_LOCK 0xF902
 #define CUSTOMOBJECT_CHUNK_TRANSFORM 0xF903
@@ -247,7 +241,6 @@ void CCustomObject::SaveStream(IWriter &F)
 	}
 }
 
-#include "ESceneCustomOTools.h"
 void CCustomObject::OnFrame()
 {
 	if (m_Motion)

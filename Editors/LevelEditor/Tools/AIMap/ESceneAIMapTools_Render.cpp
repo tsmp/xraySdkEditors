@@ -1,16 +1,8 @@
-//----------------------------------------------------
-// file: EParticlesObject.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneAIMapTools.h"
-#include "../../XrECore/Editor/D3DUtils.h"
-#include "SceneObject.h"
-#include "ui_leveltools.h"
 
 typedef Fvector2 t_node_tc[4];
 static const float dtc = 0.25f;
+
 static t_node_tc node_tc[16] =
     {
         {{0.f + 0 * dtc, 0.25f + 0 * dtc}, {0.25f + 0 * dtc, 0.25f + 0 * dtc}, {0.25f + 0 * dtc, 0.f + 0 * dtc}, {0.f + 0 * dtc, 0.f + 0 * dtc}},
@@ -47,8 +39,8 @@ void ESceneAIMapTool::OnDeviceDestroy()
 }
 
 BOOL ai_map_shown = TRUE;
-
 static const u32 block_size = 0x2000;
+
 void ESceneAIMapTool::OnRender(int priority, bool strictB2F)
 {
     if (m_Flags.is(flHideNodes) || !ai_map_shown)

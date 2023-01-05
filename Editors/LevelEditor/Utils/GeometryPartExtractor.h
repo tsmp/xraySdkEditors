@@ -1,9 +1,4 @@
-#ifndef GeometryPartExtractorH
-#define GeometryPartExtractorH
-
-#include "../XrECore/Editor/GeometryCollector.h"
-#include "../XrECore/Editor/ExportSkeleton.h"
-#include "Scene.h"
+#pragma once
 
 struct SBFace;
 class CSurface;
@@ -116,5 +111,3 @@ public:
     // utilities
     BOOL Process();
 };
-
-#endif // GeometryPartExtractorH

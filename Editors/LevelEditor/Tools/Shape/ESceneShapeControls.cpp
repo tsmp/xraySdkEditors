@@ -1,14 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneShapeControls.h"
-#include "ui_leveltools.h"
-#include "EShape.h"
-#include "scene.h"
-#include "../XrECore/Editor/ui_main.h"
-
-#include "UI\Tools\UIShapeTool.h"
-//---------------------------------------------------------------------------
 TUI_ControlShapeAdd::TUI_ControlShapeAdd(int st, int act, ESceneToolBase *parent) : TUI_CustomControl(st, act, parent)
 {
 }

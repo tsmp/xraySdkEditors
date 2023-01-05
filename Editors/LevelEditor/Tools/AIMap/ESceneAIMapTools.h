@@ -1,12 +1,4 @@
-//----------------------------------------------------
-// file: rpoint.h
-//----------------------------------------------------
-#ifndef ESceneAIMapToolsH
-#define ESceneAIMapToolsH
-
-#include "ESceneCustomMTools.H"
-#include "xrLevel.H"
-#include "ESceneAIMapTools_Export.H"
+#pragma once
 
 // refs
 class ESceneAIMapTool;
@@ -238,4 +230,3 @@ public:
 	void ResetNodes();
 	void SelectNodesByLink(int link);
 };
-#endif // ESceneAIMapToolsH

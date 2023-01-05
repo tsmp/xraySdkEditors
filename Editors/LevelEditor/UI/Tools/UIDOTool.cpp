@@ -1,7 +1,5 @@
 #include "stdafx.h"
-#include "UIDOTool.h"
-#include "ESceneDOTools.h"
-#include "..\UIDOShuffle.h"
+
 UIDOTool::UIDOTool()
 {
 	m_DOShuffle = false;

@@ -1,17 +1,4 @@
 #include "stdafx.h"
-#include "spawnpoint.h"
-#include "ESceneSpawnTools.h"
-#include "eshape.h"
-#include "../../xrServerEntities/xrServer_Objects_Abstract.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "SkeletonAnimated.h"
-#include "ObjectAnimator.h"
-#include "../../xrServerEntities/xrMessages.h"
-#include "scene.h"
-#include "../XrECore/Editor/D3DUtils.h"
-#include "iniStreamImpl.h"
-#include "../XrEcore/Editor/EditObject.h"
-#include "../XrETools/ETools.h"
 
 #define SPAWNPOINT_CHUNK_VERSION 0xE411
 #define SPAWNPOINT_CHUNK_POSITION 0xE412

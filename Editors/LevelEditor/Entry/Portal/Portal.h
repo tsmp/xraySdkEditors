@@ -1,7 +1,5 @@
-#ifndef PortalH
-#define PortalH
+#pragma once
 
-#include "CustomObject.h"
 // refs
 class CSector;
 
@@ -53,5 +51,3 @@ public:
 
     virtual bool GetSummaryInfo(SSceneSummary *inf);
 };
-
-#endif /*_INCDEF_Portal_H_*/

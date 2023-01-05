@@ -1,14 +1,4 @@
-//----------------------------------------------------
-// file: rpoint.h
-//----------------------------------------------------
-#ifndef EParticlesObjectH
-#define EParticlesObjectH
-
-#include "CustomObject.h"
-#include "SpawnPoint.h"
-
-#include "..\..\xrRender\Private\ParticleEffect.h"
-#include "..\..\xrRender\Private\ParticleGroup.h"
+#pragma once
 
 class EParticlesObject : public CCustomObject
 {
@@ -66,4 +56,3 @@ public:
 	virtual void FillProp(LPCSTR pref, PropItemVec &items);
 	virtual bool GetSummaryInfo(SSceneSummary *inf);
 };
-#endif

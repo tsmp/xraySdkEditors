@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#include "Edit\ESceneAIMapTools.h"
-#include "UIAIMapTool.h"
 
 UIAIMapTool::UIAIMapTool()
 {

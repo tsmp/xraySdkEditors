@@ -1,9 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneCustomMTools.h"
-#include "ESceneControlsCustom.h"
-#include "ui_leveltools.h"
 
 void ESceneToolBase::CreateDefaultControls(u32 sub_target_id)
 {

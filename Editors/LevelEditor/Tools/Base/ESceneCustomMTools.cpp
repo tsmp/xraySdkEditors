@@ -1,10 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneCustomMTools.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_levelmain.h"
-#include "scene.h"
 
 #define CHUNK_TOOLS_TAG 0x7777
 

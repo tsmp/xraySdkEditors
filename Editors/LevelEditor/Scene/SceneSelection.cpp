@@ -1,9 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "Scene.h"
-#include "ui_levelmain.h"
-//------------------------------------------------------------------------------
 
 void EScene::SelectObjects(bool flag, ObjClassID classfilter)
 {

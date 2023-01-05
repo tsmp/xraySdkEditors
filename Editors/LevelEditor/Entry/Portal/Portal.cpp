@@ -1,34 +1,17 @@
-//----------------------------------------------------
-// file: Portal.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "EScenePortalTools.h"
-#include "Portal.h"
-#include "Scene.h"
-#include "cl_intersect.h"
-#include "sector.h"
-#include "../../FreeMagic/MgcConvexHull2D.h"
-#include "../../FreeMagic/MgcAppr3DPlaneFit.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_leveltools.h"
-#include "SceneObject.h"
 
 #define PORTAL_VERSION 0x0010
-//------------------------------------------------------------------------------
+
 #define PORTAL_CHUNK_VERSION 0xFA10
 #define PORTAL_CHUNK_COLOR 0xFA20
 #define PORTAL_CHUNK_SECTOR_FRONT 0xFA30
 #define PORTAL_CHUNK_SECTOR_BACK 0xFA40
 #define PORTAL_CHUNK_VERTICES 0xFA50
-//------------------------------------------------------------------------------
 
 CPortal::CPortal(LPVOID data, LPCSTR name) : CCustomObject(data, name)
 {
     Construct(data);
 }
-//------------------------------------------------------------------------------
 
 void CPortal::Construct(LPVOID data)
 {
@@ -37,12 +20,10 @@ void CPortal::Construct(LPVOID data)
     m_SectorFront = 0;
     m_SectorBack = 0;
 }
-//------------------------------------------------------------------------------
 
 CPortal::~CPortal()
 {
 }
-//------------------------------------------------------------------------------
 
 bool CPortal::GetBox(Fbox &box)
 {
@@ -58,7 +39,6 @@ bool CPortal::GetBox(Fbox &box)
 
     return true;
 }
-//------------------------------------------------------------------------------
 
 void CPortal::Render(int priority, bool strictB2F)
 {
@@ -112,15 +92,8 @@ void CPortal::Render(int priority, bool strictB2F)
         EDevice.ResetNearer();
         DU_impl.DrawFaceNormal(m_Center, m_Normal, 1, 0xFFFFFFFF);
         DU_impl.DrawFaceNormal(m_Center, m_Normal, 1, 0x00000000);
-        /*		for (int k=0; k<1000; k++){
-                    Fvector dir;
-                    dir.random_dir(m_Normal,deg2rad(45.f));
-                    DU.DrawFaceNormal	(m_Center,dir,1,0x00FF0000);
-                }
-        */
     }
 }
-//------------------------------------------------------------------------------
 
 void CPortal::Move(Fvector &amount)
 {
@@ -132,7 +105,6 @@ void CPortal::Move(Fvector &amount)
         v_it->add(amount);
     m_Center.add(amount);
 }
-//------------------------------------------------------------------------------
 
 bool CPortal::FrustumPick(const CFrustum &frustum)
 {
@@ -140,7 +112,6 @@ bool CPortal::FrustumPick(const CFrustum &frustum)
         return true;
     return false;
 }
-//------------------------------------------------------------------------------
 
 bool CPortal::RayPick(float &distance, const Fvector &start, const Fvector &direction, SRayPickInfo *pinf)
 {
@@ -151,11 +122,13 @@ bool CPortal::RayPick(float &distance, const Fvector &start, const Fvector &dire
     EScenePortalTool *lt = dynamic_cast<EScenePortalTool *>(FParentTools);
     VERIFY(lt);
     FvectorVec &src = (lt->m_Flags.is(EScenePortalTool::flDrawSimpleModel)) ? m_SimplifyVertices : m_Vertices;
+
     for (FvectorIt it = src.begin(); it != src.end(); it++)
     {
         p[1].set(*it);
         p[2].set(((it + 1) == src.end()) ? src.front() : *(it + 1));
         range = UI->ZFar();
+
         if (CDB::TestRayTri2(start, direction, p, range))
         {
             if ((range >= 0) && (range < distance))
@@ -167,7 +140,6 @@ bool CPortal::RayPick(float &distance, const Fvector &start, const Fvector &dire
     }
     return bPick;
 }
-//------------------------------------------------------------------------------
 
 bool CPortal::Update(bool bLoadMode)
 {
@@ -236,7 +208,6 @@ bool CPortal::Update(bool bLoadMode)
 
     return true;
 }
-//------------------------------------------------------------------------------
 
 void CPortal::InvertOrientation(bool bUndo)
 {
@@ -244,10 +215,10 @@ void CPortal::InvertOrientation(bool bUndo)
     std::reverse(m_SimplifyVertices.begin(), m_SimplifyVertices.end());
     m_Normal.invert();
     UI->RedrawScene();
+
     if (bUndo)
         Scene->UndoSave();
 }
-//------------------------------------------------------------------------------
 
 double tri_area(Fvector2 P0, Fvector2 P1, Fvector2 P2)
 {
@@ -258,7 +229,6 @@ double tri_area(Fvector2 P0, Fvector2 P1, Fvector2 P2)
     double p = (e1 + e2 + e3) / 2.0;
     return sqrt(p * (p - e1) * (p - e2) * (p - e3));
 }
-//------------------------------------------------------------------------------
 
 bool Isect2DLvs2DL(Fvector2 &P1, Fvector2 &P2, Fvector2 &P3, Fvector2 &P4, Fvector2 &P)
 {

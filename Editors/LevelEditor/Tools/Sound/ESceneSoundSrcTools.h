@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ESceneSoundSrcToolsH
-#define ESceneSoundSrcToolsH
-
-#include "ESceneCustomOTools.h"
+#pragma once
 
 class ESceneSoundSrcTool : public ESceneCustomOTool
 {
@@ -32,5 +28,3 @@ public:
 
     virtual CCustomObject *CreateObject(LPVOID data, LPCSTR name);
 };
-//---------------------------------------------------------------------------
-#endif

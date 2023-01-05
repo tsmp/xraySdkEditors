@@ -1,23 +1,15 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESound_Source.h"
 #include "../../xrSound/stdafx.h"
 #include "../../xrSound/SoundRender_Source.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "IGame_Persistent.h"
-//----------------------------------------------------
 
 #define VIS_RADIUS 0.25f
 #define SOUND_SEL0_COLOR 0x00A0A0F0
 #define SOUND_SEL1_COLOR 0x00FFFFFF
 #define SOUND_NORM_COLOR 0x000000FF
 #define SOUND_LOCK_COLOR 0x00FF0000
-//----------------------------------------------------
 
 #define SOUND_SOURCE_VERSION 0x0014
-//----------------------------------------------------
+
 #define SOUND_CHUNK_VERSION 0x1001
 #define SOUND_CHUNK_TYPE 0x1002
 #define SOUND_CHUNK_SOURCE_NAME 0x1003
@@ -26,7 +18,6 @@
 #define SOUND_CHUNK_SOURCE_PARAMS2 0x1006
 #define SOUND_CHUNK_SOURCE_PARAMS3 0x1007
 #define SOUND_CHUNK_GAME_PARAMS 0x1008
-//----------------------------------------------------
 
 ESoundSource::ESoundSource(LPVOID data, LPCSTR name)
     : CCustomObject(data, name)

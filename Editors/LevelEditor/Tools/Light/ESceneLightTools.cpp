@@ -1,26 +1,14 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneLightTools.h"
-#include "IGame_Persistent.h"
-#include "../XrECore/Editor/d3dutils.h"
-#include "communicate.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ELight.h"
-
-#include "UI/Tools/UILightTool.h"
 
 ESceneLightTool::ESceneLightTool() : ESceneCustomOTool(OBJCLASS_LIGHT)
 {
     Clear();
     m_Flags.zero();
 }
-//------------------------------------------------------------------------------
 
 ESceneLightTool::~ESceneLightTool()
 {
 }
-//------------------------------------------------------------------------------
 
 void ESceneLightTool::Clear(bool bSpecific)
 {
@@ -289,24 +277,18 @@ bool ESceneLightTool::Validate(bool full_test)
     }
     return bRes;
 }
-//------------------------------------------------------------------------------
-
-#include "UI_LevelTools.h"
 
 void ESceneLightTool::CreateControls()
 {
     inherited::CreateDefaultControls(estDefault);
     // frame
     pForm = xr_new<UILightTool>();
-    // pFrame 			= xr_new<TfraLight>((TComponent*)0);
 }
-//----------------------------------------------------
 
 void ESceneLightTool::RemoveControls()
 {
     inherited::RemoveControls();
 }
-//----------------------------------------------------
 
 CCustomObject *ESceneLightTool::CreateObject(LPVOID data, LPCSTR name)
 {

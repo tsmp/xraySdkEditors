@@ -1,12 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "customobject.h"
-#include "motion.h"
-#include "envelope.h"
-#include "../XrECore/Editor/D3DUtils.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "../UI/UIPropertiesModal.h"
 
 void CCustomObject::OnMotionableChange(PropValue *sender)
 {

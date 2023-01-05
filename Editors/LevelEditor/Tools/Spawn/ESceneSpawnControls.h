@@ -1,12 +1,8 @@
-#ifndef ESceneSpawnControlsH
-#define ESceneSpawnControlsH
-
-#include "ESceneControlsCustom.h"
+#pragma once
 
 // refs
 class TfraRPoint;
 
-//---------------------------------------------------------------------------
 class TUI_ControlSpawnAdd : public TUI_CustomControl
 {
     bool AppendCallback(SBeforeAppendCallbackParams *p);
@@ -16,5 +12,3 @@ public:
     virtual ~TUI_ControlSpawnAdd() { ; }
     virtual bool Start(TShiftState _Shift);
 };
-
-#endif

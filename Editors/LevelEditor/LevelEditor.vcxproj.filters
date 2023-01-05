@@ -37,9 +37,6 @@
     <Filter Include="Entry\Glow">
       <UniqueIdentifier>{aa6c8d9b-0eca-4bf0-a5a6-6c1412d24678}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entry\Grouo">
-      <UniqueIdentifier>{57fd408d-c43a-41f0-b942-32593fc55853}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entry\Light">
       <UniqueIdentifier>{726316a5-fd58-4b2b-8d47-72f5e002e373}</UniqueIdentifier>
     </Filter>
@@ -117,6 +114,9 @@
     </Filter>
     <Filter Include="Tools\WayPoint">
       <UniqueIdentifier>{d2191ea4-5b63-46db-a2a6-d5a468e9f521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entry\Group">
+      <UniqueIdentifier>{57fd408d-c43a-41f0-b942-32593fc55853}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -319,10 +319,10 @@
       <Filter>Entry\Glow</Filter>
     </ClCompile>
     <ClCompile Include="Entry\Group\GroupObject.cpp">
-      <Filter>Entry\Grouo</Filter>
+      <Filter>Entry\Group</Filter>
     </ClCompile>
     <ClCompile Include="Entry\Group\GroupObjectUtils.cpp">
-      <Filter>Entry\Grouo</Filter>
+      <Filter>Entry\Group</Filter>
     </ClCompile>
     <ClCompile Include="Entry\Light\ELight.cpp">
       <Filter>Entry\Light</Filter>
@@ -666,7 +666,7 @@
       <Filter>Entry\Glow</Filter>
     </ClInclude>
     <ClInclude Include="Entry\Group\GroupObject.h">
-      <Filter>Entry\Grouo</Filter>
+      <Filter>Entry\Group</Filter>
     </ClInclude>
     <ClInclude Include="Entry\Light\ELight.h">
       <Filter>Entry\Light</Filter>

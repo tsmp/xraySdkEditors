@@ -1,17 +1,15 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "UI_LevelTools.h"
-#include "ESceneFogVolumeTools.h"
-#include "UI\Tools\UIFogVolTool.h"
 static const u16 FOG_VOL_TOOLS_VERSION = 0x0000;
 static const u16 FOG_VOL_VERSION = 0x0002;
+
 enum
 {
     TOOL_CHUNK_VERSION = 0x1001ul,
     OBJ_CHUNK_VERSION = 0x1002ul,
     OBJ_CHUNK_DATA = 0x1003ul
 };
+
 xr_token fog_vol_type[] = {
     {"Emitter", fvEmitter},
     {"Occlusion", fvOcclusion},

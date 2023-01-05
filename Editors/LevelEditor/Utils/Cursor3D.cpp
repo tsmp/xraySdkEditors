@@ -1,14 +1,5 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "Cursor3D.h"
-#include "scene.h"
-#include "sceneobject.h"
-#include "ui_levelmain.h"
-#include "../XrECore/Editor/d3dUtils.h"
-
-//---------------------------------------------------------------------------
 static WORD CrossIndices[4] = {0, 2, 1, 3};
 
 #pragma package(smart_init)

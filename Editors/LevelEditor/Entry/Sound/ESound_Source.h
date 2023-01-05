@@ -1,9 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ESound_SourceH
-#define ESound_SourceH
-//---------------------------------------------------------------------------
-
-#include "CustomObject.h"
+#pragma once
 
 class ESoundSource : public CCustomObject
 {
@@ -81,5 +76,3 @@ public:
     virtual bool GetSummaryInfo(SSceneSummary *inf);
     virtual bool ExportGame(SExportStreams *data);
 };
-
-#endif

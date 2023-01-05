@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ESceneGlowToolsH
-#define ESceneGlowToolsH
-
-#include "ESceneCustomOTools.h"
+#pragma once
 
 class ESceneGlowTool : public ESceneCustomOTool
 {
@@ -45,5 +41,3 @@ public:
 
     virtual CCustomObject *CreateObject(LPVOID data, LPCSTR name);
 };
-//---------------------------------------------------------------------------
-#endif

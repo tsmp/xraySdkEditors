@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ESceneWayToolsH
-#define ESceneWayToolsH
-
-#include "ESceneCustomOTools.h"
+#pragma once
 
 class ESceneWayTool : public ESceneCustomOTool
 {
@@ -34,5 +30,3 @@ public:
 
     virtual CCustomObject *CreateObject(LPVOID data, LPCSTR name);
 };
-//---------------------------------------------------------------------------
-#endif

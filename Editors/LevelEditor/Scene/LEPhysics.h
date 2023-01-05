@@ -1,6 +1,4 @@
-#ifndef _LE_PHYSICS_H_
-#define _LE_PHYSICS_H_
-
+#pragma once
 #include "../../xrphysics/xrphysics.h"
 
 class CObjectSpace;
@@ -29,4 +27,3 @@ private:
 };
 
 extern CScenePhyscs g_scene_physics;
-#endif

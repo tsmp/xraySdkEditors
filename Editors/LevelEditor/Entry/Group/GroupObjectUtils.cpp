@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "GroupObject.h"
 
 static const float EMPTY_GROUP_SIZE = 0.5f;
 

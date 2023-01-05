@@ -1,15 +1,6 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "CustomObject.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "../XrECore/Editor/ui_toolscustom.h"
-#include "../XrECore/Editor/editorpreferences.h"
-#include "scene.h"
-
-//------------------------------------------------------------------------------
 // static part
-//------------------------------------------------------------------------------
 void CCustomObject::SnapMove(Fvector &pos, Fvector &rot, const Fmatrix &rotRP, const Fvector &amount)
 {
     // !!! Hide object before test

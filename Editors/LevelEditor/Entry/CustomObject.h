@@ -1,14 +1,7 @@
-//----------------------------------------------------
-// file: CustomObject.h
-//----------------------------------------------------
-#ifndef CustomObjectH
-#define CustomObjectH
-
-#include "ESceneClassList.h"
-#include "SceneSummaryInfo.h"
+#pragma once
 
 #define CHUNK_OBJECT_BODY 0x7777
-//----------------------------------------------------
+
 struct SRayPickInfo;
 struct FSChunkDef;
 class CFrustum;
@@ -278,6 +271,3 @@ private:
     float m_ScaleFactor;
     float m_Speed;
 };
-
-//----------------------------------------------------
-#endif /* _INCDEF_CustomObject_H_ */

@@ -1,16 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneObjectTools.h"
-#include "ui_leveltools.h"
-#include "ESceneObjectControls.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/library.h"
-#include "Scene.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "UI/Tools/UIObjectTool.h"
 
 ESceneObjectTool::ESceneObjectTool() : ESceneCustomOTool(OBJCLASS_SCENEOBJECT)
 {
@@ -19,7 +7,6 @@ ESceneObjectTool::ESceneObjectTool() : ESceneCustomOTool(OBJCLASS_SCENEOBJECT)
     m_AppendRandomMinRotation.set(0.f, 0.f, 0.f);
     m_AppendRandomMaxRotation.set(0.f, 0.f, 0.f);
     m_Flags.zero();
-    m_Props = 0;
 }
 
 void ESceneObjectTool::CreateControls()
@@ -30,13 +17,11 @@ void ESceneObjectTool::CreateControls()
     pForm = xr_new<UIObjectTool>();
     ((UIObjectTool *)pForm)->ParentTools = this;
 }
-//----------------------------------------------------
 
 void ESceneObjectTool::RemoveControls()
 {
     inherited::RemoveControls();
 }
-//----------------------------------------------------
 
 bool ESceneObjectTool::Validate(bool full_test)
 {

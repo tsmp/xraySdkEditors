@@ -1,22 +1,8 @@
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneDOTools.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Engine/Texture.h"
-#include "Scene.h"
-#include "SceneObject.h"
-#include "cl_intersect.h"
-#include "../XrECore/Editor/Library.h"
-#include "ui_levelmain.h"
-
 #include "..\..\xrRender\Private\DetailFormat.h"
-#include "../XrECore/Editor/ImageManager.h"
 
 static const u32 DETMGR_VERSION = 0x0003ul;
-//------------------------------------------------------------------------------
+
 enum
 {
     DETMGR_CHUNK_VERSION = 0x1000ul,
@@ -30,28 +16,22 @@ enum
     DETMGR_CHUNK_DENSITY = 0x1005ul,
     DETMGR_CHUNK_FLAGS = 0x1006ul,
 };
-//----------------------------------------------------
 
-//------------------------------------------------------------------------------
 EDetailManager::EDetailManager() : ESceneToolBase(OBJCLASS_DO)
 {
     dtSlots = 0;
     ZeroMemory(&dtH, sizeof(dtH));
     m_Selected.clear();
     InitRender();
-    //.	EDevice.seqDevCreate.Add	(this,REG_PRIORITY_LOW);
-    //.	EDevice.seqDevDestroy.Add(this,REG_PRIORITY_NORMAL);
+
     m_Flags.assign(flObjectsDraw);
 }
 
 EDetailManager::~EDetailManager()
 {
-    //.	EDevice.seqDevCreate.Remove(this);
-    //.	EDevice.seqDevDestroy.Remove(this);
     Clear();
     Unload();
 }
-//------------------------------------------------------------------------------
 
 void EDetailManager::ClearColorIndices()
 {
@@ -59,6 +39,7 @@ void EDetailManager::ClearColorIndices()
     RemoveDOs();
     m_ColorIndices.clear();
 }
+
 void EDetailManager::ClearSlots()
 {
     ZeroMemory(&dtH, sizeof(DetailHeader));
@@ -66,12 +47,14 @@ void EDetailManager::ClearSlots()
     m_Selected.clear();
     InvalidateCache();
 }
+
 void EDetailManager::ClearBase()
 {
     m_Base.Clear();
     m_SnapObjects.clear();
     ExecCommand(COMMAND_REFRESH_SNAP_OBJECTS);
 }
+
 void EDetailManager::Clear(bool bSpecific)
 {
     ClearBase();
@@ -80,7 +63,6 @@ void EDetailManager::Clear(bool bSpecific)
     m_Flags.zero();
     m_RTFlags.zero();
 }
-//------------------------------------------------------------------------------
 
 void EDetailManager::InvalidateCache()
 {
@@ -93,6 +75,7 @@ void EDetailManager::InvalidateCache()
 }
 
 extern void bwdithermap(int levels, int magic[16][16]);
+
 void EDetailManager::InitRender()
 {
     // inavlidate cache
@@ -102,7 +85,6 @@ void EDetailManager::InitRender()
 
     soft_Load();
 }
-//------------------------------------------------------------------------------
 
 void EDetailManager::OnRender(int priority, bool strictB2F)
 {
@@ -154,7 +136,6 @@ void EDetailManager::OnRender(int priority, bool strictB2F)
         }
     }
 }
-//------------------------------------------------------------------------------
 
 void EDetailManager::OnDeviceCreate()
 {

@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef Custom2DProjectorH
-#define Custom2DProjectorH
-
-#include "ESceneClassList.h"
+#pragma once
 
 class CCustom2DProjector
 {
@@ -76,5 +72,3 @@ public:
         return V;
     }
 };
-//---------------------------------------------------------------------------
-#endif

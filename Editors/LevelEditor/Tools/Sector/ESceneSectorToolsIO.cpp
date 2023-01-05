@@ -1,17 +1,14 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneSectorTools.h"
 
 // chunks
 static const u16 SECTOR_TOOLS_VERSION = 0x0000;
-//----------------------------------------------------
+
 enum
 {
     CHUNK_VERSION = 0x1001ul,
     CHUNK_FLAGS = 0x1002ul,
 };
-//----------------------------------------------------
+
 bool ESceneSectorTool::LoadLTX(CInifile &ini)
 {
     u32 version = ini.r_u32("main", "version");
@@ -22,17 +19,15 @@ bool ESceneSectorTool::LoadLTX(CInifile &ini)
     }
 
     inherited::LoadLTX(ini);
-
     m_Flags.assign(ini.r_u32("main", "flags"));
 
     return true;
 }
+
 void ESceneSectorTool::SaveLTX(CInifile &ini, int id)
 {
     inherited::SaveLTX(ini, id);
-
     ini.w_u32("main", "version", SECTOR_TOOLS_VERSION);
-
     ini.w_u32("main", "flags", m_Flags.get());
 }
 
@@ -54,7 +49,6 @@ bool ESceneSectorTool::LoadStream(IReader &F)
 
     return true;
 }
-//----------------------------------------------------
 
 void ESceneSectorTool::SaveStream(IWriter &F)
 {
@@ -66,7 +60,6 @@ void ESceneSectorTool::SaveStream(IWriter &F)
     F.w_u32(m_Flags.get());
     F.close_chunk();
 }
-//----------------------------------------------------
 
 bool ESceneSectorTool::LoadSelection(IReader &F)
 {
@@ -80,7 +73,6 @@ bool ESceneSectorTool::LoadSelection(IReader &F)
 
     return inherited::LoadSelection(F);
 }
-//----------------------------------------------------
 
 void ESceneSectorTool::SaveSelection(IWriter &F)
 {
@@ -88,4 +80,3 @@ void ESceneSectorTool::SaveSelection(IWriter &F)
 
     inherited::SaveSelection(F);
 }
-//----------------------------------------------------

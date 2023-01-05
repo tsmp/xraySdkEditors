@@ -1,9 +1,5 @@
-#ifndef ESceneObjectControlsH
-#define ESceneObjectControlsH
+#pragma once
 
-#include "ESceneControlsCustom.h"
-
-//------------------------------------------------------------------------------
 class TUI_ControlObjectAdd : public TUI_CustomControl
 {
 public:
@@ -13,4 +9,3 @@ public:
 	virtual bool End(TShiftState _Shift);
 	virtual void Move(TShiftState _Shift);
 };
-#endif

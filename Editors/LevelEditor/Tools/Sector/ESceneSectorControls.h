@@ -1,9 +1,5 @@
-#ifndef ESceneSectorControlsH
-#define ESceneSectorControlsH
+#pragma once
 
-#include "ESceneControlsCustom.h"
-
-//---------------------------------------------------------------------------
 // refs
 class UISectorTool;
 enum ESectorAction
@@ -44,4 +40,3 @@ public:
     virtual void OnEnter();
     virtual void OnExit();
 };
-#endif // UI_SectorToolsH

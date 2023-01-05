@@ -1,23 +1,5 @@
-//----------------------------------------------------
-// file: BuilderLTX.cpp
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "Builder.h"
-#include "Scene.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "SceneObject.h"
-#include "ELight.h"
-#include "SpawnPoint.h"
-#include "WayPoint.h"
-#include "xr_efflensflare.h"
-#include "GroupObject.h"
-#include "EShape.h"
-#include "sector.h"
-
-//----------------------------------------------------
 BOOL SceneBuilder::ParseLTX(CInifile *pIni, ObjectList &lst, LPCSTR prefix)
 {
     return TRUE;

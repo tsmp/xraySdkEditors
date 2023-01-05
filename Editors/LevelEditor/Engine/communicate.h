@@ -1,12 +1,4 @@
-#ifndef _XR_COMM_
-#define _XR_COMM_
-
-#ifdef _EDITOR
-#include "xrLevel.h"
-#else
-#include "../../BearBundle/BearGraphics/BearGraphics.hpp"
-#include "../../xrEngine/xrLevel.h"
-#endif
+#pragma once
 
 #pragma pack(push, 4)
 
@@ -252,5 +244,3 @@ enum EBUILD_CHUNKS
 
 	EB_FORCE_DWORD = u32(-1)
 };
-
-#endif

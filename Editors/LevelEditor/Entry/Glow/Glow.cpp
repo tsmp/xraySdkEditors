@@ -1,22 +1,12 @@
-//----------------------------------------------------
-// file: Light.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "Glow.h"
-#include "../../../XrCore/xr_trims.h"
-#include "scene.h"
-#include "ESceneGlowTools.h"
 
 #define GLOW_VERSION 0x0012
-//----------------------------------------------------
+
 #define GLOW_CHUNK_VERSION 0xC411
 #define GLOW_CHUNK_PARAMS 0xC413
 #define GLOW_CHUNK_SHADER 0xC414
 #define GLOW_CHUNK_TEXTURE 0xC415
 #define GLOW_CHUNK_FLAGS 0xC416
-//----------------------------------------------------
 
 #define VIS_RADIUS 0.25f
 

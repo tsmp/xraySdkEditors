@@ -1,13 +1,4 @@
-//----------------------------------------------------
-// file: DetailObjects.h
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneDOTools.h"
-#include "Scene.h"
-#include "cl_intersect.h"
-#include "../XrECore/Editor/ui_main.h"
 
 int EDetailManager::RaySelect(int flag, float &dist, const Fvector &start, const Fvector &direction, BOOL bDistanceOnly)
 {

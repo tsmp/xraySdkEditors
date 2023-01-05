@@ -1,24 +1,17 @@
-//----------------------------------------------------
-// file: CSceneObject.cpp
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "iniStreamImpl.h"
-#include "SceneObject.h"
-#include "Scene.h"
-//----------------------------------------------------
 #define SCENEOBJ_CURRENT_VERSION 0x0012
-//----------------------------------------------------
+
 #define SCENEOBJ_CHUNK_VERSION 0x0900
 #define SCENEOBJ_CHUNK_REFERENCE 0x0902
 #define SCENEOBJ_CHUNK_PLACEMENT 0x0904
 #define SCENEOBJ_CHUNK_FLAGS 0x0905
 #define SCENEOBJ_CHUNK_SURFACE 0x0906
+
 bool CSceneObject::LoadLTX(CInifile &ini, LPCSTR sect_name)
 {
     bool bRes = true;
+
     do
     {
         u32 version = ini.r_u32(sect_name, "version");

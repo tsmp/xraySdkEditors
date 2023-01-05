@@ -1,23 +1,7 @@
-//----------------------------------------------------
-// file: CSceneObject.cpp
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "SceneObject.h"
-#include "../XrECore/Editor/library.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "../XrECore/Editor/D3DUtils.h"
+const float BLINK_TIME = 300.f;
 
-#ifdef _LEVEL_EDITOR
-#include "scene.h"
-#endif
-
-#define BLINK_TIME 300.f
-
-//----------------------------------------------------
 CSceneObject::CSceneObject(LPVOID data, LPCSTR name) : CCustomObject(data, name)
 {
     Construct(data);

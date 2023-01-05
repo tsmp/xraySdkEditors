@@ -64,7 +64,9 @@
     <ClCompile Include="Entry\StaticObject\SceneObjectIO.cpp" />
     <ClCompile Include="Entry\WayPoint\WayPoint.cpp" />
     <ClCompile Include="Kernel\LevelEditor.cpp" />
-    <ClCompile Include="Kernel\stdafx.cpp" />
+    <ClCompile Include="Kernel\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Kernel\UI_LevelMain.cpp" />
     <ClCompile Include="Kernel\UI_LevelTools.cpp" />
     <ClCompile Include="Scene\LEPhysics.cpp" />
@@ -495,6 +497,7 @@
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

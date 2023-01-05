@@ -1,22 +1,12 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "Builder.h"
-#include "../XrECore/Editor/ImageManager.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "scene.h"
-
-//------------------------------------------------------------------------------
 #define LEVEL_LODS_TEX_NAME "level_lods"
 #define LEVEL_LODS_NRM_NAME "level_lods_nm"
-//------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
 // lod build functions
-//------------------------------------------------------------------------------
+
 DEFINE_VECTOR(Fvector4, Fvector4Vec, Fvector4It);
+
 BOOL GetPointColor(SPickQuery::SResult *R, u32 &alpha)
 {
     CSurface *surf = R->e_mesh->GetSurfaceByFaceID(R->tag);

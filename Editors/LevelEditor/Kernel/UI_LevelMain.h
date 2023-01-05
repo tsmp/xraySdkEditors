@@ -1,8 +1,4 @@
-#ifndef UI_LevelMainH
-#define UI_LevelMainH
-
-#include "../XrECore/Editor/ui_main.h"
-#include "../XrECore/Editor/UI_MainCommand.h"
+#pragma once
 
 enum
 {
@@ -118,5 +114,3 @@ public:
     virtual void OnDrawUI();
 };
 extern CLevelMain *LUI;
-
-#endif // UI_MainCommandH

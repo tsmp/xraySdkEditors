@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ESceneGroupToolsH
-#define ESceneGroupToolsH
-
-#include "ESceneCustomOTools.h"
+#pragma once
 
 class ESceneGroupTool : public ESceneCustomOTool, private pureDrawUI
 {
@@ -55,5 +51,3 @@ public:
     virtual CCustomObject *CreateObject(LPVOID data, LPCSTR name);
     virtual BOOL _RemoveObject(CCustomObject *object);
 };
-//---------------------------------------------------------------------------
-#endif

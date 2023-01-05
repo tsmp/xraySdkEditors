@@ -1,15 +1,9 @@
-#ifndef UI_LevelToolsH
-#define UI_LevelToolsH
+#pragma once
 
 // refs
 class ESceneToolBase;
 class TfrmObjectList;
 
-#include "ESceneClassList.h"
-#include "../XrECore/Editor/UI_ToolsCustom.h"
-#include "../XrECore/Editor/UI_MainCommand.h"
-
-//---------------------------------------------------------------------------
 #define estDefault 0
 #define CHECK_SNAP(R, A, C)   \
     {                         \
@@ -161,4 +155,3 @@ extern CLevelTool *LTools;
 
 extern void ResetActionToSelect();
 extern TShiftState ssRBOnly;
-#endif

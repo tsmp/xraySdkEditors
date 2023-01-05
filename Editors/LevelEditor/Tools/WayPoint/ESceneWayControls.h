@@ -1,7 +1,4 @@
-#ifndef ESceneWayControlsH
-#define ESceneWayControlsH
-
-#include "ESceneControlsCustom.h"
+#pragma once
 
 // refs
 class CWayPoint;
@@ -11,7 +8,7 @@ enum
     estWayModeWay,
     estWayModePoint
 };
-//---------------------------------------------------------------------------
+
 class TUI_ControlWayPointAdd : public TUI_CustomControl
 {
 public:
@@ -20,5 +17,3 @@ public:
     virtual bool Start(TShiftState _Shift);
     virtual void OnEnter();
 };
-
-#endif // UI_WayPointToolsH

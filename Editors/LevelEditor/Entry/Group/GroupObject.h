@@ -1,8 +1,5 @@
-#ifndef GroupObjectH
-#define GroupObjectH
+#pragma once
 
-#include "CustomObject.h"
-//----------------------------------------------------
 class CGroupObject : public CCustomObject
 {
 	typedef CCustomObject inherited;
@@ -81,5 +78,3 @@ public:
 
 	virtual void FillProp(LPCSTR pref, PropItemVec &items);
 };
-//----------------------------------------------------
-#endif /* _INCDEF_GroupObject_H_ */

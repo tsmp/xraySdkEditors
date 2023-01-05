@@ -1,9 +1,5 @@
-#ifndef EScenePSControlsH
-#define EScenePSControlsH
+#pragma once
 
-#include "ESceneControlsCustom.h"
-
-//---------------------------------------------------------------------------
 class TUI_ControlPSAdd : public TUI_CustomControl
 {
 	bool AfterAppendCallback(TShiftState Shift, CCustomObject *obj);
@@ -15,5 +11,3 @@ public:
 	virtual bool End(TShiftState _Shift);
 	virtual void Move(TShiftState _Shift);
 };
-//---------------------------------------------------------------------------
-#endif // UI_PSToolsH

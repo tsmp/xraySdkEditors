@@ -1,27 +1,17 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESound_Environment.h"
-#include "EShape.h"
-#include "ui_levelmain.h"
-//----------------------------------------------------
 
 #define SOUND_SEL0_COLOR 0x00A0A0A0
 #define SOUND_SEL1_COLOR 0x00FFFFFF
 #define SOUND_NORM_COLOR 0x000000FF
 #define SOUND_LOCK_COLOR 0x00FF0000
-//----------------------------------------------------
 
 #define SOUND_ENV_VERSION 0x0012
-//----------------------------------------------------
+
 #define SOUND_CHUNK_VERSION 0x1001
 #define SOUND_CHUNK_ENV_SHAPE 0x1002
 #define SOUND_CHUNK_ENV_REFS 0x1003
-//----------------------------------------------------
 
-ESoundEnvironment::ESoundEnvironment(LPVOID data, LPCSTR name)
-    : CEditShape(data, name)
+ESoundEnvironment::ESoundEnvironment(LPVOID data, LPCSTR name) : CEditShape(data, name)
 {
     Construct(data);
 }

@@ -1,13 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneWayTools.h"
-#include "ESceneWayControls.h"
-#include "ui_leveltools.h"
-#include "WayPoint.h"
-#include "scene.h"
-#include "ui_levelmain.h"
-#include "UI\Tools\UIWayTool.h"
 void ESceneWayTool::OnActivate()
 {
     inherited::OnActivate();
@@ -17,7 +9,6 @@ void ESceneWayTool::OnActivate()
     else
         frame->SetWayMode(true);
 }
-//----------------------------------------------------
 
 void ESceneWayTool::CreateControls()
 {
@@ -27,7 +18,6 @@ void ESceneWayTool::CreateControls()
     // frame
     pForm = xr_new<UIWayTool>();
 }
-//----------------------------------------------------
 
 void ESceneWayTool::RemoveControls()
 {

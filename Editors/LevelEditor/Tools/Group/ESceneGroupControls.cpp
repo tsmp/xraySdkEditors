@@ -1,14 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneGroupControls.h"
-#include "ESceneGroupTools.h"
-#include "GroupObject.h"
-#include "Scene.h"
-
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
 TUI_ControlGroupAdd::TUI_ControlGroupAdd(int st, int act, ESceneToolBase *parent) : TUI_CustomControl(st, act, parent)
 {
 }

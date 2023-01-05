@@ -5,8 +5,7 @@
 #include "cl_intersect.h"
 
 #ifdef _EDITOR
-#include "scene.h"
-#include "sceneobject.h"
+#include "../Editors/LevelEditor/Scene/scene.h"
 #include "../../Editors/XrETools/ETools.h"
 #endif
 

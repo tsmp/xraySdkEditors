@@ -1,7 +1,5 @@
-#ifndef ESceneCustomMToolsH
-#define ESceneCustomMToolsH
+#pragma once
 
-#include "ESceneClassList.h"
 // refs
 struct SSceneSummary;
 class TUI_CustomControl;
@@ -162,4 +160,3 @@ public:
 };
 
 DEFINE_MAP(ObjClassID, ESceneToolBase *, SceneToolsMap, SceneToolsMapPairIt);
-#endif // ESceneCustomMToolsH

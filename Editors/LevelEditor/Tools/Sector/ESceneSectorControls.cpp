@@ -1,20 +1,6 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneSectorControls.h"
-#include "scene.h"
-#include "Sector.h"
-#include "../XrECore/Editor/editmesh.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "SceneObject.h"
-#include "GroupObject.h"
-#include "ui_leveltools.h"
-#include "ui_levelmain.h"
-#include "UI\Tools\UISectorTool.h"
-
-//---------------------------------------------------------------------------
 // add
-//------------------------------------------------------------------------------
 TUI_ControlSectorAdd::TUI_ControlSectorAdd(int st, int act, ESceneToolBase *parent) : TUI_CustomControl(st, act, parent)
 {
 }

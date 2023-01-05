@@ -1,21 +1,14 @@
-//----------------------------------------------------
-// file: rpoint.h
-//----------------------------------------------------
-
-#ifndef SpawnPointH
-#define SpawnPointH
+#pragma once
 
 #define SPAWNPOINT_VERSION 0x0017
 
-#include "../../xrServerEntities/LevelGameDef.h"
-#include "../../xrServerEntities/xrServer_Objects_abstract.h"
-#include "CustomObject.h"
-#include "../XrEcore/editor/PhysicsShellHolderEditorBase.h"
 // refs
 class CSE_Visual;
 class CSE_Motion;
 class CObjectAnimator;
 class ISE_Abstract;
+
+
 
 class CLE_Visual : private pureDrawUI
 {
@@ -199,5 +192,3 @@ private:
 private:
     void RenderSimBox();
 };
-
-#endif /*_INCDEF_Glow_H_*/

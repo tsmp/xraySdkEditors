@@ -1,12 +1,4 @@
-//----------------------------------------------------
-// file: WayPoint.h
-//----------------------------------------------------
-
-#ifndef WayPointH
-#define WayPointH
-
-#include "../../xrServerEntities/LevelGameDef.h"
-#include "CustomObject.h"
+#pragma once
 
 class CFrustum;
 class CWayPoint;
@@ -120,4 +112,3 @@ public:
         UpdateTransform();
     }
 };
-#endif /*_INCDEF_WayPoint_H_*/

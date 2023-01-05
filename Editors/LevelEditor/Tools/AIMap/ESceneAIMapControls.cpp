@@ -1,16 +1,6 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneAIMapControls.h"
-#include "ESceneAIMapTools.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "scene.h"
-#include "ui_leveltools.h"
-#include "UI\Tools\UIAIMapTool.h"
-
-//------------------------------------------------------------------------------
 // Node Add
-//------------------------------------------------------------------------------
 TUI_ControlAIMapNodeAdd::TUI_ControlAIMapNodeAdd(int st, int act, ESceneToolBase *parent) : TUI_CustomControl(st, act, parent)
 {
 }

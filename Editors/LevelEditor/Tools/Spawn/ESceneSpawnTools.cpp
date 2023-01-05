@@ -1,15 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneSpawnTools.h"
-#include "ui_leveltools.h"
-#include "ESceneSpawnControls.h"
-#include "Scene.h"
-#include "SceneObject.h"
-#include "spawnpoint.h"
-#include "builder.h"
-#include "..\..\XrECore\Editor\Library.h"
-#include "UI\Tools\UISpawnTool.h"
 
 static HMODULE hXRSE_FACTORY = 0;
 
@@ -197,8 +186,6 @@ ref_shader ESceneSpawnTool::GetIcon(shared_str name)
     else
         return it->second;
 }
-//----------------------------------------------------
-#include "EShape.h"
 
 CCustomObject *ESceneSpawnTool::CreateObject(LPVOID data, LPCSTR name)
 {

@@ -1,8 +1,5 @@
-//---------------------------------------------------------------------------
-#ifndef ESceneFogVolumeToolsH
-#define ESceneFogVolumeToolsH
+#pragma once
 
-#include "ESceneCustomOTools.h"
 class EFogVolume;
 
 enum
@@ -46,9 +43,6 @@ public:
     void Selected(EFogVolume *fv);
 };
 
-#include "CustomObject.h"
-#include "EShape.h"
-
 class EFogVolume : public CEditShape
 {
     typedef CCustomObject inherited;
@@ -77,5 +71,3 @@ public:
 protected:
     virtual void Select(int flag);
 };
-
-#endif

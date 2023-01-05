@@ -1,25 +1,4 @@
-//----------------------------------------------------
-// file: SceneUndo.cpp
-//
-// Tanya M. : 265-74-96
-//            265-86-00
-//            251-46-69
-//            251-46-70
-//            251-46-76
-//            251-46-77
-//            251-46-78
-//            264-89-00
-//
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "Scene.h"
-#include "../XrECore/Editor/EditorPreferences.h"
-#include "../XrECore/Editor/ui_main.h"
-
-//----------------------------------------------------
 
 void EScene::UndoClear()
 {

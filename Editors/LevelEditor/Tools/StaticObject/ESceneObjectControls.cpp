@@ -1,17 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "ESceneObjectControls.h"
-#include "ui_leveltools.h"
-#include "../XrECore/Editor/library.h"
-#include "scene.h"
-#include "SceneObject.h"
-#include "ESceneObjectTools.h"
-#include "ui_levelmain.h"
-#include "UI\Tools\UIObjectTool.h"
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
 TUI_ControlObjectAdd::TUI_ControlObjectAdd(int st, int act, ESceneToolBase *parent) : TUI_CustomControl(st, act, parent)
 {
 }

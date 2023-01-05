@@ -1,16 +1,4 @@
-//----------------------------------------------------
-// file: WayPoint.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "WayPoint.h"
-#include "ui_leveltools.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ESceneWayControls.h"
-#include "../XrECore/Editor/d3dUtils.h"
-
-//----------------------------------------------------
 
 #define WAYPOINT_SIZE 1.5f
 #define WAYPOINT_RADIUS WAYPOINT_SIZE * .5f

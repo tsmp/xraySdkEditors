@@ -1,13 +1,10 @@
-#ifndef ESceneAIMapControlsH
-#define ESceneAIMapControlsH
-
-#include "ESceneControlsCustom.h"
+#pragma once
 
 // refs
 class ESceneAIMapTool;
 
 #define estAIMapNode 0
-//---------------------------------------------------------------------------
+
 class TUI_ControlAIMapNodeAdd : public TUI_CustomControl
 {
 	int append_nodes;
@@ -18,7 +15,7 @@ public:
 	virtual bool End(TShiftState _Shift);
 	virtual void Move(TShiftState _Shift);
 };
-//---------------------------------------------------------------------------
+
 class TUI_ControlAIMapNodeMove : public TUI_CustomControl
 {
 public:
@@ -36,5 +33,3 @@ public:
 	virtual bool End(TShiftState _Shift);
 	virtual void Move(TShiftState _Shift);
 };
-//---------------------------------------------------------------------------
-#endif // UI_AIMapToolsH

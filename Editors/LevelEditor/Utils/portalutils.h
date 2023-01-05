@@ -1,8 +1,6 @@
-#ifndef PortalUtilsH
-#define PortalUtilsH
-
-#include "ESceneClassList.h"
+#pragma once
 #include <iterator>
+
 // refs
 class CEditableMesh;
 class CEditableObject;
@@ -64,5 +62,3 @@ public:
 };
 
 extern CPortalUtils PortalUtils;
-
-#endif /*_INCDEF_PortalUtils_H_*/

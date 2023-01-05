@@ -1,17 +1,7 @@
-//----------------------------------------------------
-// file: ELight.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ELight.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "../XrECORE/Editor/D3DUtils.h"
-#include "scene.h"
-#include "escenelighttools.h"
 
 static const u32 LIGHT_VERSION = 0x0011;
-//----------------------------------------------------
+
 enum
 {
     LIGHT_CHUNK_VERSION = 0xB411,
@@ -26,7 +16,6 @@ enum
     LIGHT_CHUNK_LCONTROL = 0xB441,
     LIGHT_CHUNK_PARAMS = 0xB442,
 };
-//----------------------------------------------------
 
 #define VIS_RADIUS 0.25f
 #define SEL_COLOR 0x00FFFFFF

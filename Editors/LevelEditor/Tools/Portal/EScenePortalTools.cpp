@@ -1,13 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "EScenePortalTools.h"
-#include "ui_leveltools.h"
-#include "EScenePortalControls.h"
-#include "portal.h"
-#include "Scene.h"
-#include "../../FreeMagic/MgcAppr3DPlaneFit.h"
-#include "UI\Tools\UIPortalTool.h"
 /* TODO 1 -oAlexMX -cTODO: Create tools as AI Map */
 
 void EScenePortalTool::CreateControls()
@@ -18,20 +10,17 @@ void EScenePortalTool::CreateControls()
     pForm = xr_new<UIPortalTool>();
     ((UIPortalTool *)pForm)->tool = this;
 }
-//----------------------------------------------------
 
 void EScenePortalTool::RemoveControls()
 {
     inherited::RemoveControls();
 }
-//----------------------------------------------------
 
 void EScenePortalTool::FillProp(LPCSTR pref, PropItemVec &items)
 {
     PHelper().CreateFlag32(items, PrepareKey(pref, "Common\\Draw Simple Model"), &m_Flags, flDrawSimpleModel);
     inherited::FillProp(pref, items);
 }
-//----------------------------------------------------
 
 CCustomObject *EScenePortalTool::CreateObject(LPVOID data, LPCSTR name)
 {

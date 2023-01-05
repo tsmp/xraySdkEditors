@@ -1,16 +1,5 @@
-//----------------------------------------------------
-// file: SceneUtil.cpp
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "Scene.h"
-#include "ELight.h"
-#include "SceneObject.h"
-#include "ui_leveltools.h"
-
-//----------------------------------------------------
 CCustomObject *EScene::FindObjectByName(LPCSTR name, ObjClassID classfilter)
 {
     if (!name)

@@ -1,7 +1,5 @@
 #include "stdafx.h"
-#include "UISectorTool.h"
-#include "Edit\portalutils.h"
-#include "Edit\sector.h"
+
 UISectorTool::UISectorTool()
 {
     m_Edit = false;

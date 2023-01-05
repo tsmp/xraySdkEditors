@@ -1,8 +1,5 @@
 #include "stdafx.h"
-#include "UIObjectTool.h"
-#include "..\..\..\XrECore\Editor\Library.h"
-#include "SceneObject.h"
-#include "Edit/ESceneObjectTools.h"
+
 UIObjectTool::UIObjectTool()
 {
     m_selPercent = 0.f;

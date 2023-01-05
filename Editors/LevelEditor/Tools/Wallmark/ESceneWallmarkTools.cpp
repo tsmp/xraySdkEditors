@@ -1,23 +1,8 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneWallmarkTools.h"
-#include "ESceneWallmarkControls.h"
-#include "Scene.h"
-#include "Builder.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/UI_ToolsCustom.h"
-#include "scene.h"
-#include "../XrECore/Editor/UI_Main.h"
-#include "../XrECore/Editor/D3DUtils.h"
-#include "ResourceManager.h"
-#include "UI_LevelTools.h"
 
 // chunks
 #define WM_VERSION 0x0004
-//----------------------------------------------------
+
 #define WM_CHUNK_VERSION 0x0001
 #define WM_CHUNK_FLAGS 0x0002
 #define WM_CHUNK_PARAMS 0x0003

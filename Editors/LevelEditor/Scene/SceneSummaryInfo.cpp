@@ -1,25 +1,16 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "SceneSummaryInfo.h"
-#include "../XrECore/Editor/ImageManager.h"
-#include "../XrECore/Editor/EThumbnail.h"
-#include "SceneSummaryInfo.h"
-#include "Scene.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_levelmain.h"
-#include "../XrECore/Editor/Library.h"
 
 static SSceneSummary s_summary;
 
-xr_token summary_texture_type_tokens[] = {
+xr_token summary_texture_type_tokens[] = 
+{
     {"Base", SSceneSummary::sttBase},
     {"Implicit", SSceneSummary::sttImplicit},
     {"DO", SSceneSummary::sttDO},
     {"Glow", SSceneSummary::sttGlow},
     {"LOD", SSceneSummary::sttLOD},
-    {0, 0}};
+    {0, 0}
+};
 
 void SSceneSummary::Prepare()
 {

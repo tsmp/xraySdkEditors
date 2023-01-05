@@ -1,19 +1,4 @@
-//----------------------------------------------------
-// file: PortalUtils.cpp
-//----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "portalutils.h"
-#include "Scene.h"
-#include "Portal.h"
-#include "Sector.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "SceneObject.h"
-#include "../XrECore/Editor/Library.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_leveltools.h"
 
 CPortalUtils PortalUtils;
 #define EPS_P 0.001f

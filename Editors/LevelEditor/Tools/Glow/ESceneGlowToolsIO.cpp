@@ -1,17 +1,13 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneGlowTools.h"
 
 // chunks
 static const u16 GLOW_TOOLS_VERSION = 0x0000;
-//----------------------------------------------------
+
 enum
 {
     CHUNK_VERSION = 0x1001ul,
     CHUNK_FLAGS = 0x1002ul,
 };
-//----------------------------------------------------
 
 bool ESceneGlowTool::LoadLTX(CInifile &ini)
 {
@@ -36,7 +32,6 @@ void ESceneGlowTool::SaveLTX(CInifile &ini, int id)
     inherited::SaveLTX(ini, id);
 
     ini.w_u32("main", "glow_tool_version", GLOW_TOOLS_VERSION);
-
     ini.w_u32("main", "flags", m_Flags.get());
 }
 

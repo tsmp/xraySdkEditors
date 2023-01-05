@@ -1,17 +1,4 @@
-//----------------------------------------------------
-// file: BuilderGame.cpp
-//----------------------------------------------------
-
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "Builder.h"
-#include "Scene.h"
-#include "../../xrServerEntities/LevelGameDef.h"
-#include "SoundManager_LE.h"
-#include "CustomObject.h"
-#include "ESceneFogVolumeTools.h"
-#include "SpawnPoint.h"
 
 bool sort_fog_vol(EFogVolume *fv1, EFogVolume *fv2)
 {

@@ -1,8 +1,5 @@
-#ifndef SectorH
-#define SectorH
+#pragma once
 
-#include "portalutils.h"
-#include "CustomObject.h"
 enum EVisible
 {
     fvNone,
@@ -117,5 +114,3 @@ public:
 
     virtual bool Validate(bool bMsg);
 };
-
-#endif /*_INCDEF_Sector_H_*/

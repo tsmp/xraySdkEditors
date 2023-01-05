@@ -1,27 +1,20 @@
-//---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "EShape.h"
-#include "du_box.h"
-#include "Scene.h"
-#include "UI\Tools\UIShapeTool.h"
 #define SHAPE_COLOR_TRANSP 0x3C808080
 #define SHAPE_COLOR_EDGE 0xFF202020
 
-//---------------------------------------------------------------------------
-
 #define SHAPE_CURRENT_VERSION 0x0002
-//---------------------------------------------------------------------------
+
 #define SHAPE_CHUNK_VERSION 0x0000
 #define SHAPE_CHUNK_SHAPES 0x0001
 #define SHAPE_CHUNK_DATA 0x0002
-//---------------------------------------------------------------------------
 
-xr_token shape_type_tok[] = {
+xr_token shape_type_tok[] = 
+{
     {"common", eShapeCommon},
     {"level bound", eShapeLevelBound},
-    {0, 0}};
+    {0, 0}
+};
 
 CEditShape::CEditShape(LPVOID data, LPCSTR name) : CCustomObject(data, name)
 {

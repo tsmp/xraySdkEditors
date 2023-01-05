@@ -1,17 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "EScenePSControls.h"
-#include "ui_leveltools.h"
-#include "..\..\xrRender\Private\PSLibrary.h"
-#include "EParticlesObject.h"
-#include "scene.h"
-#include "../XrECore/Editor/ui_main.h"
-
-#include "UI\Tools\UIParticlesTool.h"
-//----------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
 TUI_ControlPSAdd::TUI_ControlPSAdd(int st, int act, ESceneToolBase *parent) : TUI_CustomControl(st, act, parent)
 {
 }

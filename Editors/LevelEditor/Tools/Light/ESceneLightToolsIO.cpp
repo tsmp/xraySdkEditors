@@ -1,14 +1,8 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneLightTools.h"
-#include "elight.h"
-#include "scene.h"
-#include "../XrECore/Editor/ui_main.h"
 
 // chunks
 static const u16 LIGHT_TOOLS_VERSION = 0x0000;
-//----------------------------------------------------
+
 enum
 {
     CHUNK_VERSION = 0x1001ul,
@@ -19,7 +13,7 @@ enum
     CHUNK_SUN_SHADOW = 0x1006ul,
     CHUNK_HEMI2 = 0x1007ul,
 };
-//----------------------------------------------------
+
 bool ESceneLightTool::LoadLTX(CInifile &ini)
 {
     u32 version = ini.r_u32("main", "version");
@@ -52,7 +46,6 @@ void ESceneLightTool::SaveLTX(CInifile &ini, int id)
     inherited::SaveLTX(ini, id);
 
     ini.w_u32("main", "version", LIGHT_TOOLS_VERSION);
-
     ini.w_u32("main", "flags", m_Flags.get());
 
     ini.w_fvector2("main", "sun_shadow_dir", m_SunShadowDir);

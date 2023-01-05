@@ -1,17 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneAIMapTools.h"
-
-#include "scene.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "ui_leveltools.h"
-#include "cl_intersect.h"
-#include "../../FreeMagic/MgcAppr3DPlaneFit.h"
-#include "sceneobject.h"
-#include "../XrECore/Editor/EditObject.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "../../XrETools/ETools.h"
 
 static SPickQuery PQ;
 
@@ -20,6 +7,7 @@ IC void SnapXZ(Fvector &V, float ps)
     V.x = snapto(V.x, ps);
     V.z = snapto(V.z, ps);
 }
+
 struct tri
 {
     Fvector *v[3];

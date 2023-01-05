@@ -1,11 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
 
-#include "EScenePSTools.h"
-#include "ui_leveltools.h"
-#include "EScenePSControls.h"
-#include "EParticlesObject.h"
-#include "UI\Tools\UIParticlesTool.h"
 void EScenePSTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
@@ -13,13 +7,11 @@ void EScenePSTool::CreateControls()
 	// frame
 	pForm = xr_new<UIParticlesTool>();
 }
-//----------------------------------------------------
 
 void EScenePSTool::RemoveControls()
 {
 	inherited::RemoveControls();
 }
-//----------------------------------------------------
 
 CCustomObject *EScenePSTool::CreateObject(LPVOID data, LPCSTR name)
 {

@@ -1,9 +1,5 @@
-#ifndef ESceneShapeControlsH
-#define ESceneShapeControlsH
+#pragma once
 
-#include "ESceneControlsCustom.h"
-
-//---------------------------------------------------------------------------
 class TUI_ControlShapeAdd : public TUI_CustomControl
 {
     bool AfterAppendCallback(TShiftState _Shift, CCustomObject *obj);
@@ -13,5 +9,3 @@ public:
     virtual ~TUI_ControlShapeAdd() { ; }
     virtual bool Start(TShiftState _Shift);
 };
-
-#endif

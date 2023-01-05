@@ -1,31 +1,21 @@
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "ESceneCustomOTools.h"
-#include "../XrECore/Editor/ui_main.h"
-#include "scene.h"
-#include "CustomObject.h"
 
 ESceneCustomOTool::ESceneCustomOTool(ObjClassID cls) : ESceneToolBase(cls)
 {
 }
-//----------------------------------------------------
 
 ESceneCustomOTool::~ESceneCustomOTool()
 {
 }
-//----------------------------------------------------
 
 void ESceneCustomOTool::UpdateSnapList()
 {
 }
-//----------------------------------------------------
 
 ObjectList *ESceneCustomOTool::GetSnapList()
 {
     return 0;
 }
-//----------------------------------------------------
 
 BOOL ESceneCustomOTool::_AppendObject(CCustomObject *object)
 {

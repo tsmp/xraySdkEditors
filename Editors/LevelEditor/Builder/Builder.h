@@ -1,14 +1,4 @@
-//----------------------------------------------------
-// file: Builder.h
-//----------------------------------------------------
-
-#ifndef BuilderH
-#define BuilderH
-
-#include "communicate.h"
-#include "../XrECore/Editor/EditMesh.h"
-#include "ESceneClassList.h"
-//----------------------------------------------------
+#pragma once
 
 // refs
 class CSceneObject;
@@ -21,7 +11,7 @@ struct st_SPData;
 class CSurface;
 struct st_DPSurface;
 class CSceneStat;
-//----------------------------------------------------
+
 // some types
 typedef Fvector b_vnormal;
 
@@ -168,6 +158,3 @@ public:
 };
 
 extern SceneBuilder Builder;
-
-//----------------------------------------------------
-#endif /*_INCDEF_Builder_H_*/
