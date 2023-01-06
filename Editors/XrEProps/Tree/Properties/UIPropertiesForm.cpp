@@ -96,7 +96,6 @@ void UIPropertiesForm::Draw()
 	{
 		ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_NoHide);
 		ImGui::TableSetupColumn("Prop", ImGuiTableColumnFlags_WidthFixed, TEXT_BASE_WIDTH * 6.0f);
-		ImGui::TableHeadersRow();
 		m_Root.DrawRoot();
 		ImGui::EndTable();
 	}
