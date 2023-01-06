@@ -20,6 +20,7 @@ namespace ImGui
 
         void StyleColorsSpectrum()
         {
+            MessageBox(0, L"spec", 0, 0);
             ImGuiStyle *style = &ImGui::GetStyle();
             style->GrabRounding = 4.0f;
 

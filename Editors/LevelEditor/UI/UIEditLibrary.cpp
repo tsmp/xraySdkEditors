@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "../../XrEUI/imgui_internal.h"
 
 UIEditLibrary *UIEditLibrary::Form = nullptr;
 

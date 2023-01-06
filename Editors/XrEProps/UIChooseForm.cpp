@@ -136,19 +136,20 @@ UIChooseForm::UIChooseForm() : m_Texture(nullptr), m_ClickItem(nullptr), iSelect
     m_Props = xr_new<UIPropertiesForm>();
     // m_Props->AsGroup();
 }
+
 UIChooseForm::~UIChooseForm()
 {
     if (m_Texture)
         m_Texture->Release();
-    if (!E.on_close.empty())
-    {
+
+    if (!E.on_close.empty())    
         E.on_close();
-    }
+    
     xr_delete(m_Props);
 }
+
 void UIChooseForm::Draw()
 {
-
     if (!m_LastSelection.empty())
     {
         Node *N = FindObject(&m_GeneralNode, m_LastSelection.c_str());
@@ -156,24 +157,26 @@ void UIChooseForm::Draw()
             SelectObject(&m_GeneralNode, m_LastSelection.c_str());
         m_LastSelection.clear();
     }
+
     if (m_SelectedItem && E.flags.test(SChooseEvents::flAnimated))
     {
         if (!E.on_get_texture.empty())
             E.on_get_texture(m_SelectedItem->name.c_str(), m_Texture);
     }
+
     ImGui::Columns(2);
     {
         {
             ImGui::Text("Find:");
             ImGui::SameLine();
-            m_Filter.Draw("", -1);
-            if (ImGui::BeginChild("Left", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar))
-            {
-                DrawNode(&m_GeneralNode);
-            }
+            m_Filter.Draw("##Find", -1);
+
+            if (ImGui::BeginChild("Left", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar))            
+                DrawNode(&m_GeneralNode);            
 
             ImGui::EndChild();
         }
+
         ImGui::NextColumn();
         {
             ImGui::BeginChild("Right", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), false);

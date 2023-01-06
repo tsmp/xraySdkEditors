@@ -328,13 +328,17 @@ public:
 		else if (N->IsFolder())
 		{
 			if (N->Selected)
-				ImGui::SetNextTreeNodeOpen(true);
+				ImGui::SetNextItemOpen(true);
+
 			ImGui::AlignTextToFramePadding();
 			ImGuiTreeNodeFlags FolderFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+
 			if (IsFolderBullet(N))
 				FolderFlags |= ImGuiTreeNodeFlags_Bullet;
+
 			if (IsFolderSelected(N))
 				FolderFlags |= ImGuiTreeNodeFlags_Selected;
+
 			if (ImGui::TreeNodeEx(N->Name.c_str(), FolderFlags))
 			{
 				DrawAfterFolderNode(true, N);

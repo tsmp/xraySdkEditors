@@ -373,7 +373,7 @@ void UIItemListForm::DrawAfterFolderNode(bool is_open, Node *Node)
 {
 	if (m_Flags.is(fMenuEdit))
 	{
-		if (ImGui::OpenPopupOnItemClick("MenuEdit", 1))
+		if (ImGui::OpenPopupOnItemClick2("MenuEdit", 1))
 		{
 			m_UseMenuEdit = true;
 			m_edit_node = Node;
@@ -410,7 +410,7 @@ void UIItemListForm::DrawItem(Node *Node)
 
 	if (m_Flags.is(fMenuEdit))
 	{
-		if (ImGui::OpenPopupOnItemClick("MenuEdit", 1))
+		if (ImGui::OpenPopupOnItemClick2("MenuEdit", 1))
 		{
 			m_UseMenuEdit = true;
 			m_edit_node = Node;
