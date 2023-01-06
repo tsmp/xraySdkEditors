@@ -234,23 +234,23 @@ void TUI::ClearCommands()
     ::ClearCommands();
 }
 
-//------------------------------------------------------------------------------
 // UI Commands
-//------------------------------------------------------------------------------
 CCommandVar TUI::CommandRenderFocus(CCommandVar p1, CCommandVar p2)
 {
     SetFocus(EDevice.m_hWnd);
     return 1;
 }
+
 CCommandVar TUI::CommandBreakLastOperation(CCommandVar p1, CCommandVar p2)
 {
-    if (mrYes == ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Are you sure to break current action?"))
+    if (mrYes == ELog.DlgMsg(mtConfirmation, mbYes | mbNo, "Are you sure to break current action?"))
     {
         NeedBreak();
         ELog.Msg(mtInformation, "Execution canceled.");
     }
     return 1;
 }
+
 CCommandVar TUI::CommandRenderResize(CCommandVar p1, CCommandVar p2)
 {
     /*  if (psDeviceFlags.is(rsDrawSafeRect)){
@@ -393,24 +393,26 @@ CCommandVar CommandSetSettings(CCommandVar p1, CCommandVar p2)
     Tools->SetSettings(p1, p2);
     return TRUE;
 }
+
 CCommandVar CommandSoundEditor(CCommandVar p1, CCommandVar p2)
 {
     UISoundEditorForm::Show();
-    //  TfrmSoundLib::EditLib(xr_string("Sound Editor"));
     return TRUE;
 }
+
 CCommandVar CommandSyncSounds(CCommandVar p1, CCommandVar p2)
 {
-
-    if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Are you sure to synchronize sounds?") == mrYes)
+    if (ELog.DlgMsg(mtConfirmation, mbYes | mbNo, "Are you sure to synchronize sounds?") == mrYes)
         SndLib->RefreshSounds(true);
     return TRUE;
 }
+
 CCommandVar CommandImageEditor(CCommandVar p1, CCommandVar p2)
 {
     UIImageEditorForm::Show(false);
     return TRUE;
 }
+
 CCommandVar CommandLightAnimEditor(CCommandVar p1, CCommandVar p2)
 {
     UIEditLightAnim::Show();
@@ -420,7 +422,6 @@ CCommandVar CommandLightAnimEditor(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandMinimapEditor(CCommandVar p1, CCommandVar p2)
 {
     UIMinimapEditorForm::Show();
-    // TTMinimapEditor::Show   ();
     return TRUE;
 }
 
@@ -431,7 +432,7 @@ CCommandVar CommandCheckTextures(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandRefreshTextures(CCommandVar p1, CCommandVar p2)
 {
-    if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Are you sure to synchronize textures?") == mrYes)
+    if (ELog.DlgMsg(mtConfirmation, mbYes | mbNo, "Are you sure to synchronize textures?") == mrYes)
         ImageLib.RefreshTextures(0);
     return TRUE;
 }
