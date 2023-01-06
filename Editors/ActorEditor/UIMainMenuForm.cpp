@@ -119,7 +119,7 @@ void UIMainMenuForm::Draw()
                 {
                     ExecCommand(COMMAND_REFRESH_TEXTURES);
                 }
-                if (ImGui::MenuItem("Cheack New Textures", ""))
+                if (ImGui::MenuItem("Check New Textures", ""))
                 {
                     ExecCommand(COMMAND_CHECK_TEXTURES);
                 }
