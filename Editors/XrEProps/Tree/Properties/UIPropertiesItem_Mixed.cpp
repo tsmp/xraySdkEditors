@@ -16,9 +16,7 @@ inline bool MixedNumeric(PropItem *item, bool &change)
 	}
 	return true;
 }
-//-----------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------
+
 template <class T>
 BOOL MixedFlag(PropItem *prop, bool &change)
 {
@@ -32,9 +30,7 @@ BOOL MixedFlag(PropItem *prop, bool &change)
 		change = prop->ApplyValue<FlagValue<_flags<T>>, _flags<T>>(new_val);
 	return TRUE;
 }
-//-----------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------
+
 template <class T>
 BOOL MixedToken(PropItem *prop, bool &change)
 {
@@ -47,9 +43,7 @@ BOOL MixedToken(PropItem *prop, bool &change)
 		change = prop->ApplyValue<TokenValue<T>, T>(edit_value);
 	return TRUE;
 }
-//-----------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------
+
 template <class T>
 BOOL MixedRToken(PropItem *prop, bool &change)
 {
@@ -62,11 +56,19 @@ BOOL MixedRToken(PropItem *prop, bool &change)
 		change = prop->ApplyValue<RTokenValue<T>, T>(edit_value);
 	return TRUE;
 }
-void UIPropertiesForm::RemoveMixed(Node *N)
+
+void UIPropertiesItem::RemoveMixed()
 {
-	EPropType type = N->Object->Type();
-	PropItem *node = N->Object;
+	PropItem* node = PItem;
+	EPropType type = node->Type();
 	bool change = false;
+	auto m_EditTextValue = PropertiesFrom->m_EditTextValue;
+
+	auto Modified = [&]()
+	{
+		PropertiesFrom->Modified();
+	};
+
 	switch (type)
 	{
 	case PROP_SHORTCUT:
@@ -341,6 +343,9 @@ void UIPropertiesForm::RemoveMixed(Node *N)
 		return;
 		break;
 	}
+
+#pragma TODO("TSMP: какой то странный тут код")
+
 	if (change)
 	{
 		Modified();
@@ -348,6 +353,6 @@ void UIPropertiesForm::RemoveMixed(Node *N)
 	else
 	{
 		Modified();
-		N->Object->m_Flags.set(PropItem::flIgnoreMixed, 1);
+		PItem->m_Flags.set(PropItem::flIgnoreMixed, 1);
 	}
 }

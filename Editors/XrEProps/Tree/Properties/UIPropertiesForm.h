@@ -1,6 +1,9 @@
 #pragma once
-class XREPROPS_API UIPropertiesForm : public XrUI, private FolderHelper<PropItem, true>
+
+class XREPROPS_API UIPropertiesForm : public XrUI
 {
+	friend class UIPropertiesItem;
+
 public:
 	void SetModifiedEvent(TOnModifiedEvent modif = 0) { OnModifiedEvent = modif; }
 	UIPropertiesForm();
@@ -21,28 +24,16 @@ public:
 	};
 	Flags32 m_Flags;
 
-private:
-	virtual void DrawItem(Node *Node);
-	virtual void DrawItem(const char *name, PropItem *Node);
-	virtual bool IsDrawFolder(Node *Node);
-	virtual void DrawAfterFolderNode(bool is_open, Node *Node = 0);
+	IC bool IsReadOnly() const { return m_Flags.is(plReadOnly); }
 
 private:
 	PropItemVec m_Items;
-	Node m_GeneralNode;
 	PropItem *m_EditChooseValue;
 	PropItem *m_EditTextureValue;
 	PropItem *m_EditShortcutValue;
 
 private:
 	TOnModifiedEvent OnModifiedEvent;
-	bool m_bModified;
-	void Modified()
-	{
-		m_bModified = true;
-		if (!OnModifiedEvent.empty())
-			OnModifiedEvent();
-	}
 
 private:
 	PropItem *m_EditTextValue;
@@ -56,6 +47,16 @@ private:
 	PropItem *m_EditGameTypeValue;
 	void DrawEditGameType();
 
+	bool m_bModified;
+	
+	void Modified()
+	{ 
+		m_bModified = true; 
+		
+		if (!OnModifiedEvent.empty())
+			OnModifiedEvent(); 
+	}
+
 private:
-	void RemoveMixed(Node *Node);
+	UIPropertiesItem m_Root;
 };

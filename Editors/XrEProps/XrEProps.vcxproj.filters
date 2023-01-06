@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Tree">
+      <UniqueIdentifier>{1ed51885-0799-4071-ae4b-df1eae541f8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tree\Base">
+      <UniqueIdentifier>{46ad08be-8860-4e32-ab21-23d51c8ccb56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tree\Properties">
+      <UniqueIdentifier>{195fe88c-3b69-456c-b129-41385cf1459e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,17 +51,23 @@
     <ClCompile Include="FolderLib.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="UIPropertiesForm.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="UIKeyPressForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="UIPropertiesForm_DrawItem.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="Tree\Base\UITreeItem.cpp">
+      <Filter>Tree\Base</Filter>
     </ClCompile>
-    <ClCompile Include="UIPropertiesForm_Mixed.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="Tree\Properties\UiPropertiesItem.cpp">
+      <Filter>Tree\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree\Properties\UIPropertiesForm.cpp">
+      <Filter>Tree\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree\Properties\UIPropertiesItem_DrawProp.cpp">
+      <Filter>Tree\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree\Properties\UIPropertiesItem_Mixed.cpp">
+      <Filter>Tree\Properties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,11 +92,17 @@
     <ClInclude Include="FolderLib.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="UIPropertiesForm.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="UIKeyPressForm.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree\Base\UITreeItem.h">
+      <Filter>Tree\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree\Properties\UiPropertiesItem.h">
+      <Filter>Tree\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree\Properties\UIPropertiesForm.h">
+      <Filter>Tree\Properties</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
