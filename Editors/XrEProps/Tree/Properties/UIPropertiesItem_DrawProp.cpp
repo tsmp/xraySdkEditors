@@ -139,12 +139,38 @@ BOOL FlagOnEdit(PropItem *prop, bool &change)
 
 void UIPropertiesItem::DrawProp()
 {
+	PropItem* node = PItem;
+
 	auto Modified = [&]()
 	{
 		PropertiesFrom->Modified();
 	};
 
-	auto node = PItem;
+	auto DrawTextProperty = [&](const char* text)
+	{
+		string128 Str;
+		xr_string Source = PItem->GetDrawText();
+		strncpy_s(Str, Source.c_str(), sizeof(string128) - 4);
+
+		if (Source.size() > 128 && strrchr(Str, '\n'))
+			strrchr(Str, '\n')[0] = '\0';
+
+		xr_strcat(Str, "...");
+		ImGui::Button(Str, ImVec2(-1, 0));
+
+		if (ImGui::OpenPopupOnItemClick2("EditText", 0))
+		{
+			if (PropertiesFrom->m_EditTextValueData)
+				xr_delete(PropertiesFrom->m_EditTextValueData);
+
+			PropertiesFrom->m_EditTextValueData = xr_strdup(text ? text : "");
+			PropertiesFrom->m_EditTextValueDataSize = xr_strlen(PropertiesFrom->m_EditTextValueData) + 1;
+			PropertiesFrom->m_EditTextValue = node;
+		}
+
+		PropertiesFrom->DrawEditText();
+	};
+
 	EPropType type = PItem->Type();
 
 	switch (type)
@@ -511,133 +537,25 @@ void UIPropertiesItem::DrawProp()
 
 	case PROP_CTEXT:
 	{
-		CTextValue *V = dynamic_cast<CTextValue *>(node->GetFrontValue());
+		CTextValue *V = dynamic_cast<CTextValue*>(node->GetFrontValue());
 		R_ASSERT(V);
-		{
-			char text[20];
-			xr_string str = node->GetDrawText();
-			int i = 0;
-
-			for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
-			{
-				if (str[a] == '\n')
-					a++;
-				if (str[a] == '\t')
-					a++;
-				if (str[a] == '\r')
-					a++;
-				text[i] = str[a];
-			}
-
-			if (str.size() > 16 || str.size() == 0)
-			{
-				for (; i < std::min(size_t(16), str.size()) + 3; i++)
-				{
-					text[i] = '.';
-				}
-			}
-
-			text[i] = 0;
-			ImGui::Text(text);
-		}
-
-		if (ImGui::OpenPopupOnItemClick2("EditText", 0))
-		{
-			if (PropertiesFrom->m_EditTextValueData)
-				xr_delete(PropertiesFrom->m_EditTextValueData);
-
-			PropertiesFrom->m_EditTextValueData = xr_strdup(V->GetValue());
-			PropertiesFrom->m_EditTextValueDataSize = xr_strlen(PropertiesFrom->m_EditTextValueData) + 1;
-			PropertiesFrom->m_EditTextValue = node;
-		}
-
-		PropertiesFrom->DrawEditText();
+		DrawTextProperty(V->GetValue());
 	}
 	break;
 
 	case PROP_RTEXT:
 	{
-		RTextValue *V = dynamic_cast<RTextValue *>(node->GetFrontValue());
+		RTextValue *V = dynamic_cast<RTextValue*>(node->GetFrontValue());
 		R_ASSERT(V);
-		{
-			char text[20];
-			xr_string str = node->GetDrawText();
-			int i = 0;
-
-			for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
-			{
-				if (str[a] == '\n')
-					a++;
-				if (str[a] == '\t')
-					a++;
-				if (str[a] == '\r')
-					a++;
-				text[i] = str[a];
-			}
-
-			if (str.size() > 16 || str.size() == 0)
-			{
-				for (; i < std::min(size_t(16), str.size()) + 3; i++)				
-					text[i] = '.';				
-			}
-
-			text[i] = 0;
-			ImGui::Text(text);
-		}
-
-		if (ImGui::OpenPopupOnItemClick2("EditText", 0))
-		{
-			if (PropertiesFrom->m_EditTextValueData)
-				xr_delete(PropertiesFrom->m_EditTextValueData);
-
-			PropertiesFrom->m_EditTextValueData = xr_strdup(V->GetValue().c_str() ? V->GetValue().c_str() : "");
-			PropertiesFrom->m_EditTextValueDataSize = xr_strlen(PropertiesFrom->m_EditTextValueData) + 1;
-			PropertiesFrom->m_EditTextValue = node;
-		}
-		PropertiesFrom->DrawEditText();
+		DrawTextProperty(V->GetValue().c_str());
 	}
 	break;
 
 	case PROP_STEXT:
 	{
-		STextValue *V = dynamic_cast<STextValue *>(node->GetFrontValue());
+		STextValue *V = dynamic_cast<STextValue*>(node->GetFrontValue());
 		R_ASSERT(V);
-		{
-			char text[20];
-			xr_string str = node->GetDrawText();
-			int i = 0;
-
-			for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
-			{
-				if (str[a] == '\n')
-					a++;
-				if (str[a] == '\t')
-					a++;
-				if (str[a] == '\r')
-					a++;
-				text[i] = str[a];
-			}
-
-			if (str.size() > 16 || str.size() == 0)
-			{
-				for (; i < std::min(size_t(16), str.size()) + 3; i++)				
-					text[i] = '.';				
-			}
-
-			text[i] = 0;
-			ImGui::Text(text);
-		}
-
-		if (ImGui::OpenPopupOnItemClick2("EditText", 0))
-		{
-			if (PropertiesFrom->m_EditTextValueData)
-				xr_delete(PropertiesFrom->m_EditTextValueData);
-			PropertiesFrom->m_EditTextValueData = xr_strdup(V->GetValue().c_str());
-			PropertiesFrom->m_EditTextValueDataSize = xr_strlen(PropertiesFrom->m_EditTextValueData) + 1;
-			PropertiesFrom->m_EditTextValue = node;
-		}
-
-		PropertiesFrom->DrawEditText();
+		DrawTextProperty(V->GetValue().c_str());
 	}
 	break;
 
