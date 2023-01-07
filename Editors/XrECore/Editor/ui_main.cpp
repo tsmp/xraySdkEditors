@@ -726,7 +726,15 @@ void TUI::RealResetUI()
 {
     m_Flags.set(flResetUI, FALSE);
     string_path ini_path;
-    if (FS.exist(ini_path, "$sdk_root_raw$", UI->EditorName(), "_imgui_default.ini"))
+
+    const char* rootPath;
+
+    if (Core.SocSdk)
+        rootPath = "$sdk_root_raw$";
+    else
+        rootPath = "$server_data_root$";
+
+    if (FS.exist(ini_path, rootPath, UI->EditorName(), "_imgui_default.ini"))
     {
         UI->Resize(1280, 800);
         ImGui::LoadIniSettingsFromDisk(ini_path);
