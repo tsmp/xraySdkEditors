@@ -32,7 +32,7 @@ enum EFC_Visible
 #define FRUSTUM_P_LRTB (FRUSTUM_P_LEFT | FRUSTUM_P_RIGHT | FRUSTUM_P_TOP | FRUSTUM_P_BOTTOM)
 #define FRUSTUM_P_ALL (FRUSTUM_P_LRTB | FRUSTUM_P_NEAR | FRUSTUM_P_FAR)
 
-#define FRUSTUM_SAFE (FRUSTUM_MAXPLANES * 4)
+#define FRUSTUM_SAFE (FRUSTUM_MAXPLANES * 16)
 typedef svector<Fvector, FRUSTUM_SAFE> sPoly;
 extern u32 frustum_aabb_remap[8][6];
 
