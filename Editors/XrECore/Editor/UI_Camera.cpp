@@ -321,8 +321,8 @@ bool CUI_Camera::KeyUp(WORD Key, TShiftState Shift)
 
 void CUI_Camera::MouseRayFromPoint(Fvector &start, Fvector &direction, const Ivector2 &point)
 {
-    int halfwidth = UI->GetRenderWidth() * 0.5f;
-    int halfheight = UI->GetRenderHeight() * 0.5f;
+    int halfwidth = UI->GetRenderWidth() * 0.5f / EDevice.m_ScreenQuality;
+    int halfheight = UI->GetRenderHeight() * 0.5f / EDevice.m_ScreenQuality;
 
     if (!halfwidth || !halfheight)
         return;
