@@ -76,14 +76,6 @@ void xrCore::InitCore(const char* AppName, LogCallback cb)
 	LPCSTR fs_fname = "fs.ltx";
 	xr_strcpy(ApplicationName, AppName);
 
-#ifdef XRCORE_STATIC
-	_clear87();
-	_control87(_PC_53, MCW_PC);
-	_control87(_RC_CHOP, MCW_RC);
-	_control87(_RC_NEAR, MCW_RC);
-	_control87(_MCW_EM, MCW_EM);
-#endif
-
 	// Init COM so we can use CoCreateInstance
 	if (!strstr(GetCommandLine(), "-editor"))
 		CoInitializeEx(NULL, COINIT_MULTITHREADED);
@@ -174,8 +166,6 @@ void xrCore::DestroyCore()
 	Memory._destroy();
 }
 
-#ifndef XRCORE_STATIC
-
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD ul_reason_for_call, LPVOID lpvReserved)
 {
 	switch (ul_reason_for_call)
@@ -192,4 +182,3 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD ul_reason_for_call, LPVOID lpvRese
 	}
 	return TRUE;
 }
-#endif // XRCORE_STATIC

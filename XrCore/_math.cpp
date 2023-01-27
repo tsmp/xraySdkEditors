@@ -232,10 +232,10 @@ void debug_on_thread_spawn();
 void _initialize_cpu_thread()
 {
 	debug_on_thread_spawn();
-#ifndef XRCORE_STATIC
+
 	// fpu & sse
 	FPU::m24r();
-#endif // XRCORE_STATIC
+
 	if (CPU::ID.feature & _CPU_FEATURE_SSE)
 	{
 		//_mm_setcsr ( _mm_getcsr() | (_MM_FLUSH_ZERO_ON+_MM_DENORMALS_ZERO_ON) );
