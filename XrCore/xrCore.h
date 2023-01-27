@@ -156,7 +156,6 @@
 #include "xrsharedmem.h"
 #include "xrstring.h"
 #include "xr_resource.h"
-#include "rt_compressor.h"
 #include "xr_shared.h"
 #include "string_concatenations.h"
 

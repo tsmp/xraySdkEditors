@@ -106,7 +106,6 @@ void xrCore::InitCore(const char* AppName, LogCallback cb)
 
 	InitLog();
 	_initialize_cpu();
-	rtc_initialize();
 
 	xr_FS = xr_new<ELocatorAPI>();
 	xr_EFS = xr_new<EFS_Utils>();
