@@ -1,10 +1,5 @@
-// LocatorAPI.cpp: implementation of the ELocatorAPI class.
-//
-//////////////////////////////////////////////////////////////////////
-
 #include "stdafx.h"
-#pragma hdrstop
-#ifdef ELocatorAPIH
+
 #pragma warning(disable : 4995)
 #include <io.h>
 #include <direct.h>
@@ -14,11 +9,8 @@
 
 #include "FS_internal.h"
 
-#define FSLTX "fs.ltx"
+ELocatorAPI* xr_FS = nullptr;
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 ELocatorAPI::ELocatorAPI()
 {
 	m_Flags.zero();
@@ -29,12 +21,10 @@ ELocatorAPI::ELocatorAPI()
 	dwOpenCounter = 0;
 }
 
-ELocatorAPI::~ELocatorAPI()
+void ELocatorAPI::InitFS(u32 flags)
 {
-}
+	const char* FSLTX = "fs.ltx";
 
-void ELocatorAPI::_initialize(u32 flags, LPCSTR fs_fname)
-{
 	char _delimiter = '|'; //','
 	if (m_Flags.is(flReady))
 		return;
@@ -75,12 +65,12 @@ void ELocatorAPI::_initialize(u32 flags, LPCSTR fs_fname)
 	else
 		append_path("$fs_root$", "", 0, FALSE);
 
-	IReader *F = r_open((fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+	IReader *F = r_open(FSLTX);
 
 	if (!F && m_Flags.is(flScanAppRoot))
-		F = r_open("$app_root$", (fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+		F = r_open("$app_root$", FSLTX);
 
-	R_ASSERT3(F, "Can't open file:", (fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+	R_ASSERT3(F, "Can't open file:", FSLTX);
 	// append all pathes
 	string_path buf;
 	string_path id, temp, root, add, def, capt;
@@ -134,7 +124,7 @@ void ELocatorAPI::_initialize(u32 flags, LPCSTR fs_fname)
 	CreateLog(0 != strstr(Core.Params, "-nolog"));
 }
 
-void ELocatorAPI::_destroy()
+void ELocatorAPI::DestroyFS()
 {
 	CloseLog();
 
@@ -164,34 +154,25 @@ BOOL ELocatorAPI::file_find(LPCSTR full_name, FS_File &f)
 	}
 }
 
-const ILocatorAPIFile *ELocatorAPI::exist(const char *fn)
+const bool ELocatorAPI::exist(const char *fn)
 {
-	static ILocatorAPIFile *ExistIsTrue = (ILocatorAPIFile *)0xFFFF;
-	static ILocatorAPIFile *ExistIsFalse = (ILocatorAPIFile *)0x0;
-	if (::GetFileAttributes(fn) != u32(-1))
-	{
-		return ExistIsTrue;
-	}
-	else
-	{
-		return ExistIsFalse;
-	}
+	return ::GetFileAttributes(fn) != u32(-1);
 }
 
-const ILocatorAPIFile *ELocatorAPI::exist(const char *path, const char *name)
+const bool ELocatorAPI::exist(const char *path, const char *name)
 {
 	string_path temp;
 	update_path(temp, path, name);
 	return exist(temp);
 }
 
-const ILocatorAPIFile *ELocatorAPI::exist(string_path &fn, const char *path, const char *name)
+const bool ELocatorAPI::exist(string_path &fn, const char *path, const char *name)
 {
 	update_path(fn, path, name);
 	return exist(fn);
 }
 
-const ILocatorAPIFile *ELocatorAPI::exist(string_path &fn, const char *path, const char *name, const char *ext)
+const bool ELocatorAPI::exist(string_path &fn, const char *path, const char *name, const char *ext)
 {
 	string_path nm;
 	strconcat(sizeof(nm), nm, name, ext);
@@ -655,4 +636,3 @@ BOOL ELocatorAPI::can_modify_file(LPCSTR path, LPCSTR name)
 	update_path(temp, path, name);
 	return can_modify_file(temp);
 }
-#endif

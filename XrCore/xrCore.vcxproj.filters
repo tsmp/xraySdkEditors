@@ -247,15 +247,6 @@
       <Filter>OS</Filter>
     </ClCompile>
     <ClCompile Include="xrSyncronize.cpp" />
-    <ClCompile Include="ILocatorAPI.cpp">
-      <Filter>FS\LocatorAPI</Filter>
-    </ClCompile>
-    <ClCompile Include="LocatorAPI.cpp">
-      <Filter>FS\LocatorAPI</Filter>
-    </ClCompile>
-    <ClCompile Include="LocatorAPI_auth.cpp">
-      <Filter>FS\LocatorAPI</Filter>
-    </ClCompile>
     <ClCompile Include="LocatorAPI_defs.cpp">
       <Filter>FS\LocatorAPI</Filter>
     </ClCompile>
@@ -541,12 +532,6 @@
       <Filter>OS</Filter>
     </ClInclude>
     <ClInclude Include="xrSyncronize.h" />
-    <ClInclude Include="ILocatorAPI.h">
-      <Filter>FS\LocatorAPI</Filter>
-    </ClInclude>
-    <ClInclude Include="LocatorAPI.h">
-      <Filter>FS\LocatorAPI</Filter>
-    </ClInclude>
     <ClInclude Include="LocatorAPI_defs.h">
       <Filter>FS\LocatorAPI</Filter>
     </ClInclude>

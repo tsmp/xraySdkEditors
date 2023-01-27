@@ -73,7 +73,6 @@ namespace CPU
 
 void xrCore::InitCore(const char* AppName, LogCallback cb)
 {
-	LPCSTR fs_fname = "fs.ltx";
 	xr_strcpy(ApplicationName, AppName);
 
 	// Init COM so we can use CoCreateInstance
@@ -115,26 +114,24 @@ void xrCore::InitCore(const char* AppName, LogCallback cb)
 	u32 flags = 0;
 
 	if (strstr(Params, "-build"))
-		flags |= CLocatorAPI::flBuildCopy;
+		flags |= ELocatorAPI::flBuildCopy;
 
 	if (strstr(Params, "-ebuild"))
-		flags |= CLocatorAPI::flBuildCopy | CLocatorAPI::flEBuildCopy;
+		flags |= ELocatorAPI::flBuildCopy | ELocatorAPI::flEBuildCopy;
 
 #ifdef DEBUG
 	if (strstr(Params, "-cache"))
-		flags |= CLocatorAPI::flCacheFiles;
+		flags |= ELocatorAPI::flCacheFiles;
 	else
-		flags &= ~CLocatorAPI::flCacheFiles;
+		flags &= ~ELocatorAPI::flCacheFiles;
 #endif // DEBUG
 
-	flags |= CLocatorAPI::flScanAppRoot;
+	flags |= ELocatorAPI::flScanAppRoot;
 
-#ifndef ELocatorAPIH
 	if (0 != strstr(Params, "-file_activity"))
-		flags |= CLocatorAPI::flDumpFileActivity;
-#endif
+		flags |= ELocatorAPI::flDumpFileActivity;
 
-	FS._initialize(flags, fs_fname);
+	FS.InitFS(flags);
 	PrintBuildId();
 	EFS._initialize();
 
@@ -151,7 +148,7 @@ extern compression::ppmd::stream *trained_model;
 
 void xrCore::DestroyCore()
 {
-	FS._destroy();
+	FS.DestroyFS();
 	EFS._destroy();
 	xr_delete(xr_FS);
 	xr_delete(xr_EFS);

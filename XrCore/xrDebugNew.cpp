@@ -332,7 +332,7 @@ XRCORE_API string_path g_bug_report_file;
 void CALLBACK PreErrorHandler(INT_PTR)
 {
 #ifdef USE_BUG_TRAP
-	if (!xr_FS || !FS.m_Flags.test(CLocatorAPI::flReady))
+	if (!xr_FS || !FS.m_Flags.test(ELocatorAPI::flReady))
 		return;
 
 	string_path log_folder;

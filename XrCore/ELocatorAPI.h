@@ -1,14 +1,7 @@
-// LocatorAPI.h: interface for the CLocatorAPI class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#ifndef ELocatorAPIH
-#define ELocatorAPIH
 #pragma once
-
 #include "LocatorAPI_defs.h"
 
-class XRCORE_API ELocatorAPI : public ILocatorAPI
+class XRCORE_API ELocatorAPI
 {
 	friend class FS_Path;
 
@@ -19,50 +12,68 @@ private:
 
 public:
 	ELocatorAPI();
-	virtual ~ELocatorAPI();
-	virtual void _initialize(u32 flags, LPCSTR fs_fname = 0);
-	virtual void _destroy();
+	~ELocatorAPI() = default;
 
-	virtual IReader *r_open(LPCSTR initial, LPCSTR N);
+	void InitFS(u32 flags);
+	void DestroyFS();
+
+	IReader *r_open(LPCSTR initial, LPCSTR N);
 	IC IReader *r_open(LPCSTR N) { return r_open(0, N); }
-	virtual void r_close(IReader *&S);
+	void r_close(IReader *&S);
 
-	virtual IWriter *w_open(LPCSTR initial, LPCSTR N);
-	virtual IWriter *w_open_ex(LPCSTR initial, LPCSTR N);
+	IWriter *w_open(LPCSTR initial, LPCSTR N);
+	IWriter *w_open_ex(LPCSTR initial, LPCSTR N);
 	IC IWriter *w_open(LPCSTR N) { return w_open(0, N); }
 	IC IWriter *w_open_ex(LPCSTR N) { return w_open_ex(0, N); }
-	virtual void w_close(IWriter *&S);
+	void w_close(IWriter *&S);
 
-	virtual const ILocatorAPIFile *exist(LPCSTR N);
-	virtual const ILocatorAPIFile *exist(LPCSTR path, LPCSTR name);
-	virtual const ILocatorAPIFile *exist(string_path &fn, LPCSTR path, LPCSTR name);
-	virtual const ILocatorAPIFile *exist(string_path &fn, LPCSTR path, LPCSTR name, LPCSTR ext);
+	const bool exist(LPCSTR N);
+	const bool exist(LPCSTR path, LPCSTR name);
+	const bool exist(string_path &fn, LPCSTR path, LPCSTR name);
+	const bool exist(string_path &fn, LPCSTR path, LPCSTR name, LPCSTR ext);
 
-	virtual BOOL can_write_to_folder(LPCSTR path);
-	virtual BOOL can_write_to_alias(LPCSTR path);
-	virtual BOOL can_modify_file(LPCSTR fname);
-	virtual BOOL can_modify_file(LPCSTR path, LPCSTR name);
+	BOOL can_write_to_folder(LPCSTR path);
+	BOOL can_write_to_alias(LPCSTR path);
+	BOOL can_modify_file(LPCSTR fname);
+	BOOL can_modify_file(LPCSTR path, LPCSTR name);
 
-	virtual BOOL dir_delete(LPCSTR initial, LPCSTR N, BOOL remove_files);
-	virtual BOOL dir_delete(LPCSTR full_path, BOOL remove_files) { return dir_delete(0, full_path, remove_files); }
-	virtual void file_delete(LPCSTR path, LPCSTR nm);
-	virtual void file_delete(LPCSTR full_path) { file_delete(0, full_path); }
-	virtual virtual void file_copy(LPCSTR src, LPCSTR dest);
-	virtual void file_rename(LPCSTR src, LPCSTR dest, bool bOwerwrite = true);
-	virtual int file_length(LPCSTR src);
+	BOOL dir_delete(LPCSTR initial, LPCSTR N, BOOL remove_files);
+	BOOL dir_delete(LPCSTR full_path, BOOL remove_files) { return dir_delete(0, full_path, remove_files); }
+	void file_delete(LPCSTR path, LPCSTR nm);
+	void file_delete(LPCSTR full_path) { file_delete(0, full_path); }
+	void file_copy(LPCSTR src, LPCSTR dest);
+	void file_rename(LPCSTR src, LPCSTR dest, bool bOwerwrite = true);
+	int file_length(LPCSTR src);
 
-	virtual time_t get_file_age(LPCSTR nm);
-	virtual void set_file_age(LPCSTR nm, time_t age);
+	time_t get_file_age(LPCSTR nm);
+	void set_file_age(LPCSTR nm, time_t age);
 
-	virtual BOOL path_exist(LPCSTR path);
-	virtual FS_Path *get_path(LPCSTR path);
-	virtual FS_Path *append_path(LPCSTR path_alias, LPCSTR root, LPCSTR add, BOOL recursive);
-	virtual LPCSTR update_path(string_path &dest, LPCSTR initial, LPCSTR src);
+	BOOL path_exist(LPCSTR path);
+	FS_Path *get_path(LPCSTR path);
+	FS_Path *append_path(LPCSTR path_alias, LPCSTR root, LPCSTR add, BOOL recursive);
+	LPCSTR update_path(string_path &dest, LPCSTR initial, LPCSTR src);
 
-	virtual BOOL file_find(LPCSTR full_name, FS_File &f);
+	BOOL file_find(LPCSTR full_name, FS_File &f);
+	int file_list(FS_FileSet &dest, LPCSTR path, u32 flags = FS_ListFiles, LPCSTR mask = 0);
 
-	virtual int file_list(FS_FileSet &dest, LPCSTR path, u32 flags = FS_ListFiles, LPCSTR mask = 0);
-	//.    void						update_path			(xr_string& dest, LPCSTR initial, LPCSTR src);
+	u32 dwAllocGranularity;
+	Flags32 m_Flags;
+	u32 dwOpenCounter;
+
+	enum
+	{
+		flNeedRescan = (1 << 0),
+		flBuildCopy = (1 << 1),
+		flReady = (1 << 2),
+		flEBuildCopy = (1 << 3),
+		flEventNotificator = (1 << 4),
+		flTargetFolderOnly = (1 << 5),
+		flCacheFiles = (1 << 6),
+		flScanAppRoot = (1 << 7),
+		flNeedCheck = (1 << 8),
+		flDumpFileActivity = (1 << 9),
+	};
 };
 
-#endif // ELocatorAPIH
+extern XRCORE_API ELocatorAPI* xr_FS;
+#define FS (*xr_FS)

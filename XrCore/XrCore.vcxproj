@@ -249,9 +249,6 @@
     <ClCompile Include="file_stream_reader.cpp" />
     <ClCompile Include="FS.cpp" />
     <ClCompile Include="FTimer.cpp" />
-    <ClCompile Include="ILocatorAPI.cpp" />
-    <ClCompile Include="LocatorAPI.cpp" />
-    <ClCompile Include="LocatorAPI_auth.cpp" />
     <ClCompile Include="LocatorAPI_defs.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="LzHuf.cpp" />
@@ -373,10 +370,8 @@
     <ClInclude Include="FS_impl.h" />
     <ClInclude Include="FS_internal.h" />
     <ClInclude Include="FTimer.h" />
-    <ClInclude Include="ILocatorAPI.h" />
     <ClInclude Include="intrusive_ptr.h" />
     <ClInclude Include="intrusive_ptr_inline.h" />
-    <ClInclude Include="LocatorAPI.h" />
     <ClInclude Include="LocatorAPI_defs.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="lzhuf.h" />
