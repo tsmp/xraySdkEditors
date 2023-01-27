@@ -15,8 +15,56 @@
 #endif
 
 XRCORE_API xrCore Core;
-XRCORE_API u32 build_id;
-XRCORE_API LPCSTR build_date;
+
+void PrintBuildId()
+{
+	constexpr int MonthsCount = 12;
+
+	static const char* MonthId[MonthsCount] =
+	{
+		"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+	};
+
+	static const int DaysInMonth[MonthsCount] =
+	{
+		31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+	};
+
+	static const int start_day = 31;	// 31
+	static const int start_month = 1;	// January
+	static const int start_year = 1999;	// 1999
+
+	const char* BuildDate = __DATE__;
+
+	int days;
+	int months = 0;
+	int years;
+
+	string16 month;
+	string256 buffer;
+	strcpy_s(buffer, BuildDate);
+	sscanf(buffer, "%s %d %d", month, &days, &years);
+	month[15] = '\0';
+
+	for (int i = 0; i < MonthsCount; i++)
+	{
+		if (_stricmp(MonthId[i], month))
+			continue;
+
+		months = i;
+		break;
+	}
+
+	u32 build_id = (years - start_year) * 365 + days - start_day;
+
+	for (int i = 0; i < months; ++i)
+		build_id += DaysInMonth[i];
+
+	for (int i = 0; i < start_month - 1; ++i)
+		build_id -= DaysInMonth[i];
+
+	Msg("'xrCore' build %d, %s\n", build_id, BuildDate);
+}
 
 namespace CPU
 {
@@ -95,7 +143,7 @@ void xrCore::InitCore(const char* AppName, LogCallback cb)
 #endif
 
 	FS._initialize(flags, fs_fname);
-	Msg("'%s' build %d, %s\n", "xrCore", build_id, build_date);
+	PrintBuildId();
 	EFS._initialize();
 
 #ifdef DEBUG
