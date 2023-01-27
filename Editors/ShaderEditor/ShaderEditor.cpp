@@ -6,8 +6,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 {
     if (!IsDebuggerPresent())
         Debug._initialize(false);
-    Core._initialize("shader", ELogCallback, 1, "fs.ltx", true);
 
+    Core.InitCore("shader", ELogCallback);
     STools = xr_new<CShaderTool>();
     Tools = STools;
 
@@ -23,6 +23,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     }
     
     xr_delete(MainForm);
-    Core._destroy();
+    Core.DestroyCore();
     return 0;
 }

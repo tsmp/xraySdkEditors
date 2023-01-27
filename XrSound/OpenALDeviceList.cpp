@@ -130,7 +130,7 @@ void ALDeviceList::Enumerate()
 						m_devices.back().props.efx = (alIsExtensionPresent("ALC_EXT_EFX") == TRUE);
 						m_devices.back().props.xram = (alIsExtensionPresent("EAX_RAM") == TRUE);
 
-						m_devices.back().props.eax_unwanted = Core.Editor ? 0 : ((0 == xr_strcmp(actualDeviceName, AL_GENERIC_HARDWARE)) || (0 == xr_strcmp(actualDeviceName, AL_GENERIC_SOFTWARE)));
+						m_devices.back().props.eax_unwanted = 0;
 						++index;
 					}
 					alcDestroyContext(context);

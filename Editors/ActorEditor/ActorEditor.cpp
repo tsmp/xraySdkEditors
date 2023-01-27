@@ -7,7 +7,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     if (!IsDebuggerPresent())
         Debug._initialize(false);
 
-    Core._initialize("actor", ELogCallback, 1, "fs.ltx", true);
+    Core.InitCore("actor", ELogCallback);
 
     ATools = xr_new<CActorTools>();
     Tools = ATools;
@@ -24,6 +24,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     }
 
     xr_delete(MainForm);
-    Core._destroy();
+    Core.DestroyCore();
     return 0;
 }

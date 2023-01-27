@@ -6,8 +6,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 {
     if (!IsDebuggerPresent())
         Debug._initialize(false);
-    Core._initialize("particle", ELogCallback, 1, "fs.ltx", true);
 
+    Core.InitCore("particle", ELogCallback);
     PTools = xr_new<CParticleTool>();
     Tools = PTools;
 
@@ -23,6 +23,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     }
     
     xr_delete(MainForm);
-    Core._destroy();
+    Core.DestroyCore();
     return 0;
 }

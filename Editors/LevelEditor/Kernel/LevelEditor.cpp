@@ -8,7 +8,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     if (!IsDebuggerPresent())
         Debug._initialize(false);
 
-    Core._initialize("level", ELogCallback, 1, "fs.ltx", true);
+    Core.InitCore("level", ELogCallback);
     XrSE_Factory::initialize();
     
     LTools = xr_new<CLevelTool>();
@@ -30,6 +30,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
     xr_delete(MainForm);
     XrSE_Factory::destroy();
-    Core._destroy();
+    Core.DestroyCore();
     return 0;
 }

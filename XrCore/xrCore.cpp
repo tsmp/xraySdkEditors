@@ -1,12 +1,11 @@
-// xrCore.cpp : Defines the entry point for the DLL application.
-//
 #include "stdafx.h"
-//#include "..\BearBundle\BearCore\BearCore.hpp"
-#pragma hdrstop
-
 #include <mmsystem.h>
 #include <objbase.h>
 #include "xrCore.h"
+
+#ifdef DEBUG
+#include <malloc.h>
+#endif // DEBUG
 
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "dxerr.lib")
@@ -14,10 +13,6 @@
 #ifndef _WIN64
 #pragma comment(lib, "legacy_stdio_definitions.lib")
 #endif
-
-#ifdef DEBUG
-#include <malloc.h>
-#endif // DEBUG
 
 XRCORE_API xrCore Core;
 XRCORE_API u32 build_id;
@@ -28,168 +23,119 @@ namespace CPU
 	extern void Detect();
 };
 
-static u32 init_counter = 0;
-
-//. extern xr_vector<shared_str>*	LogFile;
-
-void xrCore::_initialize(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname, bool editor_fs)
+void xrCore::InitCore(const char* AppName, LogCallback cb)
 {
+	LPCSTR fs_fname = "fs.ltx";
+	xr_strcpy(ApplicationName, AppName);
 
-	xr_strcpy(ApplicationName, _ApplicationName);
-
-	if (0 == init_counter)
-	{
-		Editor = editor_fs;
-		// BearCore::Initialize();
 #ifdef XRCORE_STATIC
-		_clear87();
-		_control87(_PC_53, MCW_PC);
-		_control87(_RC_CHOP, MCW_RC);
-		_control87(_RC_NEAR, MCW_RC);
-		_control87(_MCW_EM, MCW_EM);
-#endif
-		// Init COM so we can use CoCreateInstance
-		//		HRESULT co_res =
-		if (!strstr(GetCommandLine(), "-editor"))
-			CoInitializeEx(NULL, COINIT_MULTITHREADED);
-
-		xr_strcpy(Params, sizeof(Params), GetCommandLine());
-		_strlwr_s(Params, sizeof(Params));
-
-		string_path fn, dr, di;
-
-		// application path
-		GetModuleFileName(GetModuleHandle(MODULE_NAME), fn, sizeof(fn));
-		_splitpath(fn, dr, di, 0, 0);
-		strconcat(sizeof(ApplicationPath), ApplicationPath, dr, di);
-
-#if 0
-		// working path
-        if( strstr(Params,"-wf") )
-        {
-            string_path				c_name;
-            sscanf					(strstr(Core.Params,"-wf ")+4,"%[^ ] ",c_name);
-            SetCurrentDirectory     (c_name);
-        }
+	_clear87();
+	_control87(_PC_53, MCW_PC);
+	_control87(_RC_CHOP, MCW_RC);
+	_control87(_RC_NEAR, MCW_RC);
+	_control87(_MCW_EM, MCW_EM);
 #endif
 
-		GetCurrentDirectory(sizeof(WorkingPath), WorkingPath);
+	// Init COM so we can use CoCreateInstance
+	if (!strstr(GetCommandLine(), "-editor"))
+		CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
-		// User/Comp Name
-		DWORD sz_user = sizeof(UserName);
-		GetUserName(UserName, &sz_user);
+	xr_strcpy(Params, sizeof(Params), GetCommandLine());
+	_strlwr_s(Params, sizeof(Params));
 
-		DWORD sz_comp = sizeof(CompName);
-		GetComputerName(CompName, &sz_comp);
+	string_path fn, dr, di;
 
-		// Mathematics & PSI detection
-		CPU::Detect();
+	// application path
+	GetModuleFileName(GetModuleHandle(MODULE_NAME), fn, sizeof(fn));
+	_splitpath(fn, dr, di, nullptr, nullptr);
+	strconcat(sizeof(ApplicationPath), ApplicationPath, dr, di);
 
-		Memory._initialize(strstr(Params, "-mem_debug") ? TRUE : FALSE);
+	GetCurrentDirectory(sizeof(WorkingPath), WorkingPath);
 
-		DUMP_PHASE;
+	// User/Comp Name
+	DWORD sz_user = sizeof(UserName);
+	GetUserName(UserName, &sz_user);
 
-		InitLog();
-		_initialize_cpu();
+	DWORD sz_comp = sizeof(CompName);
+	GetComputerName(CompName, &sz_comp);
 
-		//		Debug._initialize	();
+	// Mathematics & PSI detection
+	CPU::Detect();
 
-		rtc_initialize();
+	Memory._initialize(strstr(Params, "-mem_debug") ? TRUE : FALSE);
+	DUMP_PHASE;
 
-		if (editor_fs)
-			xr_FS = xr_new<ELocatorAPI>();
-		else
-			xr_FS = xr_new<CLocatorAPI>();
+	InitLog();
+	_initialize_cpu();
+	rtc_initialize();
 
-		xr_EFS = xr_new<EFS_Utils>();
-		//.		R_ASSERT			(co_res==S_OK);
-	}
-	if (init_fs)
-	{
-		u32 flags = 0;
-		if (0 != strstr(Params, "-build"))
-			flags |= CLocatorAPI::flBuildCopy;
-		if (0 != strstr(Params, "-ebuild"))
-			flags |= CLocatorAPI::flBuildCopy | CLocatorAPI::flEBuildCopy;
+	xr_FS = xr_new<ELocatorAPI>();
+	xr_EFS = xr_new<EFS_Utils>();
+
+	u32 flags = 0;
+
+	if (strstr(Params, "-build"))
+		flags |= CLocatorAPI::flBuildCopy;
+
+	if (strstr(Params, "-ebuild"))
+		flags |= CLocatorAPI::flBuildCopy | CLocatorAPI::flEBuildCopy;
+
 #ifdef DEBUG
-		if (strstr(Params, "-cache"))
-			flags |= CLocatorAPI::flCacheFiles;
-		else
-			flags &= ~CLocatorAPI::flCacheFiles;
+	if (strstr(Params, "-cache"))
+		flags |= CLocatorAPI::flCacheFiles;
+	else
+		flags &= ~CLocatorAPI::flCacheFiles;
 #endif // DEBUG
 
-		flags |= CLocatorAPI::flScanAppRoot;
+	flags |= CLocatorAPI::flScanAppRoot;
 
 #ifndef ELocatorAPIH
-		if (0 != strstr(Params, "-file_activity"))
-			flags |= CLocatorAPI::flDumpFileActivity;
+	if (0 != strstr(Params, "-file_activity"))
+		flags |= CLocatorAPI::flDumpFileActivity;
 #endif
 
-		FS._initialize(flags, fs_fname);
-		Msg("'%s' build %d, %s\n", "xrCore", build_id, build_date);
-		EFS._initialize();
+	FS._initialize(flags, fs_fname);
+	Msg("'%s' build %d, %s\n", "xrCore", build_id, build_date);
+	EFS._initialize();
 
 #ifdef DEBUG
-		Msg("CRT heap 0x%08x", _get_heap_handle());
-		Msg("Process heap 0x%08x", GetProcessHeap());
+	Msg("CRT heap 0x%08x", _get_heap_handle());
+	Msg("Process heap 0x%08x", GetProcessHeap());
 #endif // DEBUG
-	}
+
 	SetLogCB(cb);
-	init_counter++;
 }
 
-#if 1
 #include "compression_ppmd_stream.h"
 extern compression::ppmd::stream *trained_model;
-#endif
-void xrCore::_destroy()
+
+void xrCore::DestroyCore()
 {
-	--init_counter;
-	if (0 == init_counter)
+	FS._destroy();
+	EFS._destroy();
+	xr_delete(xr_FS);
+	xr_delete(xr_EFS);
+
+	if (trained_model)
 	{
-		FS._destroy();
-		EFS._destroy();
-		xr_delete(xr_FS);
-		xr_delete(xr_EFS);
-
-#if 1
-		if (trained_model)
-		{
-			void *buffer = trained_model->buffer();
-			xr_free(buffer);
-			xr_delete(trained_model);
-		}
-#endif
-
-		Memory._destroy();
-
-		// BearCore::Destroy();
+		void* buffer = trained_model->buffer();
+		xr_free(buffer);
+		xr_delete(trained_model);
 	}
+
+	Memory._destroy();
 }
 
 #ifndef XRCORE_STATIC
 
-//. why ???
-#if 0
-	BOOL WINAPI DllEntryPoint(HINSTANCE hinstDLL, DWORD ul_reason_for_call, LPVOID lpvReserved)
-#else
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD ul_reason_for_call, LPVOID lpvReserved)
-#endif
 {
 	switch (ul_reason_for_call)
 	{
-	case DLL_PROCESS_ATTACH:
-	{
-	}
-	//.		LogFile.reserve		(256);
-	break;
 	case DLL_THREAD_ATTACH:
-		// if (!strstr(GetCommandLine(),"-editor"))
-		// CoInitializeEx	(NULL, COINIT_MULTITHREADED);
 		timeBeginPeriod(1);
 		break;
-	case DLL_THREAD_DETACH:
-		break;
+
 	case DLL_PROCESS_DETACH:
 #ifdef USE_MEMORY_MONITOR
 		memory_monitor::flush_each_time(true);
