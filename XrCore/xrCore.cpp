@@ -142,23 +142,12 @@ void xrCore::InitCore(const char* AppName, LogCallback cb)
 	SetLogCB(cb);
 }
 
-#include "compression_ppmd_stream.h"
-extern compression::ppmd::stream *trained_model;
-
 void xrCore::DestroyCore()
 {
 	FS.DestroyFS();
 	EFS._destroy();
 	xr_delete(xr_FS);
 	xr_delete(xr_EFS);
-
-	if (trained_model)
-	{
-		void* buffer = trained_model->buffer();
-		xr_free(buffer);
-		xr_delete(trained_model);
-	}
-
 	Memory._destroy();
 }
 

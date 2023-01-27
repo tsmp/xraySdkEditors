@@ -55,21 +55,6 @@
     <Filter Include="Compression">
       <UniqueIdentifier>{e288bdc2-b843-415a-bd5d-cf597b697367}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Compression\ppmd">
-      <UniqueIdentifier>{1343e767-3b72-4c6f-8c95-91287e380d51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compression\ppmd\common">
-      <UniqueIdentifier>{a325971c-c475-4849-acb6-92db8f339bec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compression\ppmd\core">
-      <UniqueIdentifier>{84e67fca-e393-42a5-905c-490a94858337}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compression\ppmd\core\allocator">
-      <UniqueIdentifier>{906acec2-db03-4de0-89b7-8812b3318b0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compression\ppmd\stream">
-      <UniqueIdentifier>{ed4956d4-2254-4d7f-9814-eed3da2ac5be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Compression\lz">
       <UniqueIdentifier>{c5ad5e1c-daae-48f2-b454-0c6e529a8fed}</UniqueIdentifier>
     </Filter>
@@ -200,12 +185,6 @@
     </ClCompile>
     <ClCompile Include="memory_monitor.cpp">
       <Filter>memory_monitor</Filter>
-    </ClCompile>
-    <ClCompile Include="ppmd_compressor.cpp">
-      <Filter>Compression\ppmd</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Compression\ppmd\core</Filter>
     </ClCompile>
     <ClCompile Include="LzHuf.cpp">
       <Filter>Compression\lz</Filter>
@@ -437,27 +416,6 @@
     </ClInclude>
     <ClInclude Include="memory_monitor.h">
       <Filter>memory_monitor</Filter>
-    </ClInclude>
-    <ClInclude Include="ppmd_compressor.h">
-      <Filter>Compression\ppmd</Filter>
-    </ClInclude>
-    <ClInclude Include="PPMd.h">
-      <Filter>Compression\ppmd\common</Filter>
-    </ClInclude>
-    <ClInclude Include="PPMdType.h">
-      <Filter>Compression\ppmd\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Coder.hpp">
-      <Filter>Compression\ppmd\core</Filter>
-    </ClInclude>
-    <ClInclude Include="SubAlloc.hpp">
-      <Filter>Compression\ppmd\core\allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="compression_ppmd_stream.h">
-      <Filter>Compression\ppmd\stream</Filter>
-    </ClInclude>
-    <ClInclude Include="compression_ppmd_stream_inline.h">
-      <Filter>Compression\ppmd\stream</Filter>
     </ClInclude>
     <ClInclude Include="lzhuf.h">
       <Filter>Compression\lz</Filter>
