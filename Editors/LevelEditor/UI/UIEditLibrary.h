@@ -29,6 +29,9 @@ private:
 	void OnMakeThmClick();
 	void OnPreviewClick();
 
+	void MakeLOD(bool highQuality);
+	void GenerateLOD(RStringVec &props, bool bHighQuality);
+
 	void RefreshSelected();
 	void ChangeReference(const RStringVec &items);
 	bool SelectionToReference(ListItemsVec *props);
@@ -38,6 +41,9 @@ private:
 	LPCSTR m_Current;
 	bool m_Preview;
 	ListItem* m_Selected;
+
+	bool m_SelectLods;
+	bool m_HighQualityLod;
 
 	xr_vector<CSceneObject *> m_pEditObjects;
 

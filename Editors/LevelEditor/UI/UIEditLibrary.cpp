@@ -20,6 +20,7 @@ UIEditLibrary::UIEditLibrary()
 	m_Props = xr_new<UIPropertiesForm>();
 	m_Selected = nullptr;
 	m_Preview = false;
+	m_SelectLods = false;
 }
 
 void UIEditLibrary::OnItemFocused(ListItem *item)
@@ -324,6 +325,81 @@ void UIEditLibrary::DrawObject(CCustomObject *obj, const char *name)
 	}*/
 }
 
+void UIEditLibrary::GenerateLOD(RStringVec &props, bool bHighQuality)
+{
+	u32 lodsCnt = 0;
+	SPBItem* pb = UI->ProgressStart(props.size(), "Making LOD");
+
+	for (const shared_str &str: props)
+	{
+		RStringVec reference;
+		reference.push_back(str);
+		ChangeReference(reference); // select item
+
+		R_ASSERT(m_pEditObjects.size() == 1);
+		CSceneObject* SO = m_pEditObjects[0];
+		CEditableObject* O = SO->GetReference();
+
+		if (O && O->IsMUStatic())
+		{
+			pb->Inc(O->GetName());
+			BOOL bLod = O->m_objectFlags.is(CEditableObject::eoUsingLOD);
+			O->m_objectFlags.set(CEditableObject::eoUsingLOD, FALSE);
+			xr_string tex_name;
+			tex_name = EFS.ChangeFileExt(O->GetName(), "");
+
+			string_path	tmp;
+			strcpy(tmp, tex_name.c_str());
+			_ChangeSymbol(tmp, '\\', '_');
+			tex_name = xr_string("lod_") + tmp;
+			tex_name = ImageLib.UpdateFileName(tex_name);
+			ImageLib.CreateLODTexture(O, tex_name.c_str(), LOD_IMAGE_SIZE, LOD_IMAGE_SIZE, LOD_SAMPLE_COUNT, O->Version(), bHighQuality ? 4/*7*/ : 1);
+			O->OnDeviceDestroy();
+			O->m_objectFlags.set(CEditableObject::eoUsingLOD, bLod);
+			ELog.Msg(mtInformation, "LOD for object '%s' successfully created.", O->GetName());
+			lodsCnt++;
+		}
+		else
+			ELog.Msg(mtError, "Can't create LOD texture from non 'Multiple Usage' object.", SO->RefName());
+
+		if (UI->NeedAbort())
+			break;
+	}
+
+	UI->ProgressEnd(pb);
+
+	if(lodsCnt)
+		ELog.DlgMsg(mtInformation, "'%u' LOD's succesfully created.", lodsCnt);
+}
+
+void UIEditLibrary::MakeLOD(bool bHighQuality)
+{
+	//if (ebSave->Enabled)
+	//{
+	//	ELog.DlgMsg(mtError, "Save library changes before generating LOD.");
+	//	return;
+	//}
+
+	int res = ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() | mbYes | mbNo | mbCancel, "Do you want to select multiple objects?");
+
+	if (res == mrCancel)
+		return;
+
+	if (res == mrNo)
+	{
+		RStringVec sel_items;
+		sel_items.push_back(m_Selected->Key());
+		GenerateLOD(sel_items, bHighQuality);
+		return;
+	}
+
+	R_ASSERT(res == mrYes);
+	UIChooseForm::SelectItem(smObject, 512, 0);
+	m_SelectLods = true;
+	m_HighQualityLod = true;
+	// answer is handled in DrawRightBar
+}
+
 void UIEditLibrary::OnMakeThmClick()
 {
 	U32Vec pixels;
@@ -396,11 +472,11 @@ void UIEditLibrary::DrawRightBar()
 			ImGui::PopStyleVar();
 		}
 
-		// Make Thumbnail
+		// Make Thumbnail & Lod
 		{
-			bool enableMakeThumbnail = m_Selected && m_Preview;
+			bool enableMakeThumbnailAndLod = m_Selected && m_Preview;
 
-			if (!enableMakeThumbnail)
+			if (!enableMakeThumbnailAndLod)
 			{
 				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
 				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
@@ -409,37 +485,21 @@ void UIEditLibrary::DrawRightBar()
 			if (ImGui::Button("Make Thumbnail", ImVec2(-1, 0)))
 				OnMakeThmClick();
 
-			if (!enableMakeThumbnail)
+			if (ImGui::Button("Make LOD (High Quality)", ImVec2(-1, 0)))
+				MakeLOD(true);
+
+			if (ImGui::Button("Make LOD (Low Quality)", ImVec2(-1, 0)))
+				MakeLOD(false);
+
+			if (!enableMakeThumbnailAndLod)
 			{
 				ImGui::PopItemFlag();
 				ImGui::PopStyleVar();
 			}
 		}
 
-		//if (disabled)
-		{
-			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
-		}
-
-		if (ImGui::Button("Make LOD (High Quality)", ImVec2(-1, 0))) 
-		{
-		}
-		if (ImGui::Button("Make LOD (Low Quality)", ImVec2(-1, 0))) 
-		{
-		}
-
-		// if (disabled)
-		{
-			ImGui::PopItemFlag();
-			ImGui::PopStyleVar();
-		}
-
 		if (ImGui::Checkbox("Preview", &m_Preview))
 			OnPreviewClick();
-
-		// if (m_Preview)
-		//	DrawSceneObjects();
 
 		// if (disabled)
 		{
@@ -475,6 +535,29 @@ void UIEditLibrary::DrawRightBar()
 			Close();
 
 		ImGui::EndChild();
+	}
+
+	if (m_SelectLods)
+	{
+		bool change = false;
+		SStringVec lst;
+
+		if (UIChooseForm::GetResult(change, lst))
+		{
+			if (change)
+			{
+				RStringVec selItems;
+
+				for (const xr_string &xrStr: lst)
+					selItems.push_back(xrStr.c_str());
+
+				GenerateLOD(selItems, m_HighQualityLod);
+			}
+
+			m_SelectLods = false;
+		}
+
+		UIChooseForm::Update();
 	}
 }
 

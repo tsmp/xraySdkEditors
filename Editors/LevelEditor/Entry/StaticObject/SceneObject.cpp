@@ -23,11 +23,13 @@ void CSceneObject::Construct(LPVOID data)
 
 CSceneObject::~CSceneObject()
 {
-    for (CSurface *i : m_Surfaces)
-    {
-        i->OnDeviceDestroy();
-        xr_delete(i);
-    }
+#pragma TODO("TSMP: check why this was added")
+    // crashes when selecting objects in library editor after lod textures generation
+    //for (CSurface *i : m_Surfaces)
+    //{
+    //    i->OnDeviceDestroy();
+    //    xr_delete(i);
+    //}
     Lib.RemoveEditObject(m_pReference);
 }
 //----------------------------------------------------
