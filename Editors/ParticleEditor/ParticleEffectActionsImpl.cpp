@@ -8,9 +8,12 @@
 #include "../../xrParticles/particle_actions_collection.h"
 
 using namespace PAPI;
-#define PARTICLE_ACTION_VERSION 0x0001
-//---------------------------------------------------------------------------
-xr_token2 actions_token[] = {
+
+const u32 PARTICLE_ACTION_VERSION = 0x0001;
+const u32 PARTICLE_ACTION_VERSION_SOC = 0x0000;
+
+xr_token2 actions_token[] =
+{
 	{"Avoid", "Steer particles away from a domain of space.", PAAvoidID},
 	{"Bounce", "Bounce particles off a domain of space.", PABounceID},
 	{"Copy VertexB", "Set the secondary position from current position.", PACopyVertexBID},
@@ -40,7 +43,8 @@ xr_token2 actions_token[] = {
 	{"Target Velocity", "Change velocity of all particles toward the specified velocity.", PATargetVelocityID},
 	{"Vortex", "Swirl particles around a vortex.", PAVortexID},
 	{"Turbulence", "A Turbulence.", PATurbulenceID},
-	{0, 0}};
+	{0, 0}
+};
 
 EParticleAction *pCreateEActionImpl(PAPI::PActionEnum type)
 {
@@ -155,7 +159,12 @@ void EParticleAction::Render(const Fmatrix &parent)
 void EParticleAction::Load(IReader &F)
 {
 	u32 vers = F.r_u32();
-	R_ASSERT(vers == PARTICLE_ACTION_VERSION);
+
+	if(Core.SocSdk)
+		R_ASSERT(vers == PARTICLE_ACTION_VERSION_SOC);
+	else
+		R_ASSERT(vers == PARTICLE_ACTION_VERSION);
+
 	F.r_stringZ(actionName);
 	flags.assign(F.r_u32());
 	for (PFloatMapIt f_it = floats.begin(); f_it != floats.end(); f_it++)
@@ -1152,12 +1161,20 @@ EPATargetColor::EPATargetColor() : EParticleAction(PAPI::PATargetColorID)
 	appendVector("Color", PVector::vColor, 1.f, 1.f, 1.f, 0.f, 1.f);
 	appendFloat("Alpha", 1.f, 0.0f, 1.0f);
 	appendFloat("Scale", 1.f, 0.01f, P_MAXFLOAT);
-	appendFloat("TimeFrom", 0.0f, 0.0f, 1.0f);
-	appendFloat("TimeTo", 1.0f, 0.0f, 1.0f);
+
+	if (!Core.SocSdk)
+	{
+		appendFloat("TimeFrom", 0.0f, 0.0f, 1.0f);
+		appendFloat("TimeTo", 1.0f, 0.0f, 1.0f);
+	}
 }
+
 void EPATargetColor::Compile(IWriter &F)
 {
-	pTargetColor(F, _vector("Color").val, _float("Alpha").val, _float("Scale").val, _float("TimeFrom").val, _float("TimeTo").val);
+	if(Core.SocSdk)
+		pTargetColor(F, _vector("Color").val, _float("Alpha").val, _float("Scale").val, 0.f, 1.f);
+	else
+		pTargetColor(F, _vector("Color").val, _float("Alpha").val, _float("Scale").val, _float("TimeFrom").val, _float("TimeTo").val);
 }
 
 EPATargetSize::EPATargetSize() : EParticleAction(PAPI::PATargetSizeID)
@@ -1167,6 +1184,7 @@ EPATargetSize::EPATargetSize() : EParticleAction(PAPI::PATargetSizeID)
 	appendVector("Size", PVector::vNum, 2.f, 2.f, 0.001f, EPS_L);
 	appendVector("Scale", PVector::vNum, 1.f, 1.f, 0.f);
 }
+
 void EPATargetSize::Compile(IWriter &F)
 {
 	pTargetSize(F, _vector("Size").val, _vector("Scale").val);
@@ -1179,6 +1197,7 @@ EPATargetRotate::EPATargetRotate() : EParticleAction(PAPI::PATargetRotateID)
 	appendVector("Rotation", PVector::vAngle, 0.f, 0.f, 0.f);
 	appendFloat("Scale", 1.f, 0.0f, P_MAXFLOAT);
 }
+
 void EPATargetRotate::Compile(IWriter &F)
 {
 	pTargetRotate(F, _vector("Rotation").val, _float("Scale").val);
