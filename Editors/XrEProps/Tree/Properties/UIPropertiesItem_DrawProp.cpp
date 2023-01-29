@@ -16,20 +16,22 @@ inline bool DrawNumeric(PropItem *item, bool &change, bool read_only)
 		item->BeforeEdit<NumericValue<T>, T>(value);
 		data = static_cast<int>(value);
 	}
+
 	change = ImGui::InputInt("##value", &data, read_only ? ImGuiInputTextFlags_ReadOnly : 0);
+
 	if (change)
 	{
+		T temp = static_cast<T>(data);
 
-		if (int(V->lim_mn) > data)
-			data = int(V->lim_mn);
-		if (int(V->lim_mx) < data)
-			data = int(V->lim_mx);
-		T temp = T(data);
+		if (V->lim_mn > temp)
+			temp = V->lim_mn;
+		if (V->lim_mx < temp)
+			temp = V->lim_mx;
+
 		if (item->AfterEdit<NumericValue<T>, T>(temp) && !read_only)
-		{
 			change = item->ApplyValue<NumericValue<T>, T>(temp);
-		}
 	}
+
 	return true;
 }
 
