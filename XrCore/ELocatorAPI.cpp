@@ -31,12 +31,11 @@ void ELocatorAPI::InitFS(u32 flags)
 
 	Log("Initializing File System...");
 	m_Flags.set(flags, TRUE);
+	string_path tmpAppPath;
 
 	if (m_Flags.is(flScanAppRoot))
 	{
-		string_path tmpAppPath;
 		string_path tmpFsPath;
-
 		xr_strcpy(tmpAppPath, sizeof(tmpAppPath), Core.ApplicationPath);
 		xr_strcpy(tmpFsPath, sizeof(tmpAppPath), tmpAppPath);
 		xr_strcat(tmpFsPath, sizeof(tmpAppPath), FSLTX);
@@ -65,6 +64,7 @@ void ELocatorAPI::InitFS(u32 flags)
 	else
 		append_path("$fs_root$", "", 0, FALSE);
 
+	xr_strcat(tmpAppPath, "\\");
 	IReader *F = r_open(FSLTX);
 
 	if (!F && m_Flags.is(flScanAppRoot))
@@ -110,9 +110,21 @@ void ELocatorAPI::InitFS(u32 flags)
 		lp_add = (cnt >= 4) ? xr_strlwr(add) : 0;
 		lp_def = (cnt >= 5) ? def : 0;
 		lp_capt = (cnt >= 6) ? capt : 0;
+
 		PathPairIt p_it = pathes.find(root);
+		const char* rootDir;
+
+		if (p_it != pathes.end())
+			rootDir = p_it->second->m_Path;
+		else
+		{
+			// to find path when working directory is not sdk root, and root not specified
+			rootDir = tmpAppPath;
+			lp_add = root;
+		}
+
 		std::pair<PathPairIt, bool> I;
-		FS_Path *P = xr_new<FS_Path>((p_it != pathes.end()) ? p_it->second->m_Path : root, lp_add, lp_def, lp_capt, fl);
+		FS_Path *P = xr_new<FS_Path>(rootDir, lp_add, lp_def, lp_capt, fl);
 		I = pathes.insert(mk_pair(xr_strdup(id), P));
 
 		R_ASSERT(I.second);
