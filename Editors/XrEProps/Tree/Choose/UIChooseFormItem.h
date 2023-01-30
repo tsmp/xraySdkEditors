@@ -13,6 +13,7 @@ public:
 	SChooseItem* Object;
 	shared_str Text;
 	bool bSelected;
+	bool m_bOpenByDefault;
 	void Draw();
 	void DrawRoot();
 	void Sort();
@@ -23,6 +24,7 @@ public:
 	void ClearSelection();
 	void Selected(int Start, int End);
 	void SelectedToFavorite(bool Favorite);
+	void OpenParentItems(const char* path, char delimiter = '\\');
 
 protected:
 	bool CheckFilter();

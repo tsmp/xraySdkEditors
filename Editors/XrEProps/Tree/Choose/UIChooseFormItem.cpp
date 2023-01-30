@@ -6,6 +6,7 @@ UIChooseFormItem::UIChooseFormItem(shared_str Name) : Object(nullptr), UITreeIte
 	m_bIsMixed = false;
 	bSelected = false;
 	Index = -1;
+	m_bOpenByDefault = false;
 }
 
 void UIChooseFormItem::Draw()
@@ -83,6 +84,9 @@ void UIChooseFormItem::Draw()
 	else
 	{
 		ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_OpenOnArrow;
+
+		if (m_bOpenByDefault)
+			Flags |= ImGuiTreeNodeFlags_DefaultOpen;
 
 		if (Form->m_Flags.test(cfMultiSelect))
 		{
@@ -270,4 +274,20 @@ UITreeItem *UIChooseFormItem::CreateItem(shared_str Name)
 	auto Item = xr_new<UIChooseFormItem>(Name);
 	Item->Form = Form;
 	return Item;
+}
+
+void UIChooseFormItem::OpenParentItems(const char* path, char delimiter)
+{
+	if (!delimiter || !strchr(path, delimiter)) // not a folder
+		return;
+
+	string_path itemName;
+	xr_strcpy(itemName, path);
+	strchr(itemName, delimiter)[0] = '\0';
+
+	if (UIChooseFormItem* Item = dynamic_cast<UIChooseFormItem*>(FindItem(itemName)))
+	{
+		Item->m_bOpenByDefault = true;
+		Item->OpenParentItems(strchr(path, delimiter) + 1);
+	}
 }

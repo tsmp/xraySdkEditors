@@ -44,7 +44,6 @@ void UIChooseForm::FillItems(u32 choose_id)
     for (auto &i : m_Items)
     {
         xr_string Name = i.name.c_str();
-        Name.append("*");
         xr_string RealName;
 
         if (strrchr(i.name.c_str(), '\\'))
@@ -62,7 +61,6 @@ void UIChooseForm::FillItems(u32 choose_id)
     {
         m_ItemNone.name = NONE_CAPTION;
         xr_string Name = m_ItemNone.name.c_str();
-        Name.append("*");
         UIChooseFormItem *Item = static_cast<UIChooseFormItem *>(m_RootItem.AppendItem(Name.c_str()));
         Item->Object = &m_ItemNone;
         Item->Text = NONE_CAPTION;
@@ -444,12 +442,11 @@ void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnC
         {
             _GetItem(init_name, i, result);
 
-            for (auto &item : Form->m_Items)
-            {
-                if (item.name.c_str() == result)                
-                    Form->m_SelectedItems.push_back(&item);                
-            }
+            if (auto *Item = Form->m_RootItem.FindItem(result.c_str()))
+                ((UIChooseFormItem*)Item)->bSelected = true;
         }
+
+        Form->m_RootItem.SelectedToFavorite(true);
         Form->CheckFavorite();
     }
     else
@@ -460,6 +457,7 @@ void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnC
             {
                 ((UIChooseFormItem*)Item)->bSelected = true;
                 Form->UpdateSelected((UIChooseFormItem*)Item);
+                Form->m_RootItem.OpenParentItems(init_name);
             }
         }
     }
