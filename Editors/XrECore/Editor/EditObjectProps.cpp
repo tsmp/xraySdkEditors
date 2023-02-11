@@ -4,7 +4,6 @@
 #include "EditObject.h"
 #include "EditMesh.h"
 #include "ui_main.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
 #include "motion.h"
 #include "bone.h"
 

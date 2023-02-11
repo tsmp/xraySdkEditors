@@ -21,7 +21,6 @@
 #include "weapon.h"
 #include "cameraeffector.h"
 #endif
-#include "xrServer_Objects_ALife_Monsters.h"
 #endif
 
 #undef SMART_CAST_H

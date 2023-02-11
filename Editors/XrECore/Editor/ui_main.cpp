@@ -9,7 +9,6 @@
 #include "UI_Main.h"
 #include "d3dutils.h"
 #include "SoundManager.h"
-#include "PSLibrary.h"
 
 #include "UIEditLightAnim.h"
 #include "UIImageEditorForm.h"
@@ -334,7 +333,6 @@ void TUI::CheckWindowPos(HWND *form)
     if (form->Top<0) 							form->Top 	= 0;*/
 }
 //---------------------------------------------------------------------------
-#include "igame_persistent.h"
 #ifndef _EDITOR
 #include "environment.h"
 #endif

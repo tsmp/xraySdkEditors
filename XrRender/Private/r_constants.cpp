@@ -7,7 +7,6 @@
 
 #include "ResourceManager.h"
 
-#include "../../xrCore/xrPool.h"
 #include "r_constants.h"
 
 #include "../Private/dxRenderDeviceRender.h"

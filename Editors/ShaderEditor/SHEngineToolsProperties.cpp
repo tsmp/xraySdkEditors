@@ -3,7 +3,6 @@
 #pragma hdrstop
 
 #include "SHEngineTools.h"
-#include "../xrEProps/folderlib.h"
 
 //---------------------------------------------------------------------------
 xr_token mode_token[] = {

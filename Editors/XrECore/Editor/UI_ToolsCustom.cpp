@@ -7,10 +7,7 @@
 #include "EditObject.h"
 #include "EditMesh.h"
 #include "ui_main.h"
-#include "motion.h"
-#include "bone.h"
 #include "library.h"
-#include "fmesh.h"
 #include "d3dutils.h"
 
 //------------------------------------------------------------------------------

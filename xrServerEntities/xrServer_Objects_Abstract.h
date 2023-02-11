@@ -11,7 +11,6 @@
 
 #pragma pack(push, 4)
 #include "xrServer_Space.h"
-#include "../xrCDB/xrCDB.h"
 #include "ShapeData.h"
 #include "gametype_chooser.h"
 
@@ -20,11 +19,8 @@ class CDUInterface;
 
 #ifndef _EDITOR
 #ifndef XRGAME_EXPORTS
-#include "../xrSound/Sound.h"
 #endif
 #endif
-
-#include "xrEProps.h"
 
 #ifndef XRGAME_EXPORTS
 #include "DrawUtils.h"

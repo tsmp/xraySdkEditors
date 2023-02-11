@@ -1,11 +1,7 @@
 #include "StdAfx.h"
-#include "PHDynamicData.h"
 #include "Physics.h"
 #include "tri-colliderknoopc/dTriList.h"
 #include "PHShellSplitter.h"
-#include "PHFracture.h"
-#include "PHJointDestroyInfo.h"
-#include "PHCollideValidator.h"
 //#include "Level.h"
 #include "iphysicsshellholder.h"
 #include "PhysicsShellAnimator.h"
@@ -22,7 +18,6 @@
 
 #include "ExtendedGeom.h"
 
-#include "PHElement.h"
 #include "PHShell.h"
 void CPHShell::activate(bool disable)
 {

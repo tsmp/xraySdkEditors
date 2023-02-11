@@ -34,9 +34,7 @@ extern "C"
 {
 #endif
 
-#include <stddef.h> /* for size_t */
-
-  /*
+/*
     malloc(size_t n)
     Returns a pointer to a newly allocated chunk of at least n bytes, or
     null if no space is available. Additionally, on failure, errno is

@@ -6,7 +6,6 @@
 
 #include <io.h>
 #include <fcntl.h>
-#include <sys\stat.h>
 
 #define MODULE
 

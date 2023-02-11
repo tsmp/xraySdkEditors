@@ -8,7 +8,6 @@
 //#include "EditMeshVLight.h"
 #include "EditMesh.h"
 #include "EditObject.h"
-#include "ui_main.h"
 #include "d3dutils.h"
 #include "render.h"
 //----------------------------------------------------

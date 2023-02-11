@@ -17,7 +17,6 @@ using namespace Mgc;
 
 #include <algorithm>
 #include <cassert>
-#include <cmath>
 #include <set>
 using namespace std;
 

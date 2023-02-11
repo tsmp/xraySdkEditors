@@ -3,8 +3,6 @@
 
 #include "xrstring.h"
 
-#include "FS_impl.h"
-
 XRCORE_API extern str_container *g_pStringContainer = NULL;
 
 #define HEADER 12 + sizeof(str_value *) // ref + len + crc + next

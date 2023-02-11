@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "..\xrCore\_type_traits.h"
 
 #define declare_has(a)                                             \
 	template <typename T>                                          \

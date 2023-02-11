@@ -6,9 +6,7 @@
 
 #include "..\..\xrRender\Private\ParticleEffect.h"
 #include "..\XrEcore\Editor\ParticleEffectActions.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
 #include "ui_particletools.h"
-#include "../xrEProps/FolderLib.h"
 
 BOOL PS::CPEDef::Equal(const CPEDef *pe)
 {

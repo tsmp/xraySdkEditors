@@ -90,8 +90,6 @@ void IBlender::Destroy(IBlender *&B)
 #include "../../R1_PC/blender_LaEmB.h"
 #include "blender_Lm(EbB).h"
 #include "blender_BmmD.h"
-#include "../../R1_PC/blender_shadow_world.h"
-#include "../../R1_PC/blender_blur.h"
 #include "../../R1_PC/blender_model.h"
 #include "blender_model_ebb.h"
 #include "blender_detail_still.h"

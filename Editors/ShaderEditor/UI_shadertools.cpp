@@ -4,7 +4,6 @@
 #pragma hdrstop
 
 #include "UI_ShaderTools.h"
-#include "GameMtlLib.h"
 
 //------------------------------------------------------------------------------
 CShaderTool *STools = (CShaderTool *)Tools;

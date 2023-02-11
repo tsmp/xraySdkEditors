@@ -6,7 +6,6 @@
 #pragma hdrstop
 
 #include "EditMesh.h"
-#include "EditObject.h"
 
 //----------------------------------------------------
 void CEditableMesh::Transform(const Fmatrix &parent)

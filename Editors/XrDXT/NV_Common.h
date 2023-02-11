@@ -16,7 +16,6 @@ Comments:
 #ifndef __NV_COMMON_H
 #define __NV_COMMON_H
 
-#include <windows.h>
 #include <assert.h>
 
 #ifndef ASSERT_IF_FAILED

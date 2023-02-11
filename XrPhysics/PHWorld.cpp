@@ -20,7 +20,6 @@
 #include "geometrybits.h"
 #include "console_vars.h"
 #include "../xrengine/device.h"
-#include "../xrengine/defines.h"
 #include "../xrcdb/xr_area.h"
 #include "../xrcore/fs_internal.h"
 #ifdef DEBUG

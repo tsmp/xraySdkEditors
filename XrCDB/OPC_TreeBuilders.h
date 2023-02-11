@@ -20,7 +20,6 @@
 #ifndef __OPC_TREEBUILDERS_H__
 #define __OPC_TREEBUILDERS_H__
 
-#include "opc_aabbtree.h"
 #include "../xrCore/xrPool.h"
 
 //! Tree splitting rules

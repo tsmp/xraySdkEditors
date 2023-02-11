@@ -35,7 +35,6 @@ DEFINE_VECTOR(shared_str, RStrVec, RStrVecIt);
 
 #include "ExportSkeleton.h"
 
-#include "../engine/nvMeshMender.h"
 /*
 void CExportSkeleton::SSplit::CalculateTB()
 {

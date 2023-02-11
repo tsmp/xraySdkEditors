@@ -3,7 +3,6 @@
 
 #include "render.h"
 #include "ResourceManager.h"
-#include "../../../xrAPI/xrAPI.h"
 //---------------------------------------------------------------------------
 float ssaDISCARD = 4.f;
 float ssaDONTSORT = 32.f;
@@ -76,7 +75,6 @@ void CRender::Calculate()
 	ViewBase.CreateFromMatrix(EDevice.mFullTransform, FRUSTUM_P_LRTB | FRUSTUM_P_FAR);
 }
 
-#include "igame_persistent.h"
 #ifndef _EDITOR
 #include "environment.h"
 #endif

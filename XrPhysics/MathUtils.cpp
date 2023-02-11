@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "mathutils.h"
 #include "ode/common.h"
 XRPHYSICS_API const float phInfinity = dInfinity;
 /*

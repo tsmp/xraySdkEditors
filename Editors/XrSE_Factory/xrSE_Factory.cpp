@@ -9,9 +9,7 @@
 #include "pch_script.h"
 #include "xrSE_Factory.h"
 #include "ai_space.h"
-#include "script_engine.h"
 #include "object_factory.h"
-#include "xrEProps.h"
 #include "xrSE_Factory_import_export.h"
 #include "script_properties_list_helper.h"
 

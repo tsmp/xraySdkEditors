@@ -11,7 +11,6 @@
 // http://www.magic-software.com/License/free.pdf
 
 #include "MgcTriangleMesh.h"
-#include "MgcRTLib.h"
 using namespace Mgc;
 
 #include <fstream>

@@ -5,12 +5,9 @@
 #include "EditObject.h"
 #include "EditMesh.h"
 #include "fmesh.h"
-#include "bone.h"
 #include "motion.h"
 
 #ifdef _EDITOR
-#include "std_classes.h"
-#include "ui_main.h"
 #endif
 
 CObjectOGFCollectorPacked::CObjectOGFCollectorPacked(const Fbox &bb, int apx_vertices, int apx_faces)

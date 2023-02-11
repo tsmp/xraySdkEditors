@@ -3,7 +3,6 @@
 
 #include "../../../xrengine/device.h"
 #include "ui_camera.h"
-#include "../../../xrRender/Private/hwcaps.h"
 #include "../../../xrRender/Private/hw.h"
 #include "../../../xrEngine/pure.h"
 #include "../../../xrCore/ftimer.h"

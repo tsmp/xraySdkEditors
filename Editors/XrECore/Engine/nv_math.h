@@ -17,9 +17,8 @@ Comments:
 
 #ifndef _nv_mathdecl_h_
 #include "nv_mathdecl.h"
-#endif // _nv_mathdecl_h_
 
-#include <assert.h>
+#endif // _nv_mathdecl_h_
 
 typedef f32 nv_scalar;
 

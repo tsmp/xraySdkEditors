@@ -2,8 +2,6 @@
 #define SoundRenderH
 #pragma once
 
-#include "sound.h"
-
 class CSoundRender_Core;
 class CSoundRender_Source;
 class CSoundRender_Emitter;

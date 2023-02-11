@@ -9,8 +9,6 @@
 #include "motion.h"
 #include "bone.h"
 #include "SkeletonAnimated.h"
-#include "fmesh.h"
-#include "../xrEProps/folderlib.h"
 #include "../../xrphysics/physicsshell.h"
 //---------------------------------------------------------------------------
 MotionID EngineModel::FindMotionID(LPCSTR name, u16 slot)

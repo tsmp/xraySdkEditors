@@ -24,7 +24,6 @@ distribution.
 #include "stdafx.h"
 
 #include <ctype.h>
-#include <stddef.h>
 
 #include "tinyxml.h"
 

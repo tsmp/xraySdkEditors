@@ -3,7 +3,6 @@
 #pragma hdrstop
 
 #include "SHEngineTools.h"
-#include "UI_ShaderTools.h"
 #include "ui_shadermain.h"
 #include "..\XrECore\Editor\EditMesh.h"
 //------------------------------------------------------------------------------

@@ -3,8 +3,6 @@
 #pragma hdrstop
 
 #include "../XrECore/Editor/ParticleEffectActions.h"
-#include "../xrEProps/folderlib.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
 #include "../../xrParticles/particle_actions_collection.h"
 
 using namespace PAPI;

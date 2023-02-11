@@ -2,7 +2,6 @@
 #include "StdAfx.h"
 #include "phcharacter.h"
 #include "Physics.h"
-#include "ExtendedGeom.h"
 #include "PHCapture.h"
 //#include "Entity.h"
 //#include "inventory_item.h"

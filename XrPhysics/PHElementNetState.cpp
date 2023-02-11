@@ -3,7 +3,6 @@
 #include "phinterpolation.h"
 #include "phelement.h"
 #include "phobject.h"
-#include "phworld.h"
 #include "phshell.h"
 
 void CPHElement::get_State(SPHNetState &state)

@@ -2,7 +2,6 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "ui_main.h"
 //---------------------------------------------------------------------------
 #if 0
 bool TUI::CreateMailslot()

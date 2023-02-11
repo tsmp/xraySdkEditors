@@ -1,7 +1,6 @@
 #include "stdafx.h"
 
 #include "bone.h"
-#include "envelope.h"
 
 #define BONE_VERSION 0x0002
 //------------------------------------------------------------------------------

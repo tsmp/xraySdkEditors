@@ -15,7 +15,6 @@
  ************************************************************************/
 
 #include "geom3d.h"
-#include "MxVec3.h"
 #include "MxVec4.h"
 
 extern double triangle_project_point(const Vec3 &v0, const Vec3 &v1,

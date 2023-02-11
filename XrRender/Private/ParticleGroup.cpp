@@ -8,7 +8,6 @@
 #endif
 
 #include "ParticleGroup.h"
-#include "PSLibrary.h"
 #include "ParticleEffect.h"
 
 using namespace PS;

@@ -1,7 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "StdAfx.h"
-#include "PHDynamicData.h"
 #include "Physics.h"
 #include "tri-colliderknoopc/dTriList.h"
 #include "PHShellSplitter.h"
@@ -31,7 +30,6 @@
 #include "ExtendedGeom.h"
 #include "PHElement.h"
 #include "PHShell.h"
-#include "PHCollideValidator.h"
 #include "PHElementInline.h"
 #include "PhysicsShellAnimator.h"
 #include "phshellbuildjoint.h"

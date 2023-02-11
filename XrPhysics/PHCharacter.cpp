@@ -6,10 +6,8 @@
 #include "ExtendedGeom.h"
 #include "iphysicsshellholder.h"
 
-#include "../xrEngine/cl_intersect.h"
 #include "../xrEngine/gamemtllib.h"
 
-#include "tri-colliderKNoOPC\__aabb_tri.h"
 #include "ode/src/util.h"
 #include "ph_valid_ode.h"
 #include "Phaicharacter.h"

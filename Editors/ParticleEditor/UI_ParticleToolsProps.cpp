@@ -3,7 +3,7 @@
 #pragma hdrstop
 
 #include "UI_ParticleTools.h"
-#include "UI_ParticleMain.h"
+
 void CParticleTool::OnDrawUI()
 {
     if (m_LibPED)

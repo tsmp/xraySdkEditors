@@ -13,7 +13,6 @@
 #include "../../../xrRender/Private/DetailModel.H"
 #include "../../../xrRender/Private/ModelPool.h"
 #include "../../../xrRender/Private/SkeletonCustom.h"
-#include "../../../xrAPI/xrAPI.h"
 
 // definition (Renderer)
 class CRenderTarget /*:public IRender_Target*/

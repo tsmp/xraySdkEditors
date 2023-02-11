@@ -2,8 +2,6 @@
 #pragma hdrstop
 
 #include "bone.h"
-#include "envelope.h"
-#include "GameMtlLib.h"
 #include "ui_toolscustom.h"
 
 void SJointIKData::clamp_by_limits(Fvector &dest_xyz)

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "UIEditLightAnim.h"
 #include "LightAnimLibrary.h"
-#include "ui_main.h"
 #define POINTER_HEIGHT 35
 UIEditLightAnim *UIEditLightAnim::Form = nullptr;
 UIEditLightAnim::UIEditLightAnim()

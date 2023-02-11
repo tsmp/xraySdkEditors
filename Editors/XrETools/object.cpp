@@ -12,7 +12,6 @@
 
 #include "object.h"
 #include "..\XrQSlim\MxQMetric.h"
-#include "quad.h"
 
 #define QUAD_SIZE 5
 

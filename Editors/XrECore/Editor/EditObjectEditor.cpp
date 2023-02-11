@@ -5,12 +5,9 @@
 #include "EditMesh.h"
 #include "motion.h"
 #include "bone.h"
-#include "ExportSkeleton.h"
-#include "ExportObjectOGF.h"
 #include "d3dutils.h"
 #include "ui_main.h"
 #include "render.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
 #include "ResourceManager.h"
 #include "ImageManager.h"
 

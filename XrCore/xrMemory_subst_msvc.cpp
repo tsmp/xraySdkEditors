@@ -2,7 +2,6 @@
 #pragma hdrstop
 
 #include "xrMemory_align.h"
-#include "xrMemory_pure.h"
 
 #ifndef __BORLANDC__
 

@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include "script_space_forward.h"
-
 #pragma warning(push)
 
 #pragma warning(disable : 4244)
@@ -20,12 +18,9 @@
 extern "C"
 {
 #include "..\External\LuaJIT\src\lua.h"
-#include "..\External\LuaJIT\src\lualib.h"
-#include "..\External\LuaJIT\src\lauxlib.h"
 };
 
 #include <luabind/luabind.hpp>
-#include <luabind/object.hpp>
 
 template <typename T1, typename T2>
 IC T1 *_dynamic_cast(T2 *p2)

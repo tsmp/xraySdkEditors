@@ -7,7 +7,6 @@
 
 #include "cderr.h"
 #include "commdlg.h"
-#include "vfw.h"
 #include <shobjidl.h>
 EFS_Utils *xr_EFS = NULL;
 //----------------------------------------------------

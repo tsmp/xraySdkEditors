@@ -3,7 +3,6 @@
 #include "NV_Common.h"
 #include "NVI_Convolution.h"
 #include "NVI_Image.h"
-#include "tga.h"
 
 using namespace xray_nvi;
 

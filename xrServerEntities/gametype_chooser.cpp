@@ -2,7 +2,6 @@
 #pragma hdrstop
 
 #include "gametype_chooser.h"
-#include "xrServer_Objects_Abstract.h"
 
 xr_token rpoint_game_type[] =
     {

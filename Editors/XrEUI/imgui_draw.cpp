@@ -38,7 +38,6 @@ Index of this file:
 #include "misc/freetype/imgui_freetype.h"
 #endif
 
-#include <stdio.h> // vsnprintf, sscanf, printf
 #if !defined(alloca)
 #if defined(__GLIBC__) || defined(__sun) || defined(__APPLE__) || defined(__NEWLIB__)
 #include <alloca.h> // alloca (glibc uses <alloca.h>. Note that Cygwin may have _WIN32 defined, so the order matters here)

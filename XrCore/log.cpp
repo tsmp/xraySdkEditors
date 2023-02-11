@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include <time.h>
-#include "resource.h"
 #include "log.h"
 #if 0
 #include "malloc.h"

@@ -4,8 +4,6 @@
 #include "detailmanager.h"
 
 #ifdef _EDITOR
-#include "igame_persistent.h"
-#include "environment.h"
 #else
 #include "../../xrEngine/igame_persistent.h"
 #include "../../xrEngine/environment.h"

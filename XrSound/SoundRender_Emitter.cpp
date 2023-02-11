@@ -118,7 +118,6 @@ u32 CSoundRender_Emitter::play_time()
 		return 0;
 }
 
-#include "SoundRender_Source.h"
 void CSoundRender_Emitter::set_cursor(u32 p)
 {
 	m_stream_cursor = p;

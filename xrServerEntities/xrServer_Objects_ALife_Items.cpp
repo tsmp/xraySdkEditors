@@ -13,7 +13,6 @@
 #include "object_broker.h"
 
 #ifndef XRGAME_EXPORTS
-#include "bone.h"
 #else
 #include "../xrEngine/bone.h"
 #ifdef DEBUG

@@ -1,5 +1,4 @@
 #pragma once
-#include <assert.h>
 #include <windows.h>
 
 template <class _Type>

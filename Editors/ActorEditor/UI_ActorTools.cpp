@@ -170,7 +170,6 @@ CActorTools::~CActorTools()
 {
 }
 
-#include "igame_persistent.h"
 #include "..\xrECore\editor\d3dutils.h"
 
 const u32 color_bone_sel_color = 0xFFFFFFFF;

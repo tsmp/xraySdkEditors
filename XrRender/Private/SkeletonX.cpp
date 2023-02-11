@@ -6,7 +6,6 @@
 #pragma hdrstop
 
 #pragma warning(disable : 4995)
-#include "d3dx9.h"
 #pragma warning(default : 4995)
 
 #ifndef _EDITOR

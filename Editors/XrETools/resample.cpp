@@ -3,8 +3,6 @@
 #include "stdafx.h"
 
 #include <math.h>
-#include <stdlib.h>
-#include <string.h>
 #include <stdarg.h>
 #include <assert.h>
 

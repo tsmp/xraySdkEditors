@@ -5,9 +5,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "EditObject.h"
 //#include "lwo2.h"
-#include "LW_SHADERDEF.h"
 #include "EditMesh.h"
 
 extern "C"
@@ -16,7 +14,6 @@ extern "C"
 };
 
 #ifdef _EDITOR
-#include "ResourceManager.h"
 
 extern "C" __declspec(dllimport) lwObject *LWO_ImportObject(char *filename, lwObject *new_obj);
 extern "C" __declspec(dllimport) void LWO_CloseFile(lwObject *new_obj);

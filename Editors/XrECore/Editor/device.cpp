@@ -3,7 +3,6 @@
 #pragma hdrstop
 #include "gamefont.h"
 #include <sal.h>
-#include "ImageManager.h"
 #include "ui_main.h"
 #include "render.h"
 #include "GameMtlLib.h"

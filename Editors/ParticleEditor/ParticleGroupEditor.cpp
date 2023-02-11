@@ -3,7 +3,6 @@
 #pragma hdrstop
 
 #include "..\..\XrRender\Private\ParticleGroup.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
 #include "ui_particletools.h"
 
 BOOL PS::CPGDef::SEffect::Equal(const SEffect &src)

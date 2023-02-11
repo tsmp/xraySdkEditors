@@ -12,7 +12,6 @@
 #include "UISoundEditorForm.h"
 #include "d3dutils.h"
 
-#include "PSLibrary.h"
 #include "Library.h"
 #include "LightAnimLibrary.h"
 

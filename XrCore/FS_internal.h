@@ -5,7 +5,6 @@
 #include "lzhuf.h"
 #include <io.h>
 #include <fcntl.h>
-#include <sys\stat.h>
 #include <share.h>
 
 void *FileDownload(LPCSTR fn, u32 *pdwSize = NULL);

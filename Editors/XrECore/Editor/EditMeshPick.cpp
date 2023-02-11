@@ -8,7 +8,6 @@
 #include "EditMesh.h"
 #include "EditObject.h"
 //#include "cl_collector.h"
-#include "ui_main.h"
 #include "pick_defs.h"
 #include "../XrETools/ETools.h"
 

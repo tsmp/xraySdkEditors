@@ -3,7 +3,6 @@
 
 #include "ResourceManager.h"
 #include "blenders\Blender_Recorder.h"
-#include "blenders\Blender.h"
 
 #include "dxRenderDeviceRender.h"
 

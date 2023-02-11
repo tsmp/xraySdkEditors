@@ -7,7 +7,6 @@
 #include "../xrEngine/gamemtllib.h"
 
 #include "phworld.h"
-#include "phcollidevalidator.h"
 #include "PHShell.h"
 #include "matrix_utils.h"
 #include "iphysicsshellholder.h"

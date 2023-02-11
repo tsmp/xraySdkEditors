@@ -1,9 +1,7 @@
 #include "stdafx.h"
 #include "script_debugger_threads.h"
-#include "ai_space.h"
 #include "script_process.h"
 #include "script_engine.h"
-#include "script_engine_space.h"
 #include "script_thread.h"
 #include "script_debugger.h"
 

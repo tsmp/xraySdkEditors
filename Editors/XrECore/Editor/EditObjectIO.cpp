@@ -10,11 +10,9 @@
 #include "bone.h"
 #include "motion.h"
 
-#include "exportskeleton.h"
 #include "exportobjectOGF.h"
 
 #ifdef _EDITOR
-#include "Shader.h"
 
 bool CEditableObject::Load(const char *fname)
 {

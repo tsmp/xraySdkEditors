@@ -5,7 +5,6 @@
 //. ?#include "ParticleSystem.h"
 #include "..\..\XrRender\Private\ParticleEffect.h"
 #include "..\..\XrRender\Private\ParticleGroup.h"
-#include "pure.h"
 
 // refs
 class CEditableObject;

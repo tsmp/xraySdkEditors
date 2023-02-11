@@ -2,7 +2,6 @@
 #pragma hdrstop
 
 #include "EStats.h"
-#include "hw.h"
 #include "gamefont.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -22,7 +21,6 @@ CEStats::~CEStats()
 {
 }
 
-#include "igame_persistent.h"
 void CEStats::Show(CGameFont *font)
 {
 	// Stop timers

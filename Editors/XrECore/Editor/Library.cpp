@@ -7,7 +7,6 @@
 
 #include "Library.h"
 #include "EditObject.h"
-#include "ui_main.h"
 
 //----------------------------------------------------
 ELibrary Lib;

@@ -13,8 +13,6 @@
 #include "MxDefines.h"
 #include "MxQMetric3.h"
 
-#include "MxMat2.h"
-
 void MxQuadric3::init(double a, double b, double c, double d, double area)
 {
     a2 = a * a;

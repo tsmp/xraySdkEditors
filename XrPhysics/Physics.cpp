@@ -6,7 +6,6 @@
 #include "../xrEngine/gamemtllib.h"
 //#include "gameobject.h"
 //#include "PhysicsShellHolder.h"
-#include "PHCollideValidator.h"
 #ifdef DEBUG
 #include "debug_output.h"
 #endif

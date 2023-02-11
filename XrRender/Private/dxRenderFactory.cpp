@@ -18,11 +18,6 @@
 #endif // _EDITOR
 
 #include "dxFontRender.h"
-#include "dxApplicationRender.h"
-#include "dxWallMarkArray.h"
-#include "dxStatsRender.h"
-#include "dxUISequenceVideoItem.h"
-#include "dxUIShader.h"
 
 dxRenderFactory RenderFactoryImpl;
 

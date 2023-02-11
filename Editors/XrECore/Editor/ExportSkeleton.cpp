@@ -7,19 +7,14 @@
 #include "EditMesh.h"
 #include "fmesh.h"
 
-#include "std_classes.h"
 #include "bone.h"
 #include "SkeletonMotions.h"
 #include "motion.h"
 
 //#include "library.h"
 
-#include "MgcCont3DBox.h"
-#include "MgcCont3DMinBox.h"
-
 #ifdef _EDITOR
 #include "ui_main.h"
-#include "ui_toolscustom.h"
 
 #endif
 //#include "../../../xrRender/Private/SkeletonAnimated.h"
@@ -511,7 +506,6 @@ CExportSkeleton::CExportSkeleton(CEditableObject *object)
     m_Source = object;
 }
 //----------------------------------------------------
-#include "../WildMagic/WmlMath.h"
 #include "../WildMagic/WmlContMinBox3.h"
 #include "../WildMagic/WmlContBox3.h"
 

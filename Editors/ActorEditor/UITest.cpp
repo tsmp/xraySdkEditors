@@ -1,5 +1,5 @@
 #include "UITest.h"
-#include "..\XrEUI\imgui.h"
+
 UITest::UITest()
 {
     out[0] = 0;

@@ -3,8 +3,6 @@
 
 using std::swap;
 
-#include "_type_traits.h"
-
 #ifdef __BORLANDC__
 #define M_NOSTDCONTAINERS_EXT
 #endif
@@ -428,8 +426,6 @@ struct pred_stri : public std::binary_function<char *, char *, bool>
 #define DEFINE_STACK(T, N) typedef xr_stack<T> N;
 
 #include "FixedVector.h"
-#include "buffer_vector.h"
-
 // auxilary definition
 DEFINE_VECTOR(bool, boolVec, boolIt);
 DEFINE_VECTOR(BOOL, BOOLVec, BOOLIt);

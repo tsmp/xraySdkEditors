@@ -17,7 +17,6 @@
 #include "MxVector.h"
 
 #define __T float
-#include "mixmops.h"
 
 #define __T double
 #include "mixmops.h"

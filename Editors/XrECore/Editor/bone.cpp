@@ -2,7 +2,6 @@
 #pragma hdrstop
 
 #include "bone.h"
-#include "envelope.h"
 
 #define BONE_VERSION 0x0002
 //------------------------------------------------------------------------------

@@ -3,7 +3,6 @@
 
 #include "d3dutils.h"
 #include "ui_main.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
 #include "ParticleEffectActions.h"
 
 using namespace PAPI;

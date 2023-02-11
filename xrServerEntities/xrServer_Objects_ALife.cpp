@@ -9,8 +9,7 @@
 #include "stdafx.h"
 #include "xrServer_Objects_ALife.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-#include "game_base_space.h"
-#include "object_broker.h"
+	#include "object_broker.h"
 #include "restriction_space.h"
 
 #ifndef AI_COMPILER
@@ -18,8 +17,6 @@
 #endif // AI_COMPILER
 
 #ifndef XRGAME_EXPORTS
-#include "bone.h"
-#include "defines.h"
 LPCSTR GAME_CONFIG = "game.ltx";
 #else // XRGAME_EXPORTS
 #include "../xrEngine/bone.h"
