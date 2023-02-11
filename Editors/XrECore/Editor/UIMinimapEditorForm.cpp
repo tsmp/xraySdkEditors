@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "UIMinimapEditorForm.h"
+
 UIMinimapEditorForm *UIMinimapEditorForm::Form = nullptr;
-bool UIMinimapEditorForm::bOpen = false;
+
 UIMinimapEditorForm::UIMinimapEditorForm()
 {
     m_TextureRemove = nullptr;
@@ -21,13 +22,16 @@ void UIMinimapEditorForm::Draw()
         m_TextureRemove->Release();
         m_TextureRemove = nullptr;
     }
-    if (m_Texture == nullptr)
+
+    if (!m_Texture)
     {
         u32 mem = 0;
         m_Texture = RImplementation.texture_load("ed\\ed_nodata", mem);
     }
+
     ImGui::Image(m_Texture, ImVec2(330, 530));
-    if (ImGui::Button("Load"))
+
+	if (ImGui::Button("Load"))
         LoadClick();
 }
 
@@ -37,7 +41,7 @@ void UIMinimapEditorForm::Update()
     {
         if (!Form->IsClosed())
         {
-            if (ImGui::BeginPopupModal("MinimapEditor", &bOpen, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize, true))
+            if (ImGui::BeginPopupModal("MinimapEditor", &Form->bOpen, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize, true))
             {
                 Form->Draw();
                 ImGui::EndPopup();
@@ -59,9 +63,11 @@ void UIMinimapEditorForm::Show()
 {
     VERIFY(!Form);
     Form = xr_new<UIMinimapEditorForm>();
-    bOpen = true;
+    Form->bOpen = true;
 }
+
 extern bool Stbi_Load(LPCSTR full_name, U32Vec &data, u32 &w, u32 &h, u32 &a);
+
 void UIMinimapEditorForm::LoadClick()
 {
     xr_string fn;
