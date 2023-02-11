@@ -7,6 +7,7 @@ UIPropertiesForm::UIPropertiesForm() : m_Root("", this)
 	m_EditShortcutValue = nullptr;
 	m_EditTextureValue = nullptr;
 	m_EditTextValueData = nullptr;
+	m_EditTextValueInitial = nullptr;
 	m_Flags.zero();
 }
 
@@ -156,124 +157,125 @@ void UIPropertiesForm::DrawEditText()
 	if (ImGui::BeginPopupContextItem("EditText", 0))
 	{
 		R_ASSERT(m_EditTextValueData);
-
 		ImGui::BeginGroup();
+
 		if (ImGui::Button("Ok"))
 		{
-			CTextValue *V1 = dynamic_cast<CTextValue *>(m_EditTextValue->GetFrontValue());
-			if (V1)
+			auto OnOkSuccessful = [&]()
+			{
+				xr_delete(m_EditTextValueData);
+				xr_delete(m_EditTextValueInitial);
+				Modified();
+				ImGui::CloseCurrentPopup();
+			};
+
+			auto OnOkFailed = [&]()
+			{
+				if (!m_EditTextValueData || !m_EditTextValueInitial)
+					return;
+
+				// TSMP: close window on ok when nothing changed
+				if (!xr_strcmp(m_EditTextValueData, m_EditTextValueInitial))
+					OnOkSuccessful();
+			};
+
+			if (dynamic_cast<CTextValue*>(m_EditTextValue->GetFrontValue()))
 			{
 				xr_string out = m_EditTextValueData;
+
 				if (m_EditTextValue->AfterEdit<CTextValue, xr_string>(out))
 				{
 					if (m_EditTextValue->ApplyValue<CTextValue, LPCSTR>(out.c_str()))
-					{
-						xr_delete(m_EditTextValueData);
-						Modified();
-						ImGui::CloseCurrentPopup();
-					}
+						OnOkSuccessful();
+				}
+			}
+			else if (dynamic_cast<RTextValue*>(m_EditTextValue->GetFrontValue()))
+			{
+				shared_str out = m_EditTextValueData;
+
+				if (m_EditTextValue->AfterEdit<RTextValue, shared_str>(out))
+				{
+					if (m_EditTextValue->ApplyValue<RTextValue, shared_str>(out))
+						OnOkSuccessful();
+				}
+			}
+			else if (dynamic_cast<STextValue*>(m_EditTextValue->GetFrontValue()))
+			{
+				xr_string out = m_EditTextValueData;
+
+				if (m_EditTextValue->AfterEdit<STextValue, xr_string>(out))
+				{
+					if (m_EditTextValue->ApplyValue<STextValue, xr_string>(out))
+						OnOkSuccessful();
 				}
 			}
 			else
-			{
-				RTextValue *V2 = dynamic_cast<RTextValue *>(m_EditTextValue->GetFrontValue());
-				if (V2)
-				{
-					shared_str out = m_EditTextValueData;
-					if (m_EditTextValue->AfterEdit<RTextValue, shared_str>(out))
-					{
-						if (m_EditTextValue->ApplyValue<RTextValue, shared_str>(out))
-						{
-							xr_delete(m_EditTextValueData);
-							Modified();
-							ImGui::CloseCurrentPopup();
-						}
-					}
-				}
-				else
-				{
-					STextValue *V3 = dynamic_cast<STextValue *>(m_EditTextValue->GetFrontValue());
-					if (V3)
-					{
-						xr_string out = m_EditTextValueData;
-						if (m_EditTextValue->AfterEdit<STextValue, xr_string>(out))
-						{
-							if (m_EditTextValue->ApplyValue<STextValue, xr_string>(out))
-							{
-								xr_delete(m_EditTextValueData);
-								Modified();
-								ImGui::CloseCurrentPopup();
-							}
-						}
-					}
-					else
-					{
-						R_ASSERT(false);
-					}
-				}
-			}
+				R_ASSERT(false);
+
+			OnOkFailed();
 		}
+
 		ImGui::SameLine(0);
+
 		if (ImGui::Button("Cancel"))
 		{
 			xr_delete(m_EditTextValueData);
+			xr_delete(m_EditTextValueInitial);
 			ImGui::CloseCurrentPopup();
 		}
+
 		ImGui::SameLine(0);
+
 		if (ImGui::Button("Apply"))
 		{
-			CTextValue *V1 = dynamic_cast<CTextValue *>(m_EditTextValue->GetFrontValue());
-			if (V1)
+			auto OnApplySuccessful = [&]()
+			{
+				const char* newText = m_EditTextValueData;
+				xr_delete(m_EditTextValueInitial);
+				m_EditTextValueInitial = xr_strdup(newText ? newText : "");
+				Modified();
+			};
+
+			if (dynamic_cast<CTextValue*>(m_EditTextValue->GetFrontValue()))
 			{
 				xr_string out = m_EditTextValueData;
+
 				if (m_EditTextValue->AfterEdit<CTextValue, xr_string>(out))
 				{
 					if (m_EditTextValue->ApplyValue<CTextValue, LPCSTR>(out.c_str()))
-					{
-						Modified();
-					}
+						OnApplySuccessful();
+				}
+			}
+			else if (dynamic_cast<RTextValue*>(m_EditTextValue->GetFrontValue()))
+			{
+				shared_str out = m_EditTextValueData;
+
+				if (m_EditTextValue->AfterEdit<RTextValue, shared_str>(out))
+				{
+					if (m_EditTextValue->ApplyValue<RTextValue, shared_str>(out))
+						OnApplySuccessful();
+				}
+			}
+			else if (dynamic_cast<STextValue*>(m_EditTextValue->GetFrontValue()))
+			{
+				xr_string out = m_EditTextValueData;
+
+				if (m_EditTextValue->AfterEdit<STextValue, xr_string>(out))
+				{
+					if (m_EditTextValue->ApplyValue<STextValue, xr_string>(out))
+						OnApplySuccessful();
 				}
 			}
 			else
-			{
-				RTextValue *V2 = dynamic_cast<RTextValue *>(m_EditTextValue->GetFrontValue());
-				if (V2)
-				{
-					shared_str out = m_EditTextValueData;
-					if (m_EditTextValue->AfterEdit<RTextValue, shared_str>(out))
-					{
-						if (m_EditTextValue->ApplyValue<RTextValue, shared_str>(out))
-						{
-							Modified();
-						}
-					}
-				}
-				else
-				{
-					STextValue *V3 = dynamic_cast<STextValue *>(m_EditTextValue->GetFrontValue());
-					if (V3)
-					{
-						xr_string out = m_EditTextValueData;
-						if (m_EditTextValue->AfterEdit<STextValue, xr_string>(out))
-						{
-							if (m_EditTextValue->ApplyValue<STextValue, xr_string>(out))
-							{
-								Modified();
-							}
-						}
-					}
-					else
-					{
-						R_ASSERT(false);
-					}
-				}
-			}
+				R_ASSERT(false);
 		}
+
 		ImGui::SameLine(150);
 
 		if (ImGui::Button("Load"))
 		{
 			xr_string fn;
+
 			if (EFS.GetOpenName(0, "$import$", fn, false, NULL, 2))
 			{
 				xr_string buf;
@@ -287,29 +289,37 @@ void UIPropertiesForm::DrawEditText()
 		}
 
 		ImGui::SameLine(0);
+
 		if (ImGui::Button("Save"))
 		{
 			xr_string fn;
+
 			if (EFS.GetSaveName("$import$", fn, NULL, 2))
 			{
 				CMemoryWriter F;
 				F.w_stringZ(m_EditTextValueData);
+
 				if (!F.save_to(fn.c_str()))
 					Log("!Can't save text file:", fn.c_str());
 			}
 		}
 
 		ImGui::SameLine(0);
+
 		if (ImGui::Button("Clear"))
-		{
-			m_EditTextValueData[0] = 0;
-		}
+			m_EditTextValueData[0] = '\0';
+
 		ImGui::EndGroup();
+
 		if (m_EditTextValueData)
-			ImGui::InputTextMultiline(
-				"##text", m_EditTextValueData, m_EditTextValueDataSize, ImVec2(500, 200), ImGuiInputTextFlags_CallbackResize, [](ImGuiInputTextCallbackData *data) -> int
-				{ return reinterpret_cast<UIPropertiesForm *>(data->UserData)->DrawEditText_Callback(data); },
-				reinterpret_cast<void *>(this));
+		{
+			ImGui::InputTextMultiline("##text", m_EditTextValueData, m_EditTextValueDataSize, ImVec2(500, 200),
+				ImGuiInputTextFlags_CallbackResize, [](ImGuiInputTextCallbackData* data) -> int
+				{
+					return reinterpret_cast<UIPropertiesForm*>(data->UserData)->DrawEditText_Callback(data);
+				}, this
+			);
+		}
 
 		ImGui::EndPopup();
 	}

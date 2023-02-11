@@ -6,25 +6,27 @@ class XREPROPS_API UIPropertiesForm : public XrUI
 
 public:
 	void SetModifiedEvent(TOnModifiedEvent modif = 0) { OnModifiedEvent = modif; }
+
 	UIPropertiesForm();
-	virtual ~UIPropertiesForm();
-	virtual void Draw();
+	~UIPropertiesForm() override;
+
+	void Draw() override;
 	void AssignItems(PropItemVec &items);
 	PropItem *FindItem(const char *path);
 	PropItem *FindItemOfName(shared_str name);
 	void ClearProperties();
-	IC void SetReadOnly(bool enable) { m_Flags.set(plReadOnly, enable); }
-	IC bool IsModified() { return m_bModified; }
-	IC bool Empty() { return m_Items.size() == 0; }
+	void SetReadOnly(bool enable) { m_Flags.set(plReadOnly, enable); }
+	bool IsModified() const { return m_bModified; }
+	bool Empty() const { return m_Items.empty(); }
 
-public:
 	enum
 	{
 		plReadOnly = (1 << 0),
 	};
+
 	Flags32 m_Flags;
 
-	IC bool IsReadOnly() const { return m_Flags.is(plReadOnly); }
+	bool IsReadOnly() const { return m_Flags.is(plReadOnly); }
 
 private:
 	PropItemVec m_Items;
@@ -32,22 +34,22 @@ private:
 	PropItem *m_EditTextureValue;
 	PropItem *m_EditShortcutValue;
 
-private:
 	TOnModifiedEvent OnModifiedEvent;
 
-private:
 	PropItem *m_EditTextValue;
-	char *m_EditTextValueData;
+
+	char* m_EditTextValueData;
+	char* m_EditTextValueInitial;
 	int m_EditTextValueDataSize;
+	bool m_bModified;
+
 	void DrawEditText();
 	int DrawEditText_Callback(ImGuiInputTextCallbackData *data);
 
-private:
 	GameTypeChooser m_EditGameTypeChooser;
 	PropItem *m_EditGameTypeValue;
-	void DrawEditGameType();
 
-	bool m_bModified;
+	void DrawEditGameType();
 	
 	void Modified()
 	{ 
@@ -57,6 +59,5 @@ private:
 			OnModifiedEvent(); 
 	}
 
-private:
 	UIPropertiesItem m_Root;
 };
