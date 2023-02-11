@@ -167,9 +167,9 @@ void UIPropertiesItem::DrawProp()
 
 			PropertiesFrom->m_EditTextValueData = xr_strdup(text ? text : "");
 			PropertiesFrom->m_EditTextValueDataSize = xr_strlen(PropertiesFrom->m_EditTextValueData) + 1;
-			PropertiesFrom->m_EditTextValue = node;
 		}
 
+		PropertiesFrom->m_EditTextValue = node;
 		PropertiesFrom->DrawEditText();
 	};
 
