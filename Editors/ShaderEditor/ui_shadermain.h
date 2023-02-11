@@ -30,6 +30,7 @@ public:
 
     virtual LPCSTR EditorName() { return "shader"; }
     virtual LPCSTR EditorDesc() { return "Shader Editor"; }
+    HICON EditorIcon() override;
 
     virtual bool ApplyShortCut(DWORD Key, TShiftState Shift);
     virtual bool ApplyGlobalShortCut(DWORD Key, TShiftState Shift);

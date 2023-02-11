@@ -251,4 +251,10 @@ void CParticleMain::RealQuit()
 {
     inherited::Quit();
 }
-//---------------------------------------------------------------------------
+
+#include "Resources\resource.h"
+
+HICON CParticleMain::EditorIcon()
+{
+    return LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(MAINICON));
+}

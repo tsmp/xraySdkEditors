@@ -271,6 +271,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resources\resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UIBoneForm.h" />
     <ClInclude Include="UIKeyForm.h" />
@@ -281,6 +282,13 @@
     <ClInclude Include="UITopBarForm_ButtonList.h" />
     <ClInclude Include="UI_ActorMain.h" />
     <ClInclude Include="UI_ActorTools.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\ActorEditor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ae.ico" />
+    <Image Include="resources\ae.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

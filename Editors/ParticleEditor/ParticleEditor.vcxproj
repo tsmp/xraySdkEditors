@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="noise.h" />
+    <ClInclude Include="resources\resource.h" />
     <ClInclude Include="StatGraph.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UILeftBarForm.h" />
@@ -78,6 +79,12 @@
     <ProjectReference Include="..\XrEUI\XrEUI.vcxproj">
       <Project>{7e28883c-db86-4ee8-813a-991ba20c68c9}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\pe.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\ParticleEditor.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

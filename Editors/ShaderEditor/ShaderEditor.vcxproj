@@ -46,6 +46,7 @@
     <ClCompile Include="UI_shadertools.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resources\resource.h" />
     <ClInclude Include="SHCompilerTools.h" />
     <ClInclude Include="SHEngineTools.h" />
     <ClInclude Include="SHGameMtlPairTools.h" />
@@ -77,6 +78,13 @@
     <ProjectReference Include="..\XrEUI\XrEUI.vcxproj">
       <Project>{7e28883c-db86-4ee8-813a-991ba20c68c9}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\se.ico" />
+    <Image Include="se.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\ShaderEditor.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

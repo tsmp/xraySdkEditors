@@ -171,7 +171,7 @@ void CShaderMain::OutUICursorPos()
         s.sprintf("Cur: %d, %d",pt.x,pt.y);
         fraBottomBar->paUICursor->Caption=s; fraBottomBar->paUICursor->Repaint();*/
 }
-//---------------------------------------------------------------------------
+
 void CShaderMain::OutGridSize()
 {
     /*VERIFY(fraBottomBar);
@@ -179,14 +179,20 @@ void CShaderMain::OutGridSize()
     s.sprintf("Grid: %1.1f",EPrefs->grid_cell_size);
     fraBottomBar->paGridSquareSize->Caption=s; fraBottomBar->paGridSquareSize->Repaint();*/
 }
-//---------------------------------------------------------------------------
+
 void CShaderMain::OutInfo()
 {
     // fraBottomBar->paSel->Caption = Tools->GetInfo();
 }
-//---------------------------------------------------------------------------
+
 void CShaderMain::RealQuit()
 {
     UI->Quit();
 }
-//---------------------------------------------------------------------------
+
+#include "Resources\resource.h"
+
+HICON CShaderMain::EditorIcon()
+{
+    return LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(MAINICON));
+}

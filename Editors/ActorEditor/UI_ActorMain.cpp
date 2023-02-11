@@ -558,3 +558,10 @@ Ivector2 CActorMain::GetRenderMousePosition() const
 {
     return MainForm->GetRenderForm()->GetMousePos();
 }
+
+#include "Resources\resource.h"
+
+HICON CActorMain::EditorIcon()
+{
+    return LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(MAINICON));
+}

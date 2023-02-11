@@ -1,7 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef UI_ActorMainH
-#define UI_ActorMainH
-//---------------------------------------------------------------------------
+#pragma once
 
 enum
 {
@@ -25,7 +22,6 @@ enum
     COMMAND_FILE_MENU,
     COMMAND_LOAD_FIRSTRECENT,
 };
-//------------------------------------------------------------------------------
 
 class CActorMain : public TUI
 {
@@ -49,6 +45,7 @@ public:
 
     virtual LPCSTR EditorName() { return "actor"; }
     virtual LPCSTR EditorDesc() { return "Actor Editor"; }
+    HICON EditorIcon() override;
 
     virtual bool ApplyShortCut(DWORD Key, TShiftState Shift);
     virtual bool ApplyGlobalShortCut(DWORD Key, TShiftState Shift);
@@ -76,5 +73,3 @@ public:
     virtual void Save(CInifile *);
     virtual void FillProp(PropItemVec &items);
 };
-//---------------------------------------------------------------------------
-#endif
