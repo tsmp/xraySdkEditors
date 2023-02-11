@@ -277,8 +277,6 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
     float dH = o_size.y / (LOD_IMAGE_SIZE / 2);
     float dR = bb.getradius();
     float d2R = dR * 2.f;
-    // ETOOLS::ray_options			(CDB::OPT_CULL);
-
     CreateLODSamples(bb, lod_pixels, LOD_IMAGE_SIZE, LOD_IMAGE_SIZE);
 
     float tN = 0.f, tH = 0.f, tT = 0.f, tR = 0.f;
@@ -286,15 +284,20 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
     float LOD_CALC_SAMPLES = quality;
     s32 LOD_CALC_SAMPLES_LIM = LOD_CALC_SAMPLES / 2;
 
+    xr_vector<CSurface*> loadedSurfaces;
+
     // preload textures
-    for (SurfaceIt surf_it = OBJECT->Surfaces().begin(); surf_it != OBJECT->Surfaces().end(); surf_it++)
+    for (CSurface* surf: OBJECT->Surfaces())
     {
-        CSurface *surf = *surf_it;
         Shader_xrLC *c_sh = EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
         if (!c_sh->flags.bRendering)
             continue;
-        if (0 == surf->m_ImageData)
+
+        if (!surf->m_ImageData)
+        {
             surf->CreateImageData();
+            loadedSurfaces.push_back(surf);
+        }
     }
 
     // calculate
@@ -304,10 +307,12 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
         M.setXYZ(0, angle, 0);
         M.translate_over(o_center);
         Mi.invert(M);
+
         for (s32 iH = 0; iH < LOD_IMAGE_SIZE; iH++)
         {
             PB->Inc();
             float Y = (iH - (LOD_IMAGE_SIZE - 1) / 2) * dH;
+
             for (s32 iW = 0; iW < LOD_IMAGE_SIZE; iW++)
             {
                 float X = (iW - (LOD_IMAGE_SIZE) / 2) * dW;
@@ -317,18 +322,17 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
                 u32 &tgt_n = nm_pixels[pixel];
                 u32 &tgt_h = hemi_tmp[pixel];
 
-                ///.			tgt_c			= 0x00000000;
-
-                FvectorVec n_vec;
-                ///.			Fvector4Vec		c_vec;
+				FvectorVec n_vec;
                 Fvector4Vec sample_pt_vec;
                 Fvector start;
                 CTimer TT, TT1;
                 TT.Start();
                 SPickQuery PQ;
+
                 for (s32 iiH = -LOD_CALC_SAMPLES_LIM; iiH <= LOD_CALC_SAMPLES_LIM; iiH++)
                 {
                     float dY = iiH * (dH / LOD_CALC_SAMPLES);
+
                     for (s32 iiW = -LOD_CALC_SAMPLES_LIM; iiW <= LOD_CALC_SAMPLES_LIM; iiW++)
                     {
                         float dX = iiW * (dW / LOD_CALC_SAMPLES);
@@ -337,11 +341,12 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
                         start.mad(M.k, -dR);
                         PQ.prepare_rq(start, M.k, d2R, CDB::OPT_CULL);
                         OBJECT->RayQuery(PQ);
+
                         if (PQ.r_count())
                         {
                             PQ.r_sort();
                             Fvector N = {0, 0, 0};
-                            ///.		                Fcolor C	= {0,0,0,0};
+
                             for (s32 k = PQ.r_count() - 1; k >= 0; k--)
                             {
                                 SPickQuery::SResult *R = PQ.r_begin() + k;
@@ -349,6 +354,7 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
                                 if (!GetPointColor(R, uA, uC))
                                     continue;
                                 float fA = float(uA) / 255.f;
+
                                 if (uA)
                                 {
                                     Fvector pt;
@@ -357,6 +363,7 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
                                     ptt.set(pt.x, pt.y, pt.z, fA);
                                     sample_pt_vec.push_back(ptt);
                                 }
+
                                 // normal
                                 Fvector Nn;
                                 Nn.mknormal(R->verts[0], R->verts[1], R->verts[2]);
@@ -364,32 +371,24 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
 
                                 N.mul(1.f - fA);
                                 N.add(Nn);
-
-                                // color
-                                ///.							Fcolor Cn;
-                                ///.							Cn.set			(uC);
-                                ///.							if (Cn.a>=(200.f/255.f)) C.lerp(C,Cn,Cn.a);
                             }
+
                             float n_mag = N.magnitude();
+
                             if (!fis_zero(n_mag, EPS))
                                 n_vec.push_back(N.div(n_mag));
-                            ///.		                c_vec.push_back 	(Fvector4().set(C.r,C.g,C.b,C.a));
                         }
                     }
                 }
-                tN += TT.GetElapsed_sec();
-                ///.			Fvector4 cC			= {0,0,0,0};
-                ///.			for (Fvector4It c_it=c_vec.begin(); c_it!=c_vec.end(); c_it++)
-                ///.				cC.add			(*c_it);
-                ///.			cC.div				(c_vec.size());
-                ///.			cC.mul				(255.f);
-                ///.			tgt_c				= color_rgba(iFloor(cC.x),iFloor(cC.y),iFloor(cC.z),iFloor(cC.w)>200.f?255:0);
 
+                tN += TT.GetElapsed_sec();
                 Fvector N = {0, 0, 0};
+
                 if (!n_vec.empty())
                 {
                     for (FvectorIt it = n_vec.begin(); it != n_vec.end(); it++)
                         N.add(*it);
+
                     N.div(n_vec.size());
                     N.normalize_safe();
                     Mi.transform_dir(N);
@@ -404,6 +403,7 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
                 TT.Start();
                 // light points
                 float res_transp = 0.f;
+
                 for (Fvector4It pt_it = sample_pt_vec.begin(); pt_it != sample_pt_vec.end(); pt_it++)
                 {
                     float avg_transp = 0.f;
@@ -450,12 +450,12 @@ void CImageManager::CreateLODTexture(CEditableObject *OBJECT, U32Vec &lod_pixels
     for (int px_idx = 0; px_idx < int(nm_pixels.size()); px_idx++)
         nm_pixels[px_idx] = subst_alpha(nm_pixels[px_idx], color_get_R(hemi_tmp[px_idx]));
 
+    for (CSurface* surf : loadedSurfaces)
+        surf->RemoveImageData();
+
     UI->ProgressEnd(PB);
 }
 
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
 void CImageManager::CreateLODTexture(CEditableObject *OBJECT, LPCSTR tex_name, u32 tgt_w, u32 tgt_h, int samples, int age, int quality)
 {
     U32Vec lod_pixels, nm_pixels;

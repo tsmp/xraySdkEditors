@@ -23,16 +23,13 @@ void CSceneObject::Construct(LPVOID data)
 
 CSceneObject::~CSceneObject()
 {
-#pragma TODO("TSMP: check why this was added")
-    // crashes when selecting objects in library editor after lod textures generation
-    //for (CSurface *i : m_Surfaces)
-    //{
-    //    i->OnDeviceDestroy();
-    //    xr_delete(i);
-    //}
+    for (CSurface *&i : m_Surfaces)
+    {
+		i->OnDeviceDestroy();
+		xr_delete(i);
+    }
     Lib.RemoveEditObject(m_pReference);
 }
-//----------------------------------------------------
 
 void CSceneObject::EvictObject()
 {
@@ -40,7 +37,6 @@ void CSceneObject::EvictObject()
         m_pReference->EvictObject();
 }
 
-//----------------------------------------------------
 void CSceneObject::Select(BOOL flag)
 {
     inherited::Select(flag);
@@ -48,7 +44,6 @@ void CSceneObject::Select(BOOL flag)
         Blink();
 }
 
-//----------------------------------------------------
 int CSceneObject::GetFaceCount()
 {
     return m_pReference ? m_pReference->GetFaceCount() : 0;
