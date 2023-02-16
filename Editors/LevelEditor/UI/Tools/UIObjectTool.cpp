@@ -1,4 +1,8 @@
 #include "stdafx.h"
+#include <thread>
+#include <atomic>
+
+static std::atomic<bool> RefreshInProgress;
 
 UIObjectTool::UIObjectTool()
 {
@@ -10,6 +14,7 @@ UIObjectTool::UIObjectTool()
     m_Selection = false;
     m_RealTexture = nullptr;
     m_RemoveTexture = nullptr;
+    RefreshInProgress = false;
     m_ObjectList = xr_new<UIItemListForm>();
     m_ObjectList->SetOnItemFocusedEvent(TOnILItemFocused(this, &UIObjectTool::OnItemFocused));
     m_TextureNull.create("ed\\ed_nodata");
@@ -20,6 +25,9 @@ UIObjectTool::UIObjectTool()
 
 UIObjectTool::~UIObjectTool()
 {
+    while (RefreshInProgress)
+        std::this_thread::yield();
+
     if (m_RemoveTexture)
         m_RemoveTexture->Release();
     if (m_RealTexture)
@@ -159,24 +167,42 @@ void UIObjectTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
-    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
-    if (ImGui::TreeNode("Object List"))
+
+    if (!RefreshInProgress)
     {
-        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-        ImGui::BeginChild("Object List");
-        ImGui::Separator();
-        m_ObjectList->Draw();
-        ImGui::Separator();
-        ImGui::EndChild();
-        ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-        ImGui::TreePop();
+        ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
+        if (ImGui::TreeNode("Object List"))
+        {
+            ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+            ImGui::BeginChild("Object List");
+            ImGui::Separator();
+            m_ObjectList->Draw();
+            ImGui::Separator();
+            ImGui::EndChild();
+            ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+            ImGui::TreePop();
+        }
     }
+    else
+        ImGui::Text("Loading...");
 }
 
 void UIObjectTool::RefreshList()
 {
+    if (RefreshInProgress)
+        return;
+
+    std::thread refreshThread(&UIObjectTool::RefreshListInternal, this);
+    refreshThread.detach();
+}
+
+void UIObjectTool::RefreshListInternal()
+{
+    Msg("UIObjectTool refresh started");
+    RefreshInProgress = true;
     ListItemsVec items;
     FS_FileSet lst;
+
     if (Lib.GetObjects(lst))
     {
         FS_FileSetIt it = lst.begin();
@@ -192,6 +218,8 @@ void UIObjectTool::RefreshList()
     m_RealTexture = nullptr;
     m_Props->ClearProperties();
     m_ObjectList->AssignItems(items);
+    RefreshInProgress = false;
+    Msg("UIObjectTool refresh finished");
 }
 
 void UIObjectTool::OnDrawUI()
