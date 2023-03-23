@@ -297,6 +297,7 @@ void UIImageEditorForm::OnItemsFocused(ListItem* item)
 	{
 		ETextureThumbnail* thm = FindUsedTHM(prop->Key());
 		m_THM_Current.push_back(thm);
+        m_ItemProps->ClearProperties();
 
 		// fill prop
 		thm->FillProp(props, PropValue::TOnChange(this, &UIImageEditorForm::OnTypeChange));
