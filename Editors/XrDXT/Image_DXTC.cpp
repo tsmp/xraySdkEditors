@@ -74,7 +74,7 @@ void Image_DXTC::SaveAsRaw()
 	VERIFY(pf);
 
 	// writes only 32 bit format.
-	fwrite(m_pDecompBytes, m_nHeight * m_nWidth * 4, sizeof(byte), pf);
+	fwrite(m_pDecompBytes, m_nHeight * m_nWidth * 4, sizeof(BYTE), pf);
 
 	fclose(pf);
 	pf = NULL;
@@ -136,7 +136,7 @@ bool Image_DXTC::LoadFromFile(LPCSTR filename)
 	// start reading the file
 	// from Microsoft's mssdk D3DIM example "Compress"
 
-	DDSURFACEDESC2 ddsd;
+	DDS_HEADER ddsd;
 	DWORD dwMagic;
 
 	// Read magic number
@@ -149,7 +149,7 @@ bool Image_DXTC::LoadFromFile(LPCSTR filename)
 	}
 
 	// Read the surface description
-	fread(&ddsd, sizeof(DDSURFACEDESC2), 1, file);
+	fread(&ddsd, sizeof(DDS_HEADER), 1, file);
 
 	// Does texture have mipmaps?
 	m_bMipTexture = (ddsd.dwMipMapCount > 0) ? TRUE : FALSE;
@@ -161,7 +161,7 @@ bool Image_DXTC::LoadFromFile(LPCSTR filename)
 
 	// Is it DXTC ?
 	// I sure hope pixelformat is valid!
-	DecodePixelFormat(m_strFormat, &(ddsd.ddpfPixelFormat));
+	DecodePixelFormat(m_strFormat, &(ddsd.ddspf));
 
 	if (m_CompFormat == PF_DXT1 ||
 		m_CompFormat == PF_DXT2 ||
@@ -191,11 +191,11 @@ bool Image_DXTC::LoadFromFile(LPCSTR filename)
 
 	// Read only first mip level for now:
 
-	if (ddsd.dwFlags & DDSD_LINEARSIZE)
+	if (ddsd.dwHeaderFlags & DDSD_LINEARSIZE)
 	{
 		// TRACE("dwFlags  has DDSD_LINEARSIZE\n");
 
-		m_pCompBytes = (BYTE *)calloc(ddsd.dwLinearSize, sizeof(BYTE));
+		m_pCompBytes = (BYTE *)calloc(ddsd.dwPitchOrLinearSize, sizeof(BYTE));
 
 		if (m_pCompBytes == NULL)
 		{
@@ -203,17 +203,17 @@ bool Image_DXTC::LoadFromFile(LPCSTR filename)
 			return (false);
 		}
 
-		fread(m_pCompBytes, ddsd.dwLinearSize, 1, file);
+		fread(m_pCompBytes, ddsd.dwPitchOrLinearSize, 1, file);
 	}
 	else
 	{
 		// TRACE("dwFlags  file doesn't have linearsize set\n");
 
-		DWORD dwBytesPerRow = ddsd.dwWidth * ddsd.ddpfPixelFormat.dwRGBBitCount / 8;
+		DWORD dwBytesPerRow = ddsd.dwWidth * ddsd.ddspf.dwRGBBitCount / 8;
 
-		m_pCompBytes = (BYTE *)calloc(ddsd.lPitch * ddsd.dwHeight, sizeof(BYTE));
+		m_pCompBytes = (BYTE*)calloc(ddsd.dwWidth * ddsd.dwHeight, sizeof(BYTE));
 
-		m_nCompSize = ddsd.lPitch * ddsd.dwHeight;
+		m_nCompSize = ddsd.dwWidth * ddsd.dwHeight;
 		m_nCompLineSz = dwBytesPerRow;
 
 		if (m_pCompBytes == NULL)
@@ -222,13 +222,8 @@ bool Image_DXTC::LoadFromFile(LPCSTR filename)
 			return (false);
 		}
 
-		BYTE *pDest = m_pCompBytes;
-
-		for (DWORD yp = 0; yp < ddsd.dwHeight; yp++)
-		{
-			fread(pDest, dwBytesPerRow, 1, file);
-			pDest += ddsd.lPitch;
-		}
+		BYTE* pDest = m_pCompBytes;
+		fread(pDest, m_nCompSize, 1, file);
 	}
 
 	// done reading file
@@ -700,7 +695,7 @@ void Image_DXTC::DecompressDXT1()
 	for (j = 0; j < yblocks; j++)
 	{
 		// 8 bytes per block
-		pBlock = (DXTColBlock *)((DWORD)m_pCompBytes + j * xblocks * 8);
+		pBlock = (DXTColBlock *)((size_t)m_pCompBytes + j * xblocks * 8);
 
 		for (i = 0; i < xblocks; i++, pBlock++)
 		{
@@ -711,7 +706,7 @@ void Image_DXTC::DecompressDXT1()
 			// now decode the color block into the bitmap bits
 			// inline func:
 
-			pImPos = (DWORD *)((DWORD)pBase + i * 16 + (j * 4) * m_nWidth * 4);
+			pImPos = (DWORD *)((size_t)pBase + i * 16 + (j * 4) * m_nWidth * 4);
 
 			DecodeColorBlock(pImPos, pBlock, m_nWidth, (DWORD *)&col_0, (DWORD *)&col_1,
 							 (DWORD *)&col_2, (DWORD *)&col_3);
@@ -771,7 +766,7 @@ void Image_DXTC::DecompressDXT3()
 		// 8 bytes per block
 		// 1 block for alpha, 1 block for color
 
-		pBlock = (DXTColBlock *)((DWORD)m_pCompBytes + j * xblocks * 16);
+		pBlock = (DXTColBlock *)((size_t)m_pCompBytes + j * xblocks * 16);
 
 		for (i = 0; i < xblocks; i++, pBlock++)
 		{
@@ -789,7 +784,7 @@ void Image_DXTC::DecompressDXT3()
 			// Decode the color block into the bitmap bits
 			// inline func:
 
-			pImPos = (DWORD *)((DWORD)pBase + i * 16 + (j * 4) * m_nWidth * 4);
+			pImPos = (DWORD *)((size_t)pBase + i * 16 + (j * 4) * m_nWidth * 4);
 
 			DecodeColorBlock(pImPos, pBlock, m_nWidth, (DWORD *)&col_0, (DWORD *)&col_1,
 							 (DWORD *)&col_2, (DWORD *)&col_3);
@@ -845,7 +840,7 @@ void Image_DXTC::DecompressDXT5()
 		// 8 bytes per block
 		// 1 block for alpha, 1 block for color
 
-		pBlock = (DXTColBlock *)((DWORD)m_pCompBytes + j * xblocks * 16);
+		pBlock = (DXTColBlock *)((size_t)m_pCompBytes + j * xblocks * 16);
 
 		for (i = 0; i < xblocks; i++, pBlock++)
 		{
@@ -866,7 +861,7 @@ void Image_DXTC::DecompressDXT5()
 			// Decode the color block into the bitmap bits
 			// inline func:
 
-			pImPos = (DWORD *)((DWORD)pBase + i * 16 + (j * 4) * m_nWidth * 4);
+			pImPos = (DWORD *)((size_t)pBase + i * 16 + (j * 4) * m_nWidth * 4);
 
 			DecodeColorBlock(pImPos, pBlock, m_nWidth, (DWORD *)&col_0, (DWORD *)&col_1,
 							 (DWORD *)&col_2, (DWORD *)&col_3);
@@ -880,41 +875,10 @@ void Image_DXTC::DecompressDXT5()
 } // dxt5
 
 /*
-typedef struct _DDSURFACEDESC2 {
-	DWORD         dwSize;
-	DWORD         dwFlags;
-	DWORD         dwHeight;
-	DWORD         dwWidth;
-	union
-	{
-		LONG      lPitch;
-		DWORD     dwLinearSize;
-	} DUMMYUNIONNAMEN(1);
-	DWORD         dwBackBufferCount;
-	union
-	{
-		DWORD     dwMipMapCount;
-		DWORD     dwRefreshRate;
-	} DUMMYUNIONNAMEN(2);
-	DWORD         dwAlphaBitDepth;
-	DWORD         dwReserved;
-	LPVOID        lpSurface;
-	union
-	{
-		DDCOLORKEY    ddckCKDestOverlay;
-		DWORD         dwEmptyFaceColor;
-	} DUMMYUNIONNAMEN(3);
-	DDCOLORKEY    ddckCKDestBlt;
-	DDCOLORKEY    ddckCKSrcOverlay;
-	DDCOLORKEY    ddckCKSrcBlt;
-	DDPIXELFORMAT ddpfPixelFormat;
-	DDSCAPS2      ddsCaps;
-	DWORD         dwTextureStage;
-} DDSURFACEDESC2, FAR* LPDDSURFACEDESC2;
-
-
-
-  */
+ * Premultiplied alpha format -- the color components have been
+ * premultiplied by the alpha component.
+ */
+const DWORD ALPHAPREMULT = 0x00008000l;
 
 //-----------------------------------------------------------------------------
 // Name: PixelFormatToString()
@@ -922,7 +886,7 @@ typedef struct _DDSURFACEDESC2 {
 //	adapted from microsoft mssdk D3DIM Compress example
 //  PixelFormatToString()
 //-----------------------------------------------------------------------------
-VOID Image_DXTC::DecodePixelFormat(CHAR *strPixelFormat, DDPIXELFORMAT *pddpf)
+VOID Image_DXTC::DecodePixelFormat(CHAR *strPixelFormat, DDS_PIXELFORMAT *pddpf)
 {
 	switch (pddpf->dwFourCC)
 	{
@@ -933,7 +897,7 @@ VOID Image_DXTC::DecodePixelFormat(CHAR *strPixelFormat, DDPIXELFORMAT *pddpf)
 				   GetNumberOfBits(pddpf->dwRBitMask),
 				   GetNumberOfBits(pddpf->dwGBitMask),
 				   GetNumberOfBits(pddpf->dwBBitMask),
-				   pddpf->dwBBitMask & DDPF_ALPHAPREMULT ? "-premul" : "");
+				   pddpf->dwBBitMask & ALPHAPREMULT ? "-premul" : "");
 		m_CompFormat = PF_ARGB;
 		break;
 
@@ -967,148 +931,6 @@ VOID Image_DXTC::DecodePixelFormat(CHAR *strPixelFormat, DDPIXELFORMAT *pddpf)
 		break;
 	}
 }
-
-// Struct to hold various timing values
-
-/*
-struct TimingInfo
-{
-	LARGE_INTEGER	m_start_clk;
-	LARGE_INTEGER	m_end_clk;
-
-	int				m_nSamples;
-	LARGE_INTEGER	m_interval_sum;		// sum of all end-start, nSamples number added in
-
-	CString		m_csName;		// text desc of what timed
-};
-
-void Image_DXTC::RunTimingSession()
-{
-	// Must have a dxt5 texture loaded
-	// No special reason - just lazy coding
-	// Functions called to time code are separate from non-timed
-	//  code.  It's alogorithm that counts.
-
-	VERIFY( m_pCompBytes != NULL );
-	VERIFY( m_pDecompBytes != NULL );		// must already have allocated memory
-
-
-	switch( m_CompFormat )
-	{
-	case PF_DXT1 :
-	case PF_DXT2 :
-	case PF_DXT3 :
-	case PF_DXT4 :
-	case PF_UNKNOWN :
-
-		//TRACE("You must have a DXT5 texture loaded to RunTimingSession()!!\n");
-		//TRACE("Now I will be nasty and VERIFY(false)!\n");
-		VERIFY(false);
-		break;
-
-	case PF_DXT5 :
-		//TRACE( "Running code timing session on DXT5 color decompress\n");
-		break;
-	}
-
-
-	LARGE_INTEGER	start_clk, end_clk;
-	QueryPerformanceCounter( &start_clk );
-
-
-	#define NMETHOD   4
-
-	#define NBATCHES  4
-
-	int passes[NBATCHES];
-	passes[0] = 1;
-	passes[1] = 10;
-	passes[2] = 30;
-	passes[3] = 50;
-
-	TimingInfo	method[NMETHOD][NBATCHES];
-
-	int i,n;
-
-	FILE * pf = fopen("timing.txt", "wt" );
-
-	if( pf == NULL )
-	{
-		return;
-	}
-
-
-	fprintf( pf,"\n\n");
-
-	for( i=0; i < NBATCHES; i++ )
-	{
-		Sleep(50);
-		fprintf( pf,"i: %d   passes[i]: %d\n", i, passes[i] );
-		Time_Decomp5_01( passes[i],  & (method[0][i]) );
-		Time_Decomp5_02( passes[i],  & (method[1][i]) );
-		Time_Decomp5_03( passes[i],  & (method[2][i]) );
-		Time_Decomp5_04( passes[i],  & (method[3][i]) );
-	}
-
-
-	QueryPerformanceCounter( &end_clk );
-
-//	unsigned long total;
-//	total = (unsigned long) ( end_clk - start_clk );
-	LARGE_INTEGER freq;
-	QueryPerformanceFrequency( & freq );
-
-	fprintf( pf, "\nCounter freq = %u  %d \n", freq.LowPart, freq.HighPart  );
-	fprintf( pf, "start:  %u  %u       end:  %u  %u\n", start_clk.LowPart, start_clk.HighPart, end_clk.LowPart, end_clk.HighPart );
-
-	//TRACE( "\nCounter freq = %u  %d \n", freq.LowPart, freq.HighPart  );
-	//TRACE( "start:  %u  %u       end:  %u  %u\n", start_clk.LowPart, start_clk.HighPart, end_clk.LowPart, end_clk.HighPart );
-
-	double dur = ( (double)end_clk.LowPart - (double)start_clk.LowPart ) / (double)freq.LowPart;
-
-	fprintf( pf, "Total timing session took:  %u cycles = %f seconds\n", ( end_clk.LowPart - start_clk.LowPart ), dur );
-	fprintf( pf, "\n\n");
-
-	//TRACE( "Total timing session took:  %u cycles = %f seconds\n", ( end_clk.LowPart - start_clk.LowPart ), dur );
-	//TRACE( "\n\n");
-
-	for(n=0; n < NMETHOD; n++ )
-	{
-		for(i=0; i < NBATCHES; i++ )
-		{
-			fprintf( pf, "method %d:\n", n );
-			fprintf( pf, "  %s", method[n][i].m_csName );
-			fprintf( pf, "  tot:   %u %u\n", method[n][i].m_interval_sum.HighPart, method[n][i].m_interval_sum.LowPart );
-
-			//TRACE( "method %d:\n", n );
-			//TRACE( "  %s", method[n][i].m_csName );
-			//TRACE( "  tot:   %u %u\n", method[n][i].m_interval_sum.HighPart, method[n][i].m_interval_sum.LowPart );
-
-			dur = ((double)method[n][i].m_interval_sum.LowPart) / ((double)method[n][i].m_nSamples * (double)freq.LowPart );
-
-			fprintf( pf, "  avg:   %u\n", method[n][i].m_interval_sum.LowPart / method[n][i].m_nSamples );
-			fprintf( pf, "  avg time:  %f sec\n", dur );
-
-			//TRACE( "  avg:   %u\n", method[n][i].m_interval_sum.LowPart / method[n][i].m_nSamples );
-			//TRACE( "  avg time:  %f sec\n", dur );
-		}
-
-		fprintf( pf, "\n\n");
-		//TRACE("\n\n");
-	}
-
-
-	fclose( pf );
-
-	MessageBeep( MB_OK );
-
-//BOOL QueryPerformanceFrequency(
-//  LARGE_INTEGER *lpFrequency   // address of current frequency
-//);
-
-
-}
-*/
 
 inline void GetColorBlockColors_m2(DXTColBlock *pBlock, Color8888 *col_0, Color8888 *col_1,
 								   Color8888 *col_2, Color8888 *col_3,

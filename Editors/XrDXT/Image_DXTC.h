@@ -18,16 +18,8 @@ function is called.  Output of timing test is saved to a local .txt file.
 
 ******************************************************************************/
 
-#if !defined(AFX_IMAGE_DXTC_H__4B89D8D0_7857_11D4_9630_00A0C996DE3D__INCLUDED_)
-#define AFX_IMAGE_DXTC_H__4B89D8D0_7857_11D4_9630_00A0C996DE3D__INCLUDED_
-
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-
-#include <ddraw.h>
-
-// struct TimingInfo;		// defined in Image_DXTC.cpp
+#include "dds\ddsTypes.h"
+#include "dds.h"
 
 enum PixFormat
 {
@@ -51,7 +43,7 @@ class Image_DXTC
 	string256 m_strFormat;
 	PixFormat m_CompFormat;
 
-	DDSURFACEDESC2 m_DDSD; // read from dds file
+	DDS_HEADER m_DDSD; // read from dds file
 	bool m_bMipTexture;	   // texture has mipmaps?
 
 	int m_nWidth; // in pixels of uncompressed image
@@ -64,7 +56,7 @@ private:
 	void DecompressDXT4();
 	void DecompressDXT5();
 
-	void DecodePixelFormat(LPSTR strPixelFormat, DDPIXELFORMAT *pddpf);
+	void DecodePixelFormat(LPSTR strPixelFormat, DDS_PIXELFORMAT *pddpf);
 	void AllocateDecompBytes();
 
 public:
@@ -84,5 +76,3 @@ public:
 
 	bool MipTexture() { return (m_bMipTexture); }
 };
-
-#endif // !defined(AFX_IMAGE_DXTC_H__4B89D8D0_7857_11D4_9630_00A0C996DE3D__INCLUDED_)
