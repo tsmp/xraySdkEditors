@@ -126,21 +126,19 @@ void UIChooseFormItem::DrawRoot()
 
 void UIChooseFormItem::Sort()
 {
-	for (UITreeItem *Item : Items)
+	std::sort(Items.begin(), Items.end(), [](UITreeItem *Right, UITreeItem *Left) -> bool
 	{
-		std::sort(Items.begin(), Items.end(), [](UITreeItem *Right, UITreeItem *Left) -> bool
-				  { 
-			UIChooseFormItem* pRight = ((UIChooseFormItem*)Right);
-			UIChooseFormItem* pLeft = ((UIChooseFormItem*)Left);
+		UIChooseFormItem* pRight = static_cast<UIChooseFormItem*>(Right);
+		UIChooseFormItem* pLeft = static_cast<UIChooseFormItem*>(Left);
 
-			if(pRight->Object&& !pLeft->Object)
-				return false;
-			
-			if (!pRight->Object && pLeft->Object)
-				return true;
+		if (pRight->Object && !pLeft->Object)
+			return false;
 
-			return xr_strcmp(pRight->Name.c_str(), pLeft->Name.c_str()) < 0; });
-	}
+		if (!pRight->Object && pLeft->Object)
+			return true;
+
+		return xr_strcmp(pRight->Name.c_str(), pLeft->Name.c_str()) < 0;
+	});
 
 	for (UITreeItem *Item : Items)
 		((UIChooseFormItem *)Item)->Sort();
