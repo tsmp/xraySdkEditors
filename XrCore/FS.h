@@ -422,4 +422,7 @@ public:
 	virtual ~CVirtualFileRW();
 };
 
+#include "FS_impl.h"
+
 #endif // fsH
+
